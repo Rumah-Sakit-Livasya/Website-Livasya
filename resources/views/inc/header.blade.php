@@ -45,7 +45,7 @@
 <link rel="stylesheet" media="screen, print" href="/css/page-invoice.css">
 <link rel="stylesheet" media="screen, print" href="/css/theme-demo.css">
 
-{{-- SweetAlert2 --}}
+{{-- Boxicons --}}
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 {{-- SweetAlert2 --}}
