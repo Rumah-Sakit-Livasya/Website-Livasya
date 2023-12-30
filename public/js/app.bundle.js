@@ -1855,14 +1855,14 @@ $(window).on("blur focus", function(e) {
                 myapp_config.root_.toggleClass("blur")
 
                 if (myapp_config.debugState)
-                console.log("blur");
+                // console.log("blur");
 
                 break;
             case "focus":
                 myapp_config.root_.toggleClass("blur")
                 if (myapp_config.debugState)
 
-                console.log("focused");
+                // console.log("focused");
 
                 break;
         }

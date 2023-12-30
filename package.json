@@ -16,6 +16,8 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
-        "boxicons": "^2.1.4"
+        "boxicons": "^2.1.4",
+        "datatables.net-editor": "^2.2.2",
+        "datatables.net-editor-bs5": "^2.2.0"
     }
 }

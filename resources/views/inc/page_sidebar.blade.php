@@ -40,12 +40,18 @@
         </div>
         <ul id="js-nav-menu" class="nav-menu">
             <li class="{{ set_active('dashboard') }}">
-                <a href="/dashboard" title="Dashboard" data-filter-tags="application dashboard">
+                <a href="{{ route('dashboard') }}" title="Dashboard" data-filter-tags="application dashboard">
                     <i class='bx bxs-dashboard'></i>
                     <span class="nav-link-text" data-i18n="nav.application_dashboard">Dashboard</span>
                 </a>
             </li>
-            <li class="{{ set_active('users') }}">
+            <li class="{{ set_active('dashboard/categories') }}">
+                <a href="{{ route('category.index') }}" title="Kategori" data-filter-tags="application kaegori">
+                    <i class='bx bxs-category-alt'></i>
+                    <span class="nav-link-text" data-i18n="nav.application_kategori">Kategori Berita</span>
+                </a>
+            </li>
+            <li class="{{ set_active('dashboard/users') }}">
                 <a href="{{ route('user.index') }}" title="users" data-filter-tags="application user">
                     <i class='bx bxs-user-account'></i>
                     <span class="nav-link-text" data-i18n="nav.application_user">Users</span>
@@ -89,7 +95,8 @@
                                 </a>
                             </li>
                             <li class="{{ set_active('intel_privacy') }}">
-                                <a href="/intel_privacy" title="Privacy" data-filter-tags="application intel privacy">
+                                <a href="/intel_privacy" title="Privacy"
+                                    data-filter-tags="application intel privacy">
                                     <span class="nav-link-text"
                                         data-i18n="nav.application_intel_privacy">Privacy</span>
                                 </a>

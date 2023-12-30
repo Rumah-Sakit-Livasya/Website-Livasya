@@ -2,7 +2,8 @@
 <title>
     @yield('title', 'My App') - @yield('mywebname', 'Keuangan')
 </title>
-<meta name="description" content="Analytics Dashboard">
+<meta name="description" content="Laravel">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
 <!-- Call App Mode on ios devices -->
@@ -44,6 +45,7 @@
 <link rel="stylesheet" media="screen, print" href="/css/miscellaneous/lightgallery/lightgallery.bundle.css">
 <link rel="stylesheet" media="screen, print" href="/css/page-invoice.css">
 <link rel="stylesheet" media="screen, print" href="/css/theme-demo.css">
+
 
 {{-- Boxicons --}}
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>

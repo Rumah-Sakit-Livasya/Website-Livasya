@@ -16,6 +16,28 @@ DOC: if you remove pace.js from core please note on Internet Explorer some CSS a
 <script type="text/javascript">
     /* Activate smart panels */
     $('#js-page-content').smartPanel();
+
+    // Fungsi untuk menampilkan notifikasi sukses SweetAlert
+    function showSuccessAlert(message) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Sukses!',
+            text: message,
+            showConfirmButton: false,
+            timer: 2000 // Durasi notifikasi dalam milidetik (ms)
+        });
+    }
+
+    // Fungsi untuk menampilkan notifikasi kesalahan SweetAlert 
+    function showErrorAlert(message) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Terjadi Kesalahan!',
+            text: message,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    }
 </script>
 
 <script src="/js/script.js"></script>
