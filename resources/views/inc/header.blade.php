@@ -53,6 +53,10 @@
 {{-- SweetAlert2 --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+{{-- Trix Editor --}}
+<link rel="stylesheet" type="text/css" href="/css/trix.css">
+<script type="text/javascript" src="/js/trix.js"></script>
+
 <style>
     .bx {
         transform: scale(1.5);

@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Pages\CategoryController;
 use App\Http\Controllers\Pages\DashboardController;
 use App\Http\Controllers\Pages\UserController;
+use App\Http\Controllers\Pages\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,8 +27,10 @@ Route::middleware('auth')->group(function () {
         // Category
         Route::get("/categories", [CategoryController::class, 'index'])->name("category.index");
         Route::get('/categories/checkSlug', [CategoryController::class, 'checkSlug']);
-        Route::post("/categories", [CategoryController::class, 'store'])->name("category.create");
-        Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+
+        // Posts
+        Route::get("/posts", [PostController::class, 'index'])->name("posts.index");
+        Route::get('/posts/checkSlug', [PostController::class, 'checkSlug']);
 
         // Users
         Route::get("/users", [UserController::class, 'index'])->name("user.index");

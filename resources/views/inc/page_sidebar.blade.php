@@ -46,9 +46,15 @@
                 </a>
             </li>
             <li class="{{ set_active('dashboard/categories') }}">
-                <a href="{{ route('category.index') }}" title="Kategori" data-filter-tags="application kaegori">
+                <a href="{{ route('category.index') }}" title="Kategori" data-filter-tags="application kategori">
                     <i class='bx bxs-category-alt'></i>
                     <span class="nav-link-text" data-i18n="nav.application_kategori">Kategori Berita</span>
+                </a>
+            </li>
+            <li class="{{ set_active('dashboard/posts') }}">
+                <a href="{{ route('posts.index') }}" title="Berita" data-filter-tags="application berita">
+                    <i class='bx bxs-news'></i>
+                    <span class="nav-link-text" data-i18n="nav.application_posts">Berita</span>
                 </a>
             </li>
             <li class="{{ set_active('dashboard/users') }}">
