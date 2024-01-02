@@ -61,7 +61,13 @@
                 <a href="{{ route('facilities.index') }}" title="Fasilitas Unggulan"
                     data-filter-tags="application fasilitas unggulan">
                     <i class='bx bx-star'></i>
-                    <span class="nav-link-text" data-i18n="nav.application_posts">Fasilitas Unggulan</span>
+                    <span class="nav-link-text" data-i18n="nav.application_facilities">Fasilitas Unggulan</span>
+                </a>
+            </li>
+            <li class="{{ set_active('dashboard/doctors') }}">
+                <a href="{{ route('doctors.index') }}" title="Dokter" data-filter-tags="application dokter">
+                    <i class='bx bx-user'></i>
+                    <span class="nav-link-text" data-i18n="nav.application_doctors">Dokter</span>
                 </a>
             </li>
             <li class="{{ set_active('dashboard/users') }}">

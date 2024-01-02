@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Pages\CategoryController;
 use App\Http\Controllers\Pages\DashboardController;
+use App\Http\Controllers\Pages\DoctorController;
 use App\Http\Controllers\Pages\FacilityController;
 use App\Http\Controllers\Pages\UserController;
 use App\Http\Controllers\Pages\PostController;
@@ -36,6 +37,9 @@ Route::middleware('auth')->group(function () {
         // Facility
         Route::get("/facilities", [FacilityController::class, 'index'])->name("facilities.index");
         Route::get('/facilities/checkSlug', [FacilityController::class, 'checkSlug']);
+
+        // Facility
+        Route::get("/doctors", [DoctorController::class, 'index'])->name("doctors.index");
 
         // Users
         Route::get("/users", [UserController::class, 'index'])->name("user.index");

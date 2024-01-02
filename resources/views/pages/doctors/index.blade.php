@@ -1,14 +1,13 @@
 @extends('inc.layout')
-@section('title', 'Fasilitas Unggulan')
+@section('title', 'Dokter')
 @section('content')
     <main id="js-page-content" role="main" class="page-content">
         <div class="row mb-5">
             <div class="col-xl-12">
                 <button type="button" class="btn btn-primary waves-effect waves-themed" data-backdrop="static"
-                    data-keyboard="false" data-toggle="modal" data-target="#tambah-fasilitas"
-                    title="Tambah Fasilitas Unggulan">
+                    data-keyboard="false" data-toggle="modal" data-target="#tambah-dokter" title="Tambah Dokter">
                     <span class="fal fa-plus-circle mr-1"></span>
-                    Tambah Fasilitas Unggulan
+                    Tambah Dokter
                 </button>
             </div>
         </div>
@@ -18,7 +17,7 @@
                 <div id="panel-1" class="panel">
                     <div class="panel-hdr">
                         <h2>
-                            Table <span class="fw-300"><i>Fasilitas Unggulan</i></span>
+                            Table <span class="fw-300"><i>Dokter</i></span>
                         </h2>
                     </div>
                     <div class="panel-container show">
@@ -28,24 +27,24 @@
                                 <thead>
                                     <tr>
                                         <th style="white-space: nowrap">No</th>
-                                        <th style="white-space: nowrap">Judul</th>
-                                        <th style="white-space: nowrap">Slug</th>
+                                        <th style="white-space: nowrap">Nama</th>
+                                        <th style="white-space: nowrap">Jabatan</th>
                                         <th style="white-space: nowrap">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($facilities as $facility)
+                                    @foreach ($doctors as $doctor)
                                         <tr>
                                             <td style="white-space: nowrap">{{ $loop->iteration }}</td>
-                                            <td style="white-space: nowrap">{{ $facility->name }}</td>
-                                            <td style="white-space: nowrap">{{ $facility->slug }}</td>
+                                            <td style="white-space: nowrap">{{ $doctor->name }}</td>
+                                            <td style="white-space: nowrap">{{ $doctor->jabatan }}</td>
 
                                             <td style="white-space: nowrap">
-                                                <!-- Add a data-facility-id attribute to the edit button -->
+                                                <!-- Add a data-doctor-id attribute to the edit button -->
                                                 <button type="button" data-backdrop="static" data-keyboard="false"
                                                     class="badge mx-1 badge-primary p-2 border-0 text-white edit-button"
-                                                    data-toggle="modal" data-target="#edit-fasilitas" title="Ubah"
-                                                    data-facility-id="{{ $facility->id }}">
+                                                    data-toggle="modal" data-target="#edit-dokter" title="Ubah"
+                                                    data-doctor-id="{{ $doctor->id }}">
                                                     <span class="fal fa-pencil"></span>
                                                 </button>
                                             </td>
@@ -55,16 +54,16 @@
                                 <tfoot>
                                     <tr>
                                         <th style="white-space: nowrap">No</th>
-                                        <th style="white-space: nowrap">Judul</th>
-                                        <th style="white-space: nowrap">Slug</th>
+                                        <th style="white-space: nowrap">Nama</th>
+                                        <th style="white-space: nowrap">Jabatan</th>
                                         <th style="white-space: nowrap">Aksi</th>
                                     </tr>
                                 </tfoot>
                             </table>
                             <!-- datatable end -->
                             <!-- Modal -->
-                            @include('pages.facilities.partials.edit-facility')
-                            @include('pages.facilities.partials.create-facility')
+                            @include('pages.doctors.partials.edit-doctor')
+                            @include('pages.doctors.partials.create-doctor')
                         </div>
                     </div>
                 </div>
@@ -107,32 +106,32 @@
         $(document).ready(function() {
             // SELECT2
             $(function() {
-                $('#create-unggulan').select2({
-                    dropdownParent: $('#tambah-fasilitas')
+                $('#create-category').select2({
+                    dropdownParent: $('#tambah-dokter')
                 });
-                $('#edit-unggulan').select2({
-                    dropdownParent: $('#edit-fasilitas')
+                $('#edit-category').select2({
+                    dropdownParent: $('#edit-dokter')
                 });
             });
             // SELECT2
 
             // Kirim formulir tambah melalui AJAX
             $('#create-button').on('click', function() {
-                var formData = new FormData($('#create-facility-form')[0]);
+                var formData = new FormData($('#create-doctor-form')[0]);
 
                 $.ajax({
-                    type: 'POST',
-                    url: '/api/facilities',
+                    type: 'post',
+                    url: '/api/doctors',
                     data: formData,
                     processData: false,
                     contentType: false,
                     success: function(response) {
                         // Tangani keberhasilan, misalnya, tutup modal atau perbarui UI
-                        $('#tambah-fasilitas').modal('hide');
+                        $('#tambah-dokter').modal('hide');
                         // Lakukan sesuatu setelah berhasil, seperti memuat kembali data kategori
 
                         // Tampilkan pesan keberhasilan
-                        showSuccessAlert('Fasilitas Ditambah!');
+                        showSuccessAlert('Dokter Ditambah!');
 
                         // Tunda reload selama 2 detik
                         setTimeout(function() {
@@ -140,7 +139,7 @@
                         }, 1000);
                     },
                     error: function(error) {
-                        $('#tambah-fasilitas').modal('hide');
+                        $('#tambah-dokter').modal('hide');
                         // Tangani kesalahan, misalnya, tampilkan pesan kesalahan validasi
                         showErrorAlert('Cek kembali data yang dikirim');
                     }
@@ -150,41 +149,27 @@
 
             // Add the category ID to the modal when the Edit button is clicked
             $('.edit-button').on('click', function() {
-                var facilityId = $(this).data('facility-id');
+                var doctorId = $(this).data('doctor-id');
 
                 // Set the category ID to the modal input field
-                $('#edit-facility-id').val(facilityId);
+                $('#edit-doctor-id').val(doctorId);
 
                 $.ajax({
                     type: 'GET',
-                    url: '/api/facilities/' + facilityId,
+                    url: '/api/doctors/' + doctorId,
                     success: function(data) {
-                        $('#edit-icon').val(data.icon);
-                        $('#edit-unggulan').val(data.unggulan);
                         $('#edit-name').val(data.name);
-                        $('#edit-slug').val(data.slug);
-                        $('#edit-body').val(data.body);
-                        $('#edit-body-text').val(data.body);
+                        $('#edit-jabatan').val(data.jabatan);
+
 
                         // Set attribut src pada elemen gambar berdasarkan data image dari respons
                         var previewImage = $('.edit-img-preview');
                         if (previewImage.length) {
-                            previewImage.attr('src', '/storage/' + data.image);
+                            previewImage.attr('src', '/storage/' + data.foto);
                         }
 
-
-                        // Set nilai dan atribut selected untuk dropdown berdasarkan data unggulan
-                        $('#edit-unggulan').val(data.unggulan).select2({
-                            dropdownParent: $('#edit-fasilitas')
-                        });
-                        // editUnggulanDropdown.val(data.unggulan);
-                        // editUnggulanDropdown.find('option[value="' + data.unggulan + '"]').attr(
-                        //     'selected', true);
-
-                        // console.log(editUnggulanDropdown);
-
                         // Show the modal
-                        $('#edit-berita').modal('show');
+                        $('#edit-dokter').modal('show');
                     },
                     error: function(error) {
                         showErrorAlert('Terjadi kesalahan:', error);
@@ -194,21 +179,21 @@
 
 
             // Submit the form via AJAX
-            $('#update-facility-form').on('submit', function(e) {
+            $('#update-doctor-form').on('submit', function(e) {
                 e.preventDefault();
 
-                var facilityId = $('#edit-facility-id').val();
+                var doctorId = $('#edit-doctor-id').val();
 
                 $.ajax({
                     type: 'PUT',
-                    url: '/api/facilities/' + facilityId,
+                    url: '/api/doctors/' + doctorId,
                     data: $(this).serialize(),
                     success: function(response) {
                         // Handle success, e.g., close modal or update UI
-                        $('#edit-fasilitas').modal('hide');
+                        $('#edit-dokter').modal('hide');
 
                         //tampilkan pesan
-                        showSuccessAlert('Fasilitas Diubah!');
+                        showSuccessAlert('Dokter Diubah!');
 
                         // Tunda reload selama 2 detik
                         setTimeout(function() {
@@ -216,7 +201,7 @@
                         }, 1000);
                     },
                     error: function(error) {
-                        $('#edit-fasilitas').modal('hide');
+                        $('#edit-dokter').modal('hide');
                         // Handle errors, e.g., display validation errors
                         showErrorAlert('Cek kembali data yang dikirim');
                     }
@@ -238,23 +223,6 @@
                 $('#dt-basic-example').removeClassPrefix('bg-').addClass(theadColor);
             });
 
-            // Slugable
-            const createtitle = document.querySelector('#create-name');
-            const createslug = document.querySelector('#create-slug');
-            const edittitle = document.querySelector('#edit-name');
-            const editslug = document.querySelector('#edit-slug');
-
-            createtitle.addEventListener('change', function() {
-                fetch('/dashboard/posts/checkSlug?title=' + createtitle.value)
-                    .then(response => response.json())
-                    .then(data => createslug.value = data.slug)
-            });
-
-            edittitle.addEventListener('change', function() {
-                fetch('/dashboard/posts/checkSlug?title=' + edittitle.value)
-                    .then(response => response.json())
-                    .then(data => editslug.value = data.slug)
-            });
         });
     </script>
 @endsection
