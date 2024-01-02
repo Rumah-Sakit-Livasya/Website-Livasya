@@ -1,13 +1,14 @@
 @extends('inc.layout')
-@section('title', 'Berita')
+@section('title', 'Fasilitas Unggulam')
 @section('content')
     <main id="js-page-content" role="main" class="page-content">
         <div class="row mb-5">
             <div class="col-xl-12">
                 <button type="button" class="btn btn-primary waves-effect waves-themed" data-backdrop="static"
-                    data-keyboard="false" data-toggle="modal" data-target="#tambah-berita" title="Tambah Berita">
+                    data-keyboard="false" data-toggle="modal" data-target="#tambah-fasilitas"
+                    title="Tambah Fasilitas Unggulam">
                     <span class="fal fa-plus-circle mr-1"></span>
-                    Tambah Berita
+                    Tambah Fasilitas Unggulam
                 </button>
             </div>
         </div>
@@ -17,7 +18,7 @@
                 <div id="panel-1" class="panel">
                     <div class="panel-hdr">
                         <h2>
-                            Table <span class="fw-300"><i>Berita</i></span>
+                            Table <span class="fw-300"><i>Fasilitas Unggulam</i></span>
                         </h2>
                     </div>
                     <div class="panel-container show">
@@ -27,26 +28,24 @@
                                 <thead>
                                     <tr>
                                         <th style="white-space: nowrap">No</th>
-                                        <th style="white-space: nowrap">Kategori</th>
                                         <th style="white-space: nowrap">Judul</th>
                                         <th style="white-space: nowrap">Slug</th>
                                         <th style="white-space: nowrap">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($posts as $post)
+                                    @foreach ($facilities as $facility)
                                         <tr>
                                             <td style="white-space: nowrap">{{ $loop->iteration }}</td>
-                                            <td style="white-space: nowrap">{{ $post->category->name }}</td>
-                                            <td style="white-space: nowrap">{{ $post->title }}</td>
-                                            <td style="white-space: nowrap">{{ $post->slug }}</td>
+                                            <td style="white-space: nowrap">{{ $facility->name }}</td>
+                                            <td style="white-space: nowrap">{{ $facility->slug }}</td>
 
                                             <td style="white-space: nowrap">
-                                                <!-- Add a data-post-id attribute to the edit button -->
+                                                <!-- Add a data-facility-id attribute to the edit button -->
                                                 <button type="button" data-backdrop="static" data-keyboard="false"
                                                     class="badge mx-1 badge-primary p-2 border-0 text-white edit-button"
-                                                    data-toggle="modal" data-target="#edit-berita" title="Ubah"
-                                                    data-post-id="{{ $post->id }}">
+                                                    data-toggle="modal" data-target="#edit-fasilitas" title="Ubah"
+                                                    data-facility-id="{{ $facility->id }}">
                                                     <span class="fal fa-pencil"></span>
                                                 </button>
                                             </td>
@@ -56,7 +55,6 @@
                                 <tfoot>
                                     <tr>
                                         <th style="white-space: nowrap">No</th>
-                                        <th style="white-space: nowrap">Kategori</th>
                                         <th style="white-space: nowrap">Judul</th>
                                         <th style="white-space: nowrap">Slug</th>
                                         <th style="white-space: nowrap">Aksi</th>
@@ -65,8 +63,8 @@
                             </table>
                             <!-- datatable end -->
                             <!-- Modal -->
-                            @include('pages.posts.partials.edit-post')
-                            @include('pages.posts.partials.create-post')
+                            @include('pages.facilities.partials.edit-facility')
+                            @include('pages.facilities.partials.create-facility')
                         </div>
                     </div>
                 </div>
@@ -109,32 +107,32 @@
         $(document).ready(function() {
             // SELECT2
             $(function() {
-                $('#create-category').select2({
-                    dropdownParent: $('#tambah-berita')
+                $('#create-unggulan').select2({
+                    dropdownParent: $('#tambah-fasilitas')
                 });
-                $('#edit-category').select2({
-                    dropdownParent: $('#edit-berita')
+                $('#edit-unggulan').select2({
+                    dropdownParent: $('#edit-fasilitas')
                 });
             });
             // SELECT2
 
             // Kirim formulir tambah melalui AJAX
             $('#create-button').on('click', function() {
-                var formData = new FormData($('#create-post-form')[0]);
+                var formData = new FormData($('#create-facility-form')[0]);
 
                 $.ajax({
                     type: 'POST',
-                    url: '/api/posts',
+                    url: '/api/facilities',
                     data: formData,
                     processData: false,
                     contentType: false,
                     success: function(response) {
                         // Tangani keberhasilan, misalnya, tutup modal atau perbarui UI
-                        $('#tambah-berita').modal('hide');
+                        $('#tambah-fasilitas').modal('hide');
                         // Lakukan sesuatu setelah berhasil, seperti memuat kembali data kategori
 
                         // Tampilkan pesan keberhasilan
-                        showSuccessAlert('Berita Ditambah!');
+                        showSuccessAlert('Fasilitas Ditambah!');
 
                         // Tunda reload selama 2 detik
                         setTimeout(function() {
@@ -142,7 +140,7 @@
                         }, 1000);
                     },
                     error: function(error) {
-                        $('#tambah-berita').modal('hide');
+                        $('#tambah-fasilitas').modal('hide');
                         // Tangani kesalahan, misalnya, tampilkan pesan kesalahan validasi
                         showErrorAlert('Cek kembali data yang dikirim');
                     }
@@ -152,31 +150,38 @@
 
             // Add the category ID to the modal when the Edit button is clicked
             $('.edit-button').on('click', function() {
-                var postId = $(this).data('post-id');
+                var facilityId = $(this).data('facility-id');
 
                 // Set the category ID to the modal input field
-                $('#edit-post-id').val(postId);
+                $('#edit-facility-id').val(facilityId);
 
                 $.ajax({
                     type: 'GET',
-                    url: '/api/posts/' + postId,
+                    url: '/api/facilities/' + facilityId,
                     success: function(data) {
-                        $('#edit-user-id').val(data.user_id);
-                        $('#edit-category').val(data.category_id);
-                        $('#edit-title').val(data.title);
+                        $('#edit-icon').val(data.icon);
+                        $('#edit-unggulan').val(data.unggulan);
+                        $('#edit-name').val(data.name);
                         $('#edit-slug').val(data.slug);
                         $('#edit-body').val(data.body);
                         $('#edit-body-text').val(data.body);
-
-                        $('#edit-category').val(data.category_id).select2({
-                            dropdownParent: $('#edit-berita')
-                        });
 
                         // Set attribut src pada elemen gambar berdasarkan data image dari respons
                         var previewImage = $('.edit-img-preview');
                         if (previewImage.length) {
                             previewImage.attr('src', '/storage/' + data.image);
                         }
+
+
+                        // Set nilai dan atribut selected untuk dropdown berdasarkan data unggulan
+                        $('#edit-unggulan').val(data.unggulan).select2({
+                            dropdownParent: $('#edit-fasilitas')
+                        });
+                        // editUnggulanDropdown.val(data.unggulan);
+                        // editUnggulanDropdown.find('option[value="' + data.unggulan + '"]').attr(
+                        //     'selected', true);
+
+                        // console.log(editUnggulanDropdown);
 
                         // Show the modal
                         $('#edit-berita').modal('show');
@@ -189,21 +194,21 @@
 
 
             // Submit the form via AJAX
-            $('#update-post-form').on('submit', function(e) {
+            $('#update-facility-form').on('submit', function(e) {
                 e.preventDefault();
 
-                var postId = $('#edit-post-id').val();
+                var facilityId = $('#edit-facility-id').val();
 
                 $.ajax({
                     type: 'PUT',
-                    url: '/api/posts/' + postId,
+                    url: '/api/facilities/' + facilityId,
                     data: $(this).serialize(),
                     success: function(response) {
                         // Handle success, e.g., close modal or update UI
-                        $('#edit-berita').modal('hide');
+                        $('#edit-fasilitas').modal('hide');
 
                         //tampilkan pesan
-                        showSuccessAlert('Berita Diubah!');
+                        showSuccessAlert('Fasilitas Diubah!');
 
                         // Tunda reload selama 2 detik
                         setTimeout(function() {
@@ -211,7 +216,7 @@
                         }, 1000);
                     },
                     error: function(error) {
-                        $('#edit-berita').modal('hide');
+                        $('#edit-fasilitas').modal('hide');
                         // Handle errors, e.g., display validation errors
                         showErrorAlert('Cek kembali data yang dikirim');
                     }
@@ -234,9 +239,9 @@
             });
 
             // Slugable
-            const createtitle = document.querySelector('#create-title');
+            const createtitle = document.querySelector('#create-name');
             const createslug = document.querySelector('#create-slug');
-            const edittitle = document.querySelector('#edit-title');
+            const edittitle = document.querySelector('#edit-name');
             const editslug = document.querySelector('#edit-slug');
 
             createtitle.addEventListener('change', function() {

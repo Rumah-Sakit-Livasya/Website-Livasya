@@ -57,6 +57,13 @@
                     <span class="nav-link-text" data-i18n="nav.application_posts">Berita</span>
                 </a>
             </li>
+            <li class="{{ set_active('dashboard/facilities') }}">
+                <a href="{{ route('facilities.index') }}" title="Fasilitas Unggulan"
+                    data-filter-tags="application fasilitas unggulan">
+                    <i class='bx bx-star'></i>
+                    <span class="nav-link-text" data-i18n="nav.application_posts">Fasilitas Unggulan</span>
+                </a>
+            </li>
             <li class="{{ set_active('dashboard/users') }}">
                 <a href="{{ route('user.index') }}" title="users" data-filter-tags="application user">
                     <i class='bx bxs-user-account'></i>
