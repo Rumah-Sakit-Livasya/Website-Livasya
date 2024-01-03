@@ -68,7 +68,7 @@
                             <div class="row justify-content-center align-items-center">
                                 <div class="col-sm-6">
                                     <img src="{{ asset('/storage/' . $jumbotron->main_image) }}"
-                                        class="d-block m-auto img-fluid m-auto p-5 rounded-circle" alt="">
+                                        class="d-block m-auto img-fluid p-5 rounded-circle" alt="">
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="wrap-text">
