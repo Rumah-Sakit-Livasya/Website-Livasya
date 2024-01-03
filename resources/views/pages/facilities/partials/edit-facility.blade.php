@@ -5,6 +5,7 @@
                 @method('put')
                 @csrf
                 <input type="hidden" name="facility_id" id="edit-facility-id" value="">
+                <input type="text" id="oldImage" name="oldImage" value="">
                 <div class="modal-header">
                     <h5 class="modal-title">Ubah Kategori</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

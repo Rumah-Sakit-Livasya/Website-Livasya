@@ -45,6 +45,34 @@
                     <span class="nav-link-text" data-i18n="nav.application_dashboard">Dashboard</span>
                 </a>
             </li>
+            <li class="{{ set_active_mainmenu(['dashboard/jumbotron', 'info_app_licensing', 'info_app_flavors']) }}">
+                <a href="#" title="Pages" data-filter-tags="pages">
+                    <i class='bx bx-home'></i>
+                    <span class="nav-link-text" data-i18n="nav.package_pages">Pages</span>
+                </a>
+                <ul>
+                    <li class="{{ set_active('dashboard/jumbotron') }}">
+                        <a href="{{ route('jumbotron.index') }}" title="Jumbotron"
+                            data-filter-tags="package pages jumbotron">
+                            <span class="nav-link-text" data-i18n="nav.package_pages_jumbotron">Jumbotron</span>
+                        </a>
+                    </li>
+                    <li class="{{ set_active('info_app_licensing') }}">
+                        <a href="/info_app_licensing" title="Product Licensing"
+                            data-filter-tags="package info product licensing">
+                            <span class="nav-link-text" data-i18n="nav.package_info_product_licensing">Product
+                                Licensing</span>
+                        </a>
+                    </li>
+                    <li class="{{ set_active('info_app_flavors') }}">
+                        <a href="/info_app_flavors" title="Different Flavors"
+                            data-filter-tags="package info different flavors">
+                            <span class="nav-link-text" data-i18n="nav.package_info_different_flavors">Different
+                                Flavors</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li class="{{ set_active('dashboard/categories') }}">
                 <a href="{{ route('category.index') }}" title="Kategori" data-filter-tags="application kategori">
                     <i class='bx bxs-category-alt'></i>
@@ -1064,7 +1092,8 @@
                                     <li class="{{ set_active('page_inbox_write') }}">
                                         <a href="/page_inbox_write" title="Write"
                                             data-filter-tags="pages inbox write">
-                                            <span class="nav-link-text" data-i18n="nav.pages_inbox_write">Write</span>
+                                            <span class="nav-link-text"
+                                                data-i18n="nav.pages_inbox_write">Write</span>
                                         </a>
                                     </li>
                                 </ul>

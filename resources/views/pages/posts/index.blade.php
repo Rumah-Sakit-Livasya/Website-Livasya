@@ -167,6 +167,7 @@
                         $('#edit-slug').val(data.slug);
                         $('#edit-body').val(data.body);
                         $('#edit-body-text').val(data.body);
+                        $('#oldImage').val(data.image);
 
                         $('#edit-category').val(data.category_id).select2({
                             dropdownParent: $('#edit-berita')
@@ -188,21 +189,23 @@
             });
 
 
-            // Submit the form via AJAX
             $('#update-post-form').on('submit', function(e) {
                 e.preventDefault();
 
                 var postId = $('#edit-post-id').val();
+                var formData = new FormData(this); // Gunakan 'this' untuk mengambil data dari form saat ini
 
                 $.ajax({
-                    type: 'PUT',
+                    type: 'POST', // Ganti menjadi POST
                     url: '/api/posts/' + postId,
-                    data: $(this).serialize(),
+                    data: formData,
+                    processData: false,
+                    contentType: false,
                     success: function(response) {
                         // Handle success, e.g., close modal or update UI
                         $('#edit-berita').modal('hide');
 
-                        //tampilkan pesan
+                        // Tampilkan pesan
                         showSuccessAlert('Berita Diubah!');
 
                         // Tunda reload selama 2 detik

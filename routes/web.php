@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Pages\JumbotronController;
 use App\Http\Controllers\Pages\CategoryController;
 use App\Http\Controllers\Pages\DashboardController;
 use App\Http\Controllers\Pages\DoctorController;
@@ -38,8 +39,11 @@ Route::middleware('auth')->group(function () {
         Route::get("/facilities", [FacilityController::class, 'index'])->name("facilities.index");
         Route::get('/facilities/checkSlug', [FacilityController::class, 'checkSlug']);
 
-        // Facility
+        // Doctor
         Route::get("/doctors", [DoctorController::class, 'index'])->name("doctors.index");
+
+        // Jumbotron
+        Route::get("/jumbotron", [JumbotronController::class, 'index'])->name("jumbotron.index");
 
         // Users
         Route::get("/users", [UserController::class, 'index'])->name("user.index");

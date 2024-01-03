@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\CategoryApiController;
 use App\Http\Controllers\Api\DoctorApiController;
 use App\Http\Controllers\Api\FacilityApiController;
 use App\Http\Controllers\Api\PostApiController;
+use App\Http\Controllers\Api\JumbotronApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,9 @@ Route::get('/doctors', [DoctorApiController::class, 'getDoctor']);
 Route::post('/doctors', [DoctorApiController::class, 'store']);
 Route::get('/doctors/{doctor}', [DoctorApiController::class, 'show']);
 Route::put('/doctors/{doctor}', [DoctorApiController::class, 'update']);
+
+Route::get('/jumbotron', [JumbotronApiController::class, 'show']);
+Route::put('/jumbotron/{jumbotron}', [JumbotronApiController::class, 'update']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

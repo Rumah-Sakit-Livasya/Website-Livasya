@@ -160,6 +160,7 @@
                     success: function(data) {
                         $('#edit-name').val(data.name);
                         $('#edit-jabatan').val(data.jabatan);
+                        $('#oldImage').val(data.foto);
 
 
                         // Set attribut src pada elemen gambar berdasarkan data image dari respons
@@ -184,15 +185,20 @@
 
                 var doctorId = $('#edit-doctor-id').val();
 
+                // Membuat FormData untuk mengambil data formulir, termasuk file
+                var formData = new FormData(this);
+
                 $.ajax({
-                    type: 'PUT',
+                    type: 'POST', // Ganti menjadi POST
                     url: '/api/doctors/' + doctorId,
-                    data: $(this).serialize(),
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                     success: function(response) {
                         // Handle success, e.g., close modal or update UI
                         $('#edit-dokter').modal('hide');
 
-                        //tampilkan pesan
+                        // Tampilkan pesan
                         showSuccessAlert('Dokter Diubah!');
 
                         // Tunda reload selama 2 detik

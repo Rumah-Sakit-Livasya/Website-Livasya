@@ -6,6 +6,7 @@
                 @csrf
                 <input type="hidden" name="user_id" id="edit-user-id" value="">
                 <input type="hidden" name="post_id" id="edit-post-id" value="">
+                <input type="hidden" id="oldImage" name="oldImage" value="">
                 <div class="modal-header">
                     <h5 class="modal-title">Ubah Berita</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

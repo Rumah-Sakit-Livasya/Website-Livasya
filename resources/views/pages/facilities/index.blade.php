@@ -165,6 +165,7 @@
                         $('#edit-slug').val(data.slug);
                         $('#edit-body').val(data.body);
                         $('#edit-body-text').val(data.body);
+                        $('#oldImage').val(data.image);
 
                         // Set attribut src pada elemen gambar berdasarkan data image dari respons
                         var previewImage = $('.edit-img-preview');
@@ -177,11 +178,6 @@
                         $('#edit-unggulan').val(data.unggulan).select2({
                             dropdownParent: $('#edit-fasilitas')
                         });
-                        // editUnggulanDropdown.val(data.unggulan);
-                        // editUnggulanDropdown.find('option[value="' + data.unggulan + '"]').attr(
-                        //     'selected', true);
-
-                        // console.log(editUnggulanDropdown);
 
                         // Show the modal
                         $('#edit-berita').modal('show');
@@ -198,16 +194,19 @@
                 e.preventDefault();
 
                 var facilityId = $('#edit-facility-id').val();
+                var formData = new FormData(this); // Gunakan 'this' untuk mengambil data dari form saat ini
 
                 $.ajax({
-                    type: 'PUT',
+                    type: 'POST', // Ganti menjadi POST
                     url: '/api/facilities/' + facilityId,
-                    data: $(this).serialize(),
+                    data: formData,
+                    processData: false,
+                    contentType: false,
                     success: function(response) {
                         // Handle success, e.g., close modal or update UI
                         $('#edit-fasilitas').modal('hide');
 
-                        //tampilkan pesan
+                        // Tampilkan pesan
                         showSuccessAlert('Fasilitas Diubah!');
 
                         // Tunda reload selama 2 detik
