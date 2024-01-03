@@ -19,13 +19,22 @@ class DoctorApiController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'foto' => 'image|file|max:5120',
+            'foto' => 'image|file',
             'name' => 'required|max:255',
             'jabatan' => 'required|max:255',
+            'deskripsi' => 'required',
+            'poster' => 'image|file',
+            'jadwal' => 'image|file',
         ]);
 
         if ($request->file('foto')) {
             $validatedData['foto'] = $request->file('foto')->store('img-dokter');
+        }
+        if ($request->file('poster')) {
+            $validatedData['poster'] = $request->file('poster')->store('img-poster');
+        }
+        if ($request->file('jadwal')) {
+            $validatedData['jadwal'] = $request->file('jadwal')->store('img-jadwal');
         }
 
         $doctor = Doctor::create($validatedData);
@@ -43,9 +52,12 @@ class DoctorApiController extends Controller
     {
         $doctor = Doctor::findOrFail($doctorId);
         $rules = [
-            'foto' => 'image|file|max:5120',
+            'foto' => 'image|file',
             'name' => 'required|max:255',
             'jabatan' => 'required|max:255',
+            'deskripsi' => 'required',
+            'poster' => 'image|file',
+            'jadwal' => 'image|file',
         ];
 
         $validatedData = $request->validate($rules);
@@ -56,6 +68,20 @@ class DoctorApiController extends Controller
             }
 
             $validatedData['foto'] = $request->file('foto')->store('img-dokter');
+        }
+        if ($request->file('poster')) {
+            if ($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
+
+            $validatedData['poster'] = $request->file('poster')->store('img-poster');
+        }
+        if ($request->file('jadwal')) {
+            if ($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
+
+            $validatedData['jadwal'] = $request->file('jadwal')->store('img-jadwal');
         }
 
         $doctor->update($validatedData);

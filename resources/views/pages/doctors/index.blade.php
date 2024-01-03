@@ -89,6 +89,34 @@
             }
         }
 
+        function createPreviewPoster() {
+            const poster = document.querySelector('#create-poster');
+            const imgPreview = document.querySelector('.create-poster-preview')
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(poster.files[0])
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
+
+        function createPreviewJadwal() {
+            const jadwal = document.querySelector('#create-jadwal');
+            const imgPreview = document.querySelector('.create-jadwal-preview')
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(jadwal.files[0])
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
+
         function editPreviewImage() {
             const image = document.querySelector('#edit-image');
             const imgPreview = document.querySelector('.edit-img-preview')
@@ -97,6 +125,34 @@
 
             const oFReader = new FileReader();
             oFReader.readAsDataURL(image.files[0])
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
+
+        function editPreviewPoster() {
+            const poster = document.querySelector('#edit-poster');
+            const imgPreview = document.querySelector('.edit-poster-preview')
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(poster.files[0])
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
+
+        function editPreviewJadwal() {
+            const jadwal = document.querySelector('#edit-jadwal');
+            const imgPreview = document.querySelector('.edit-jadwal-preview')
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(jadwal.files[0])
 
             oFReader.onload = function(oFREvent) {
                 imgPreview.src = oFREvent.target.result;
@@ -160,13 +216,26 @@
                     success: function(data) {
                         $('#edit-name').val(data.name);
                         $('#edit-jabatan').val(data.jabatan);
+                        $('#edit-deskripsi').val(data.deskripsi);
+                        $('#edit-deskripsi-text').val(data.deskripsi);
                         $('#oldImage').val(data.foto);
-
+                        $('#oldPoster').val(data.poster);
+                        $('#oldJadwal').val(data.jadwal);
 
                         // Set attribut src pada elemen gambar berdasarkan data image dari respons
                         var previewImage = $('.edit-img-preview');
                         if (previewImage.length) {
                             previewImage.attr('src', '/storage/' + data.foto);
+                        }
+
+                        var previewPoster = $('.edit-poster-preview');
+                        if (previewPoster.length) {
+                            previewPoster.attr('src', '/storage/' + data.poster);
+                        }
+
+                        var previewJadwal = $('.edit-jadwal-preview');
+                        if (previewJadwal.length) {
+                            previewJadwal.attr('src', '/storage/' + data.jadwal);
                         }
 
                         // Show the modal

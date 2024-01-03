@@ -30,6 +30,32 @@
                         <input type="text" value="" class="form-control" id="create-jabatan" name="jabatan"
                             placeholder="Jabatan">
                     </div>
+                    <div class="form-group">
+                        <label for="create-deskripsi" class="form-label">Deskripsi</label>
+                        <input id="create-deskripsi" type="hidden" name="deskripsi" value="{{ old('deskripsi') }}">
+                        <trix-editor input="create-deskripsi"></trix-editor>
+                        @error('deskripsi')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="create-poster">Poster</label>
+                        <img class="create-poster-preview img-fluid mb-3 col-sm-5">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="create-poster" name="poster"
+                                onchange="createPreviewPoster()">
+                            <label class="custom-file-label" for="create-image">Pilih gambar</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="create-jadwal">Jadwal</label>
+                        <img class="create-jadwal-preview img-fluid mb-3 col-sm-5">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="create-jadwal" name="jadwal"
+                                onchange="createPreviewJadwal()">
+                            <label class="custom-file-label" for="create-image">Pilih gambar</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
