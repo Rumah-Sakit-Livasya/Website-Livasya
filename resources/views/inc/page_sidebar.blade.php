@@ -45,7 +45,7 @@
                     <span class="nav-link-text" data-i18n="nav.application_dashboard">Dashboard</span>
                 </a>
             </li>
-            <li class="{{ set_active_mainmenu(['dashboard/jumbotron', 'info_app_licensing', 'info_app_flavors']) }}">
+            <li class="{{ set_active_mainmenu(['dashboard/jumbotron', 'dashboard/pelayanan', 'info_app_flavors']) }}">
                 <a href="#" title="Pages" data-filter-tags="pages">
                     <i class='bx bx-home'></i>
                     <span class="nav-link-text" data-i18n="nav.package_pages">Pages</span>
@@ -57,18 +57,25 @@
                             <span class="nav-link-text" data-i18n="nav.package_pages_jumbotron">Jumbotron</span>
                         </a>
                     </li>
-                    <li class="{{ set_active('info_app_licensing') }}">
-                        <a href="/info_app_licensing" title="Product Licensing"
-                            data-filter-tags="package info product licensing">
-                            <span class="nav-link-text" data-i18n="nav.package_info_product_licensing">Product
-                                Licensing</span>
+                    <li class="{{ set_active('dashboard/pelayanan') }}">
+                        <a href="{{ route('pelayanan.index') }}" title="Pelayanan"
+                            data-filter-tags="package pages pelayanan">
+                            <span class="nav-link-text" data-i18n="nav.package_pages_pelayanan">Pelayanan</span>
                         </a>
                     </li>
-                    <li class="{{ set_active('info_app_flavors') }}">
-                        <a href="/info_app_flavors" title="Different Flavors"
-                            data-filter-tags="package info different flavors">
-                            <span class="nav-link-text" data-i18n="nav.package_info_different_flavors">Different
-                                Flavors</span>
+                    <li class="{{ set_active('dashboard/identity') }}">
+                        <a href="{{ route('identity.index') }}" title="Identitas"
+                            data-filter-tags="package pages identitas">
+                            <span class="nav-link-text" data-i18n="nav.package_pages_identitas">Identitas</span>
+                        </a>
+                    </li>
+                    <li class="{{ set_active('dashboard/galery') }}">
+                        <a href="{{ route('galery.index') }}" title="Galery" data-filter-tags="package pages galery">
+                            <span class="nav-link-text" data-i18n="nav.package_pages_galery">Galery</span>
+                        </a>
+                    <li class="{{ set_active('dashboard/jadwal') }}">
+                        <a href="{{ route('jadwal.index') }}" title="Jadwal" data-filter-tags="package pages jadwal">
+                            <span class="nav-link-text" data-i18n="nav.package_pages_jadwal">Jadwal</span>
                         </a>
                     </li>
                 </ul>

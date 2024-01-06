@@ -5,9 +5,9 @@
                 @method('put')
                 @csrf
                 <input type="hidden" name="doctor_id" id="edit-doctor-id" value="">
-                <input type="text" id="oldImage" name="oldImage" value="">
-                <input type="text" id="oldPoster" name="oldPoster" value="">
-                <input type="text" id="oldJadwal" name="oldJadwal" value="">
+                <input type="hidden" id="oldImage" name="oldImage" value="">
+                <input type="hidden" id="oldPoster" name="oldPoster" value="">
+                <input type="hidden" id="oldJadwal" name="oldJadwal" value="">
                 <div class="modal-header">
                     <h5 class="modal-title">Ubah Dokter</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -6,6 +6,10 @@ use App\Http\Controllers\Pages\CategoryController;
 use App\Http\Controllers\Pages\DashboardController;
 use App\Http\Controllers\Pages\DoctorController;
 use App\Http\Controllers\Pages\FacilityController;
+use App\Http\Controllers\Pages\GaleryController;
+use App\Http\Controllers\Pages\IdentityController;
+use App\Http\Controllers\Pages\JadwalController;
+use App\Http\Controllers\Pages\PelayananController;
 use App\Http\Controllers\Pages\UserController;
 use App\Http\Controllers\Pages\PostController;
 use App\Http\Controllers\ProfileController;
@@ -44,6 +48,18 @@ Route::middleware('auth')->group(function () {
 
         // Jumbotron
         Route::get("/jumbotron", [JumbotronController::class, 'index'])->name("jumbotron.index");
+
+        // Pelayanan
+        Route::get("/pelayanan", [PelayananController::class, 'index'])->name("pelayanan.index");
+
+        // Identity
+        Route::get("/identity", [IdentityController::class, 'index'])->name("identity.index");
+
+        // Galery
+        Route::get("/galery", [GaleryController::class, 'index'])->name("galery.index");
+
+        // Jadwal
+        Route::get("/jadwal", [JadwalController::class, 'index'])->name("jadwal.index");
 
         // Users
         Route::get("/users", [UserController::class, 'index'])->name("user.index");

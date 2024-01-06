@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\DoctorApiController;
 use App\Http\Controllers\Api\FacilityApiController;
 use App\Http\Controllers\Api\PostApiController;
 use App\Http\Controllers\Api\JumbotronApiController;
+use App\Http\Controllers\Api\PelayananApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,11 @@ Route::get('/facilities', [FacilityApiController::class, 'getFacility']);
 Route::post('/facilities', [FacilityApiController::class, 'store']);
 Route::get('/facilities/{facility}', [FacilityApiController::class, 'show']);
 Route::put('/facilities/{facility}', [FacilityApiController::class, 'update']);
+
+Route::get('/pelayanan', [PelayananApiController::class, 'getPelayanan']);
+Route::post('/pelayanan', [PelayananApiController::class, 'store']);
+Route::get('/pelayanan/{pelayanan}', [PelayananApiController::class, 'show']);
+Route::put('/pelayanan/{pelayanan}', [PelayananApiController::class, 'update']);
 
 Route::get('/doctors', [DoctorApiController::class, 'getDoctor']);
 Route::post('/doctors', [DoctorApiController::class, 'store']);
