@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CategoryApiController;
 use App\Http\Controllers\Api\DoctorApiController;
 use App\Http\Controllers\Api\FacilityApiController;
+use App\Http\Controllers\Api\IdentityApiController;
 use App\Http\Controllers\Api\PostApiController;
 use App\Http\Controllers\Api\JumbotronApiController;
 use App\Http\Controllers\Api\PelayananApiController;
@@ -48,6 +49,9 @@ Route::put('/doctors/{doctor}', [DoctorApiController::class, 'update']);
 
 Route::get('/jumbotron', [JumbotronApiController::class, 'show']);
 Route::put('/jumbotron/{jumbotron}', [JumbotronApiController::class, 'update']);
+
+Route::get('/identity', [IdentityApiController::class, 'show']);
+Route::put('/identity/{identity}', [IdentityApiController::class, 'update']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

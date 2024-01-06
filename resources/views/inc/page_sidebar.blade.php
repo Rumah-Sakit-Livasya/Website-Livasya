@@ -45,7 +45,7 @@
                     <span class="nav-link-text" data-i18n="nav.application_dashboard">Dashboard</span>
                 </a>
             </li>
-            <li class="{{ set_active_mainmenu(['dashboard/jumbotron', 'dashboard/pelayanan', 'info_app_flavors']) }}">
+            <li class="{{ set_active_mainmenu(['dashboard/jumbotron', 'dashboard/pelayanan', 'dashboard/identity']) }}">
                 <a href="#" title="Pages" data-filter-tags="pages">
                     <i class='bx bx-home'></i>
                     <span class="nav-link-text" data-i18n="nav.package_pages">Pages</span>

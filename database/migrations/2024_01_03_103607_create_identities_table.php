@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('image')->nullable();
-            $table->string('title');
-            $table->string('descript');
+            $table->string('visi');
+            $table->text('misi');
+            $table->text('tujuan');
             $table->string('sejarah');
             $table->text('facebook');
             $table->text('instagram');
@@ -24,7 +25,7 @@ return new class extends Migration
             $table->text('youtube');
             $table->string('no_hp');
             $table->string('no_telp');
-            $table->string('gmail');
+            $table->string('email');
             $table->string('alamat');
             $table->integer('jml_pasien_puas');
             $table->integer('jml_fasilitas_kamar');

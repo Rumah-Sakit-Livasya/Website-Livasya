@@ -5,7 +5,7 @@
                 data-id="">
                 @method('put')
                 @csrf
-                <input type="text" id="oldImage" name="oldImage" value="">
+                <input type="hidden" id="oldImage" name="oldImage" value="">
                 <div class="modal-header">
                     <h5 class="modal-title">Ubah Jumbotron</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

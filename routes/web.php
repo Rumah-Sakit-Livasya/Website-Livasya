@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Pages\JumbotronController;
 use App\Http\Controllers\Pages\CategoryController;
 use App\Http\Controllers\Pages\DashboardController;

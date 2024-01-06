@@ -8,5 +8,11 @@ use Illuminate\Http\Request;
 
 class IdentityController extends Controller
 {
-    //
+    public function index()
+    {
+        return view('pages.identity.index', [
+            'title' => "Identitas",
+            'identity' => Identity::first()
+        ]);
+    }
 }
