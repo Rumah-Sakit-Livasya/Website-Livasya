@@ -64,6 +64,8 @@
     }
 </style>
 
+@yield('css')
+
 {{-- <script src="/js/jspdf.umd.min.js"></script> --}}
 <!-- BEGIN Body -->
 <!-- Possible Classes

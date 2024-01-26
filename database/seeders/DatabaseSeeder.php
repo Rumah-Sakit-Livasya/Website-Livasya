@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
         $this->call(JumbotronSeeder::class);
         $this->call(IdentitySeeder::class);
+        $this->call(JadwalSeeder::class);
     }
 }
