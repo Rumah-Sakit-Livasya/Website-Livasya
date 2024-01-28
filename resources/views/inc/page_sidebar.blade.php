@@ -39,6 +39,12 @@
             </a>
         </div>
         <ul id="js-nav-menu" class="nav-menu">
+            <li class="{{ set_active('/') }}">
+                <a href="/" title="Home" data-filter-tags="application home">
+                    <i class='bx bxs-home'></i>
+                    <span class="nav-link-text" data-i18n="nav.application_home">Home</span>
+                </a>
+            </li>
             <li class="{{ set_active('dashboard') }}">
                 <a href="{{ route('dashboard') }}" title="Dashboard" data-filter-tags="application dashboard">
                     <i class='bx bxs-dashboard'></i>

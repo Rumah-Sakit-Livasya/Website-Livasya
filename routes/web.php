@@ -1,17 +1,30 @@
 <?php
 
+use App\Http\Controllers\Pages\FasilitasController;
+use App\Http\Controllers\Pages\JadwalDokterController;
 use App\Http\Controllers\Pages\JumbotronController;
 use App\Http\Controllers\Pages\CategoryController;
 use App\Http\Controllers\Pages\DashboardController;
 use App\Http\Controllers\Pages\DoctorController;
 use App\Http\Controllers\Pages\FacilityController;
 use App\Http\Controllers\Pages\GaleryController;
+use App\Http\Controllers\Pages\HomeController;
 use App\Http\Controllers\Pages\IdentityController;
 use App\Http\Controllers\Pages\JadwalController;
+use App\Http\Controllers\Pages\PagePostController;
 use App\Http\Controllers\Pages\PelayananController;
 use App\Http\Controllers\Pages\UserController;
 use App\Http\Controllers\Pages\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Pages\TentangController;
+use App\Models\Category;
+use App\Models\Doctor;
+use App\Models\Galery;
+use App\Models\Identity;
+use App\Models\Jadwal;
+use App\Models\Jumbotron;
+use App\Models\Pelayanan;
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +37,23 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/service/{pelayanan:slug}', [HomeController::class, 'index']);
+Route::get('/categories', [HomeController::class, 'categories']);
+Route::get('/categories/{category:slug}', [HomeController::class, 'category']);
+Route::get('/gallery', [HomeController::class, 'gallery']);
+Route::get('/dokter', [HomeController::class, 'dokter']);
+Route::get('/jadwal-dokter', [HomeController::class, 'jadwalDokter']);
+Route::get('/mitra-kami', [HomeController::class, 'mitraKami']);
+Route::get('/faq', [HomeController::class, 'faq']);
+Route::get('/about-us', [TentangController::class, 'index']);
+Route::get('/jadwal/{dokter:id}', [JadwalDokterController::class, 'show']);
+Route::get('/posts', [PagePostController::class, 'index']);
+Route::get('/posts/{post:slug}', [PagePostController::class, 'show']);
+Route::get('/fasilitas-unggulan', [FasilitasController::class, 'index']);
+Route::get('/fasilitas-lainnya', [FasilitasController::class, 'lainnya']);
+Route::get('/fasilitas/{fasilitas:slug}', [FasilitasController::class, 'show']);
 
 Route::middleware('auth')->group(function () {
     Route::prefix('dashboard')->group(function () {
@@ -71,3 +101,55 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/default-menu.php';
+
+// Route::get('/igd', [HomeController::class, 'igd']);
+
+// Route::get('/rawat-jalan', function () {
+//     $about = Identity::first();
+//     return view('services.rawat-jalan', [
+//         'name' => $about->name,
+//         'title' => 'Rawat Jalan',
+//         'about' => $about,
+//         'pelayanan' => Pelayanan::all()
+//     ]);
+// });
+
+// Route::get('/rawat-inap', function () {
+//     $about = Identity::first();
+//     return view('services.rawat-inap', [
+//         'name' => $about->name,
+//         'title' => 'Rawat Inap',
+//         'about' => $about,
+//         'pelayanan' => Pelayanan::all()
+//     ]);
+// });
+
+// Route::get('/radiologi', function () {
+//     $about = Identity::first();
+//     return view('services.radiologi', [
+//         'name' => $about->name,
+//         'title' => 'Radiologi',
+//         'about' => $about,
+//         'pelayanan' => Pelayanan::all()
+//     ]);
+// });
+
+// Route::get('/laboratorium', function () {
+//     $about = Identity::first();
+//     return view('services.laboratorium', [
+//         'name' => $about->name,
+//         'title' => 'Laboratorium',
+//         'about' => $about,
+//         'pelayanan' => Pelayanan::all()
+//     ]);
+// });
+
+// Route::get('/perinatologi', function () {
+//     $about = Identity::first();
+//     return view('services.perinatologi', [
+//         'name' => $about->name,
+//         'title' => 'Perinatologi',
+//         'about' => $about,
+//         'pelayanan' => Pelayanan::all()
+//     ]);
+// });
