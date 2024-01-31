@@ -85,6 +85,18 @@ section:nth-child(even) {
   height: 30rem;
 }
 
+.hero-karir {
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url("/img/sampul.jpg");
+  background-size: cover;
+  background-position: right -15rem;
+  margin-top: 8rem;
+  height: 30rem;
+}
+
 .hero-gallery {
   background: linear-gradient(
       rgba(255, 255, 255, 0.5),

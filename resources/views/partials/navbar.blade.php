@@ -79,6 +79,7 @@
                         </div>
                     </div>
                 </li>
+                <a class="nav-link" href="/career">Karir</a>
                 @auth
                     <li class="nav-link dropdown p-0">
                         <a class="nav-link dropdown-toggle" href="javasript:void(0)" role="button"

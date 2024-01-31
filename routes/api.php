@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CareerApiController;
 use App\Http\Controllers\Api\CategoryApiController;
 use App\Http\Controllers\Api\DoctorApiController;
 use App\Http\Controllers\Api\FacilityApiController;
@@ -28,6 +29,11 @@ Route::get('/categories', [CategoryApiController::class, 'getCategory']);
 Route::post('/categories', [CategoryApiController::class, 'store']);
 Route::get('/categories/{category}', [CategoryApiController::class, 'show']);
 Route::put('/categories/{category}', [CategoryApiController::class, 'update']);
+
+Route::get('/careers', [CareerApiController::class, 'getCareer']);
+Route::post('/careers', [CareerApiController::class, 'store']);
+Route::get('/careers/{career}', [CareerApiController::class, 'show']);
+Route::put('/careers/{career}', [CareerApiController::class, 'update']);
 
 Route::get('/posts', [PostApiController::class, 'getPost']);
 Route::post('/posts', [PostApiController::class, 'store']);

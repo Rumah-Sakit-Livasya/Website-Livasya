@@ -106,6 +106,12 @@
                     <span class="nav-link-text" data-i18n="nav.application_facilities">Fasilitas Unggulan</span>
                 </a>
             </li>
+            <li class="{{ set_active('dashboard/careers') }}">
+                <a href="{{ route('career.index') }}" title="Karir" data-filter-tags="application karir">
+                    <i class='bx bxs-briefcase'></i>
+                    <span class="nav-link-text" data-i18n="nav.application_career">Karir</span>
+                </a>
+            </li>
             <li class="{{ set_active('dashboard/doctors') }}">
                 <a href="{{ route('doctors.index') }}" title="Dokter" data-filter-tags="application dokter">
                     <i class='bx bx-user'></i>

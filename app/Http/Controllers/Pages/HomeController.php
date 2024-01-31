@@ -90,6 +90,7 @@ class HomeController extends Controller
             'galleries' => Galery::all()
         ]);
     }
+
     public function mitraKami()
     {
         $about = Identity::first();

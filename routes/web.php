@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Pages\CareerController;
 use App\Http\Controllers\Pages\FasilitasController;
 use App\Http\Controllers\Pages\JadwalDokterController;
 use App\Http\Controllers\Pages\JumbotronController;
@@ -15,16 +16,7 @@ use App\Http\Controllers\Pages\PagePostController;
 use App\Http\Controllers\Pages\PelayananController;
 use App\Http\Controllers\Pages\UserController;
 use App\Http\Controllers\Pages\PostController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Pages\TentangController;
-use App\Models\Category;
-use App\Models\Doctor;
-use App\Models\Galery;
-use App\Models\Identity;
-use App\Models\Jadwal;
-use App\Models\Jumbotron;
-use App\Models\Pelayanan;
-use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,6 +46,9 @@ Route::get('/posts/{post:slug}', [PagePostController::class, 'show']);
 Route::get('/fasilitas-unggulan', [FasilitasController::class, 'index']);
 Route::get('/fasilitas-lainnya', [FasilitasController::class, 'lainnya']);
 Route::get('/fasilitas/{fasilitas:slug}', [FasilitasController::class, 'show']);
+Route::get('/career', [CareerController::class, 'index']);
+Route::get('/career/{tipe}', [CareerController::class, 'career']);
+Route::get('/career/{tipe}/{career:id}', [CareerController::class, 'apply']);
 
 Route::middleware('auth')->group(function () {
     Route::prefix('dashboard')->group(function () {
@@ -63,6 +58,9 @@ Route::middleware('auth')->group(function () {
         // Category
         Route::get("/categories", [CategoryController::class, 'index'])->name("category.index");
         Route::get('/categories/checkSlug', [CategoryController::class, 'checkSlug']);
+
+        // Career
+        Route::get("/careers", [CareerController::class, 'admin'])->name("career.index");
 
         // Posts
         Route::get("/posts", [PostController::class, 'index'])->name("posts.index");
