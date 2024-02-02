@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Career extends Model
+class ApplierWork extends Model
 {
     use HasFactory;
 
@@ -13,6 +13,6 @@ class Career extends Model
 
     public function applier()
     {
-        return $this->hasMany(Applier::class);
+        return $this->belongsTo(Applier::class);
     }
 }

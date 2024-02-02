@@ -49,6 +49,7 @@ Route::get('/fasilitas/{fasilitas:slug}', [FasilitasController::class, 'show']);
 Route::get('/career', [CareerController::class, 'index']);
 Route::get('/career/{tipe}', [CareerController::class, 'career']);
 Route::get('/career/{tipe}/{career:id}', [CareerController::class, 'apply']);
+Route::get('/careers/{career:id}', [CareerController::class, 'applier']);
 
 Route::middleware('auth')->group(function () {
     Route::prefix('dashboard')->group(function () {

@@ -35,6 +35,8 @@ Route::post('/careers', [CareerApiController::class, 'store']);
 Route::get('/careers/{career}', [CareerApiController::class, 'show']);
 Route::put('/careers/{career}', [CareerApiController::class, 'update']);
 
+Route::post('/appliers', [CareerApiController::class, 'apply']);
+
 Route::get('/posts', [PostApiController::class, 'getPost']);
 Route::post('/posts', [PostApiController::class, 'store']);
 Route::get('/posts/{post}', [PostApiController::class, 'show']);

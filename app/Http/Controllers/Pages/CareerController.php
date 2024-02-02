@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Models\Applier;
 use App\Models\Career;
 use App\Models\Doctor;
 use App\Models\Galery;
@@ -60,8 +61,20 @@ class CareerController extends Controller
             'title' => "Formulir Data Pelamar - $career->title",
             'tipe' => $tipe,
             'about' => $about,
+            'career' => $career,
             'pelayanan' => Pelayanan::all(),
             'galleries' => Galery::all()
+        ]);
+    }
+
+    public function applier($career)
+    {
+        $applier = Applier::where('career_id', $career)->orderBy('created_at', 'asc')->get();
+
+        // return $career;
+
+        return view('pages.careers.partials.applier-list', [
+            'appliers' => $applier
         ]);
     }
 }
