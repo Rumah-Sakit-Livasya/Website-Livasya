@@ -23,7 +23,7 @@
                         @foreach ($pelayanan as $p)
                             <li>
                                 <a class="dropdown-item fs-4" style="margin: 0; border-radius:10px;"
-                                    href="/{{ $p->slug }}">{{ $p->title }}</a>
+                                    href="/pelayanan/{{ $p->slug }}">{{ $p->title }}</a>
                             </li>
                         @endforeach
                     </ul>

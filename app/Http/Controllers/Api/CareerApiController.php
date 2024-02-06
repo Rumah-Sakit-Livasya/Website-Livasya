@@ -103,14 +103,59 @@ class CareerApiController extends Controller
             'declare_suspended' => 'required',
             'declare_criminal' => 'required',
             'declare_lvs' => 'required',
-            'declare_lvs_when' => 'required',
-            'declare_lvs_where' => 'required',
-            'declare_lvs_position' => 'required',
-            'declare_lvs_stage' => 'required',
+            'declare_lvs_when' => 'nullable',
+            'declare_lvs_where' => 'nullable',
+            'declare_lvs_position' => 'nullable',
+            'declare_lvs_stage' => 'nullable',
             'declare_politic' => 'required',
             'declare_government' => 'required',
             'declare_business' => 'required'
+        ], [
+            'career_id.required' => 'Field Karier ID harus diisi.',
+            'find_vacancy.required' => 'Field Cari Lowongan harus diisi.',
+            'first_name.required' => 'Field Nama Depan harus diisi.',
+            'last_name.required' => 'Field Nama Belakang harus diisi.',
+            'birth_place.required' => 'Field Tempat Lahir harus diisi.',
+            'birth_day.required' => 'Field Tanggal Lahir harus diisi.',
+            'email.required' => 'Field Email harus diisi.',
+            'email.email' => 'Field Email harus berupa alamat email yang valid.',
+            'sex.required' => 'Field Jenis Kelamin harus diisi.',
+            'marital_status.required' => 'Field Status Pernikahan harus diisi.',
+            'religion.required' => 'Field Agama harus diisi.',
+            'id_card.required' => 'Field Nomor KTP harus diisi.',
+            'suku.required' => 'Field Suku harus diisi.',
+            'ktp_address.required' => 'Field Alamat KTP harus diisi.',
+            'family_name.required' => 'Field Nama Keluarga harus diisi.',
+            'family_sex.required' => 'Field Jenis Kelamin Keluarga harus diisi.',
+            'family_relationship.required' => 'Field Hubungan Keluarga harus diisi.',
+            'family_occupation.required' => 'Field Pekerjaan Keluarga harus diisi.',
+            'family_contact.required' => 'Field Kontak Keluarga harus diisi.',
+            'emergency_name.required' => 'Field Nama Kontak Darurat harus diisi.',
+            'emergency_relation.required' => 'Field Hubungan dengan Kontak Darurat harus diisi.',
+            'emergency_phone.required' => 'Field Nomor Kontak Darurat harus diisi.',
+            'emergency_address.required' => 'Field Alamat Kontak Darurat harus diisi.',
+            'school_name.required' => 'Field Nama Sekolah harus diisi.',
+            'school_city.required' => 'Field Kota Sekolah harus diisi.',
+            'school_major.required' => 'Field Jurusan Sekolah harus diisi.',
+            'school_year.required' => 'Field Tahun Lulus Sekolah harus diisi.',
+            'school_qual.required' => 'Field Kualifikasi Sekolah harus diisi.',
+            'school_gpa.required' => 'Field IPK/GPA Sekolah harus diisi.',
+            'compensation_salary.required' => 'Field Gaji yang Diinginkan harus diisi.',
+            'compensation_benefit.required' => 'Field Manfaat yang Diinginkan harus diisi.',
+            'compensation_workdate.required' => 'Field Tanggal Mulai Bekerja yang Diinginkan harus diisi.',
+            'declare_family_member.required' => 'Field Anggota Keluarga bekerja di perusahaan ini harus diisi.',
+            'declare_suspended.required' => 'Field Pernah dipecat atau di-suspend harus diisi.',
+            'declare_criminal.required' => 'Field Pernah dihukum pidana harus diisi.',
+            'declare_lvs.required' => 'Field Hubungan dengan LVS harus diisi.',
+            'declare_politic.required' => 'Field Terlibat Politik harus diisi.',
+            'declare_government.required' => 'Field Pekerjaan di Pemerintahan harus diisi.',
+            'declare_business.required' => 'Field Memiliki Bisnis Sendiri harus diisi.',
         ]);
+
+        if ($request->file('attachment')) {
+            $validatedData['attachment'] = $request->file('attachment')->store('cv');
+        }
+
 
         if ($request->cb_address) {
             $validatedData['permanent_address'] = $request->ktp_address;

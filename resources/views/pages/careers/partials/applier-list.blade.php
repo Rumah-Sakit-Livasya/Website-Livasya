@@ -44,11 +44,18 @@
                                             </button>
 
                                             <!-- Add a new button for opening in a new window -->
-                                            <button type="button"
+                                            <a href="/careers/{{ $applier->career->id }}/{{ $applier->id }}"
                                                 class="badge mx-1 badge-success p-2 border-0 text-white open-new-window-button"
                                                 data-applier-id="{{ $applier->id }}">
                                                 <span class="fal fa-eye"></span>
-                                            </button>
+                                            </a>
+
+                                            <!-- Add a new button for opening in a new window -->
+                                            <a href="/careers/{{ $applier->career->id }}/{{ $applier->id }}/download-cv"
+                                                class="badge mx-1 badge-warning p-2 border-0 text-white open-new-window-button"
+                                                data-applier-id="{{ $applier->id }}">
+                                                <span class="fal fa-download"></span>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

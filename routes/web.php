@@ -12,6 +12,7 @@ use App\Http\Controllers\Pages\GaleryController;
 use App\Http\Controllers\Pages\HomeController;
 use App\Http\Controllers\Pages\IdentityController;
 use App\Http\Controllers\Pages\JadwalController;
+use App\Http\Controllers\Pages\PagePelayananController;
 use App\Http\Controllers\Pages\PagePostController;
 use App\Http\Controllers\Pages\PelayananController;
 use App\Http\Controllers\Pages\UserController;
@@ -36,11 +37,11 @@ Route::get('/categories', [HomeController::class, 'categories']);
 Route::get('/categories/{category:slug}', [HomeController::class, 'category']);
 Route::get('/gallery', [HomeController::class, 'gallery']);
 Route::get('/dokter', [HomeController::class, 'dokter']);
+Route::get('/dokter/{dokter:id}', [HomeController::class, 'detailDokter']);
 Route::get('/jadwal-dokter', [HomeController::class, 'jadwalDokter']);
 Route::get('/mitra-kami', [HomeController::class, 'mitraKami']);
 Route::get('/faq', [HomeController::class, 'faq']);
 Route::get('/about-us', [TentangController::class, 'index']);
-Route::get('/jadwal/{dokter:id}', [JadwalDokterController::class, 'show']);
 Route::get('/posts', [PagePostController::class, 'index']);
 Route::get('/posts/{post:slug}', [PagePostController::class, 'show']);
 Route::get('/fasilitas-unggulan', [FasilitasController::class, 'index']);
@@ -49,9 +50,13 @@ Route::get('/fasilitas/{fasilitas:slug}', [FasilitasController::class, 'show']);
 Route::get('/career', [CareerController::class, 'index']);
 Route::get('/career/{tipe}', [CareerController::class, 'career']);
 Route::get('/career/{tipe}/{career:id}', [CareerController::class, 'apply']);
-Route::get('/careers/{career:id}', [CareerController::class, 'applier']);
+
+Route::get('/pelayanan/{pelayanan:slug}', [PagePelayananController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
+    Route::get('/careers/{career:id}', [CareerController::class, 'appliers']);
+    Route::get('/careers/{career:id}/{applier:id}', [CareerController::class, 'applier']);
+    Route::get('/careers/{career:id}/{applier:id}/download-cv', [CareerController::class, 'downloadCV']);
     Route::prefix('dashboard')->group(function () {
         // Dashboard
         Route::get("/", [DashboardController::class, 'index'])->name("dashboard");
@@ -79,6 +84,7 @@ Route::middleware('auth')->group(function () {
 
         // Pelayanan
         Route::get("/pelayanan", [PelayananController::class, 'index'])->name("pelayanan.index");
+        Route::get("/pelayanan/{pelayanan:id}/images", [PelayananController::class, 'images'])->name("pelayanan.image");
 
         // Identity
         Route::get("/identity", [IdentityController::class, 'index'])->name("identity.index");

@@ -43,7 +43,7 @@
                                         style="border-radius: 5px; outline: none; border: none; border-radius: 20px">
                                         @if ($post->image)
                                             <div class="card-img-top img overflow-hidden"
-                                                style="z-index: 0; background-image: url({{ asset('/public/' . $post->image) }}); background-size: cover; height: 300px; background-position: center;">
+                                                style="z-index: 0; background-image: url({{ asset('/storage/' . $post->image) }}); background-size: cover; height: 300px; background-position: center;">
                                             </div>
                                         @else
                                             <div class="card-img-top img overflow-hidden"

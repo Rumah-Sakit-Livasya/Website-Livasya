@@ -47,6 +47,12 @@
                                                     data-pelayanan-id="{{ $pelayanan->id }}">
                                                     <span class="fal fa-pencil"></span>
                                                 </button>
+
+                                                <button type="button"
+                                                    class="badge mx-1 badge-success p-2 border-0 text-white open-new-window-button"
+                                                    data-pelayanan-id="{{ $pelayanan->id }}">
+                                                    <span class="fal fa-images"></span>
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -75,7 +81,49 @@
     <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
     <script src="/js/formplugins/select2/select2.bundle.js"></script>
     <script>
+        function createPreviewHeader() {
+            const header = document.querySelector('#create-header');
+            const imgPreview = document.querySelector('.create-img-preview')
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(header.files[0])
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
+
+        function editPreviewHeader() {
+            const header = document.querySelector('#edit-header');
+            const imgPreview = document.querySelector('.edit-img-preview')
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(header.files[0])
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
+
         $(document).ready(function() {
+            // Popup Windows
+            $('.open-new-window-button').click(function() {
+                // Get the career ID from the data attribute
+                var pelayananId = $(this).data('pelayanan-id');
+
+                // Construct the URL based on your application's logic
+                var url = '/dashboard/pelayanan/' + pelayananId +
+                    '/images'; // Change this to match your route
+
+                // Open the URL in a new window with full screen size
+                window.open(url, '_blank', 'width=' + screen.width + ',height=' + screen.height);
+            });
+            // Popup Windows
+
             // Kirim formulir tambah melalui AJAX
             $('#create-button').on('click', function() {
                 var formData = new FormData($('#create-pelayanan-form')[0]);
@@ -124,11 +172,17 @@
                         $('#edit-slug').val(data.slug);
                         $('#edit-body').val(data.body);
                         $('#edit-body-text').val(data.body);
+                        $('#oldImage').val(data.header);
 
                         // Set nilai dan atribut selected untuk dropdown berdasarkan data unggulan
                         $('#edit-unggulan').val(data.unggulan).select2({
                             dropdownParent: $('#edit-pelayanan')
                         });
+
+                        var previewImage = $('.edit-img-preview');
+                        if (previewImage.length) {
+                            previewImage.attr('src', '/storage/' + data.header);
+                        }
 
                         // Show the modal
                         $('#edit-berita').modal('show');

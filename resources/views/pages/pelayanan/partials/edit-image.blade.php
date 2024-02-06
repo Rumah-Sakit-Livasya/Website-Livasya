@@ -13,15 +13,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="form-label d-block" for="edit-header">Header</label>
-                        <img class="edit-img-preview img-fluid mb-3 col-sm-5" alt="Header">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="edit-header" name="header"
-                                onchange="editPreviewHeader()">
-                            <label class="custom-file-label" for="edit-header">Pilih gambar</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="edit-icon">Icon</label>
                         <input type="text" autofocus value="" class="form-control" id="edit-icon"
                             name="icon" placeholder="Icon Fontawesome">

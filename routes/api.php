@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\DoctorApiController;
 use App\Http\Controllers\Api\FacilityApiController;
 use App\Http\Controllers\Api\GaleryApiController;
 use App\Http\Controllers\Api\IdentityApiController;
+use App\Http\Controllers\Api\ImageApiController;
 use App\Http\Controllers\Api\JadwalApiController;
 use App\Http\Controllers\Api\PostApiController;
 use App\Http\Controllers\Api\JumbotronApiController;
@@ -71,6 +72,12 @@ Route::post('/galeries', [GaleryApiController::class, 'store']);
 Route::get('/galeries/{galery}', [GaleryApiController::class, 'show']);
 Route::put('/galeries/{galery}', [GaleryApiController::class, 'update']);
 Route::delete('/galeries/{galery}', [GaleryApiController::class, 'destroy']);
+
+Route::get('/images', [ImageApiController::class, 'getGalery']);
+Route::post('/images', [ImageApiController::class, 'store']);
+Route::get('/images/{image}', [ImageApiController::class, 'show']);
+Route::put('/images/{image}', [ImageApiController::class, 'update']);
+Route::delete('/images/{image}', [ImageApiController::class, 'destroy']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pelayanans', function (Blueprint $table) {
             $table->id();
+            $table->string('header');
             $table->string('icon');
             $table->string('title');
             $table->string('slug');

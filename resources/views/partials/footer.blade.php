@@ -16,11 +16,11 @@
         </div>
         <div class="box">
             <h3 class="fw-bold ">Hubungi Kami</h3>
-            <a class="nav-link" href="https://wa.me/{{ $about->no_telp1 }}"> <i class="fab fa-whatsapp"></i>
-                +{{ $about->no_telp1 }} </a>
-            <a class="nav-link" href="javascript:void(0)"> <i class="fas fa-phone"></i> {{ $about->no_telp2 }} </a>
-            <a class="nav-link" href="mailto:{{ $about->gmail }}"> <i class="fas fa-envelope"></i>
-                {{ $about->gmail }} </a>
+            <a class="nav-link" href="https://wa.me/{{ $about->no_hp }}"> <i class="fab fa-whatsapp"></i>
+                +{{ $about->no_hp }} </a>
+            <a class="nav-link" href="javascript:void(0)"> <i class="fas fa-phone"></i> {{ $about->no_telp }} </a>
+            <a class="nav-link" href="mailto:{{ $about->email }}"> <i class="fas fa-envelope"></i>
+                {{ $about->email }} </a>
         </div>
         <div class="box">
             <h3 class="fw-bold">Mitra Kami</h3>

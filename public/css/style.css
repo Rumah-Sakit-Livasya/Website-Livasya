@@ -57,7 +57,7 @@ section:nth-child(even) {
     url("/img/fasilitas/header.jpg");
   background-size: cover;
   background-position: right center;
-  margin-top: 8rem;
+  margin-top: 4rem;
   height: 30rem;
 }
 

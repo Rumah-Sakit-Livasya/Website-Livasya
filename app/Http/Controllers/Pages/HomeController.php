@@ -77,6 +77,17 @@ class HomeController extends Controller
             'galleries' => Galery::all()
         ]);
     }
+    public function detailDokter(Identity $about, Doctor $dokter)
+    {
+        // return $dokter;
+        return view('dokter', [
+            'name' => $about->name,
+            'title' => 'Dokter',
+            'about' => Identity::first(),
+            'dokter' => $dokter,
+            'pelayanan' => Pelayanan::all()
+        ]);
+    }
 
     public function jadwalDokter()
     {

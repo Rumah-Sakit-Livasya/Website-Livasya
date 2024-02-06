@@ -12,6 +12,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
+                        <label class="form-label" for="create-header">Header</label>
+                        <img class="create-img-preview img-fluid mb-3 col-sm-5">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="create-header" name="header"
+                                onchange="createPreviewHeader()">
+                            <label class="custom-file-label" for="create-header">Pilih gambar</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="create-icon">Icon</label>
                         <input type="text" autofocus value="" class="form-control" id="create-icon"
                             name="icon" placeholder="Icon Fontawesome">

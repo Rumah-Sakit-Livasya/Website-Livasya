@@ -12,11 +12,11 @@
         {{-- <h1 class="heading pt-5"><span>dokter</span></h1> --}}
         <div class="box-container">
             @foreach ($dokter as $d)
-                <a href="/jadwal/{{ $d->id }}" class="nav-link">
+                <a href="/dokter/{{ $d->id }}" class="nav-link">
                     <div class="box p-5" data-aos="fade-up">
-                        <img src="{{ asset('public/' . $d['image']) }}" alt="">
-                        <h4>{{ $d['nama_dokter'] }}</h4>
-                        <span style="color: #e97f0d">{{ $d['jabatan'] }}</span>
+                        <img src="{{ asset('storage/' . $d->foto) }}" alt="">
+                        <h4>{{ $d->name }}</h4>
+                        <span style="color: #e97f0d">{{ $d->jabatan }}</span>
                     </div>
                 </a>
             @endforeach

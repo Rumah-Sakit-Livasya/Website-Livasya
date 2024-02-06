@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pelayanan_id');
             $table->string('image');
+            $table->string('thumbnail');
             $table->string('caption');
             $table->timestamps();
         });

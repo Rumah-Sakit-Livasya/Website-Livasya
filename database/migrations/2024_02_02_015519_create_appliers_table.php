@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('religion');
             $table->string('id_card');
             $table->string('suku');
-            $table->string('npwp');
-            $table->string('social_security');
+            $table->string('npwp')->nullable();
+            $table->string('social_security')->nullable();
             $table->text('ktp_address');
             $table->text('permanent_address');
             $table->string('family_name');
@@ -50,14 +50,15 @@ return new class extends Migration
             $table->text('declare_family_member');
             $table->text('declare_suspended');
             $table->text('declare_criminal');
-            $table->text('declare_lvs');
-            $table->text('declare_lvs_when');
-            $table->text('declare_lvs_where');
-            $table->text('declare_lvs_position');
-            $table->text('declare_lvs_stage');
+            $table->text('declare_lvs')->nullable();
+            $table->text('declare_lvs_when')->nullable();
+            $table->text('declare_lvs_where')->nullable();
+            $table->text('declare_lvs_position')->nullable();
+            $table->text('declare_lvs_stage')->nullable();
             $table->text('declare_politic');
             $table->text('declare_government');
             $table->text('declare_business');
+            $table->text('attachment');
             $table->timestamps();
         });
     }

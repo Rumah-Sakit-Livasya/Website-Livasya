@@ -54,8 +54,8 @@
 
                                                 <!-- Add a new button for opening in a new window -->
                                                 <button type="button"
-                                                    class="badge mx-1 badge-success p-2 border-0 text-white open-new-window-button"
-                                                    data-career-id="{{ $career->id }}">
+                                                    class="badge mx-1 badge-success p-2 border-0 text-white"
+                                                    onclick="openWindows({{ $career->id }})">
                                                     <span class="fal fa-eye"></span>
                                                 </button>
                                             </td>
@@ -88,20 +88,15 @@
     <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
     <script src="/js/formplugins/select2/select2.bundle.js"></script>
     <script>
+        function openWindows(careerId) {
+            // Construct the URL based on your application's logic
+            var url = '/careers/' + careerId; // Change this to match your route
+
+            // Open the URL in a new window with full screen size
+            window.open(url, '_blank', 'width=' + screen.width + ',height=' + screen.height);
+        }
+
         $(document).ready(function() {
-            // Popup Windows
-            $('.open-new-window-button').click(function() {
-                // Get the career ID from the data attribute
-                var careerId = $(this).data('career-id');
-
-                // Construct the URL based on your application's logic
-                var url = '/careers/' + careerId; // Change this to match your route
-
-                // Open the URL in a new window with full screen size
-                window.open(url, '_blank', 'width=' + screen.width + ',height=' + screen.height);
-            });
-            // Popup Windows
-
             // SELECT2
             $(function() {
                 $('#create-tipe').select2({

@@ -167,12 +167,12 @@
         <h1 class="heading mt-5"> Pelayanan <span>Kami</span> </h1>
         <div class="box-custom row justify-content-center align-items-center">
             @foreach ($pelayanan as $p)
-                <a href="/{{ $p->url }}"
+                <a href="/pelayanan/{{ $p->slug }}"
                     class="pelayanan g-5 shadow col-lg-3 mx-5 d-flex align-items-center text-decoration-none"
                     style="height: 23rem; border-radius: 2rem">
                     <div class="card-body text-center">
-                        <i class="{{ $p['icon'] }} mb-3" style="font-size: 7rem;"></i>
-                        <p class="fs-1 mt-3 text fw-bold">{{ $p['title'] }}</p>
+                        <i class="{{ $p->icon }} mb-3" style="font-size: 7rem;"></i>
+                        <p class="fs-1 mt-3 text fw-bold">{{ $p->title }}</p>
                     </div>
                 </a>
             @endforeach
@@ -222,7 +222,7 @@
                                 style="border-radius: 5px; outline: none; border: none; border-radius: 20px; transform: scale(.95);">
                                 @if ($p->image)
                                     <div class="card-img-top img overflow-hidden"
-                                        style="z-index: 0; background-image: url({{ asset('/public/' . $p->image) }}); background-size: cover; height: 300px; background-position: center;">
+                                        style="z-index: 0; background-image: url({{ asset('/storage/' . $p->image) }}); background-size: cover; height: 300px; background-position: center;">
                                     </div>
                                 @else
                                     <div class="card-img-top img overflow-hidden"

@@ -33,8 +33,10 @@ class FasilitasController extends Controller
         ]);
     }
 
-    public function show(Facility $facility)
+    public function show($slug)
     {
+        $facility = Facility::where('slug', $slug)->first();
+
         return view('fasilitas.show', [
             'title' => $facility->name,
             'name' => 'RSIA Livasya',
