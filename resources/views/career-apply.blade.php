@@ -4,6 +4,11 @@
 @extends('layouts.main')
 
 @section('container')
+    <style>
+        .custom-file-input:lang(en)~.custom-file-label::after {
+            height: max-content !important;
+        }
+    </style>
     <section class="gallery bg-white" style="padding-top: 15rem">
         <h1 class="heading my-5"><span style="font-size: 3rem !important">{{ $title }}</span> </h1>
 
@@ -79,7 +84,8 @@
                                 </div>
                                 <div class="col-12 col-lg-4 mb-3">
                                     <div class="form-group">
-                                        <label for="create-sex" class="fw-normal">Jenis Kelamin </label>
+                                        <label for="create-sex" class="fw-normal">Jenis Kelamin <span
+                                                class="text-danger">*</span> </label>
                                         <select name="sex" id="create-sex" class="form-control form-control-lg">
                                             <option value="pria">Pria</option>
                                             <option value="wanita">Wanita</option>
@@ -88,7 +94,8 @@
                                 </div>
                                 <div class="col-12 col-lg-4 mb-3">
                                     <div class="form-group">
-                                        <label for="create-martial-status" class="fw-normal">Status Pernikahan </label>
+                                        <label for="create-martial-status" class="fw-normal">Status Pernikahan <span
+                                                class="text-danger">*</span></label>
                                         <select name="marital_status" id="create-martial-status"
                                             class="form-control form-control-lg">
                                             <option value="lajang">Lajang</option>
@@ -99,7 +106,8 @@
                                 </div>
                                 <div class="col-12 col-lg-4 mb-3">
                                     <div class="form-group">
-                                        <label for="create-religion" class="fw-normal">Agama </label>
+                                        <label for="create-religion" class="fw-normal">Agama <span
+                                                class="text-danger">*</span></label>
                                         <select name="religion" id="create-religion"
                                             class="form-control form-control-lg">
                                             <option value="Islam">Islam</option>
@@ -124,7 +132,7 @@
                                         <label for="create-suku" class="fw-normal">Suku <span
                                                 class="text-danger">*</span></label>
                                         <input name="suku" id="create-suku" class="form-control form-control-lg"
-                                            type="text" placeholder="misalnya bahasa Indonesia" required>
+                                            type="text" placeholder="misalnya bahasa Sunda" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6 mb-3">
@@ -284,37 +292,37 @@
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-12 col-lg-4">
+                                    <div class="col-12 col-lg-4 mt-3">
                                         <div class="form-group">
                                             <label for="create-school-city" class="fw-normal">Kota <span
-                                                    class="text-danger">*</span>
-                                                <input name="school_city" id="create-school-city"
-                                                    class="form-control form-control-lg" type="text"
-                                                    placeholder="misalnya Jakarta">
+                                                    class="text-danger">*</span></label>
+                                            <input name="school_city" id="create-school-city"
+                                                class="form-control form-control-lg" type="text"
+                                                placeholder="misalnya Jakarta">
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-4">
+                                    <div class="col-12 col-lg-4 mt-3">
                                         <div class="form-group">
                                             <label for="create-school-major" class="fw-normal">Jurusan <span
-                                                    class="text-danger">*</span>
-                                                <input name="school_major" id="create-school-major"
-                                                    class="form-control form-control-lg" type="text"
-                                                    placeholder="misalnya Jurusan Kedokteran">
+                                                    class="text-danger">*</span></label>
+                                            <input name="school_major" id="create-school-major"
+                                                class="form-control form-control-lg" type="text"
+                                                placeholder="misalnya Jurusan Kedokteran">
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-4">
+                                    <div class="col-12 col-lg-4 mt-3">
                                         <div class="form-group">
-                                            <label for="create-schoor-year" class="fw-normal">Tahun <span
-                                                    class="text-danger">*</span>
-                                                <input name="school_year" id="create-schoor-year"
-                                                    class="form-control form-control-lg" type="number"
-                                                    placeholder="misalnya tahun 2010">
+                                            <label for="create-schoor-year" class="fw-normal">Tahun Lulus <span
+                                                    class="text-danger">*</span></label>
+                                            <input name="school_year" id="create-schoor-year"
+                                                class="form-control form-control-lg" type="number"
+                                                placeholder="misalnya tahun 2010">
                                         </div>
                                     </div>
                                     <div class="col-12 col-lg-6 mt-3">
                                         <div class="form-group">
                                             <label for="create-school-qual" class="fw-normal">Kualifikasi yang
-                                                Diperoleh </label>
+                                                Diperoleh <span class="text-danger">*</span></label>
                                             <input name="school_qual" id="create-school-qual"
                                                 class="form-control form-control-lg" type="text"
                                                 placeholder="misalnya Gelar Sarjana">
@@ -322,10 +330,11 @@
                                     </div>
                                     <div class="col-12 col-lg-6 mt-3">
                                         <div class="form-group">
-                                            <label for="create-school-gpa" class="fw-normal">IPK
-                                                <input name="school_gpa" id="create-school-gpa"
-                                                    class="form-control form-control-lg" type="number"
-                                                    placeholder="misalnya 4.00">
+                                            <label for="create-school-gpa" class="fw-normal">IPK / Nilai Akhir <span
+                                                    class="text-danger">*</span></label>
+                                            <input name="school_gpa" id="create-school-gpa"
+                                                class="form-control form-control-lg" type="number"
+                                                placeholder="Masukan Nilai">
                                         </div>
                                     </div>
                                 </div>
@@ -598,7 +607,8 @@
                                                     <span class="input-group-text">Rp</span>
                                                 </div>
                                                 <input name="work_start_salary[]" id="create-work-start-salary"
-                                                    type="text" class="form-control form-control-lg">
+                                                    type="text" class="form-control form-control-lg"
+                                                    oninput="formatInput(this)">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">.00</span>
                                                 </div>
@@ -614,7 +624,8 @@
                                                     <span class="input-group-text">Rp</span>
                                                 </div>
                                                 <input name="work_latest_salary[]" id="create-work-latest-salary"
-                                                    type="text" class="form-control form-control-lg">
+                                                    type="text" class="form-control form-control-lg"
+                                                    oninput="formatInput(this)">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">.00</span>
                                                 </div>
@@ -680,13 +691,14 @@
                                 <div class="col-12 col-lg-6 mt-3">
                                     <div class="form-group">
                                         <label for="create-compensation-salary" class="fw-normal">Gaji bulanan
-                                            (Kotor)</label>
+                                            (Kotor) <span class="text-danger">*</span> </label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp</span>
                                             </div>
                                             <input name="compensation_salary" id="create-compensation-salary"
-                                                type="text" class="form-control form-control-lg">
+                                                type="text" class="form-control form-control-lg"
+                                                oninput="formatInput(this)">
                                             <div class="input-group-append">
                                                 <span class="input-group-text">.00</span>
                                             </div>
@@ -696,7 +708,7 @@
                                 <div class="col-12 col-lg-6 mt-3">
                                     <div class="form-group">
                                         <label for="create-compensation-benefit" class="fw-normal">Manfaat /
-                                            Lainnya</label>
+                                            Lainnya <span class="text-danger">*</span></label>
                                         <input name="compensation_benefit" id="create-compensation-benefit"
                                             class="form-control form-control-lg" type="text" placeholder="">
                                     </div>
@@ -826,8 +838,8 @@
                                 <div class="col-12 col-lg-12 mt-3">
                                     <label for="create-declare-business" class="fw-normal">7. Apakah Anda mempunyai
                                         pekerjaan
-                                        atau kegiatan usaha lain di luar pekerjaan saat ini? <span
-                                            class="text-danger">*</span>
+                                        atau kegiatan usaha lain di luar pekerjaan saat ini?
+                                        <span class="text-danger">*</span>
                                         <br>
                                         <small><i>Jika ya, harap berikan rinciannya termasuk nama perusahaan, jenis usaha,
                                                 jabatan dan tahun mulai jabatan.</i></small>
@@ -842,14 +854,15 @@
                                         Size 2 MB) <span class="text-danger">*</span></label>
                                     <div class="custom-file">
                                         <input name="attachment" id="create-attachment" type="file"
-                                            class="custom-file-input" id="customFile" accept=".pdf" required="">
-                                        <label class="custom-file-label" for="customFile">Choose
+                                            class="custom-file-input" id="customFile" accept=".pdf" required=""
+                                            style="height: unset">
+                                        <label class="custom-file-label" style="height: unset" for="customFile">Choose
                                             file</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div id="others" class="pt-0">
+                        <div id="others" class="pt-0 mt-5">
                             <button type="button" id="create-button"
                                 class="btn btn-block btn-success fw-800 fs-20">Lamar
                                 Sekarang</button>
@@ -868,9 +881,29 @@
     <!-- Select2 -->
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script> --}}
     <script>
-        // $(document).ready(function() {
-        //     $('.select2').select2();
-        // })
+        // Fungsi untuk mengubah angka menjadi format mata uang Rupiah
+        function formatRupiah(angka) {
+            var reverse = angka.toString().split('').reverse().join(''),
+                ribuan = reverse.match(/\d{1,3}/g);
+            ribuan = ribuan.join('.').split('').reverse().join('');
+            return ribuan;
+        }
+
+        // Fungsi untuk memformat input saat pengguna mengetik
+        function formatInput(input) {
+            // Menghapus karakter selain angka
+            var value = input.value.replace(/\D/g, '');
+            // Mengubah angka menjadi format Rupiah
+            input.value = formatRupiah(value);
+        }
+
+        // Mendapatkan elemen input
+        // var input = document.getElementById('create-compensation-salary');
+
+        // // Menambahkan event listener untuk memanggil fungsi formatInput saat input berubah
+        // input.addEventListener('input', function() {
+        //     formatInput(input);
+        // });
     </script>
 
     {{-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
@@ -1032,7 +1065,7 @@
                 var addRemove = "#workForm" + (next);
                 next = next + 1;
                 var newIn = ' <div id="workForm' + next + '" name="workForm' + next +
-                    '"><div class="row gap-y"id="workForm0"><div class="col-12 col-lg-6"><div class="form-group"><label for="create-work-name" class="fw-normal">Nama Perusahaan</label><input name="work_name[]" id="create-work-name" class="form-control form-control-lg"type="text"placeholder=""></div></div><div class="col-12 col-lg-6"><div class="form-group"><label for="create-work-position" class="fw-normal">Posisi Terakhir</label><input name="work_position[]" id="create-work-position" class="form-control form-control-lg"type="text"placeholder=""></div></div><div class="col-12 col-lg-12"><div class="form-group"><label for="create-work-address" class="fw-normal">Alamat Perusahaan</label><textarea name="work_address[]" id="create-work-address" class="form-control"placeholder=""rows="3"></textarea></div></div><div class="col-12 col-lg-6"><div class="form-group"><label for="create-work-start" class="fw-normal">Mulai Tanggal</label><input name="work_start[]" id="create-work-start" class="form-control form-control-lg"type="text"placeholder=""></div></div><div class="col-12 col-lg-6"><div class="form-group"><label for=" create-work-end" class="fw-normal">Tanggal Berakhir</label><input name="work_end[]"id="create-work-end"class="form-control form-control-lg"type="text"placeholder=""></div></div><div class="col-12 col-lg-6 mt-3"><div class="form-group"><label for="create-work-start-salary" class="fw-normal">Gaji awal</label><div class="input-group"><div class="input-group-prepend"><span class="input-group-text">Rp</span></div><input name="work_start_salary[]" id="create-work-start-salary"type="text" class="form-control form-control-lg"><div class="input-group-append"><span class="input-group-text">.00</span></div></div></div></div><div class="col-12 col-lg-6 mt-3"><div class="form-group"><label for="create-work-latest-salary" class="fw-normal">Gaji Terbaru</label><div class="input-group"><div class="input-group-prepend"><span class="input-group-text">Rp</span></div><input name="work_latest_salary[]" id="create-work-latest-salary"type="text" class="form-control form-control-lg"><div class="input-group-append"><span class="input-group-text">.00</span></div></div></div></div><div class="col-12 col-lg-12 mt-3"><div class="form-group"><label for="create-work-reason" class="fw-normal">Alasan untuk pergi</label><textarea name="work_reason[]" id="create-work-reason" class="form-control" placeholder="" rows="3"></textarea></div></div><div class="container row"><div class="col-12 col-lg-8 mt-3 col-m"><div class="form-group"><label for="create-work-contact-employer" class="fw-normal">Bolehkah kami menghubungi perusahaan saat ini/sebelumnya secara langsung?</label><select name="work_contact_employer[]" id="create-work-contact-employer"class="form-control form-control-lg"><option value="">-</option><option value="ya">Ya</option><option value="tidak">Tidak</option></select></div></div></div><div class="col-12 col-lg-12 mt-3"><div class="form-group"> <label for="create-work-contact-yes" class="fw-normal"> Jika ya, harap berikan nama, nomor kontak.Jika tidak, jelaskan alasannya </label> <textarea name="work_contact_yes[]" id="create-work-contact-yes" class="form-control" placeholder="" rows="3"></textarea></div> </div> <div class="col-12 col-lg-12 mt-3"> <div class="form-group"><label for="create-work-achievement" class="fw-normal" Prestasi </label><textarea name="work_achievement[]" id="create-work-achievement" class="form-control" placeholder="" rows="3"> </textarea> </div> </div> </div> </div></div> ';
+                    '"><div class="row gap-y"id="workForm0"><div class="col-12 col-lg-6"><div class="form-group"><label for="create-work-name" class="fw-normal">Nama Perusahaan <span class="text-danger">*</span></label><input name="work_name[]" id="create-work-name" class="form-control form-control-lg"type="text"placeholder=""></div></div><div class="col-12 col-lg-6"><div class="form-group"><label for="create-work-position" class="fw-normal">Posisi Terakhir <span class="text-danger">*</span></label><input name="work_position[]" id="create-work-position" class="form-control form-control-lg"type="text"placeholder=""></div></div><div class="col-12 col-lg-12"><div class="form-group"><label for="create-work-address" class="fw-normal">Alamat Perusahaan <span class="text-danger">*</span></label><textarea name="work_address[]" id="create-work-address" class="form-control"placeholder=""rows="3"></textarea></div></div><div class="col-12 col-lg-6"><div class="form-group"><label for="create-work-start" class="fw-normal">Mulai Tanggal <span class="text-danger">*</span></label><input name="work_start[]" id="create-work-start" class="form-control form-control-lg"type="text"placeholder=""></div></div><div class="col-12 col-lg-6"><div class="form-group"><label for=" create-work-end" class="fw-normal">Tanggal Berakhir <span class="text-danger">*</span></label><input name="work_end[]"id="create-work-end"class="form-control form-control-lg"type="text"placeholder=""></div></div><div class="col-12 col-lg-6 mt-3"><div class="form-group"><label for="create-work-start-salary" class="fw-normal">Gaji awal <span class="text-danger">*</span></label><div class="input-group"><div class="input-group-prepend"><span class="input-group-text">Rp</span></div><input name="work_start_salary[]" id="create-work-start-salary"type="text" class="form-control form-control-lg" oninput="formatInput(this)"><div class="input-group-append"><span class="input-group-text">.00</span></div></div></div></div><div class="col-12 col-lg-6 mt-3"><div class="form-group"><label for="create-work-latest-salary" class="fw-normal">Gaji Terbaru <span class="text-danger">*</span></label><div class="input-group"><div class="input-group-prepend"><span class="input-group-text">Rp</span></div><input name="work_latest_salary[]" id="create-work-latest-salary"type="text" class="form-control form-control-lg" oninput="formatInput(this)"><div class="input-group-append"><span class="input-group-text">.00</span></div></div></div></div><div class="col-12 col-lg-12 mt-3"><div class="form-group"><label for="create-work-reason" class="fw-normal">Alasan Pindah <span class="text-danger">*</span></label><textarea name="work_reason[]" id="create-work-reason" class="form-control" placeholder="" rows="3"></textarea></div></div><div class="container row"><div class="col-12 col-lg-8 mt-3 col-m"><div class="form-group"><label for="create-work-contact-employer" class="fw-normal">Bolehkah kami menghubungi perusahaan saat ini/sebelumnya secara langsung? <span class="text-danger">*</span></label><select name="work_contact_employer[]" id="create-work-contact-employer"class="form-control form-control-lg"><option value="">-</option><option value="ya">Ya</option><option value="tidak">Tidak</option></select></div></div></div><div class="col-12 col-lg-12 mt-3"><div class="form-group"> <label for="create-work-contact-yes" class="fw-normal"> Jika ya, harap berikan nama, nomor kontak Jika tidak, jelaskan alasannya <span class="text-danger">*</span></label> <textarea name="work_contact_yes[]" id="create-work-contact-yes" class="form-control" placeholder="" rows="3"></textarea></div> </div> <div class="col-12 col-lg-12 mt-3"> <div class="form-group"><label for="create-work-achievement" class="fw-normal">Prestasi <span class="text-danger">*</span> </label><textarea name="work_achievement[]" id="create-work-achievement" class="form-control" placeholder="" rows="3"> </textarea> </div> </div> </div> </div></div> ';
                 var newInput = $(newIn);
                 var removeBtn = '<button id="remove' + (next - 1) +
                     '" class="btn btn-danger remove-me mt-3" >Hapus</button></div></div><div id="workForm">';

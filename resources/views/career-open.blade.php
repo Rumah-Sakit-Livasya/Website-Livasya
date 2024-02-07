@@ -15,7 +15,7 @@
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapse{{ $career->id }}" aria-expanded="true"
                                 aria-controls="collapse{{ $career->id }}">
-                                {{ $career->title }}
+                                <h4 class="fw-bolder">{{ $career->title }}</h4>
                             </button>
                         </h2>
                         <div id="collapse{{ $career->id }}" class="accordion-collapse collapse"

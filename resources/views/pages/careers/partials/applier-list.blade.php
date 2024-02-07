@@ -20,6 +20,7 @@
                                     <th style="white-space: nowrap">Jenis Kelamin</th>
                                     <th style="white-space: nowrap">Lulusan</th>
                                     <th style="white-space: nowrap">Tgl. Lahir</th>
+                                    <th style="white-space: nowrap">Input</th>
                                     <th style="white-space: nowrap">Aksi</th>
                                 </tr>
                             </thead>
@@ -33,6 +34,7 @@
                                         <td style="white-space: nowrap">{{ $applier->sex }}</td>
                                         <td style="white-space: nowrap">{{ $applier->school_name }}</td>
                                         <td style="white-space: nowrap">{{ $applier->birth_day }}</td>
+                                        <td style="white-space: nowrap">{{ $applier->created_at->diffForHumans() }}</td>
 
                                         <td style="white-space: nowrap">
                                             <!-- Add a data-applier-id attribute to the edit button -->

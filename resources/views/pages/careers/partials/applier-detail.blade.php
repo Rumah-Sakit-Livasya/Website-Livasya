@@ -41,6 +41,70 @@
                             </table>
                         </div>
                         <hr class="fc-divider mt-2">
+                        <section id="data-pribadi" class="border">
+                            <div class="row">
+                                <div class="col-12 col-lg-12">
+                                    <h5 class="text-center p-3" style="font-weight: bolder">DATA PRIBADI</h5>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 col-lg-2">
+                                    <strong>No. KTP</strong>
+                                </div>
+                                <div class="col-12 col-lg-4">
+                                    : {{ $applier->id_card }}
+                                </div>
+                                <div class="col-12 col-lg-2">
+                                    <strong>Alamat Email</strong>
+                                </div>
+                                <div class="col-12 col-lg-4">
+                                    : {{ $applier->email }}
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-12 col-lg-2">
+                                    <strong>Status Pernikahan</strong>
+                                </div>
+                                <div class="col-12 col-lg-4">
+                                    : {{ $applier->marital_status }}
+                                </div>
+                                <div class="col-12 col-lg-2">
+                                    <strong>Agama</strong>
+                                </div>
+                                <div class="col-12 col-lg-4">
+                                    : {{ $applier->religion }}
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-12 col-lg-2">
+                                    <strong>Suku</strong>
+                                </div>
+                                <div class="col-12 col-lg-4">
+                                    : {{ $applier->suku }}
+                                </div>
+                                <div class="col-12 col-lg-2"></div>
+                                <div class="col-12 col-lg-4"></div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-12 col-lg-2">
+                                    <strong>Alamat KTP</strong>
+                                </div>
+                                <div class="col-12 col-lg-4">
+                                    : {{ $applier->ktp_address }}
+                                </div>
+                                <div class="col-12 col-lg-2">
+                                    <strong>Alamat Domisili</strong>
+                                </div>
+                                <div class="col-12 col-lg-4">
+                                    : {{ $applier->permanent_address }}
+                                </div>
+                            </div>
+                        </section>
+
                         <!-- datatable start -->
                         <table id="dt-basic-example"
                             class="overflow-hidden mt-3 table table-bordered table-hover table-striped w-100">
