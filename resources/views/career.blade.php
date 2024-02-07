@@ -14,24 +14,21 @@
             <h4 class="text-default fw-400 h1">Bergabunglah Dengan Kami</h4>
         </div>
 
-        <div class="col-12 col-lg-12 text-center">
+        <div class="col-12 col-lg-12 text-center mt-5">
             <div class="row gap-y">
-
                 <div class="col-12 col-lg-12 container">
                     <div class="row gap-y justify-content-center">
                         <div class="col-12 col-lg-5">
-                            <a href="/career/medis">
-                                <p class="text-default td-none">Medis</p>
-                                <img class="img-thumbnail" src="https://mayapadahospital.com/assets/banner/career-medis.png"
-                                    alt="">
+                            <a href="/career/medis" style="text-decoration: none">
+                                <p class="text-default">Medis</p>
+                                <img class="img-thumbnail" src="/img/career-medis.png" alt="">
                             </a>
                         </div>
 
                         <div class="col-12 col-lg-5">
-                            <a href="/career/non-medis">
-                                <p class="text-default td-none">Non Medis</p>
-                                <img class="img-thumbnail"
-                                    src="https://mayapadahospital.com/assets/banner/career-nonmedis.png" alt="">
+                            <a href="/career/non-medis" style="text-decoration: none">
+                                <p class="text-default">Non Medis</p>
+                                <img class="img-thumbnail" src="/img/career-nonmedis.png" alt="">
                             </a>
                         </div>
 

@@ -58,17 +58,21 @@ class CareerController extends Controller
     public function apply($tipe, $id)
     {
         $about = Identity::first();
-        $career = Career::where('id', $id)->first();
+        $career = Career::where('id', $id)->where('status', 'on')->where('tipe', $tipe)->first();
 
-        return view('career-apply', [
-            'name' => $about->name,
-            'title' => "Formulir Data Pelamar - $career->title",
-            'tipe' => $tipe,
-            'about' => $about,
-            'career' => $career,
-            'pelayanan' => Pelayanan::all(),
-            'galleries' => Galery::all()
-        ]);
+        if ($career) {
+            return view('career-apply', [
+                'name' => $about->name,
+                'title' => "Formulir Data Pelamar - $career->title",
+                'tipe' => $tipe,
+                'about' => $about,
+                'career' => $career,
+                'pelayanan' => Pelayanan::all(),
+                'galleries' => Galery::all()
+            ]);
+        } else {
+            return abort(404);
+        }
     }
 
     public function appliers($career)
