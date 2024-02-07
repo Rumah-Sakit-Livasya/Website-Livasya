@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
 use App\Models\Applier;
+use App\Models\ApplierCertification;
+use App\Models\ApplierLanguage;
+use App\Models\ApplierWork;
 use App\Models\Career;
 use App\Models\Doctor;
 use App\Models\Galery;
@@ -70,7 +73,7 @@ class CareerController extends Controller
 
     public function appliers($career)
     {
-        $applier = Applier::where('career_id', $career)->orderBy('created_at', 'asc')->get();
+        $applier = Applier::where('career_id', $career)->orderBy('created_at', 'desc')->get();
 
         // return $career;
 
@@ -82,11 +85,15 @@ class CareerController extends Controller
     public function applier($career, $applierId)
     {
         $applier = Applier::where('id', $applierId)->first();
-
-        // return $applier;
+        $languages = ApplierLanguage::where('applier_id', $applier->id)->get();
+        $certifications = ApplierCertification::where('applier_id', $applier->id)->get();
+        $works = ApplierWork::where('applier_id', $applier->id)->get();
 
         return view('pages.careers.partials.applier-detail', [
             'applier' => $applier,
+            'languages' => $languages,
+            'certifications' => $certifications,
+            'works' => $works
         ]);
     }
 

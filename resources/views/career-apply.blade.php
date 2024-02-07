@@ -87,8 +87,8 @@
                                         <label for="create-sex" class="fw-normal">Jenis Kelamin <span
                                                 class="text-danger">*</span> </label>
                                         <select name="sex" id="create-sex" class="form-control form-control-lg">
-                                            <option value="pria">Pria</option>
-                                            <option value="wanita">Wanita</option>
+                                            <option value="Laki laki">Laki laki</option>
+                                            <option value="Perempuan">Perempuan</option>
                                         </select>
                                     </div>
                                 </div>
@@ -98,9 +98,9 @@
                                                 class="text-danger">*</span></label>
                                         <select name="marital_status" id="create-martial-status"
                                             class="form-control form-control-lg">
-                                            <option value="lajang">Lajang</option>
-                                            <option value="telah-menikah">Telah menikah</option>
-                                            <option value="perceraian">Perceraian</option>
+                                            <option value="Lajang">Lajang</option>
+                                            <option value="Menikah">Menikah</option>
+                                            <option value="Perceraian">Perceraian</option>
                                         </select>
                                     </div>
                                 </div>
@@ -195,8 +195,8 @@
                                                     class="text-danger">*</span></label>
                                             <select name="family_sex" id="create-family-sex"
                                                 class="form-control form-control-lg">
-                                                <option value="male">Laki Laki</option>
-                                                <option value="female">Perempuan</option>
+                                                <option value="Laki laki">Laki Laki</option>
+                                                <option value="Perempuan">Perempuan</option>
                                             </select>
                                         </div>
                                     </div>
@@ -211,9 +211,8 @@
                                     </div>
                                     <div class="col-12 col-lg-6 mt-3">
                                         <div class="form-group">
-                                            <label for="create-family-occupation" class="fw-normal">Pendidikan / Pekerjaan
-                                                /
-                                                Perusahaan <span class="text-danger">*</span></label>
+                                            <label for="create-family-occupation" class="fw-normal">Pekerjaan <span
+                                                    class="text-danger">*</span></label>
                                             <input name="family_occupation" id="create-family-occupation"
                                                 class="form-control form-control-lg" type="text"
                                                 placeholder="misalnya SMA">
@@ -725,6 +724,7 @@
 
                                 <div class="col-12 mt-5">
                                     <h4 class="fw-bold">Deklarasi dan Otorisasi</h4>
+                                    <hr class="w-100 my-4">
                                 </div>
                                 <div class="col-12 col-lg-12 mt-3">
                                     <label for="create-declare-family-member" class="fw-normal">
