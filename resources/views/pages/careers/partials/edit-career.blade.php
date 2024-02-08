@@ -39,8 +39,7 @@
                     <div class="form-group">
                         <label for="" class="form-label">Status</label>
                         <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="edit-status" name="status"
-                                value="on">
+                            <input type="checkbox" class="custom-control-input" id="edit-status" name="status">
                             <label class="custom-control-label" for="edit-status">Aktif</label>
                         </div>
                     </div>

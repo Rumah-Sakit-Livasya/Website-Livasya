@@ -14,7 +14,36 @@
             <h4 class="text-default fw-400 h1">Bergabunglah Dengan Kami</h4>
         </div>
 
-        <div class="col-12 col-lg-12 text-center mt-5">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <a href="/career/medis" class="text-decoration-none">
+                    <div class="card mt-5" style="overflow: visible">
+                        <img src="/img/career-medis.png" class="card-img-top">
+                        <div class="card-body text-center">
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ $medis }}
+                            </span>
+                            <span class="fw-bolder">Medis</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-lg-6">
+                <a href="/career/non-medis" class="text-decoration-none">
+                    <div class="card mt-5" style="overflow: visible">
+                        <img src="/img/career-nonmedis.png" class="card-img-top">
+                        <div class="card-body text-center">
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ $nonMedis }}
+                            </span>
+                            <span class="fw-bolder">Non Medis</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        {{-- <div class="col-12 col-lg-12 text-center mt-5">
             <div class="row gap-y">
                 <div class="col-12 col-lg-12 container">
                     <div class="row gap-y justify-content-center">
@@ -36,6 +65,6 @@
                 </div>
 
             </div>
-        </div>
+        </div> --}}
     </section>
 @endsection

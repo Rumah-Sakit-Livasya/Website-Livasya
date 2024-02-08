@@ -23,6 +23,8 @@ class CareerApiController extends Controller
     {
         if (!$request['status']) {
             $request['status'] = "off";
+        } else {
+            $request['status'] = "on";
         }
 
         $validatedData = $request->validate([
@@ -46,6 +48,8 @@ class CareerApiController extends Controller
     {
         if (!$request['status']) {
             $request['status'] = "off";
+        } else {
+            $request['status'] = "on";
         }
 
         $validatedData = $request->validate([

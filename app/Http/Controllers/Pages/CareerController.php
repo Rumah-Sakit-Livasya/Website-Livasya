@@ -19,6 +19,15 @@ class CareerController extends Controller
 {
     public function index()
     {
+        $medis = Career::where('status', 'on')
+            ->where('tipe', 'medis')
+            ->get()
+            ->count();
+        $nonMedis = Career::where('status', 'on')
+            ->where('tipe', 'non-medis')
+            ->get()
+            ->count();
+
         $about = Identity::first();
         return view('career', [
             'name' => $about->name,
@@ -26,7 +35,9 @@ class CareerController extends Controller
             'dokter' => Doctor::all(),
             'about' => $about,
             'pelayanan' => Pelayanan::all(),
-            'galleries' => Galery::all()
+            'galleries' => Galery::all(),
+            'medis' => $medis,
+            'nonMedis' => $nonMedis,
         ]);
     }
 
