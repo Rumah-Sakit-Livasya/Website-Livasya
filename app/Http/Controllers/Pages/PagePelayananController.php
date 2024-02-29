@@ -13,12 +13,12 @@ class PagePelayananController extends Controller
     public function index($slug)
     {
         $pelayanan = Pelayanan::where('slug', $slug)->first();
-        $about = Identity::first();
+        $identity = Identity::first();
 
         return view('pelayanan', [
-            'name' => $about->name,
+            'name' => $identity->name,
             'title' => "$pelayanan->title",
-            'about' => $about,
+            'identity' => $identity,
             'pel' => $pelayanan,
             'pelayanan' => Pelayanan::all(),
             'galleries' => Galery::all()

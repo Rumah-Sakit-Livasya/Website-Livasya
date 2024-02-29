@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Pages;
 
 use App\Models\Post;
 use App\Http\Controllers\Controller;
-use App\Models\About;
 use App\Models\Identity;
 use App\Models\Pelayanan;
 

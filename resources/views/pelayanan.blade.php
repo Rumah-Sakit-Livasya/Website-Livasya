@@ -56,7 +56,7 @@
                             <div class="slider slider-single">
                                 @foreach (ImagePelayanan::where('pelayanan_id', $pel->id)->get() as $item)
                                     <div>
-                                        <img src="{{ asset('/storage/' . $item->image) }}" alt="{{ $pel->title }}"
+                                        <img src="{{ asset('/storage/' . $item->thumbnail) }}" alt="{{ $pel->title }}"
                                             class="img-fluid img-thumbnail"
                                             style="filter: brightness(1); border-radius: 20px">
                                     </div>
@@ -66,7 +66,7 @@
                             <div class="slider slider-nav mt-3">
                                 @foreach (ImagePelayanan::where('pelayanan_id', $pel->id)->get() as $item)
                                     <div>
-                                        <img src="{{ asset('/storage/' . $item->thumbnail) }}" alt="IGD"
+                                        <img src="{{ asset('/storage/' . $item->image) }}" alt="IGD"
                                             class="img-fluid mx-3 img-thumbnail" style="border-radius: 20px">
                                     </div>
                                 @endforeach

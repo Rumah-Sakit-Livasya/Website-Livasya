@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\About;
-use App\Models\Pelayanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
