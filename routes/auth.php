@@ -9,17 +9,22 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
+    Route::get('/bukan-login', [LoginController::class, 'index'])->middleware('guest');
+    Route::post('/bukan-login', [LoginController::class, 'authenticate']);
+    Route::post('/logout', [LoginController::class, 'logout']);
+
     // Route::get('register', [RegisteredUserController::class, 'create'])
     //     ->name('register');
 
     // Route::post('register', [RegisteredUserController::class, 'store']);
 
-    Route::get('/bukan-login', [AuthenticatedSessionController::class, 'create'])
-        ->name('login');
-    Route::post('/bukan-login', [AuthenticatedSessionController::class, 'store']);
+    // Route::get('/bukan-login', [AuthenticatedSessionController::class, 'create'])
+    //     ->name('login');
+    // Route::post('/bukan-login', [AuthenticatedSessionController::class, 'store']);
 
     // Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
     //     ->name('password.request');
