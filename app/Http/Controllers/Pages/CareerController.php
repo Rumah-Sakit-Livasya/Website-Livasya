@@ -27,13 +27,13 @@ class CareerController extends Controller
             ->where('tipe', 'non-medis')
             ->get()
             ->count();
-        $about = Identity::first();
+        $identity = Identity::first();
 
         return view('career', [
-            'name' => $about->name,
+            'name' => $identity->name,
             'title' => 'Lowongan Kerja',
             'dokter' => Doctor::all(),
-            'about' => $about,
+            'identity' => $identity,
             'pelayanan' => Pelayanan::all(),
             'galleries' => Galery::all(),
             'medis' => $medis,
@@ -55,14 +55,14 @@ class CareerController extends Controller
 
     public function career($tipe)
     {
-        $about = Identity::first();
+        $identity = Identity::first();
 
         return view('career-open', [
-            'name' => $about->name,
+            'name' => $identity->name,
             // 'careers' => Career::where('status', 'on')->get(),
             'title' => "Lowongan tenaga $tipe",
             'tipe' => $tipe,
-            'about' => $about,
+            'identity' => $identity,
             'pelayanan' => Pelayanan::all(),
             'galleries' => Galery::all()
         ]);
@@ -70,15 +70,15 @@ class CareerController extends Controller
 
     public function apply($tipe, $id)
     {
-        $about = Identity::first();
+        $identity = Identity::first();
         $career = Career::where('id', $id)->where('status', 'on')->where('tipe', $tipe)->first();
 
         if ($career) {
             return view('career-apply', [
-                'name' => $about->name,
+                'name' => $identity->name,
                 'title' => "Formulir Data Pelamar - $career->title",
                 'tipe' => $tipe,
-                'about' => $about,
+                'identity' => $identity,
                 'career' => $career,
                 'pelayanan' => Pelayanan::all(),
                 'galleries' => Galery::all()
