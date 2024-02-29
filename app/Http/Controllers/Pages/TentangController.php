@@ -11,12 +11,12 @@ class TentangController extends Controller
 {
     public function index()
     {
-        return view('about.index', [
-            'name' => 'RSIA Livasya',
-            'title' => 'Tentang Kami',
-            'about' => Identity::first(),
-            'pelayanan' => Pelayanan::all()
+        $identity = Identity::first();
+        $pelayanan = Pelayanan::all();
 
+        return view('about.index', compact('pelayanan'), [
+            'title' => 'Tentang Kami',
+            'about' => $identity,
         ]);
     }
 }

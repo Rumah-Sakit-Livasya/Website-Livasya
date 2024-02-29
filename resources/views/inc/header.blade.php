@@ -1,6 +1,12 @@
+@php
+    use App\Models\Identity;
+
+    $identity = Identity::first();
+@endphp
+
 <meta charset="utf-8">
 <title>
-    @yield('title', 'My App') - @yield('mywebname', 'Keuangan')
+    @yield('title', 'My App') - {{ $identity->name }}
 </title>
 <meta name="description" content="Laravel">
 <meta name="csrf-token" content="{{ csrf_token() }}">

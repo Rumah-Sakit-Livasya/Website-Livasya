@@ -50,9 +50,9 @@
                     {!! $post->body !!}
                 </span>
             </div>
-            <a href="/posts" class="text-decoration-none my-5 d-inline-block">
+            <a href="/posts" class="kembali-parent text-decoration-none text-primary my-5 d-inline-block">
                 <span class="fas fa-chevron-left"></span>
-                Kembali ke halaman Berita
+                <p class="kembali d-inline-block">Kembali ke halaman Berita</p>
             </a>
         </div>
     </div>

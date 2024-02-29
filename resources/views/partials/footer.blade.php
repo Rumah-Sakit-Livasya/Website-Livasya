@@ -6,21 +6,21 @@
     <div class="box-container mt-5">
         <div class="box">
             <img src="/img/logofooter.png" width="150px" alt="" class="mb-5">
-            <p>{{ $about->alamat }}</p>
+            <p>{{ $identity->alamat }}</p>
             <div class="col">
-                <a class="nav-link" href="{{ $about->facebook }}"> <i class="fab fa-facebook-f"></i> Facebook </a>
-                <a class="nav-link" href="{{ $about->twitter }}"> <i class="fab fa-twitter"></i> Twitter </a>
-                <a class="nav-link" href="{{ $about->instagram }}/"> <i class="fab fa-instagram"></i> Instagram </a>
-                <a class="nav-link" href="{{ $about->youtube }}"> <i class="fab fa-youtube"></i> Youtube </a>
+                <a class="nav-link" href="{{ $identity->facebook }}"> <i class="fab fa-facebook-f"></i> Facebook </a>
+                <a class="nav-link" href="{{ $identity->twitter }}"> <i class="fab fa-twitter"></i> Twitter </a>
+                <a class="nav-link" href="{{ $identity->instagram }}/"> <i class="fab fa-instagram"></i> Instagram </a>
+                <a class="nav-link" href="{{ $identity->youtube }}"> <i class="fab fa-youtube"></i> Youtube </a>
             </div>
         </div>
         <div class="box">
             <h3 class="fw-bold ">Hubungi Kami</h3>
-            <a class="nav-link" href="https://wa.me/{{ $about->no_hp }}"> <i class="fab fa-whatsapp"></i>
-                +{{ $about->no_hp }} </a>
-            <a class="nav-link" href="javascript:void(0)"> <i class="fas fa-phone"></i> {{ $about->no_telp }} </a>
-            <a class="nav-link" href="mailto:{{ $about->email }}"> <i class="fas fa-envelope"></i>
-                {{ $about->email }} </a>
+            <a class="nav-link" href="https://wa.me/{{ $identity->no_hp }}"> <i class="fab fa-whatsapp"></i>
+                +{{ $identity->no_hp }} </a>
+            <a class="nav-link" href="javascript:void(0)"> <i class="fas fa-phone"></i> {{ $identity->no_telp }} </a>
+            <a class="nav-link" href="mailto:{{ $identity->email }}"> <i class="fas fa-envelope"></i>
+                {{ $identity->email }} </a>
         </div>
         <div class="box">
             <h3 class="fw-bold">Mitra Kami</h3>

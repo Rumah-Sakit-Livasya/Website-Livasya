@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Models\Identity;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,8 +12,11 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('pages.user.index', [
-            'users' => User::all(),
+        $users = User::all();
+        $identity = Identity::first();
+
+        return view('pages.user.index', compact('identity', 'users'), [
+            'title' => "Pengguna"
         ]);
     }
 

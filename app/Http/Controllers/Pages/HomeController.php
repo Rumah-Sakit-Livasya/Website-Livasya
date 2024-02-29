@@ -17,49 +17,61 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $about = Identity::first();
-        return view('home', [
-            'name' => $about->name,
-            'title' => "Home",
-            'jumbotron' => Jumbotron::first(),
-            'jadwal' => Jadwal::first(),
-            'pelayanan' => Pelayanan::all(),
-            'about' => $about,
-            'dokter' => Doctor::all(),
-            'post' => Post::latest()->limit(4)->get(),
+        $identity = Identity::first();
+        $jumbotron = Jumbotron::first();
+        $jadwal = Jadwal::first();
+        $pelayanan = Pelayanan::all();
+        $dokter = Doctor::all();
+        $post = Post::latest()->limit(4)->get();
+
+        return view('home', compact('identity', 'jumbotron', 'jadwal', 'pelayanan', 'dokter', 'post'), [
+            'title' => "Beranda",
         ]);
     }
 
     public function categories()
     {
-        $about = Identity::first();
+        $identity = Identity::first();
+        $pelayanan = Pelayanan::all();
+
         return view('categories', [
-            'name' => $about->name,
+            'name' => $identity->name,
             'title' => 'Kategori Berita',
-            'categories' => Category::with(['user', 'category'])->latest()->get(),
-            'about' => $about,
+            'categories' => Category::all(),
+            'identity' => $identity,
+            'pelayanan' => $pelayanan,
         ]);
     }
 
     public function category(Category $category)
     {
-        $about = Identity::first();
+        $pelayanan = Pelayanan::all();
+        $identity = Identity::first();
+
+        $posts = $category->posts()
+            ->filter(request(['search']))
+            ->latest()
+            ->paginate(9)
+            ->withQueryString();
+
         return view('category', [
-            'name' => $about->name,
+            'name' => $identity->name,
             'title' => $category->name,
-            'posts' => $category->posts,
-            'about' => $about,
+            'posts' => $posts,
+            'identity' => $identity,
             'category' => $category->name,
+            'pelayanan' => $pelayanan
         ]);
     }
 
+
     public function gallery()
     {
-        $about = Identity::first();
+        $identity = Identity::first();
         return view('gallery', [
-            'name' => $about->name,
+            'name' => $identity->name,
             'title' => 'Galeri',
-            'about' => $about,
+            'identity' => $identity,
             'pelayanan' => Pelayanan::all(),
             'galleries' => Galery::all()
         ]);
@@ -67,23 +79,23 @@ class HomeController extends Controller
 
     public function dokter()
     {
-        $about = Identity::first();
+        $identity = Identity::first();
         return view('alldokter', [
-            'name' => $about->name,
+            'name' => $identity->name,
             'title' => 'Dokter',
             'dokter' => Doctor::all(),
-            'about' => $about,
+            'identity' => $identity,
             'pelayanan' => Pelayanan::all(),
             'galleries' => Galery::all()
         ]);
     }
-    public function detailDokter(Identity $about, Doctor $dokter)
+    public function detailDokter(Identity $identity, Doctor $dokter)
     {
         // return $dokter;
         return view('dokter', [
-            'name' => $about->name,
+            'name' => $identity->name,
             'title' => 'Dokter',
-            'about' => Identity::first(),
+            'identity' => Identity::first(),
             'dokter' => $dokter,
             'pelayanan' => Pelayanan::all()
         ]);
@@ -91,12 +103,12 @@ class HomeController extends Controller
 
     public function jadwalDokter()
     {
-        $about = Identity::first();
+        $identity = Identity::first();
         return view('jadwal', [
-            'name' => $about->name,
+            'name' => $identity->name,
             'title' => 'Jadwal Dokter',
             'dokter' => Doctor::all(),
-            'about' => $about,
+            'identity' => $identity,
             'pelayanan' => Pelayanan::all(),
             'galleries' => Galery::all()
         ]);
@@ -104,11 +116,11 @@ class HomeController extends Controller
 
     public function mitraKami()
     {
-        $about = Identity::first();
+        $identity = Identity::first();
         return view('mitra', [
-            'name' => $about->name,
+            'name' => $identity->name,
             'title' => 'Mirtra Kami',
-            'about' => $about,
+            'identity' => $identity,
             'pelayanan' => Pelayanan::all(),
             'galleries' => Galery::all()
         ]);
@@ -116,11 +128,11 @@ class HomeController extends Controller
 
     public function faq()
     {
-        $about = Identity::first();
+        $identity = Identity::first();
         return view('faq', [
-            'name' => $about->name,
+            'name' => $identity->name,
             'title' => 'FAQ',
-            'about' => $about,
+            'identity' => $identity,
             'pelayanan' => Pelayanan::all(),
             'galleries' => Galery::all()
         ]);
@@ -128,11 +140,11 @@ class HomeController extends Controller
 
     // public function igd()
     // {
-    //     $about = Identity::first();
+    //     $identity = Identity::first();
     //     return view('services.igd', [
-    //         'name' => $about->name,
+    //         'name' => $identity->name,
     //         'title' => 'IGD',
-    //         'about' => $about,
+    //         'identity' => $identity,
     //         'pelayanan' => Pelayanan::all()
     //     ]);
     // }

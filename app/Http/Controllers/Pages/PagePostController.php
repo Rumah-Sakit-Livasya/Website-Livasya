@@ -18,7 +18,7 @@ class PagePostController extends Controller
             'slogan_jumbotron' => "Stay Safe, Stay Healty",
             'deskripsi_jumbotron' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem sed autem vero? Magnam, est laboriosam!",
             'posts' => Post::latest()->filter(request(['search']))->paginate(9)->withQueryString(),
-            'about' => Identity::first(),
+            'identity' => Identity::first(),
             'pelayanan' => Pelayanan::all()
         ]);
     }
@@ -29,7 +29,7 @@ class PagePostController extends Controller
             'title' => 'Single Post',
             'name' => 'RSIA Livasya',
             'post' => $post,
-            'about' => Identity::first(),
+            'identity' => Identity::first(),
             'pelayanan' => Pelayanan::all()
         ]);
     }

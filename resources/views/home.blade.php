@@ -99,14 +99,14 @@
         </div>
         <div class="icons" data-aos="fade-up">
             <i class="fas fa-users"></i>
-            <h3><span data-purecounter-start="0" data-purecounter-end="{{ $about->jml_pasien_puas }}"
+            <h3><span data-purecounter-start="0" data-purecounter-end="{{ $identity->jml_pasien_puas }}"
                     data-purecounter-duration="5" class="purecounter"></span>+</h3>
             <p>Pasien Puas</p>
         </div>
         <div class="icons" data-aos="fade-left">
             <i class="fas fa-procedures"></i>
-            <h3 data-purecounter-start="0" data-purecounter-end="{{ $about->jml_fasilitas_kamar }}"
-                data-purecounter-duration="2" class="purecounter">{{ $about->jml_fasilitas_kamar }}+</h3>
+            <h3 data-purecounter-start="0" data-purecounter-end="{{ $identity->jml_fasilitas_kamar }}"
+                data-purecounter-duration="2" class="purecounter">{{ $identity->jml_fasilitas_kamar }}+</h3>
             <p>Fasilitas Tempat Tidur</p>
         </div>
     </section>

@@ -1453,3 +1453,7 @@ table.dataTable.dtr-inline.collapsed
   overflow: hidden;
   color: #fff !important;
 }
+
+.kembali-parent:hover .kembali{
+  transform: translateX(10px);
+}

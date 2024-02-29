@@ -27,8 +27,8 @@ class CareerController extends Controller
             ->where('tipe', 'non-medis')
             ->get()
             ->count();
-
         $about = Identity::first();
+
         return view('career', [
             'name' => $about->name,
             'title' => 'Lowongan Kerja',
@@ -44,10 +44,12 @@ class CareerController extends Controller
     public function admin()
     {
         $careers = Career::all();
+        $identity = Identity::first();
 
         return view('pages.careers.index', [
             'title' => 'Kategori',
             'careers' => $careers,
+            'identity' => $identity,
         ]);
     }
 

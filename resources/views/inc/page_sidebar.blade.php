@@ -1,10 +1,16 @@
+@php
+    use App\Models\Identity;
+
+    $identity = Identity::first();
+@endphp
+
 <!-- BEGIN Left Aside -->
 <aside class="page-sidebar">
     <div class="page-logo">
+        <img src="/img/logo.png" alt="{{ $identity->name }}" class="w-50" aria-roledescription="logo">
         <a href="#" class="page-logo-link press-scale-down d-flex align-items-center position-relative"
             data-toggle="modal" data-target="#modal-shortcut">
-            <img src="/img/logo.png" alt="Laravel" aria-roledescription="logo">
-            <span class="page-logo-text mr-1">Laravel <Applet></Applet></span>
+            <span class="page-logo-text mr-1">{{ $identity->name }} <Applet></Applet></span>
             <span class="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
             <i class="fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i>
         </a>
@@ -52,7 +58,7 @@
                 </a>
             </li>
             <li
-                class="{{ set_active_mainmenu(['dashboard/jumbotron', 'dashboard/pelayanan', 'dashboard/identity', 'dashboard/galery']) }}">
+                class="{{ set_active_mainmenu(['dashboard/jumbotron', 'dashboard/pelayanan', 'dashboard/identity', 'dashboard/galery', 'dashboard/jadwal']) }}">
                 <a href="#" title="Pages" data-filter-tags="pages">
                     <i class='bx bx-home'></i>
                     <span class="nav-link-text" data-i18n="nav.package_pages">Pages</span>

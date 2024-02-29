@@ -1,20 +1,32 @@
 @extends('layouts.main')
 
 @section('container')
-    <section></section>
-    <section class="blogs my-5" style="padding-top: 7rem" id="blogs">
-        <h1 class="heading mb-5" style="font-size: 3rem">Kategori</h1>
+    <section class="hero-berita mt-5"
+        style="background: url(/img/WorldMap.svg);  background-size: cover; background-position: right; margin-top: 8rem; height: 40rem;">
+        <section class="title bg-light justify-content-center" style="margin-top:8rem;border-radius: 20em;opacity: 0,5;">
+            <center>
+                <h1 class="fw-bold " style="color: var(--primary)" data-aos="fade-right" data-aos-anchor-placement="top-bottom">
+                    {{ $title }}
+                </h1>
+            </center>
+        </section>
+    </section>
+
+    <section class="blogs" style="padding-top: 7rem" id="blogs">
         <div class="box-container container-fluid">
-            <div class="row row-cols-lg-3 g-5 justify-content-center">
-                <div class="box m-3" style="max-width: 45rem">
-                    @foreach ($categories as $category)
-                        <ul>
-                            <li><a class="nav-link fs-3" href="/categories/{{ $category->slug }}">{{ $category->name }}</a>
-                            </li>
-                        </ul>
-                    @endforeach
-                </div>
+            <div class="row row-cols-lg-2 g-5 justify-content-center">
+                @foreach ($categories as $category)
+                    <div class="box m-3" style="max-width: 45rem">
+                        <a class="nav-link fs-3" href="/categories/{{ $category->slug }}">{{ $category->name }}</a>
+                    </div>
+                @endforeach
             </div>
+        </div>
+        <div class="text-center">
+            <a href="/" class="kembali-parent h5 text-decoration-none text-primary my-5 d-inline-block">
+                <span class="fas fa-chevron-left"></span>
+                <p class="kembali d-inline-block">Kembali ke Beranda</p>
+            </a>
         </div>
     </section>
 @endsection

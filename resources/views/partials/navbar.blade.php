@@ -5,7 +5,7 @@
     <div class="container mx-3" style="font-family: Montserrat ">
         <a href="/" class="logo nav-link p-3"> <img src="/img/logo.png" width="40" alt="">
         </a>
-        <a href="/" class="nav-link fw-bold"> {{ $about->name }}</a>
+        <a href="/" class="nav-link fw-bold"> {{ $identity->name }}</a>
         <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -44,7 +44,21 @@
                         </div>
                     </div>
                 </li>
-                <a class="nav-link" href="/posts">Berita & Acara</a>
+                {{-- <a class="nav-link" href="/posts">Berita & Acara</a> --}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Berita
+                    </a>
+                    <div class="dropdown-menu p-4 border-top shadow " style="border:none; border-radius:15px;">
+                        <div class="row">
+                            <div class="col" style="white-space: nowrap">
+                                <a class="nav-link" href="/categories">Kategori Berita</a>
+                                <a class="nav-link" href="/posts">Berita</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="/#services" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
