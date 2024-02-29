@@ -43,7 +43,7 @@
         }
 
         .wrap-text div {
-            text-align: right !important;
+            text-align: justify !important;
         }
     </style>
     <link rel="stylesheet" href="css/animasi.css">
