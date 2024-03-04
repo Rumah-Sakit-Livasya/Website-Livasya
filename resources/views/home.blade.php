@@ -54,7 +54,7 @@
                 <div class="image row juctify-content-center">
                     <div class="">
                         <img src="{{ asset('storage/' . $jumbotron->main_image) }}"
-                            class="d-block m-auto img-fluid m-auto p-5 rounded-circle" alt="">
+                            class="d-block img-fluid m-auto p-5 rounded-circle" alt="">
                     </div>
                 </div>
             </div>
