@@ -40,6 +40,8 @@ Route::get('/dokter', [HomeController::class, 'dokter']);
 Route::get('/dokter/{dokter:id}', [HomeController::class, 'detailDokter']);
 Route::get('/jadwal-dokter', [HomeController::class, 'jadwalDokter']);
 Route::get('/mitra-kami', [HomeController::class, 'mitraKami']);
+Route::get('/kebijakan-privasi', [HomeController::class, 'kebijakanPrivasi']);
+Route::get('/syarat-ketentuan', [HomeController::class, 'syaratKetentuan']);
 Route::get('/faq', [HomeController::class, 'faq']);
 Route::get('/about-us', [TentangController::class, 'index']);
 Route::get('/posts', [PagePostController::class, 'index']);

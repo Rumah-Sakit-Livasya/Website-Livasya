@@ -126,6 +126,30 @@ class HomeController extends Controller
         ]);
     }
 
+    public function kebijakanPrivasi()
+    {
+        $identity = Identity::first();
+        return view('kebijakan-privasi', [
+            'name' => $identity->name,
+            'title' => 'Kebijakan Privasi',
+            'identity' => $identity,
+            'pelayanan' => Pelayanan::all(),
+            'galleries' => Galery::all()
+        ]);
+    }
+
+    public function syaratKetentuan()
+    {
+        $identity = Identity::first();
+        return view('syarat-ketentuan', [
+            'name' => $identity->name,
+            'title' => 'Syarat & Ketentuan',
+            'identity' => $identity,
+            'pelayanan' => Pelayanan::all(),
+            'galleries' => Galery::all()
+        ]);
+    }
+
     public function faq()
     {
         $identity = Identity::first();

@@ -89,6 +89,10 @@
                                     href="/mitra-kami">Mitra Kami</a>
                                 <a class="dropdown-item fs-4" style="margin: 0; border-radius:10px;"
                                     href="/faq">FAQ</a>
+                                <a class="dropdown-item fs-4" style="margin: 0; border-radius:10px;"
+                                    href="/syarat-ketentuan">Syarat & Ketentuan</a>
+                                <a class="dropdown-item fs-4" style="margin: 0; border-radius:10px;"
+                                    href="/kebijakan-privasi">Kebijakan Privasi</a>
                             </div>
                         </div>
                     </div>
