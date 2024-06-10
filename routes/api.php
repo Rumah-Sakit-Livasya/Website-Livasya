@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\JadwalApiController;
 use App\Http\Controllers\Api\PostApiController;
 use App\Http\Controllers\Api\JumbotronApiController;
 use App\Http\Controllers\Api\PelayananApiController;
+use App\Http\Controllers\Api\PoliklinikApiController;
+use App\Http\Controllers\Pages\PoliklinikController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +59,11 @@ Route::get('/doctors', [DoctorApiController::class, 'getDoctor']);
 Route::post('/doctors', [DoctorApiController::class, 'store']);
 Route::get('/doctors/{doctor}', [DoctorApiController::class, 'show']);
 Route::put('/doctors/{doctor}', [DoctorApiController::class, 'update']);
+
+Route::get('/polikliniks', [PoliklinikApiController::class, 'getPoliklinik']);
+Route::post('/polikliniks', [PoliklinikApiController::class, 'store']);
+Route::get('/polikliniks/{doctor}', [PoliklinikApiController::class, 'show']);
+Route::put('/polikliniks/{doctor}', [PoliklinikApiController::class, 'update']);
 
 Route::get('/jumbotron', [JumbotronApiController::class, 'show']);
 Route::put('/jumbotron/{jumbotron}', [JumbotronApiController::class, 'update']);

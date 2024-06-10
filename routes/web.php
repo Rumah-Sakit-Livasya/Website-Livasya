@@ -15,6 +15,7 @@ use App\Http\Controllers\Pages\JadwalController;
 use App\Http\Controllers\Pages\PagePelayananController;
 use App\Http\Controllers\Pages\PagePostController;
 use App\Http\Controllers\Pages\PelayananController;
+use App\Http\Controllers\Pages\PoliklinikController;
 use App\Http\Controllers\Pages\UserController;
 use App\Http\Controllers\Pages\PostController;
 use App\Http\Controllers\Pages\TentangController;
@@ -87,6 +88,9 @@ Route::middleware('auth')->group(function () {
         // Pelayanan
         Route::get("/pelayanan", [PelayananController::class, 'index'])->name("pelayanan.index");
         Route::get("/pelayanan/{pelayanan:id}/images", [PelayananController::class, 'images'])->name("pelayanan.image");
+
+        // Poliklinik
+        Route::get("/poliklinik", [PoliklinikController::class, 'index'])->name("poliklinik.index");
 
         // Identity
         Route::get("/identity", [IdentityController::class, 'index'])->name("identity.index");

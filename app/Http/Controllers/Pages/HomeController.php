@@ -10,6 +10,7 @@ use App\Models\Identity;
 use App\Models\Jadwal;
 use App\Models\Jumbotron;
 use App\Models\Pelayanan;
+use App\Models\Poliklinik;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -22,9 +23,10 @@ class HomeController extends Controller
         $jadwal = Jadwal::first();
         $pelayanan = Pelayanan::all();
         $dokter = Doctor::all();
+        $polikliniks = Poliklinik::all();
         $post = Post::latest()->limit(4)->get();
 
-        return view('home', compact('identity', 'jumbotron', 'jadwal', 'pelayanan', 'dokter', 'post'), [
+        return view('home', compact('identity', 'jumbotron', 'jadwal', 'pelayanan', 'dokter', 'post', 'polikliniks'), [
             'title' => "Beranda",
         ]);
     }

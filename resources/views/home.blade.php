@@ -126,38 +126,18 @@
                 <section class="splide" aria-labelledby="carousel-heading">
                     <div class="splide__track">
                         <ul class="splide__list">
-                            <li class="splide__slide">
-                                <div class="card mx-3 border-0 " style="border-radius:20px;">
-                                    <div class="card-body mt-4 text-center">
-                                        <img src="/img/doctorpoli.webp" alt="" width="50">
-                                        <p class="fs-3 mt-3 text fw-bold" style="color: #e97f0d;">Poli Umum</p>
+                            @foreach ($polikliniks as $poliklinik)
+                                <li class="splide__slide">
+                                    <div class="card mx-3 border-0 " style="border-radius:20px;">
+                                        <div class="card-body mt-4 text-center">
+                                            <img src="{{ asset('storage/' . $poliklinik->image) }}"
+                                                alt="{{ $poliklinik->name }}" width="50">
+                                            <p class="fs-3 mt-3 text fw-bold" style="color: #e97f0d;">
+                                                {{ $poliklinik->name }}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="splide__slide">
-                                <div class="card mx-3 border-0 " style="border-radius:20px;">
-                                    <div class="card-body mt-4 text-center">
-                                        <img src="/img/pediatrics.webp" alt="" width="50">
-                                        <p class="fs-3 mt-3 text fw-bold" style="color: #e97f0d;">Poli Anak</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="splide__slide">
-                                <div class="card mx-3 border-0 " style="border-radius:20px;">
-                                    <div class="card-body mt-4 text-center">
-                                        <img src="/img/surgery.webp" alt="" width="50">
-                                        <p class="fs-3 mt-3 text fw-bold" style="color: #e97f0d;">Poli Bedah</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="splide__slide">
-                                <div class="card mx-3 border-0 " style="border-radius:20px;">
-                                    <div class="card-body mt-4 text-center">
-                                        <img src="/img/newborn.webp" width="50" alt="">
-                                        <p class="fs-3 mt-3 text fw-bold" style="color: #e97f0d;">Poli Obgyn</p>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </section>

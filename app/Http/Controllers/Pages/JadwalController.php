@@ -12,7 +12,8 @@ class JadwalController extends Controller
     public function index()
     {
         $jadwal = Jadwal::first();
-        return view('pages.jadwal.index', compact('identity'), [
+        $identity = Identity::first();
+        return view('pages.jadwal.index', compact('jadwal'), [
             'title' => 'Jadwal',
         ]);
     }

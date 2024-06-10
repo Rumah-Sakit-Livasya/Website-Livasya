@@ -76,6 +76,12 @@
                             <span class="nav-link-text" data-i18n="nav.package_pages_pelayanan">Pelayanan</span>
                         </a>
                     </li>
+                    <li class="{{ set_active('dashboard/poliklinik') }}">
+                        <a href="{{ route('poliklinik.index') }}" title="Poliklinik"
+                            data-filter-tags="package pages poliklinik">
+                            <span class="nav-link-text" data-i18n="nav.package_pages_poliklinik">Poliklinik</span>
+                        </a>
+                    </li>
                     <li class="{{ set_active('dashboard/identity') }}">
                         <a href="{{ route('identity.index') }}" title="Identitas"
                             data-filter-tags="package pages identitas">
@@ -87,7 +93,8 @@
                             <span class="nav-link-text" data-i18n="nav.package_pages_galery">Galery</span>
                         </a>
                     <li class="{{ set_active('dashboard/jadwal') }}">
-                        <a href="{{ route('jadwal.index') }}" title="Jadwal" data-filter-tags="package pages jadwal">
+                        <a href="{{ route('jadwal.index') }}" title="Jadwal"
+                            data-filter-tags="package pages jadwal">
                             <span class="nav-link-text" data-i18n="nav.package_pages_jadwal">Jadwal</span>
                         </a>
                     </li>
