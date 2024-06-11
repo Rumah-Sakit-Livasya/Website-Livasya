@@ -20,10 +20,16 @@
                             </button>
 
                             <div class="row justify-content-center align-items-center mt-5">
-                                <div class="col-lg-6">
+                                <div class="col-lg-12 mb-3">
                                     <div class="form-group">
                                         <label class="form-label text-muted">Nama Instansi</label>
                                         <input type="text" class="form-control" id="name" disabled="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label text-muted">Nama Pendek (1 Kata)</label>
+                                        <input type="text" class="form-control" id="shortname" disabled="">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label text-muted">Misi</label>
@@ -127,6 +133,7 @@
                 processData: false,
                 success: function(data) {
                     $('#name').val(data.name);
+                    $('#shortname').val(data.shortname);
                     $('#visi').val(data.visi);
                     $('#misi').val(data.misi);
                     $('#tujuan').val(data.tujuan);
@@ -160,6 +167,7 @@
                     success: function(data) {
                         $('#update-identity-form').attr("data-id", data.id);
                         $('#edit-name').val(data.name);
+                        $('#edit-shortname').val(data.shortname);
                         $('#edit-visi').val(data.visi);
                         $('#edit-misi').val(data.misi);
                         $('#edit-misi-text').val(data.misi);

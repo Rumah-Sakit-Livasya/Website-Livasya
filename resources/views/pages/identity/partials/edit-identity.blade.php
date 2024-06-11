@@ -28,6 +28,11 @@
                             name="name" placeholder="Nama Instansi">
                     </div>
                     <div class="form-group">
+                        <label for="edit-shortname">Nama Pendek (1 Kata)</label>
+                        <input type="text" autofocus value="" class="form-control" id="edit-shortname"
+                            name="shortname" placeholder="Nama Pendek (1 Kata)">
+                    </div>
+                    <div class="form-group">
                         <label for="edit-visi">Visi</label>
                         <input type="text" autofocus value="" class="form-control" id="edit-visi"
                             name="visi" placeholder="Visi">

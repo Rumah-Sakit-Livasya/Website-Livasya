@@ -37,7 +37,7 @@
                             placeholder="Slug">
                     </div>
                     <div class="form-group">
-                        <label for="edit-body" class="form-label">Isi Pelayanan</label>
+                        <label for="edit-body-text" class="form-label">Isi Pelayanan</label>
                         <input id="edit-body" type="hidden" name="body" value="{{ old('body') }}">
                         <trix-editor input="edit-body" id="edit-body-text"></trix-editor>
                         @error('body')

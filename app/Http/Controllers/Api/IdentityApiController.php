@@ -22,6 +22,7 @@ class IdentityApiController extends Controller
         $rules = [
             'image' => 'image|file',
             'name' => 'required|max:255',
+            'shortname' => 'required|max:255',
             'visi' => 'required|max:255',
             'misi' => 'required',
             'tujuan' => 'required',

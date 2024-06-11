@@ -17,10 +17,4 @@ class PoliklinikController extends Controller
             'title' => 'Poliklinik',
         ]);
     }
-
-    public function checkSlug(Request $request)
-    {
-        $slug = SlugService::createSlug(Poliklinik::class, 'slug', $request->name);
-        return response()->json(['slug' => $slug]);
-    }
 }

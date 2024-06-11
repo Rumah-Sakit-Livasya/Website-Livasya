@@ -58,7 +58,7 @@
                 </a>
             </li>
             <li
-                class="{{ set_active_mainmenu(['dashboard/jumbotron', 'dashboard/pelayanan', 'dashboard/identity', 'dashboard/galery', 'dashboard/jadwal']) }}">
+                class="{{ set_active_mainmenu(['dashboard/jumbotron', 'dashboard/pelayanan', 'dashboard/identity', 'dashboard/galery', 'dashboard/jadwal', 'dashboard/poliklinik', 'dashboard/timeline']) }}">
                 <a href="#" title="Pages" data-filter-tags="pages">
                     <i class='bx bx-home'></i>
                     <span class="nav-link-text" data-i18n="nav.package_pages">Pages</span>
@@ -82,6 +82,12 @@
                             <span class="nav-link-text" data-i18n="nav.package_pages_poliklinik">Poliklinik</span>
                         </a>
                     </li>
+                    <li class="{{ set_active('dashboard/timeline') }}">
+                        <a href="{{ route('timeline.index') }}" title="Timeline"
+                            data-filter-tags="package pages timeline">
+                            <span class="nav-link-text" data-i18n="nav.package_pages_timeline">Timeline</span>
+                        </a>
+                    </li>
                     <li class="{{ set_active('dashboard/identity') }}">
                         <a href="{{ route('identity.index') }}" title="Identitas"
                             data-filter-tags="package pages identitas">
@@ -89,7 +95,8 @@
                         </a>
                     </li>
                     <li class="{{ set_active('dashboard/galery') }}">
-                        <a href="{{ route('galery.index') }}" title="Galery" data-filter-tags="package pages galery">
+                        <a href="{{ route('galery.index') }}" title="Galery"
+                            data-filter-tags="package pages galery">
                             <span class="nav-link-text" data-i18n="nav.package_pages_galery">Galery</span>
                         </a>
                     <li class="{{ set_active('dashboard/jadwal') }}">

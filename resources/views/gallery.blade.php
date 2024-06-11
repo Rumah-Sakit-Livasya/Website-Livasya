@@ -14,8 +14,11 @@
                 <p class="imglist">
                     @foreach ($galleries as $gallery)
                         <div class="col-lg-3" style="border-radius: 20px;">
-                            <a href="{{ asset('/public/'. $gallery->image) }}"  data-fancybox="group" data-caption="{{ $gallery->caption }}">
-                                <div class="card-img-top img overflow-hidden img-thumbnail shadow" style="z-index: 0; background-image: url({{ asset('/public/' . $gallery->image)}}); background-size: cover; height: 300px; background-position: center top; border-radius: 20px;"></div>                        
+                            <a href="{{ asset('/storage/' . $gallery->image) }}" data-fancybox="group"
+                                data-caption="{{ $gallery->caption }}">
+                                <div class="card-img-top img overflow-hidden img-thumbnail shadow"
+                                    style="z-index: 0; background-image: url({{ asset('/public/' . $gallery->image) }}); background-size: cover; height: 300px; background-position: center top; border-radius: 20px;">
+                                </div>
                             </a>
                         </div>
                     @endforeach
@@ -24,4 +27,3 @@
         </div>
     </section>
 @endsection
-

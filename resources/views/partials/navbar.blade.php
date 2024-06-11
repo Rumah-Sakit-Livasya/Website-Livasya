@@ -38,8 +38,8 @@
                             <div class="col">
                                 <a class="dropdown-item fs-4" style="margin: 0; border-radius:10px;"
                                     href="/dokter">Dokter</a>
-                                <a class="dropdown-item fs-4" style="margin: 0; border-radius:10px;"
-                                    href="/jadwal-dokter">Jadwal Dokter</a>
+                                {{-- <a class="dropdown-item fs-4" style="margin: 0; border-radius:10px;"
+                                    href="/jadwal-dokter">Jadwal Dokter</a> --}}
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="/#services" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        Livasya
+                        {{ $identity->shortname }}
                     </a>
                     <div class="dropdown-menu p-4 border-top shadow " style="border:none; border-radius:15px;">
                         <div class="row">

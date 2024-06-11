@@ -19,6 +19,7 @@ use App\Http\Controllers\Pages\PoliklinikController;
 use App\Http\Controllers\Pages\UserController;
 use App\Http\Controllers\Pages\PostController;
 use App\Http\Controllers\Pages\TentangController;
+use App\Http\Controllers\Pages\TimelineController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -88,6 +89,9 @@ Route::middleware('auth')->group(function () {
         // Pelayanan
         Route::get("/pelayanan", [PelayananController::class, 'index'])->name("pelayanan.index");
         Route::get("/pelayanan/{pelayanan:id}/images", [PelayananController::class, 'images'])->name("pelayanan.image");
+
+        // Timeline
+        Route::get("/timeline", [TimelineController::class, 'index'])->name("timeline.index");
 
         // Poliklinik
         Route::get("/poliklinik", [PoliklinikController::class, 'index'])->name("poliklinik.index");
