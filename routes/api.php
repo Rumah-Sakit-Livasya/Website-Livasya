@@ -45,6 +45,9 @@ Route::get('/posts', [PostApiController::class, 'getPost']);
 Route::post('/posts', [PostApiController::class, 'store']);
 Route::get('/posts/{post}', [PostApiController::class, 'show']);
 Route::put('/posts/{post}', [PostApiController::class, 'update']);
+Route::post('/posts/{post}/activate', [PostApiController::class, 'activate']);
+Route::post('/posts/{post}/deactivate', [PostApiController::class, 'deactivate']);
+
 
 Route::get('/facilities', [FacilityApiController::class, 'getFacility']);
 Route::post('/facilities', [FacilityApiController::class, 'store']);

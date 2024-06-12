@@ -13,10 +13,7 @@ class PagePostController extends Controller
     {
         return view('posts', [
             'title' => 'Blogs',
-            'name' => 'RSIA Livasya',
-            'slogan_jumbotron' => "Stay Safe, Stay Healty",
-            'deskripsi_jumbotron' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem sed autem vero? Magnam, est laboriosam!",
-            'posts' => Post::latest()->filter(request(['search']))->paginate(9)->withQueryString(),
+            'posts' => Post::where('is_active', 1)->latest()->filter(request(['search']))->paginate(9)->withQueryString(),
             'identity' => Identity::first(),
             'pelayanan' => Pelayanan::all()
         ]);

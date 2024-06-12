@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PostApiController extends Controller
 {
@@ -77,5 +79,35 @@ class PostApiController extends Controller
         $post->update($validatedData);
 
         return response()->json(['message' => 'Post updated successfully']);
+    }
+
+    public function activate($id)
+    {
+        try {
+            $post = Post::findOrFail($id);
+            $post->is_active = 1;
+            $post->save();
+
+            return response()->json(['success' => true]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['success' => false, 'message' => 'Post not found'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'An error occurred'], 500);
+        }
+    }
+
+    public function deactivate($id)
+    {
+        try {
+            $post = Post::findOrFail($id);
+            $post->is_active = 0;
+            $post->save();
+
+            return response()->json(['success' => true]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['success' => false, 'message' => 'Post not found'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'An error occurred'], 500);
+        }
     }
 }

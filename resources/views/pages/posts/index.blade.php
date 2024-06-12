@@ -30,6 +30,7 @@
                                         <th style="white-space: nowrap">Kategori</th>
                                         <th style="white-space: nowrap">Judul</th>
                                         <th style="white-space: nowrap">Slug</th>
+                                        <th style="white-space: nowrap">Status</th>
                                         <th style="white-space: nowrap">Aksi</th>
                                     </tr>
                                 </thead>
@@ -40,15 +41,33 @@
                                             <td style="white-space: nowrap">{{ $post->category->name }}</td>
                                             <td style="white-space: nowrap">{{ $post->title }}</td>
                                             <td style="white-space: nowrap">{{ $post->slug }}</td>
+                                            <td style="white-space: nowrap">
+                                                {{ $post->is_active == 1 ? 'Aktif' : 'Nonaktif' }}
+                                            </td>
 
                                             <td style="white-space: nowrap">
-                                                <!-- Add a data-post-id attribute to the edit button -->
+                                                <!-- Edit button -->
                                                 <button type="button" data-backdrop="static" data-keyboard="false"
                                                     class="badge mx-1 badge-primary p-2 border-0 text-white edit-button"
                                                     data-toggle="modal" data-target="#edit-berita" title="Ubah"
                                                     data-post-id="{{ $post->id }}">
                                                     <span class="fal fa-pencil"></span>
                                                 </button>
+                                                @if ($post->is_active == 1)
+                                                    <!-- Button to deactivate post -->
+                                                    <button type="button"
+                                                        class="badge mx-1 badge-danger p-2 border-0 text-white deactivate-button"
+                                                        data-post-id="{{ $post->id }}" onclick="btnDeactivate(event)">
+                                                        <i class='bx bx-minus-circle m-0'></i>
+                                                    </button>
+                                                @else
+                                                    <!-- Button to activate post -->
+                                                    <button type="button"
+                                                        class="badge mx-1 badge-success p-2 border-0 text-white activate-button"
+                                                        data-post-id="{{ $post->id }}" onclick="btnActivate(event)">
+                                                        <i class='bx bx-check-circle m-0'></i>
+                                                    </button>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -59,6 +78,7 @@
                                         <th style="white-space: nowrap">Kategori</th>
                                         <th style="white-space: nowrap">Judul</th>
                                         <th style="white-space: nowrap">Slug</th>
+                                        <th style="white-space: nowrap">Nonaktif</th>
                                         <th style="white-space: nowrap">Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -254,5 +274,101 @@
                     .then(data => editslug.value = data.slug)
             });
         });
+
+        function btnDeactivate(event) {
+            event.preventDefault();
+            let button = event.currentTarget;
+            let postId = button.getAttribute('data-post-id');
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak akan dapat mengembalikan tindakan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, nonaktifkan!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    deactivatePost(postId);
+                }
+            });
+        }
+
+        function deactivatePost(postId) {
+            $.ajax({
+                url: '/api/posts/' + postId + '/deactivate',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire(
+                            'Nonaktifkan!',
+                            'Post Anda telah dinonaktifkan.',
+                            'success'
+                        ).then(() => {
+                            location.reload(); // Reload the page to see changes
+                        });
+                    } else {
+                        Swal.fire(
+                            'Gagal!',
+                            'Gagal menonaktifkan post.',
+                            'error'
+                        );
+                    }
+                }
+            });
+        }
+
+        function btnActivate(event) {
+            event.preventDefault();
+            let button = event.currentTarget;
+            let postId = button.getAttribute('data-post-id');
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda akan mengaktifkan post ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, aktifkan!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    activatePost(postId);
+                }
+            });
+        }
+
+        function activatePost(postId) {
+            $.ajax({
+                url: '/api/posts/' + postId + '/activate',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire(
+                            'Diaktifkan!',
+                            'Post Anda telah diaktifkan.',
+                            'success'
+                        ).then(() => {
+                            location.reload(); // Reload the page to see changes
+                        });
+                    } else {
+                        Swal.fire(
+                            'Gagal!',
+                            'Gagal mengaktifkan post.',
+                            'error'
+                        );
+                    }
+                }
+            });
+        }
     </script>
 @endsection
