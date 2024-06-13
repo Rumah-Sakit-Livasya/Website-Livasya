@@ -171,7 +171,7 @@ class HomeController extends Controller
         $pelayanan = Pelayanan::all();
         $mitras = Mitra::where('is_primary', 1)->get();
 
-        return view('syarat-ketentuan', compact('identity', 'pelayanan', 'mitras'), [
+        return view('faq', compact('identity', 'pelayanan', 'mitras'), [
             'title' => 'FAQ',
         ]);
     }
