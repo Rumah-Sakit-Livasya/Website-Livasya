@@ -6,7 +6,7 @@
         <section class="title bg-light justify-content-center" style="margin-top:8rem;border-radius: 20em;opacity: 0,5;">
             <center>
                 <h1 class="fw-bold " style="color: var(--primary)" data-aos="fade-right" data-aos-anchor-placement="top-bottom">
-                    Berita Kategori {{ $category }}
+                    Berita Kategori {{ $category->name }}
                 </h1>
             </center>
         </section>

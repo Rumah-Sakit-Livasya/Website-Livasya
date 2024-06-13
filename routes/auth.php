@@ -13,7 +13,7 @@ use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('/bukan-login', [LoginController::class, 'index'])->middleware('guest');
+    Route::get('/bukan-login', [LoginController::class, 'index'])->middleware('guest')->name('login');
     Route::post('/bukan-login', [LoginController::class, 'authenticate']);
     Route::post('/logout', [LoginController::class, 'logout']);
 

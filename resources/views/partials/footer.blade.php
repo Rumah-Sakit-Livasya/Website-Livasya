@@ -25,30 +25,12 @@
         <div class="box">
             <h3 class="fw-bold">Mitra Kami</h3>
             <div class="row justify-content-center align-items-center">
-                <div class="col-3 col-lg-4">
-                    <img src="/img/asuransi/admedika.webp" alt="Admedika" class="img-thumbnail"
-                        style="background: none; border: none; box-shadow: none">
-                </div>
-                <div class="col-3 col-lg-4">
-                    <img src="/img/asuransi/bpjs.webp" alt="Owlexa" class="img-thumbnail"
-                        style="background: none; border: none; box-shadow: none">
-                </div>
-                <div class="col-3 col-lg-4">
-                    <img src="/img/asuransi/ykp.webp" alt="YKP" class="img-thumbnail"
-                        style="background: none; border: none; box-shadow: none">
-                </div>
-                <div class="col-3 col-lg-4">
-                    <img src="/img/asuransi/owlexa.webp" alt="Owlexa" class="img-thumbnail"
-                        style="background: none; border: none; box-shadow: none">
-                </div>
-                <div class="col-3 col-lg-4">
-                    <img src="/img/asuransi/iziklaim.webp" alt="Owlexa" class="img-thumbnail"
-                        style="background: none; border: none; box-shadow: none">
-                </div>
-                <div class="col-3 col-lg-4">
-                    <img src="/img/asuransi/fullerton.webp" alt="Owlexa" class="img-thumbnail"
-                        style="background: none; border: none; box-shadow: none">
-                </div>
+                @foreach ($mitras as $mitra)
+                    <div class="col-3 col-lg-4">
+                        <img src="{{ asset('storage/' . $mitra->image) }}" alt="{{ $mitra->name }}"
+                            class="img-thumbnail" style="background: none; border: none; box-shadow: none">
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>

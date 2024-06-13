@@ -8,7 +8,7 @@
         .hero-igd {
             background:
                 linear-gradient(rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.50)),
-                url("{{ asset('/storage/' . $pel->header) }}");
+                url("{{ asset('/storage/' . $pelayananPage->header) }}");
             background-size: cover;
             background-position: center center;
             margin-top: 8rem;
@@ -54,17 +54,17 @@
                     <div class="row overflow-hidden">
                         <div class="column small-11 small-centered">
                             <div class="slider slider-single">
-                                @foreach (ImagePelayanan::where('pelayanan_id', $pel->id)->get() as $item)
+                                @foreach (ImagePelayanan::where('pelayanan_id', $pelayananPage->id)->get() as $item)
                                     <div>
-                                        <img src="{{ asset('/storage/' . $item->thumbnail) }}" alt="{{ $pel->title }}"
-                                            class="img-fluid img-thumbnail"
+                                        <img src="{{ asset('/storage/' . $item->thumbnail) }}"
+                                            alt="{{ $pelayananPage->title }}" class="img-fluid img-thumbnail"
                                             style="filter: brightness(1); border-radius: 20px">
                                     </div>
                                 @endforeach
                             </div>
 
                             <div class="slider slider-nav mt-3">
-                                @foreach (ImagePelayanan::where('pelayanan_id', $pel->id)->get() as $item)
+                                @foreach (ImagePelayanan::where('pelayanan_id', $pelayananPage->id)->get() as $item)
                                     <div>
                                         <img src="{{ asset('/storage/' . $item->image) }}" alt="IGD"
                                             class="img-fluid mx-3 img-thumbnail" style="border-radius: 20px">
@@ -77,7 +77,7 @@
 
             </div>
             <div class="text mt-5 overflow-hidden">
-                {!! $pel->body !!}
+                {!! $pelayananPage->body !!}
             </div>
         </div>
     </section>

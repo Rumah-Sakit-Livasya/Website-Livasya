@@ -20,9 +20,11 @@ class HomeController extends Controller
     public function index()
     {
         $identity = Identity::first();
+        $pelayanan = Pelayanan::all();
+        $mitras = Mitra::where('is_primary', 1)->get();
+
         $jumbotron = Jumbotron::first();
         $jadwal = Jadwal::first();
-        $pelayanan = Pelayanan::all();
         $dokter = Doctor::all();
         $polikliniks = Poliklinik::all();
         $post = Post::where('is_active', 1)->latest()->limit(4)->get();
@@ -36,20 +38,20 @@ class HomeController extends Controller
     {
         $identity = Identity::first();
         $pelayanan = Pelayanan::all();
+        $mitras = Mitra::where('is_primary', 1)->get();
 
-        return view('categories', [
-            'name' => $identity->name,
-            'title' => 'Kategori Berita',
-            'categories' => Category::all(),
-            'identity' => $identity,
-            'pelayanan' => $pelayanan,
+        $categories = Category::all();
+
+        return view('categories', compact('identity', 'pelayanan', 'mitras', 'categories'), [
+            'title' => "Kategori Berita",
         ]);
     }
 
     public function category(Category $category)
     {
-        $pelayanan = Pelayanan::all();
         $identity = Identity::first();
+        $pelayanan = Pelayanan::all();
+        $mitras = Mitra::where('is_primary', 1)->get();
 
         $posts = $category->posts()
             ->filter(request(['search']))
@@ -57,13 +59,8 @@ class HomeController extends Controller
             ->paginate(9)
             ->withQueryString();
 
-        return view('category', [
-            'name' => $identity->name,
+        return view('category', compact('identity', 'pelayanan', 'mitras', 'posts', 'category'), [
             'title' => $category->name,
-            'posts' => $posts,
-            'identity' => $identity,
-            'category' => $category->name,
-            'pelayanan' => $pelayanan
         ]);
     }
 
@@ -71,17 +68,22 @@ class HomeController extends Controller
     public function gallery()
     {
         $identity = Identity::first();
-        return view('gallery', [
-            'name' => $identity->name,
+        $pelayanan = Pelayanan::all();
+        $mitras = Mitra::where('is_primary', 1)->get();
+
+        $galleries = Galery::all();
+
+        return view('gallery', compact('identity', 'pelayanan', 'mitras', 'galleries'), [
             'title' => 'Galeri',
-            'identity' => $identity,
-            'pelayanan' => Pelayanan::all(),
-            'galleries' => Galery::all()
         ]);
     }
 
     public function dokter()
     {
+        $identity = Identity::first();
+        $pelayanan = Pelayanan::all();
+        $mitras = Mitra::where('is_primary', 1)->get();
+
         $customOrder = [
             'Dokter Spesialis Obgyn',
             'Dokter Spesialis Anak',
@@ -95,94 +97,82 @@ class HomeController extends Controller
 
         $dokters = Doctor::all()->groupBy('jabatan');
 
-        // Sort the grouped doctors according to the custom order
         $sortedDokters = collect($customOrder)->mapWithKeys(function ($jabatan) use ($dokters) {
             return [$jabatan => $dokters->get($jabatan, collect())];
         });
 
-        $identity = Identity::first();
-        return view('alldokter', [
-            'name' => $identity->name,
+        return view('alldokter', compact('identity', 'pelayanan', 'mitras', 'sortedDokters'), [
             'title' => 'Dokter',
-            'sortedDokters' => $sortedDokters,
-            'identity' => $identity,
-            'pelayanan' => Pelayanan::all(),
-            'galleries' => Galery::all()
         ]);
     }
 
     public function detailDokter(Identity $identity, Doctor $dokter)
     {
-        // return $dokter;
-        return view('dokter', [
-            'name' => $identity->name,
+        $identity = Identity::first();
+        $pelayanan = Pelayanan::all();
+        $mitras = Mitra::where('is_primary', 1)->get();
+
+        return view('dokter', compact('identity', 'pelayanan', 'mitras', 'dokter'), [
             'title' => 'Dokter',
-            'identity' => Identity::first(),
-            'dokter' => $dokter,
-            'pelayanan' => Pelayanan::all()
         ]);
     }
 
     public function jadwalDokter()
     {
         $identity = Identity::first();
-        return view('jadwal', [
-            'name' => $identity->name,
+        $pelayanan = Pelayanan::all();
+        $mitras = Mitra::where('is_primary', 1)->get();
+
+        $dokter = Doctor::all();
+
+        return view('jadwal', compact('identity', 'pelayanan', 'mitras', 'dokter'), [
             'title' => 'Jadwal Dokter',
-            'dokter' => Doctor::all(),
-            'identity' => $identity,
-            'pelayanan' => Pelayanan::all(),
-            'galleries' => Galery::all()
         ]);
     }
 
     public function mitraKami()
     {
         $identity = Identity::first();
-        $mirtas = Mitra::all();
+        $pelayanan = Pelayanan::all();
+        $mitras = Mitra::where('is_primary', 1)->get();
 
-        return view('mitra', [
-            'name' => $identity->name,
-            'title' => 'Mirtra Kami',
-            'identity' => $identity,
-            'pelayanan' => Pelayanan::all(),
-            'galleries' => Galery::all()
+        $mitraPage = Mitra::all();
+
+        return view('mitra', compact('identity', 'pelayanan', 'mitras', 'mitraPage'), [
+            'title' => 'Mitra Kami',
         ]);
     }
 
     public function kebijakanPrivasi()
     {
         $identity = Identity::first();
-        return view('kebijakan-privasi', [
-            'name' => $identity->name,
+        $pelayanan = Pelayanan::all();
+        $mitras = Mitra::where('is_primary', 1)->get();
+
+        return view('kebijakan-privasi', compact('identity', 'pelayanan', 'mitras'), [
             'title' => 'Kebijakan Privasi',
-            'identity' => $identity,
-            'pelayanan' => Pelayanan::all(),
-            'galleries' => Galery::all()
         ]);
     }
 
     public function syaratKetentuan()
     {
         $identity = Identity::first();
-        return view('syarat-ketentuan', [
-            'name' => $identity->name,
+        $pelayanan = Pelayanan::all();
+        $mitras = Mitra::where('is_primary', 1)->get();
+
+        return view('syarat-ketentuan', compact('identity', 'pelayanan', 'mitras'), [
             'title' => 'Syarat & Ketentuan',
-            'identity' => $identity,
-            'pelayanan' => Pelayanan::all(),
-            'galleries' => Galery::all()
         ]);
     }
 
     public function faq()
     {
         $identity = Identity::first();
-        return view('faq', [
-            'name' => $identity->name,
+        $pelayanan = Pelayanan::all();
+        $mitras = Mitra::where('is_primary', 1)->get();
+
+        return view('syarat-ketentuan', compact('identity', 'pelayanan', 'mitras'), [
             'title' => 'FAQ',
-            'identity' => $identity,
-            'pelayanan' => Pelayanan::all(),
-            'galleries' => Galery::all()
         ]);
     }
 }
