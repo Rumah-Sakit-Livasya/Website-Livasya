@@ -29,7 +29,7 @@ class HomeController extends Controller
         $polikliniks = Poliklinik::all();
         $post = Post::where('is_active', 1)->latest()->limit(4)->get();
 
-        return view('home', compact('identity', 'jumbotron', 'jadwal', 'pelayanan', 'dokter', 'post', 'polikliniks'), [
+        return view('home', compact('identity', 'mitras', 'pelayanan', 'jumbotron', 'jadwal', 'dokter', 'post', 'polikliniks'), [
             'title' => "Beranda",
         ]);
     }
