@@ -58,7 +58,7 @@
                 </a>
             </li>
             <li
-                class="{{ set_active_mainmenu(['dashboard/jumbotron', 'dashboard/pelayanan', 'dashboard/identity', 'dashboard/galery', 'dashboard/jadwal', 'dashboard/poliklinik', 'dashboard/timeline']) }}">
+                class="{{ set_active_mainmenu(['dashboard/jumbotron', 'dashboard/pelayanan', 'dashboard/identity', 'dashboard/galery', 'dashboard/jadwal', 'dashboard/poliklinik', 'dashboard/timeline', 'dashboard/mitra']) }}">
                 <a href="#" title="Pages" data-filter-tags="pages">
                     <i class='bx bx-home'></i>
                     <span class="nav-link-text" data-i18n="nav.package_pages">Pages</span>
@@ -80,6 +80,11 @@
                         <a href="{{ route('poliklinik.index') }}" title="Poliklinik"
                             data-filter-tags="package pages poliklinik">
                             <span class="nav-link-text" data-i18n="nav.package_pages_poliklinik">Poliklinik</span>
+                        </a>
+                    </li>
+                    <li class="{{ set_active('dashboard/mitra') }}">
+                        <a href="{{ route('mitra.index') }}" title="Mitra" data-filter-tags="package pages mitra">
+                            <span class="nav-link-text" data-i18n="nav.package_pages_mitra">Mitra</span>
                         </a>
                     </li>
                     <li class="{{ set_active('dashboard/timeline') }}">

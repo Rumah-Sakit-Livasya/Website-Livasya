@@ -10,10 +10,12 @@ use App\Http\Controllers\Api\ImageApiController;
 use App\Http\Controllers\Api\JadwalApiController;
 use App\Http\Controllers\Api\PostApiController;
 use App\Http\Controllers\Api\JumbotronApiController;
+use App\Http\Controllers\Api\MitraApiController;
 use App\Http\Controllers\Api\PelayananApiController;
 use App\Http\Controllers\Api\PoliklinikApiController;
 use App\Http\Controllers\Api\TimelineApiController;
 use App\Http\Controllers\Pages\PoliklinikController;
+use Illuminate\Foundation\Mix;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,7 +50,6 @@ Route::put('/posts/{post}', [PostApiController::class, 'update']);
 Route::post('/posts/{post}/activate', [PostApiController::class, 'activate']);
 Route::post('/posts/{post}/deactivate', [PostApiController::class, 'deactivate']);
 
-
 Route::get('/facilities', [FacilityApiController::class, 'getFacility']);
 Route::post('/facilities', [FacilityApiController::class, 'store']);
 Route::get('/facilities/{facility}', [FacilityApiController::class, 'show']);
@@ -69,10 +70,18 @@ Route::post('/polikliniks', [PoliklinikApiController::class, 'store']);
 Route::get('/polikliniks/{doctor}', [PoliklinikApiController::class, 'show']);
 Route::put('/polikliniks/{doctor}', [PoliklinikApiController::class, 'update']);
 
+Route::get('/mitras', [MitraApiController::class, 'getMitra']);
+Route::post('/mitras', [MitraApiController::class, 'store']);
+Route::get('/mitras/{mitra}', [MitraApiController::class, 'show']);
+Route::put('/mitras/{mitra}', [MitraApiController::class, 'update']);
+Route::post('/mitras/{mitra}/activate', [MitraApiController::class, 'activate']);
+Route::post('/mitras/{mitra}/deactivate', [MitraApiController::class, 'deactivate']);
+
+
 Route::get('/timelines', [TimelineApiController::class, 'getTimeline']);
 Route::post('/timelines', [TimelineApiController::class, 'store']);
-Route::get('/timelines/{doctor}', [TimelineApiController::class, 'show']);
-Route::put('/timelines/{doctor}', [TimelineApiController::class, 'update']);
+Route::get('/timelines/{timeline}', [TimelineApiController::class, 'show']);
+Route::put('/timelines/{timeline}', [TimelineApiController::class, 'update']);
 
 Route::get('/jumbotron', [JumbotronApiController::class, 'show']);
 Route::put('/jumbotron/{jumbotron}', [JumbotronApiController::class, 'update']);

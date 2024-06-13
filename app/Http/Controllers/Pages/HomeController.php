@@ -9,6 +9,7 @@ use App\Models\Galery;
 use App\Models\Identity;
 use App\Models\Jadwal;
 use App\Models\Jumbotron;
+use App\Models\Mitra;
 use App\Models\Pelayanan;
 use App\Models\Poliklinik;
 use App\Models\Post;
@@ -109,6 +110,7 @@ class HomeController extends Controller
             'galleries' => Galery::all()
         ]);
     }
+
     public function detailDokter(Identity $identity, Doctor $dokter)
     {
         // return $dokter;
@@ -137,6 +139,8 @@ class HomeController extends Controller
     public function mitraKami()
     {
         $identity = Identity::first();
+        $mirtas = Mitra::all();
+
         return view('mitra', [
             'name' => $identity->name,
             'title' => 'Mirtra Kami',
@@ -181,15 +185,4 @@ class HomeController extends Controller
             'galleries' => Galery::all()
         ]);
     }
-
-    // public function igd()
-    // {
-    //     $identity = Identity::first();
-    //     return view('services.igd', [
-    //         'name' => $identity->name,
-    //         'title' => 'IGD',
-    //         'identity' => $identity,
-    //         'pelayanan' => Pelayanan::all()
-    //     ]);
-    // }
 }

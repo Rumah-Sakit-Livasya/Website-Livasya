@@ -12,6 +12,7 @@ use App\Http\Controllers\Pages\GaleryController;
 use App\Http\Controllers\Pages\HomeController;
 use App\Http\Controllers\Pages\IdentityController;
 use App\Http\Controllers\Pages\JadwalController;
+use App\Http\Controllers\Pages\MitraController;
 use App\Http\Controllers\Pages\PagePelayananController;
 use App\Http\Controllers\Pages\PagePostController;
 use App\Http\Controllers\Pages\PelayananController;
@@ -95,6 +96,9 @@ Route::middleware('auth')->group(function () {
 
         // Poliklinik
         Route::get("/poliklinik", [PoliklinikController::class, 'index'])->name("poliklinik.index");
+
+        // Mitra
+        Route::get("/mitra", [MitraController::class, 'index'])->name("mitra.index");
 
         // Identity
         Route::get("/identity", [IdentityController::class, 'index'])->name("identity.index");
