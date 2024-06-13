@@ -11,7 +11,7 @@
     <section class="doctors pt-5 overflow-hidden bg-white" id="doctors">
         @foreach ($sortedDokters as $jabatan => $doktersGroup)
             @if ($doktersGroup->isNotEmpty())
-                <div class="container">
+                <div class="container mb-5">
                     <h1 class="heading pt-5" style="font-size: 18pt; text-align: left"><span>{{ $jabatan }}</span></h1>
                     <div class="row">
                         @foreach ($doktersGroup as $d)
