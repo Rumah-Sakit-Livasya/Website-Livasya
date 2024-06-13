@@ -58,7 +58,7 @@
                 </a>
             </li>
             <li
-                class="{{ set_active_mainmenu(['dashboard/jumbotron', 'dashboard/pelayanan', 'dashboard/identity', 'dashboard/galery', 'dashboard/jadwal', 'dashboard/poliklinik', 'dashboard/timeline', 'dashboard/mitra']) }}">
+                class="{{ set_active_mainmenu(['dashboard/jumbotron', 'dashboard/pelayanan', 'dashboard/identity', 'dashboard/galery', 'dashboard/jadwal', 'dashboard/poliklinik', 'dashboard/timeline', 'dashboard/mitra', 'dashboard/faq']) }}">
                 <a href="#" title="Pages" data-filter-tags="pages">
                     <i class='bx bx-home'></i>
                     <span class="nav-link-text" data-i18n="nav.package_pages">Pages</span>
@@ -91,6 +91,11 @@
                         <a href="{{ route('timeline.index') }}" title="Timeline"
                             data-filter-tags="package pages timeline">
                             <span class="nav-link-text" data-i18n="nav.package_pages_timeline">Timeline</span>
+                        </a>
+                    </li>
+                    <li class="{{ set_active('dashboard/faq') }}">
+                        <a href="{{ route('faq.index') }}" title="Faq" data-filter-tags="package pages faq">
+                            <span class="nav-link-text" data-i18n="nav.package_pages_faq">Faq</span>
                         </a>
                     </li>
                     <li class="{{ set_active('dashboard/identity') }}">

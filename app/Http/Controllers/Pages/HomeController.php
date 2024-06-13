@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pages;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Doctor;
+use App\Models\Faq;
 use App\Models\Galery;
 use App\Models\Identity;
 use App\Models\Jadwal;
@@ -171,7 +172,9 @@ class HomeController extends Controller
         $pelayanan = Pelayanan::all();
         $mitras = Mitra::where('is_primary', 1)->get();
 
-        return view('faq', compact('identity', 'pelayanan', 'mitras'), [
+        $faqs = Faq::where('is_active', 1)->get();
+
+        return view('faq', compact('identity', 'pelayanan', 'mitras', 'faqs'), [
             'title' => 'FAQ',
         ]);
     }

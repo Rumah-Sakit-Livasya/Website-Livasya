@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\CareerApiController;
 use App\Http\Controllers\Api\CategoryApiController;
 use App\Http\Controllers\Api\DoctorApiController;
 use App\Http\Controllers\Api\FacilityApiController;
+use App\Http\Controllers\Api\FaqApiController;
 use App\Http\Controllers\Api\GaleryApiController;
 use App\Http\Controllers\Api\IdentityApiController;
 use App\Http\Controllers\Api\ImageApiController;
@@ -77,6 +78,12 @@ Route::put('/mitras/{mitra}', [MitraApiController::class, 'update']);
 Route::post('/mitras/{mitra}/activate', [MitraApiController::class, 'activate']);
 Route::post('/mitras/{mitra}/deactivate', [MitraApiController::class, 'deactivate']);
 
+Route::get('/faqs', [FaqApiController::class, 'getFaq']);
+Route::post('/faqs', [FaqApiController::class, 'store']);
+Route::get('/faqs/{faq}', [FaqApiController::class, 'show']);
+Route::put('/faqs/{faq}', [FaqApiController::class, 'update']);
+Route::post('/faqs/{faq}/activate', [FaqApiController::class, 'activate']);
+Route::post('/faqs/{faq}/deactivate', [FaqApiController::class, 'deactivate']);
 
 Route::get('/timelines', [TimelineApiController::class, 'getTimeline']);
 Route::post('/timelines', [TimelineApiController::class, 'store']);

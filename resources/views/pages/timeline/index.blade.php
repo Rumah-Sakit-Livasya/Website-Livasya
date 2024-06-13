@@ -27,26 +27,17 @@
                                 <thead>
                                     <tr>
                                         <th style="white-space: nowrap">No</th>
+                                        <th style="white-space: nowrap">Aksi</th>
                                         <th style="white-space: nowrap">Flag</th>
                                         <th style="white-space: nowrap">Time Wrap</th>
                                         <th style="white-space: nowrap">Descript</th>
                                         <th style="white-space: nowrap">Image</th>
-                                        <th style="white-space: nowrap">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($timelines as $timeline)
                                         <tr>
                                             <td style="white-space: nowrap">{{ $loop->iteration }}</td>
-                                            <td style="white-space: nowrap">{{ $timeline->flag }}</td>
-                                            <td style="white-space: nowrap">{{ $timeline->time }}</td>
-                                            <td style="white-space: nowrap">{{ $timeline->desc }}</td>
-                                            <td style="white-space: nowrap">
-                                                <img class="img-responsive" width="50"
-                                                    src="{{ asset('storage/' . $timeline->image) }}"
-                                                    alt="{{ $timeline->flag }}">
-                                            </td>
-
                                             <td style="white-space: nowrap">
                                                 <!-- Add a data-timeline-id attribute to the edit button -->
                                                 <button type="button" data-backdrop="static" data-keyboard="false"
@@ -55,7 +46,14 @@
                                                     data-timeline-id="{{ $timeline->id }}">
                                                     <span class="fal fa-pencil"></span>
                                                 </button>
-
+                                            </td>
+                                            <td style="white-space: nowrap">{{ $timeline->flag }}</td>
+                                            <td style="white-space: nowrap">{{ $timeline->time }}</td>
+                                            <td style="white-space: nowrap">{!! str_replace(['<div>', '</div>'], '', $timeline->desc) !!}</td>
+                                            <td style="white-space: nowrap">
+                                                <img class="img-responsive" width="50"
+                                                    src="{{ asset('storage/' . $timeline->image) }}"
+                                                    alt="{{ $timeline->flag }}">
                                             </td>
                                         </tr>
                                     @endforeach
@@ -63,11 +61,11 @@
                                 <tfoot>
                                     <tr>
                                         <th style="white-space: nowrap">No</th>
+                                        <th style="white-space: nowrap">Aksi</th>
                                         <th style="white-space: nowrap">Flag</th>
                                         <th style="white-space: nowrap">Time Wrap</th>
                                         <th style="white-space: nowrap">Descript</th>
                                         <th style="white-space: nowrap">Image</th>
-                                        <th style="white-space: nowrap">Aksi</th>
                                     </tr>
                                 </tfoot>
                             </table>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Pages\CategoryController;
 use App\Http\Controllers\Pages\DashboardController;
 use App\Http\Controllers\Pages\DoctorController;
 use App\Http\Controllers\Pages\FacilityController;
+use App\Http\Controllers\Pages\FaqController;
 use App\Http\Controllers\Pages\GaleryController;
 use App\Http\Controllers\Pages\HomeController;
 use App\Http\Controllers\Pages\IdentityController;
@@ -99,6 +100,9 @@ Route::middleware('auth')->group(function () {
 
         // Mitra
         Route::get("/mitra", [MitraController::class, 'index'])->name("mitra.index");
+
+        // Faq
+        Route::get("/faq", [FaqController::class, 'index'])->name("faq.index");
 
         // Identity
         Route::get("/identity", [IdentityController::class, 'index'])->name("identity.index");

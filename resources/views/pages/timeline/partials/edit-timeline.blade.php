@@ -15,7 +15,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="edit-flag">Flag</label>
-                        <input type="text" autofocus value="{{ old('flag') }} class="form-control" id="edit-flag"
+                        <input type="text" autofocus value="{{ old('flag') }}" class="form-control" id="edit-flag"
                             name="flag" placeholder="Flag">
                         @error('flag')
                             <p class="text-danger">{{ $message }}</p>
@@ -23,7 +23,7 @@
                     </div>
                     <div class="form-group">
                         <label for="edit-time">Time</label>
-                        <input type="text" autofocus value="{{ old('time') }} class="form-control" id="edit-time"
+                        <input type="text" autofocus value="{{ old('time') }}" class="form-control" id="edit-time"
                             name="time" placeholder="Time">
                         @error('time')
                             <p class="text-danger">{{ $message }}</p>
