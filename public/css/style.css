@@ -426,7 +426,6 @@ section:nth-child(even) {
   font-size: 1.2rem;
   line-height: 1.8;
 }
-
 .doctors .box-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
@@ -434,18 +433,15 @@ section:nth-child(even) {
 }
 
 .doctors .box-container .box {
-  text-align: center;
+  text-align: left;
+  /* Change text alignment to left */
   background: #fff;
   border-radius: 0.5rem;
-  /* border:; */
-  /* box-shadow: var(--box-shadow); */
   padding: 2rem;
 }
 
 .doctors .box-container .box img {
   height: 20rem;
-  /* box-shadow: 0 1rem 0 rgba(0, 0, 0, .1); */
-  /* border:var(--border); */
   border-radius: 0.5rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -454,14 +450,17 @@ section:nth-child(even) {
 .doctors .box-container .box:hover img {
   transform: translateY(-2rem) scale(1.1);
   height: 20rem;
-  /* box-shadow: 0 1rem 0 rgba(0, 0, 0, .1); */
-  /* border:var(--border); */
   border-radius: 0.5rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
-.doctors .box-container .box h3 {
+.doctors .box-container .box h3,
+/* Adjusting headings and span for left alignment */
+.doctors .box-container .box h4,
+/* Ensure h4 is also aligned to left */
+.doctors .box-container .box span {
+  text-align: left;
   color: var(--black);
   font-size: 1.5rem;
 }
