@@ -426,28 +426,23 @@ section:nth-child(even) {
   font-size: 1.2rem;
   line-height: 1.8;
 }
-.doctors .box-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
-  gap: 2rem;
-}
 
-.doctors .box-container .box {
+.doctors .box {
   text-align: left;
-  /* Change text alignment to left */
+  /* Ensure text is left-aligned */
   background: #fff;
   border-radius: 0.5rem;
   padding: 2rem;
 }
 
-.doctors .box-container .box img {
+.doctors .box img {
   height: 20rem;
   border-radius: 0.5rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
-.doctors .box-container .box:hover img {
+.doctors .box:hover img {
   transform: translateY(-2rem) scale(1.1);
   height: 20rem;
   border-radius: 0.5rem;
@@ -455,26 +450,24 @@ section:nth-child(even) {
   margin-bottom: 1rem;
 }
 
-.doctors .box-container .box h3,
+.doctors .box h4,
 /* Adjusting headings and span for left alignment */
-.doctors .box-container .box h4,
-/* Ensure h4 is also aligned to left */
-.doctors .box-container .box span {
+.doctors .box span {
   text-align: left;
   color: var(--black);
   font-size: 1.5rem;
 }
 
-.doctors .box-container .box span {
+.doctors .box span {
   color: var(--primary);
   font-size: 1.5rem;
 }
 
-.doctors .box-container .box .share {
+.doctors .box .share {
   padding-top: 2rem;
 }
 
-.doctors .box-container .box .share a {
+.doctors .box .share a {
   height: 5rem;
   width: 5rem;
   line-height: 4.5rem;
@@ -485,7 +478,7 @@ section:nth-child(even) {
   margin: 0.3rem;
 }
 
-.doctors .box-container .box .share a:hover {
+.doctors .box .share a:hover {
   background: var(--primary);
   color: #fff;
   box-shadow: var(--box-shadow);
