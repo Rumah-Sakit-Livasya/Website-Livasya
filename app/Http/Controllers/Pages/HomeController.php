@@ -81,11 +81,29 @@ class HomeController extends Controller
 
     public function dokter()
     {
+        $customOrder = [
+            'Dokter Spesialis Obgyn',
+            'Dokter Spesialis Anak',
+            'Dokter Spesialis Penyakit Dalam',
+            'Dokter Spesialis Bedah',
+            'Dokter Spesialis THT - KL',
+            'Dokter Spesialis Radiologi',
+            'Dokter Spesialis Anastesi',
+            'Dokter Umum',
+        ];
+
+        $dokters = Doctor::all()->groupBy('jabatan');
+
+        // Sort the grouped doctors according to the custom order
+        $sortedDokters = collect($customOrder)->mapWithKeys(function ($jabatan) use ($dokters) {
+            return [$jabatan => $dokters->get($jabatan, collect())];
+        });
+
         $identity = Identity::first();
         return view('alldokter', [
             'name' => $identity->name,
             'title' => 'Dokter',
-            'dokters' => Doctor::all()->groupBy('jabatan'),
+            'sortedDokters' => $sortedDokters,
             'identity' => $identity,
             'pelayanan' => Pelayanan::all(),
             'galleries' => Galery::all()
