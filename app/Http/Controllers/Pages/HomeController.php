@@ -24,7 +24,7 @@ class HomeController extends Controller
         $pelayanan = Pelayanan::all();
         $dokter = Doctor::all();
         $polikliniks = Poliklinik::all();
-        $post = Post::latest()->limit(4)->get();
+        $post = Post::where('is_active', 1)->latest()->limit(4)->get();
 
         return view('home', compact('identity', 'jumbotron', 'jadwal', 'pelayanan', 'dokter', 'post', 'polikliniks'), [
             'title' => "Beranda",
@@ -85,7 +85,7 @@ class HomeController extends Controller
         return view('alldokter', [
             'name' => $identity->name,
             'title' => 'Dokter',
-            'dokter' => Doctor::all(),
+            'dokters' => Doctor::all()->groupBy('jabatan'),
             'identity' => $identity,
             'pelayanan' => Pelayanan::all(),
             'galleries' => Galery::all()
