@@ -49,8 +49,10 @@ class CareerController extends Controller
     {
         $careers = Career::all();
         $identity = Identity::first();
+        $mitras = Mitra::where('is_primary', 1)->get();
 
         return view('pages.careers.index', [
+            'mitras' => $mitras,
             'title' => 'Kategori',
             'careers' => $careers,
             'identity' => $identity,
@@ -60,8 +62,10 @@ class CareerController extends Controller
     public function career($tipe)
     {
         $identity = Identity::first();
+        $mitras = Mitra::where('is_primary', 1)->get();
 
         return view('career-open', [
+            'mitras' => $mitras,
             'name' => $identity->name,
             // 'careers' => Career::where('status', 'on')->get(),
             'title' => "Lowongan tenaga $tipe",
@@ -76,9 +80,11 @@ class CareerController extends Controller
     {
         $identity = Identity::first();
         $career = Career::where('id', $id)->where('status', 'on')->where('tipe', $tipe)->first();
+        $mitras = Mitra::where('is_primary', 1)->get();
 
         if ($career) {
             return view('career-apply', [
+                'mitras' => $mitras,
                 'name' => $identity->name,
                 'title' => "Formulir Data Pelamar - $career->title",
                 'tipe' => $tipe,
@@ -94,23 +100,27 @@ class CareerController extends Controller
 
     public function appliers($career)
     {
+        $mitras = Mitra::where('is_primary', 1)->get();
         $applier = Applier::where('career_id', $career)->orderBy('created_at', 'desc')->get();
 
         // return $career;
 
         return view('pages.careers.partials.applier-list', [
+            'mitras' => $mitras,
             'appliers' => $applier
         ]);
     }
 
     public function applier($career, $applierId)
     {
+        $mitras = Mitra::where('is_primary', 1)->get();
         $applier = Applier::where('id', $applierId)->first();
         $languages = ApplierLanguage::where('applier_id', $applier->id)->get();
         $certifications = ApplierCertification::where('applier_id', $applier->id)->get();
         $works = ApplierWork::where('applier_id', $applier->id)->get();
 
         return view('pages.careers.partials.applier-detail', [
+            'mitras' => $mitras,
             'applier' => $applier,
             'languages' => $languages,
             'certifications' => $certifications,
