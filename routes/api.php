@@ -65,6 +65,8 @@ Route::get('/doctors', [DoctorApiController::class, 'getDoctor']);
 Route::post('/doctors', [DoctorApiController::class, 'store']);
 Route::get('/doctors/{doctor}', [DoctorApiController::class, 'show']);
 Route::put('/doctors/{doctor}', [DoctorApiController::class, 'update']);
+Route::post('/doctors/{doctor}/activate', [DoctorApiController::class, 'activate']);
+Route::post('/doctors/{doctor}/deactivate', [DoctorApiController::class, 'deactivate']);
 
 Route::get('/polikliniks', [PoliklinikApiController::class, 'getPoliklinik']);
 Route::post('/polikliniks', [PoliklinikApiController::class, 'store']);

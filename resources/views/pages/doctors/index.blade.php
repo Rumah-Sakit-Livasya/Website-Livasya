@@ -47,6 +47,22 @@
                                                     data-doctor-id="{{ $doctor->id }}">
                                                     <span class="fal fa-pencil"></span>
                                                 </button>
+
+                                                @if ($doctor->is_active == 1)
+                                                    <!-- Button to deactivate doctor -->
+                                                    <button type="button"
+                                                        class="badge mx-1 badge-danger p-2 border-0 text-white deactivate-button"
+                                                        data-doctor-id="{{ $doctor->id }}" onclick="btnDeactivate(event)">
+                                                        <i class='bx bx-minus-circle m-0'></i>
+                                                    </button>
+                                                @else
+                                                    <!-- Button to activate doctor -->
+                                                    <button type="button"
+                                                        class="badge mx-1 badge-success p-2 border-0 text-white activate-button"
+                                                        data-doctor-id="{{ $doctor->id }}" onclick="btnActivate(event)">
+                                                        <i class='bx bx-check-circle m-0'></i>
+                                                    </button>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -299,5 +315,101 @@
             });
 
         });
+
+        function btnDeactivate(event) {
+            event.preventDefault();
+            let button = event.currentTarget;
+            let doctorId = button.getAttribute('data-doctor-id');
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak akan dapat mengembalikan tindakan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, nonaktifkan!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    deactivateDoctor(doctorId);
+                }
+            });
+        }
+
+        function deactivateDoctor(doctorId) {
+            $.ajax({
+                url: '/api/doctors/' + doctorId + '/deactivate',
+                type: 'post',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire(
+                            'Nonaktifkan!',
+                            'Doctor Anda telah dinonaktifkan.',
+                            'success'
+                        ).then(() => {
+                            location.reload(); // Reload the page to see changes
+                        });
+                    } else {
+                        Swal.fire(
+                            'Gagal!',
+                            'Gagal menonaktifkan doctor.',
+                            'error'
+                        );
+                    }
+                }
+            });
+        }
+
+        function btnActivate(event) {
+            event.preventDefault();
+            let button = event.currentTarget;
+            let doctorId = button.getAttribute('data-doctor-id');
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda akan mengaktifkan doctor ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, aktifkan!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    activateDoctor(doctorId);
+                }
+            });
+        }
+
+        function activateDoctor(doctorId) {
+            $.ajax({
+                url: '/api/doctors/' + doctorId + '/activate',
+                type: 'post',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire(
+                            'Diaktifkan!',
+                            'Doctor Anda telah diaktifkan.',
+                            'success'
+                        ).then(() => {
+                            location.reload(); // Reload the page to see changes
+                        });
+                    } else {
+                        Swal.fire(
+                            'Gagal!',
+                            'Gagal mengaktifkan doctor.',
+                            'error'
+                        );
+                    }
+                }
+            });
+        }
     </script>
 @endsection

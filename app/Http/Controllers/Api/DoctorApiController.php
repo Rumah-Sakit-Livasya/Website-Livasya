@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DoctorApiController extends Controller
 {
@@ -87,5 +89,35 @@ class DoctorApiController extends Controller
         $doctor->update($validatedData);
 
         return response()->json(['message' => 'Doctor updated successfully']);
+    }
+
+    public function activate($id)
+    {
+        try {
+            $doctor = Doctor::findOrFail($id);
+            $doctor->is_active = 1;
+            $doctor->save();
+
+            return response()->json(['success' => true]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['success' => false, 'message' => 'Doctor not found'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'An error occurred'], 500);
+        }
+    }
+
+    public function deactivate($id)
+    {
+        try {
+            $doctor = Doctor::findOrFail($id);
+            $doctor->is_active = 0;
+            $doctor->save();
+
+            return response()->json(['success' => true]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['success' => false, 'message' => 'Doctor not found'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'An error occurred'], 500);
+        }
     }
 }

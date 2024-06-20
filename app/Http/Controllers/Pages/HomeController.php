@@ -94,6 +94,7 @@ class HomeController extends Controller
             'Dokter Spesialis Radiologi',
             'Dokter Spesialis Anastesi',
             'Dokter Umum',
+            'Dokter Spesialis Patologi Klinik',
         ];
 
         $dokters = Doctor::all()->groupBy('jabatan');
