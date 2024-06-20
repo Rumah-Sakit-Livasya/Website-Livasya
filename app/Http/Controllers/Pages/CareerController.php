@@ -11,6 +11,7 @@ use App\Models\Career;
 use App\Models\Doctor;
 use App\Models\Galery;
 use App\Models\Identity;
+use App\Models\Mitra;
 use App\Models\Pelayanan;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Storage;
@@ -29,6 +30,8 @@ class CareerController extends Controller
             ->count();
         $identity = Identity::first();
 
+        $mitras = Mitra::where('is_primary', 1)->get();
+
         return view('career', [
             'name' => $identity->name,
             'title' => 'Lowongan Kerja',
@@ -37,6 +40,7 @@ class CareerController extends Controller
             'pelayanan' => Pelayanan::all(),
             'galleries' => Galery::all(),
             'medis' => $medis,
+            'mitras' => $mitras,
             'nonMedis' => $nonMedis,
         ]);
     }
