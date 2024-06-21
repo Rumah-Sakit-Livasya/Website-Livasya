@@ -6,6 +6,7 @@ use App\Http\Controllers\Pages\JadwalDokterController;
 use App\Http\Controllers\Pages\JumbotronController;
 use App\Http\Controllers\Pages\CategoryController;
 use App\Http\Controllers\Pages\DashboardController;
+use App\Http\Controllers\Pages\DepartementController;
 use App\Http\Controllers\Pages\DoctorController;
 use App\Http\Controllers\Pages\FacilityController;
 use App\Http\Controllers\Pages\FaqController;
@@ -84,6 +85,9 @@ Route::middleware('auth')->group(function () {
 
         // Doctor
         Route::get("/doctors", [DoctorController::class, 'index'])->name("doctors.index");
+
+        // Departement
+        Route::get("/departements", [DepartementController::class, 'index'])->name("departements.index");
 
         // Jumbotron
         Route::get("/jumbotron", [JumbotronController::class, 'index'])->name("jumbotron.index");

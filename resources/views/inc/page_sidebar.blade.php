@@ -148,6 +148,13 @@
                     <span class="nav-link-text" data-i18n="nav.application_doctors">Dokter</span>
                 </a>
             </li>
+            <li class="{{ set_active('dashboard/departements') }}">
+                <a href="{{ route('departements.index') }}" title="Departement"
+                    data-filter-tags="application departement">
+                    <i class='bx bx-user'></i>
+                    <span class="nav-link-text" data-i18n="nav.application_departements">Departement</span>
+                </a>
+            </li>
             <li class="{{ set_active('dashboard/users') }}">
                 <a href="{{ route('user.index') }}" title="users" data-filter-tags="application user">
                     <i class='bx bxs-user-account'></i>

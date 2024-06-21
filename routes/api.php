@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CareerApiController;
 use App\Http\Controllers\Api\CategoryApiController;
+use App\Http\Controllers\Api\DepartementApiController;
 use App\Http\Controllers\Api\DoctorApiController;
 use App\Http\Controllers\Api\FacilityApiController;
 use App\Http\Controllers\Api\FaqApiController;
@@ -67,6 +68,13 @@ Route::get('/doctors/{doctor}', [DoctorApiController::class, 'show']);
 Route::put('/doctors/{doctor}', [DoctorApiController::class, 'update']);
 Route::post('/doctors/{doctor}/activate', [DoctorApiController::class, 'activate']);
 Route::post('/doctors/{doctor}/deactivate', [DoctorApiController::class, 'deactivate']);
+
+Route::get('/departements', [DepartementApiController::class, 'getDepartement']);
+Route::post('/departements', [DepartementApiController::class, 'store']);
+Route::get('/departements/{departement}', [DepartementApiController::class, 'show']);
+Route::put('/departements/{departement}', [DepartementApiController::class, 'update']);
+Route::post('/departements/{departement}/activate', [DepartementApiController::class, 'activate']);
+Route::post('/departements/{departement}/deactivate', [DepartementApiController::class, 'deactivate']);
 
 Route::get('/polikliniks', [PoliklinikApiController::class, 'getPoliklinik']);
 Route::post('/polikliniks', [PoliklinikApiController::class, 'store']);

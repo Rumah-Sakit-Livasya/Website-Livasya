@@ -85,28 +85,19 @@ class HomeController extends Controller
         $pelayanan = Pelayanan::all();
         $mitras = Mitra::where('is_primary', 1)->get();
 
-        $customOrder = [
-            'Dokter Spesialis Obgyn',
-            'Dokter Spesialis Anak',
-            'Dokter Spesialis Penyakit Dalam',
-            'Dokter Spesialis Bedah',
-            'Dokter Spesialis THT - KL',
-            'Dokter Spesialis Radiologi',
-            'Dokter Spesialis Anestesi',
-            'Dokter Spesialis Patologi Klinik',
-            'Dokter Umum',
-        ];
+        // Mengurutkan berdasarkan urutan di tabel departement
+        $dokters = Doctor::with('departement')
+            ->join('departements', 'doctors.departement_id', '=', 'departements.id')
+            ->orderBy('departements.urutan') // kolom 'urutan' di tabel departements
+            ->select('doctors.*') // memastikan hanya kolom dari tabel doctors yang diambil
+            ->get();
 
-        $dokters = Doctor::all()->groupBy('jabatan');
-
-        $sortedDokters = collect($customOrder)->mapWithKeys(function ($jabatan) use ($dokters) {
-            return [$jabatan => $dokters->get($jabatan, collect())];
-        });
-
-        return view('alldokter', compact('identity', 'pelayanan', 'mitras', 'sortedDokters'), [
+        return view('alldokter', compact('identity', 'pelayanan', 'mitras', 'dokters'), [
             'title' => 'Dokter',
         ]);
     }
+
+
 
     public function detailDokter(Identity $identity, Doctor $dokter)
     {

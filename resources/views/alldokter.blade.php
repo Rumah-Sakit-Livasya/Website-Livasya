@@ -9,27 +9,40 @@
     </section>
 
     <section class="doctors pt-5 overflow-hidden bg-white" id="doctors">
-        @foreach ($sortedDokters as $jabatan => $doktersGroup)
-            @if ($doktersGroup->isNotEmpty())
+        @php
+            $currentDepartment = null;
+        @endphp
+        @foreach ($dokters as $dokter)
+            @if ($currentDepartment != $dokter->departement->id)
+                @if ($currentDepartment != null)
+                    </div> <!-- Close previous department's row -->
+                    </div> <!-- Close previous department's container -->
+                @endif
+                @php
+                    $currentDepartment = $dokter->departement->id;
+                @endphp
                 <div class="container mb-5">
-                    <h1 class="heading pt-5" style="font-size: 18pt; text-align: left"><span>{{ $jabatan }}</span></h1>
+                    <h1 class="heading pt-5" style="font-size: 18pt; text-align: left">
+                        <span>{{ $dokter->departement->name }}</span>
+                    </h1>
                     <div class="row">
-                        @foreach ($doktersGroup as $d)
-                            <div class="col-md-4 mb-4">
-                                <a href="/dokter/{{ $d->id }}" class="nav-link">
-                                    <div class="box p-5" data-aos="fade-up">
-                                        <img src="{{ asset('storage/' . $d->foto) }}" alt="">
-                                        <h4>{{ $d->name }}</h4>
-                                        <span style="color: #e97f0d">{{ $d->jabatan }}</span>
-                                    </div>
-                                </a>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
             @endif
+            <div class="col-md-4 mb-4">
+                <a href="/dokter/{{ $dokter->id }}" class="nav-link">
+                    <div class="box p-5" data-aos="fade-up">
+                        <img src="{{ asset('storage/' . $dokter->foto) }}" alt="">
+                        <h4>{{ $dokter->name }}</h4>
+                        <span style="color: #e97f0d">{{ $dokter->jabatan }}</span>
+                    </div>
+                </a>
+            </div>
         @endforeach
+        @if ($currentDepartment != null)
+            </div> <!-- Close last department's row -->
+            </div> <!-- Close last department's container -->
+        @endif
     </section>
+
 
     <!-- doctors section ends -->
 @endsection
