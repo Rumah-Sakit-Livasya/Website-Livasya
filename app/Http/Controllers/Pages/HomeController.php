@@ -92,7 +92,7 @@ class HomeController extends Controller
             'Dokter Spesialis Bedah',
             'Dokter Spesialis THT - KL',
             'Dokter Spesialis Radiologi',
-            'Dokter Spesialis Anastesi',
+            'Dokter Spesialis Anestesi',
             'Dokter Spesialis Patologi Klinik',
             'Dokter Umum',
         ];
