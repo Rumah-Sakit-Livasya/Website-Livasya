@@ -10,7 +10,7 @@ class DepartementController extends Controller
 {
     public function index()
     {
-        $departements = Departement::orderBy('urutan', 'asc')->get();
+        $departements = Departement::orderBy('urutan')->get();
 
         return view('pages.departements.index', compact('departements'), [
             'title' => 'Departemen'
