@@ -88,7 +88,7 @@ class HomeController extends Controller
         // Mengurutkan berdasarkan urutan di tabel departement
         $dokters = Doctor::with('departement')
             ->join('departements', 'doctors.departement_id', '=', 'departements.id')
-            ->orderBy('departements.urutan') // kolom 'urutan' di tabel departements
+            ->orderByRaw('CAST(departements.urutan AS UNSIGNED)') // Mengurutkan secara numerik
             ->select('doctors.*') // memastikan hanya kolom dari tabel doctors yang diambil
             ->get();
 
