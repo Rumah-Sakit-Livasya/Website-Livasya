@@ -11,7 +11,7 @@ class DoctorController extends Controller
 {
     public function index()
     {
-        $doctors = Doctor::all();
+        $doctors = Doctor::orderBy('urutan', 'asc')->get();
 
         return view('pages.doctors.index', compact('doctors'), [
             'title' => 'Dokter'
