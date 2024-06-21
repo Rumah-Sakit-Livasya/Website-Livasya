@@ -11,19 +11,21 @@
     <section class="doctors pt-5 overflow-hidden bg-white" id="doctors">
         @php
             $currentDepartment = null;
+            $isFirstDepartment = true;
         @endphp
         @foreach ($dokters as $dokter)
             @if ($currentDepartment != $dokter->departement->id)
-                @if ($currentDepartment != null)
+                @if (!$isFirstDepartment)
                     </div> <!-- Close previous department's row -->
                     </div> <!-- Close previous department's container -->
                 @endif
                 @php
                     $currentDepartment = $dokter->departement->id;
+                    $isFirstDepartment = false;
                 @endphp
                 <div class="container mb-5">
                     <h1 class="heading pt-5" style="font-size: 18pt; text-align: left">
-                        <span>{{ $dokter->departement->name }}</span>
+                        <span>Dokter {{ $dokter->departement->name }}</span>
                     </h1>
                     <div class="row">
             @endif
@@ -42,6 +44,7 @@
             </div> <!-- Close last department's container -->
         @endif
     </section>
+
 
 
     <!-- doctors section ends -->
