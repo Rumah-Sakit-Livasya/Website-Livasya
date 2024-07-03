@@ -18,6 +18,13 @@ class DoctorApiController extends Controller
         return response()->json($doctors);
     }
 
+    public function getDepartement($id)
+    {
+        $doctors = Doctor::all();
+
+        return response()->json($doctors);
+    }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([

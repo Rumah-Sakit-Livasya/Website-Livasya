@@ -63,6 +63,13 @@
                                                         <i class='bx bx-check-circle m-0'></i>
                                                     </button>
                                                 @endif
+                                                <button type="button"
+                                                    class="badge mx-1 badge-warning p-2 border-0 text-white deactivate-button"
+                                                    data-backdrop="static" data-keyboard="false" data-toggle="modal"
+                                                    data-target="#edit-departement-dokter"
+                                                    data-departement-id="{{ $doctor->departement->id }}">
+                                                    <i class='bx bx-card m-0'></i>
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -263,7 +270,6 @@
                 });
             });
 
-
             // Submit the form via AJAX
             $('#update-doctor-form').on('submit', function(e) {
                 e.preventDefault();
@@ -295,6 +301,29 @@
                         $('#edit-dokter').modal('hide');
                         // Handle errors, e.g., display validation errors
                         showErrorAlert('Cek kembali data yang dikirim');
+                    }
+                });
+            });
+
+            $('.edit-departement-button').on('click', function() {
+                var departementId = $(this).data('departement-id');
+
+                // Set the category ID to the modal input field
+                $('#edit-departement-id').val(departementId);
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/doctors/' + departementId + '/departement',
+                    success: function(data) {
+                        $('#edit-departement').val(data.departement_id).select2({
+                            dropdownParent: $('#edit-departement-dokter');
+                        });
+
+                        // Show the modal
+                        $('#edit-departement-dokter').modal('show');
+                    },
+                    error: function(error) {
+                        showErrorAlert('Terjadi kesalahan:', error);
                     }
                 });
             });

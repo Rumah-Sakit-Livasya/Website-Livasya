@@ -151,7 +151,7 @@
             <li class="{{ set_active('dashboard/departements') }}">
                 <a href="{{ route('departements.index') }}" title="Departement"
                     data-filter-tags="application departement">
-                    <i class='bx bx-user'></i>
+                    <i class='bx bx-card'></i>
                     <span class="nav-link-text" data-i18n="nav.application_departements">Departement</span>
                 </a>
             </li>
