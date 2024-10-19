@@ -31,6 +31,18 @@
                             placeholder="Jabatan">
                     </div>
                     <div class="form-group">
+                        <label class="form-label" for="create-departement">
+                            Departement
+                        </label>
+                        <select class="form-control w-100 select2" id="create-departement" name="departement_id">
+                            <optgroup label="Departement">
+                                @foreach ($departements as $departement)
+                                    <option value="{{ $departement->id }}">{{ $departement->name }}</option>
+                                @endforeach
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="create-deskripsi" class="form-label">Deskripsi</label>
                         <input id="create-deskripsi" type="hidden" name="deskripsi" value="{{ old('deskripsi') }}">
                         <trix-editor input="create-deskripsi"></trix-editor>

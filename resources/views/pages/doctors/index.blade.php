@@ -29,6 +29,7 @@
                                         <th style="white-space: nowrap">No</th>
                                         <th style="white-space: nowrap">Nama</th>
                                         <th style="white-space: nowrap">Jabatan</th>
+                                        <th style="white-space: nowrap">Departement</th>
                                         <th style="white-space: nowrap">Aksi</th>
                                     </tr>
                                 </thead>
@@ -38,6 +39,7 @@
                                             <td style="white-space: nowrap">{{ $loop->iteration }}</td>
                                             <td style="white-space: nowrap">{{ $doctor->name }}</td>
                                             <td style="white-space: nowrap">{{ $doctor->jabatan }}</td>
+                                            <td style="white-space: nowrap">{{ $doctor->departement->name }}</td>
 
                                             <td style="white-space: nowrap">
                                                 <!-- Add a data-doctor-id attribute to the edit button -->
@@ -64,10 +66,10 @@
                                                     </button>
                                                 @endif
                                                 <button type="button"
-                                                    class="badge mx-1 badge-warning p-2 border-0 text-white deactivate-button"
+                                                    class="badge mx-1 badge-warning p-2 border-0 text-white edit-departement-button"
                                                     data-backdrop="static" data-keyboard="false" data-toggle="modal"
                                                     data-target="#edit-departement-dokter"
-                                                    data-departement-id="{{ $doctor->departement->id }}">
+                                                    data-doctor-id="{{ $doctor->id }}">
                                                     <i class='bx bx-card m-0'></i>
                                                 </button>
                                             </td>
@@ -79,6 +81,7 @@
                                         <th style="white-space: nowrap">No</th>
                                         <th style="white-space: nowrap">Nama</th>
                                         <th style="white-space: nowrap">Jabatan</th>
+                                        <th style="white-space: nowrap">Departement</th>
                                         <th style="white-space: nowrap">Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -191,6 +194,12 @@
                 $('#edit-category').select2({
                     dropdownParent: $('#edit-dokter')
                 });
+                $('#create-departement').select2({
+                    dropdownParent: $('#tambah-dokter')
+                });
+                $('#edit-departement').select2({
+                    dropdownParent: $('#edit-departement-dokter')
+                });
             });
             // SELECT2
 
@@ -274,7 +283,7 @@
             $('#update-doctor-form').on('submit', function(e) {
                 e.preventDefault();
 
-                var doctorId = $('#edit-doctor-id').val();
+                var doctorId = $('#edit-departement-doctor-id').val();
 
                 // Membuat FormData untuk mengambil data formulir, termasuk file
                 var formData = new FormData(this);
@@ -306,24 +315,72 @@
             });
 
             $('.edit-departement-button').on('click', function() {
-                var departementId = $(this).data('departement-id');
+                var doctorId = $(this).data('doctor-id');
+                console.log(doctorId);
 
-                // Set the category ID to the modal input field
-                $('#edit-departement-id').val(departementId);
+                // Set the doctor ID to the modal input field
+                $('#edit-departement-doctor-id').val(doctorId);
 
                 $.ajax({
                     type: 'GET',
-                    url: '/api/doctors/' + departementId + '/departement',
+                    url: '/api/doctors/' + doctorId + '/departement',
                     success: function(data) {
-                        $('#edit-departement').val(data.departement_id).select2({
-                            dropdownParent: $('#edit-departement-dokter');
+                        console.log(data); // Debugging untuk melihat struktur data
+
+                        // Mencari dokter berdasarkan doctorId
+                        var doctor = data.find(function(item) {
+                            return item.id === doctorId; // Mencocokkan ID dokter
                         });
+
+                        // Set value for select2
+                        if (doctor && doctor.departement_id !== undefined) {
+                            $('#edit-departement').val(doctor.departement_id).trigger(
+                                'change'); // Trigger change after setting value
+                        } else {
+                            showErrorAlert('Departement ID tidak ditemukan dalam respons.');
+                        }
 
                         // Show the modal
                         $('#edit-departement-dokter').modal('show');
                     },
                     error: function(error) {
+                        $('#edit-departement-dokter').modal('hide');
                         showErrorAlert('Terjadi kesalahan:', error);
+                    }
+                });
+            });
+
+            // Submit the form via AJAX
+            $('#update-departement-doctor-form').on('submit', function(e) {
+                e.preventDefault();
+
+                var doctorId = $('#edit-departement-doctor-id').val();
+
+                // Membuat FormData untuk mengambil data formulir, termasuk file
+                var formData = new FormData(this);
+
+                $.ajax({
+                    type: 'POST', // Ganti menjadi POST
+                    url: '/api/doctors/' + doctorId + '/departement',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        // Handle success, e.g., close modal or update UI
+                        $('#edit-departement-dokter').modal('hide');
+
+                        // Tampilkan pesan
+                        showSuccessAlert('Dokter Diubah!');
+
+                        // Tunda reload selama 2 detik
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1000);
+                    },
+                    error: function(error) {
+                        $('#edit-departement-dokter').modal('hide');
+                        // Handle errors, e.g., display validation errors
+                        showErrorAlert('Cek kembali data yang dikirim');
                     }
                 });
             });

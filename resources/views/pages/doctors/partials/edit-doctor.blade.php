@@ -80,7 +80,7 @@
                 id="update-departement-doctor-form">
                 @method('put')
                 @csrf
-                <input type="hidden" name="departement_id" id="edit-departement-id" value="">
+                <input type="hidden" id="edit-departement-doctor-id">
                 <div class="modal-header">
                     <h5 class="modal-title">Ubah Departement</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

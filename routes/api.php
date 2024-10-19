@@ -64,11 +64,12 @@ Route::put('/pelayanan/{pelayanan}', [PelayananApiController::class, 'update']);
 
 Route::get('/doctors', [DoctorApiController::class, 'getDoctor']);
 Route::post('/doctors', [DoctorApiController::class, 'store']);
-Route::get('/doctors/{doctor}', [DoctorApiController::class, 'show']);
-Route::put('/doctors/{doctor}', [DoctorApiController::class, 'update']);
-Route::post('/doctors/{doctor}/departement', [DoctorApiController::class, 'getDepartement']);
-Route::post('/doctors/{doctor}/activate', [DoctorApiController::class, 'activate']);
-Route::post('/doctors/{doctor}/deactivate', [DoctorApiController::class, 'deactivate']);
+Route::get('/doctors/{doctor:id}', [DoctorApiController::class, 'show']);
+Route::put('/doctors/{doctor:id}', [DoctorApiController::class, 'update']);
+Route::get('/doctors/{departement:id}/departement', [DoctorApiController::class, 'getDepartement']);
+Route::put('/doctors/{departement:id}/departement', [DoctorApiController::class, 'updateDepartement']);
+Route::post('/doctors/{doctor:id}/activate', [DoctorApiController::class, 'activate']);
+Route::post('/doctors/{doctor:id}/deactivate', [DoctorApiController::class, 'deactivate']);
 
 Route::get('/departements', [DepartementApiController::class, 'getDepartement']);
 Route::post('/departements', [DepartementApiController::class, 'store']);

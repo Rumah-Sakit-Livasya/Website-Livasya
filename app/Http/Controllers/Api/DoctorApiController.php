@@ -31,6 +31,7 @@ class DoctorApiController extends Controller
             'foto' => 'image|file',
             'name' => 'required|max:255',
             'jabatan' => 'required|max:255',
+            'departement_id' => 'required|max:255',
             'deskripsi' => 'required',
             'poster' => 'image|file',
             'jadwal' => 'image|file',
@@ -96,6 +97,22 @@ class DoctorApiController extends Controller
         $doctor->update($validatedData);
 
         return response()->json(['message' => 'Doctor updated successfully']);
+    }
+    public function updateDepartement(Request $request, $doctorId)
+    {
+        $doctor = Doctor::findOrFail($doctorId);
+
+        // Validasi data
+        $request->validate([
+            'departement_id' => 'required|max:255',
+        ]);
+
+        // Update data dokter
+        $doctor->update([
+            'departement_id' => $request->departement_id,
+        ]);
+
+        return response()->json(['message' => 'Departement updated successfully']);
     }
 
     public function activate($id)
