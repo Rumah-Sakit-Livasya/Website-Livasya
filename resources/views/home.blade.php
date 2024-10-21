@@ -65,7 +65,7 @@
                     </p>
                     <div class="row">
                         <div class="col" data-aos="fade-left">
-                            <a href="https://dafol.livasya.id" target="_blank" class="btn mt-3"> Daftar Sekarang <span
+                            <a href="https://dafol.livasya.com" target="_blank" class="btn mt-3"> Daftar Sekarang <span
                                     class="fas fa-chevron-right"></span></a>
                         </div>
                     </div>
