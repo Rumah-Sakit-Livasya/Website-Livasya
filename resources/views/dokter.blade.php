@@ -33,7 +33,7 @@
         <div class="container">
             <div class="row justify-content-center g-5">
                 <p class="imglist">
-                <div class="col-lg-3 d-flex align-items-stretch">
+                <div class="col-lg-3" style="border-radius: 20px;">
                     <a href="{{ asset('storage/' . $dokter->poster) }}" data-fancybox="gallery"
                         data-caption="{{ $dokter->name }}">
                         <div class="card-img-top img overflow-hidden img-thumbnail shadow"
@@ -41,7 +41,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-3 d-flex align-items-stretch">
+                <div class="col-lg-3" style="border-radius: 20px;">
                     <a href="{{ asset('storage/' . $dokter->jadwal) }}" data-fancybox="gallery"
                         data-caption="{{ $dokter->name }}">
                         <div class="card-img-top img overflow-hidden img-thumbnail shadow"
