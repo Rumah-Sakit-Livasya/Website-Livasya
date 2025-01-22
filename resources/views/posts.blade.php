@@ -27,14 +27,7 @@
 
         @if ($posts->count())
             <div class="row g-5 align-content-between justify-content-around">
-                @foreach ($posts as $post)
-                    @php
-                        $date = substr($post->created_at, 0, 10);
-                        $date_convert = date_create($date);
-                        $tanggal = date_format($date_convert, 'd');
-                        $bulan = date_format($date_convert, 'M');
-                    @endphp
-
+                @foreach ($post as $post)
                     <div class="col-lg-4">
                         @if ($post->is_embeded)
                             {!! $post->body !!}

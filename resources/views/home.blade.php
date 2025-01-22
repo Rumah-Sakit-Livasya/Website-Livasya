@@ -190,37 +190,64 @@
         <div class="box-container mb-5 mt-3">
             <div class="row g-5 align-content-between justify-content-center">
                 @foreach ($post as $p)
-                    @php
-                        $date = substr($p->created_at, 0, 10);
-                        $date_convert = date_create($date);
-                        $tanggal = date_format($date_convert, 'd');
-                        $bulan = date_format($date_convert, 'M');
-                    @endphp
                     <div class="col-lg-3">
-                        <a href="/posts/{{ $p->slug }}" class="text-decoration-none">
-                            <div class="card img-parent overflow-hidden position-relative shadow"
-                                style="border-radius: 5px; outline: none; border: none; border-radius: 20px; transform: scale(.95);">
-                                @if ($p->image)
-                                    <div class="card-img-top img overflow-hidden"
-                                        style="z-index: 0; background-image: url({{ asset('/storage/' . $p->image) }}); background-size: cover; height: 300px; background-position: center;">
+                        @if ($p->is_embeded)
+                            {!! $p->body !!}
+                        @else
+                            <a href="/posts/{{ $p->slug }}" class="text-decoration-none">
+                                <div class="card img-parent overflow-hidden position-relative shadow"
+                                    style=" outline: none; border: none;">
+                                    <div class="card-header bg-white m-3"
+                                        style="border: none; display: flex; align-items: center;">
+                                        <img src="{{ asset('img/ig.jpg') }}" alt="Image"
+                                            style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px; vertical-align: middle;">
+                                        <div class="ml-3"
+                                            style="display: flex; flex-direction: column; line-height: 1.2; font-size: 12px;">
+                                            <strong class="mb-1">rslivasya</strong>
+                                            <p class="mb-0">Majalengka</p>
+                                        </div>
                                     </div>
-                                @else
-                                    <div class="card-img-top img overflow-hidden"
-                                        style="z-index: 0; background-image: url(https://source.unsplash.com/random/900×700/?{{ $p->category->slug }}); background-size: cover; height: 25rem;">
+                                    @if ($p->image)
+                                        <div class="card-img-top overflow-hidden">
+                                            <div
+                                                style="background-image: url({{ asset('/storage/' . $p->image) }}); background-size: cover; height: 470px; background-position: center;">
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="card-img-top overflow-hidden">
+                                            <div
+                                                style="background-image: url(https://source.unsplash.com/random/900×700/?{{ $p->category->slug }}); background-size: cover; height: 470px;">
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <div class="card-body text-center" style="background-color: #fff; padding: 1rem;">
+                                        <h5 class="card-title" style="font-size: 1.2rem; font-weight: bold;">
+                                            {{ $p->title }}
+                                        </h5>
+                                        <div class="d-flex justify-content-start align-items-center mt-5"
+                                            style="gap: 10px;">
+                                            <span class="text-muted"><img
+                                                    src="https://cdn-icons-png.flaticon.com/128/1077/1077035.png"
+                                                    width="24"></span>
+                                            <span class="text-muted" style="opacity: 0.7;"><img
+                                                    src="https://cdn-icons-png.flaticon.com/128/5948/5948565.png"
+                                                    width="24"></span>
+                                            <span class="text-muted" style="opacity: 0.7; transform: rotate(-90deg)"><img
+                                                    src="https://cdn-icons-png.flaticon.com/128/1286/1286853.png"
+                                                    width="24"></span>
+                                        </div>
+                                        <p class="text-bold mt-2 text-left">99k likes</p>
                                     </div>
-                                @endif
-                                <div class="position-absolute"
-                                    style="z-index: 3; left: 0; top: 60%; width: 5rem; height: 7rem; background-color: rgba(0, 108, 191, .5);">
-                                    <h3 class="text-center text-white mt-3">{{ $tanggal }} <br>
-                                        {{ $bulan }}</h3>
+                                    <hr>
+                                    <div class="add-comment" style="height: 30px; display: flex; align-items: center;">
+                                        <h6 class="ml-3 text-muted">Add a comment...</h6>
+                                        <img src="https://cdn-icons-png.flaticon.com/128/1384/1384031.png"
+                                            class="mr-3 mb-3" alt="Instagram Icon"
+                                            style="width: 24px; height: 24px; margin-left: auto;">
+                                    </div>
                                 </div>
-                                <div class="card-body text-center"
-                                    style="z-index: 2; height: 8rem; line-height: 6rem; background-color: #fff;">
-                                    <p class="card-text" style="font-size: 11pt"><i class="far fa-folder-open"
-                                            style="color:#0d6efd;"></i> {{ $p->category->name }}</p>
-                                </div>
-                            </div>
-                        </a>
+                            </a>
+                        @endif
                     </div>
                 @endforeach
             </div>
