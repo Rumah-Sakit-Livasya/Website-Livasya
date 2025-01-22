@@ -38,9 +38,10 @@
                                     @foreach ($posts as $post)
                                         <tr>
                                             <td style="white-space: nowrap">{{ $loop->iteration }}</td>
-                                            <td style="white-space: nowrap">{{ $post->category->name }}</td>
-                                            <td style="white-space: nowrap">{{ $post->title }}</td>
-                                            <td style="white-space: nowrap">{{ $post->slug }}</td>
+                                            <td style="white-space: nowrap">
+                                                {{ $post->category->name ?? 'Embeded Instagram' }}</td>
+                                            <td style="white-space: nowrap">{{ $post->title ?? 'Embeded Instagram' }}</td>
+                                            <td style="white-space: nowrap">{{ $post->slug ?? 'Embeded Instagram' }}</td>
                                             <td style="white-space: nowrap">
                                                 {{ $post->is_active == 1 ? 'Aktif' : 'Nonaktif' }}
                                             </td>
