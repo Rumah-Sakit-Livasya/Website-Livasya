@@ -27,7 +27,7 @@
 
         @if ($posts->count())
             <div class="row g-5 align-content-between justify-content-around">
-                @foreach ($post as $post)
+                @foreach ($posts as $post)
                     <div class="col-lg-4">
                         @if ($post->is_embeded)
                             {!! $post->body !!}
