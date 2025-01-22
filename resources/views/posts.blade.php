@@ -26,46 +26,54 @@
         </div>
 
         @if ($posts->count())
-            <div class="box container-fluid">
-                <div class="wrapper">
-                    <div class="row g-5 align-content-between justify-content-center">
-                        @foreach ($posts as $post)
-                            @php
-                                $date = substr($post->created_at, 0, 10);
-                                $date_convert = date_create($date);
-                                $tanggal = date_format($date_convert, 'd');
-                                $bulan = date_format($date_convert, 'M');
-                            @endphp
+            <div class="row g-5 align-content-between justify-content-around">
+                @foreach ($posts as $post)
+                    @php
+                        $date = substr($post->created_at, 0, 10);
+                        $date_convert = date_create($date);
+                        $tanggal = date_format($date_convert, 'd');
+                        $bulan = date_format($date_convert, 'M');
+                    @endphp
 
-                            <div class="col-lg-4">
-                                <a href="/posts/{{ $post->slug }}" class="text-decoration-none">
-                                    <div class="card img-parent overflow-hidden position-relative shadow"
-                                        style="border-radius: 5px; outline: none; border: none; border-radius: 20px">
-                                        @if ($post->image)
-                                            <div class="card-img-top img overflow-hidden"
-                                                style="z-index: 0; background-image: url({{ asset('/storage/' . $post->image) }}); background-size: cover; height: 300px; background-position: center;">
-                                            </div>
-                                        @else
-                                            <div class="card-img-top img overflow-hidden"
-                                                style="z-index: 0; background-image: url(https://source.unsplash.com/random/900×700/?{{ $post->category->slug }}); background-size: cover; height: 25rem;">
-                                            </div>
-                                        @endif
-                                        <div class="position-absolute"
-                                            style="z-index: 3; left: 0; top: 60%; width: 5rem; height: 7rem; background-color: rgba(0, 108, 191, .5);">
-                                            <h3 class="text-center text-white mt-3">{{ $tanggal }} <br>
-                                                {{ $bulan }}</h3>
-                                        </div>
-                                        <div class="card-body text-center"
-                                            style="z-index: 2; height: 8rem; line-height: 6rem; background-color: #fff;">
-                                            <p class="card-text" style="font-size: 11pt"><i class="far fa-folder-open"
-                                                    style="color:#0d6efd;"></i> {{ $post->category->name }}</p>
+                    <div class="col-lg-4">
+                        <a href="/posts/{{ $post->slug }}" class="text-decoration-none">
+                            <div class="card img-parent overflow-hidden position-relative shadow"
+                                style="border-radius: 20px; outline: none; border: none;">
+                                @if ($post->image)
+                                    <div class="card-img-top img overflow-hidden">
+                                        <p class="text-muted"
+                                            style="font-size: 0.9rem; margin: 0; position: absolute; top: 10px; left: 10px; background-color: rgba(255, 255, 255, 0.7); padding: 5px; border-radius: 5px;">
+                                            @rslivasya</p>
+                                        <div
+                                            style="background-image: url({{ asset('/storage/' . $post->image) }}); background-size: cover; height: 400px; background-position: center;">
                                         </div>
                                     </div>
-                                </a>
+                                @else
+                                    <div class="card-img-top img overflow-hidden">
+                                        <p class="text-muted"
+                                            style="font-size: 0.9rem; margin: 0; position: absolute; top: 10px; left: 10px; background-color: rgba(255, 255, 255, 0.7); padding: 5px; border-radius: 5px;">
+                                            @rslivasya</p>
+                                        <div
+                                            style="background-image: url(https://source.unsplash.com/random/900×700/?{{ $post->category->slug }}); background-size: cover; height: 400px;">
+                                        </div>
+                                    </div>
+                                @endif
+                                <div class="card-body text-center" style="background-color: #fff; padding: 1rem;">
+                                    <h5 class="card-title" style="font-size: 1.2rem; font-weight: bold;">{{ $post->title }}
+                                    </h5>
+                                    <p class="card-text" style="font-size: 0.9rem; color: #6c757d;"><i
+                                            class="far fa-folder-open" style="color:#0d6efd;"></i>
+                                        {{ $post->category->name }}</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <span class="text-muted">{{ $tanggal }} {{ $bulan }}</span>
+                                        <span class="text-muted"><i class="far fa-heart"></i>
+                                            {{ $post->likes_count }}</span>
+                                    </div>
+                                </div>
                             </div>
-                        @endforeach
+                        </a>
                     </div>
-                </div>
+                @endforeach
             </div>
         @else
             <p class="fs-4 text-center">Tidak ditemukan berita.</p>
