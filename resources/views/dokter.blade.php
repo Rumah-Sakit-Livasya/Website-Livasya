@@ -29,5 +29,10 @@
                 </div>
             </div>
         </div>
+
+        <img src="{{ asset('storage/' . $dokter->poster) }}" class="img-fluid" style="width: 20rem"
+            alt="{{ $dokter->name }}">
+        <img src="{{ asset('storage/' . $dokter->jadwal) }}" class="img-fluid" style="width: 20rem"
+            alt="{{ $dokter->name }}">
     </section>
 @endsection
