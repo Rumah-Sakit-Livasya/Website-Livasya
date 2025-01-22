@@ -46,10 +46,17 @@
                     <div class="form-group">
                         <label for="create-body" class="form-label">Isi Berita</label>
                         <input id="create-body" type="hidden" name="body" value="{{ old('body') }}">
-                        <trix-editor input="create-body"></trix-editor>
+                        <div id="editor-container">
+                            <trix-editor input="create-body"></trix-editor>
+                        </div>
                         @error('body')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
+                    </div>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="is_embeded" name="is_embeded"
+                            value="1"">
+                        <label class="custom-control-label" for="is_embeded">Embedded</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -63,3 +70,16 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('is_embeded').addEventListener('change', function() {
+        const editorContainer = document.getElementById('editor-container');
+        const bodyInput = document.getElementById('create-body');
+        if (this.checked) {
+            editorContainer.innerHTML =
+                '<textarea id="create-body" name="body" class="form-control" rows="5" oninput="updateBodyValue()">{{ old('body') }}</textarea>';
+        } else {
+            editorContainer.innerHTML = '<trix-editor input="create-body"></trix-editor>';
+        }
+    });
+</script>

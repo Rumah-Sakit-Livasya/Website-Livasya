@@ -22,14 +22,22 @@ class PostApiController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|max:255',
-            'slug' => 'required|unique:posts',
-            'category_id' => 'required',
-            'image' => 'image|file|max:5120',
-            'body' => 'required',
-            'user_id' => 'required',
-        ]);
+        $rules = [
+            'body' => 'required', // Body is required if is_embeded is checked
+        ];
+
+        // If is_embeded is not checked, make title, slug, category_id, and user_id required
+        if (!$request->is_embeded) {
+            $rules['title'] = 'required|max:255';
+            $rules['slug'] = 'required|unique:posts';
+        }
+
+        $rules['image'] = 'image|file|max:5120'; // Image validation remains the same
+        $rules['is_embeded'] = 'nullable|integer'; // Added request validation for is_embeded
+        $rules['user_id'] = 'required';
+        $rules['category_id'] = 'required';
+
+        $validatedData = $request->validate($rules);
 
         if ($request->file('image')) {
             $validatedData['image'] = $request->file('image')->store('img-berita');
@@ -53,12 +61,19 @@ class PostApiController extends Controller
     {
         $post = Post::findOrFail($postId);
         $rules = [
-            'title' => 'required|max:255',
-            'category_id' => 'required',
-            'image' => 'image|file|max:5120',
-            'body' => 'required',
-            'user_id' => 'required',
+            'body' => 'required', // Body is required if is_embeded is checked
         ];
+
+        // If is_embeded is not checked, make title, slug, category_id, and user_id required
+        if (!$request->is_embeded) {
+            $rules['title'] = 'required|max:255';
+            $rules['slug'] = 'required|unique:posts';
+            $rules['category_id'] = 'required';
+            $rules['user_id'] = 'required';
+        }
+
+        $rules['image'] = 'image|file|max:5120'; // Image validation remains the same
+        $rules['is_embeded'] = 'nullable|integer'; // Added request validation for is_embeded
 
         if ($request->slug != $post->slug) {
             $rules['slug'] = 'required|unique:posts';
