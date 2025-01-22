@@ -35,15 +35,17 @@
                 <div class="col-lg-6 d-flex align-items-stretch">
                     <a href="{{ asset('storage/' . $dokter->poster) }}" data-fancybox="gallery"
                         data-caption="{{ $dokter->name }}">
-                        <img src="{{ asset('storage/' . $dokter->poster) }}" class="img-fluid"
-                            style="border-radius: 20px; height: 100%;" alt="{{ $dokter->name }}">
+                        <div class="card-img-top img overflow-hidden img-thumbnail shadow"
+                            style="z-index: 0; background-image: url({{ asset('/storage/' . $dokter->poster) }}); background-size: cover; height: 300px; background-position: center top; border-radius: 20px;">
+                        </div>
                     </a>
                 </div>
                 <div class="col-lg-6 d-flex align-items-stretch">
                     <a href="{{ asset('storage/' . $dokter->jadwal) }}" data-fancybox="gallery"
                         data-caption="{{ $dokter->name }}">
-                        <img src="{{ asset('storage/' . $dokter->jadwal) }}" class="img-fluid"
-                            style="border-radius: 20px; height: 100%;" alt="{{ $dokter->name }}">
+                        <div class="card-img-top img overflow-hidden img-thumbnail shadow"
+                            style="z-index: 0; background-image: url({{ asset('/storage/' . $dokter->jadwal) }}); background-size: cover; height: 300px; background-position: center top; border-radius: 20px;">
+                        </div>
                     </a>
                 </div>
             </div>
