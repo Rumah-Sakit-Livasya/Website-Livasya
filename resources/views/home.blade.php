@@ -189,8 +189,8 @@
         <h1 class="heading">Berita <span>Terbaru</span></h1>
         <div class="box-container mb-5 mt-3">
             <div class="row g-5 align-content-between justify-content-center">
-                @foreach ($post as $p)
-                    <div class="col-md-3 m-4"> <!-- Added margin-bottom for spacing -->
+                @foreach ($post->take($post->count() - 1) as $p)
+                    <div class="col-lg-3 m-4">
                         @if ($p->is_embeded)
                             {!! $p->body !!}
                         @else
