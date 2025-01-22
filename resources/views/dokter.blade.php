@@ -31,7 +31,7 @@
         </div>
 
         <div class="container">
-            <div class="row justify-content-center g-5">
+            <div class="row g-5">
                 <p class="imglist">
                 <div class="col-lg-3" style="border-radius: 20px;">
                     <a href="{{ asset('storage/' . $dokter->poster) }}" data-fancybox="gallery"
