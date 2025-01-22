@@ -30,9 +30,23 @@
             </div>
         </div>
 
-        <img src="{{ asset('storage/' . $dokter->poster) }}" class="img-fluid" style="width: 20rem"
-            alt="{{ $dokter->name }}">
-        <img src="{{ asset('storage/' . $dokter->jadwal) }}" class="img-fluid" style="width: 20rem"
-            alt="{{ $dokter->name }}">
+        <div class="container">
+            <div class="row justify-content-center g-5">
+                <div class="col-lg-6">
+                    <a href="{{ asset('storage/' . $dokter->poster) }}" data-fancybox="gallery"
+                        data-caption="{{ $dokter->name }}">
+                        <img src="{{ asset('storage/' . $dokter->poster) }}" class="img-fluid" style="border-radius: 20px;"
+                            alt="{{ $dokter->name }}">
+                    </a>
+                </div>
+                <div class="col-lg-6">
+                    <a href="{{ asset('storage/' . $dokter->jadwal) }}" data-fancybox="gallery"
+                        data-caption="{{ $dokter->name }}">
+                        <img src="{{ asset('storage/' . $dokter->jadwal) }}" class="img-fluid" style="border-radius: 20px;"
+                            alt="{{ $dokter->name }}">
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
 @endsection
