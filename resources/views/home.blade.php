@@ -190,7 +190,7 @@
         <div class="box-container mb-5 mt-3">
             <div class="row g-5 align-content-between justify-content-center">
                 @foreach ($post as $p)
-                    <div class="col-md-3 mb-4"> <!-- Added margin-bottom for spacing -->
+                    <div class="col-md-3 m-4"> <!-- Added margin-bottom for spacing -->
                         @if ($p->is_embeded)
                             {!! $p->body !!}
                         @else
