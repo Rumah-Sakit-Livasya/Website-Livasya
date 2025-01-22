@@ -48,13 +48,13 @@
                                     </div>
                                 </div>
                                 @if ($post->image)
-                                    <div class="card-img-top img overflow-hidden">
+                                    <div class="card-img-top overflow-hidden">
                                         <div
                                             style="background-image: url({{ asset('/storage/' . $post->image) }}); background-size: cover; height: 400px; background-position: center;">
                                         </div>
                                     </div>
                                 @else
-                                    <div class="card-img-top img overflow-hidden">
+                                    <div class="card-img-top overflow-hidden">
                                         <p class="text-muted"
                                             style="font-size: 0.9rem; margin: 0; position: absolute; top: 10px; left: 10px; background-color: rgba(255, 255, 255, 0.7); padding: 5px; border-radius: 5px;">
                                             @rslivasya</p>
