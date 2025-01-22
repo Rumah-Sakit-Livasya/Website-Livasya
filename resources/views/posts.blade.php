@@ -55,13 +55,13 @@
                                     @if ($post->image)
                                         <div class="card-img-top overflow-hidden">
                                             <div
-                                                style="background-image: url({{ asset('/storage/' . $post->image) }}); background-size: cover; height: 525px; background-position: center;">
+                                                style="background-image: url({{ asset('/storage/' . $post->image) }}); background-size: cover; height: 470px; background-position: center;">
                                             </div>
                                         </div>
                                     @else
                                         <div class="card-img-top overflow-hidden">
                                             <div
-                                                style="background-image: url(https://source.unsplash.com/random/900×700/?{{ $post->category->slug }}); background-size: cover; height: 400px;">
+                                                style="background-image: url(https://source.unsplash.com/random/900×700/?{{ $post->category->slug }}); background-size: cover; height: 470px;">
                                             </div>
                                         </div>
                                     @endif
