@@ -92,9 +92,52 @@
             <p class="fs-4 text-center">Tidak ditemukan berita.</p>
         @endif
 
-        <div class="d-flex justify-content-center mt-5">
+        <div class="d-flex justify-content-center mt-5" id="pagination-container">
             <div class="pagination">{{ $posts->links() }}</div>
         </div>
 
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            attachPaginationLinks();
+
+            function attachPaginationLinks() {
+                const paginationLinks = document.querySelectorAll('#pagination-container .pagination a');
+
+                paginationLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const url = this.href;
+
+                        fetch(url)
+                            .then(response => response.text())
+                            .then(data => {
+                                const parser = new DOMParser();
+                                const doc = parser.parseFromString(data, 'text/html');
+                                const newPosts = doc.querySelector('.row.g-5');
+                                const newPagination = doc.querySelector(
+                                '#pagination-container');
+
+                                document.querySelector('.row.g-5').innerHTML = newPosts
+                                    .innerHTML;
+                                document.querySelector('#pagination-container').innerHTML =
+                                    newPagination.innerHTML;
+
+                                // Scroll to the top of the page
+                                window.scrollTo(0, 0);
+
+                                // Reinitialize Instagram embeds after new content is loaded
+                                if (typeof instgrm !== 'undefined') {
+                                    instgrm.Embeds.process();
+                                }
+
+                                // Reattach pagination links after new content is loaded
+                                attachPaginationLinks();
+                            });
+                    });
+                });
+            }
+        });
+    </script>
 @endsection

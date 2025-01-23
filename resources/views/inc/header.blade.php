@@ -68,6 +68,10 @@
         transform: scale(1.5);
         margin-right: 1rem;
     }
+
+    #shadow-host-companion {
+        padding: 0 !important;
+    }
 </style>
 
 @yield('css')

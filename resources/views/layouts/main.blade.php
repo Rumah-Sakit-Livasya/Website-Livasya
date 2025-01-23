@@ -89,6 +89,12 @@
 
     <link rel="shortcut icon" href="/img/logo.ico" type="image/x-icon">
 
+    <style>
+        #shadow-host-companion {
+            padding: 0 !important;
+        }
+    </style>
+
 </head>
 
 <body class="m-0">

@@ -18,6 +18,10 @@ class PagePostController extends Controller
 
         $posts = Post::where('is_active', 1)->latest()->filter(request(['search']))->paginate(9)->withQueryString();
 
+        if (request()->ajax()) {
+            return view('partials.posts', compact('posts'));
+        }
+
         return view('posts', compact('identity', 'pelayanan', 'mitras', 'posts'), [
             'title' => 'Berita Terkini',
         ]);

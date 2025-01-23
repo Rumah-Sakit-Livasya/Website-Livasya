@@ -18,7 +18,7 @@
                         <label for="edit-title">Judul</label>
                         <input type="text" autofocus value="" class="form-control" id="edit-title"
                             name="title" placeholder="Judul">
-                    </div>
+                    </div>{!! !!}
                     <div class="form-group">
                         <label for="edit-slug">Slug</label>
                         <input type="text" value="" class="form-control" id="edit-slug" name="slug"
