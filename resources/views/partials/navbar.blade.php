@@ -14,7 +14,7 @@
                         class="fab fa-whatsapp me-1 text-primary"></i>
                     {{ $identity->no_hp }} </a>
                 <button class="btn btn-secondary d-flex align-items-center" style="border-radius: 20px"
-                    onclick="location.href='/dokter'"> <i class="fas fa-user-md text-primary"></i>
+                    onclick="location.href='/dokter'"> <i class="fas fa-user-md"></i>
                     <span class="me-3 p-0">Cari Dokter</span> </button>
             </div>
             <div class="right-group d-flex align-items-center">
