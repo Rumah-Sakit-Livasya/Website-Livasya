@@ -43,9 +43,9 @@
     <link href="/css/aos.css" rel="stylesheet">
 
     <!-- DataTables -->
-    <link rel="stylesheet" href="/css/dataTables.bootstrap4.min.css">
+    {{-- <link rel="stylesheet" href="/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="/css/buttons.bootstrap4.min.css"> --}}
 
     {{-- SweetAlert2 --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -291,7 +291,7 @@
     </script>
 
     <!-- DataTables -->
-    <script src="/js/jquery.dataTables.min.js"></script>
+    {{-- <script src="/js/jquery.dataTables.min.js"></script>
     <script src="/js/dataTables.bootstrap4.min.js"></script>
     <script src="/js/dataTables.responsive.min.js"></script>
     <script src="/js/responsive.bootstrap4.min.js"></script>
@@ -302,7 +302,7 @@
     <script src="/js/vfs_fonts.js"></script>
     <script src="/js/buttons.html5.min.js"></script>
     <script src="/js/buttons.print.min.js"></script>
-    <script src="/js/buttons.colVis.min.js"></script>
+    <script src="/js/buttons.colVis.min.js"></script> --}}
     <script>
         $(function() {
             $("#datatab").DataTable({
