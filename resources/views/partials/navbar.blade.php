@@ -20,9 +20,8 @@
     <div class="container d-flex justify-content-between">
         <div class="d-flex justify-content-between w-100 g-5">
             <div class="left-group d-flex align-items-center" style="letter-spacing: 1px;">
-                <a class="nav-link d-flex align-items-center me-5" href="javascript:void(0)"> <i
-                        class="fas fa-phone me-1 text-primary"></i>
-                    {{ $identity->no_telp }} </a>
+                <span class="d-flex align-items-center me-5"> <i class="fas fa-phone me-1 text-primary"></i>
+                    {{ $identity->no_telp }} </span>
                 <a class="nav-link d-flex align-items-center me-5" href="https://wa.me/{{ $identity->no_hp }}"> <i
                         class="fab fa-whatsapp me-1 text-primary"></i>
                     {{ $identity->no_hp }} </a>

@@ -18,7 +18,7 @@
             <h3 class="fw-bold ">Hubungi Kami</h3>
             <a class="nav-link" href="https://wa.me/{{ $identity->no_hp }}"> <i class="fab fa-whatsapp"></i>
                 +{{ $identity->no_hp }} </a>
-            <a class="nav-link" href="javascript:void(0)"> <i class="fas fa-phone"></i> {{ $identity->no_telp }} </a>
+            <span class="nav-link"> <i class="fas fa-phone"></i> {{ $identity->no_telp }} </span>
             <a class="nav-link" href="mailto:{{ $identity->email }}"> <i class="fas fa-envelope"></i>
                 {{ $identity->email }} </a>
         </div>
