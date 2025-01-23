@@ -93,6 +93,17 @@
         #shadow-host-companion {
             padding: 0 !important;
         }
+
+        @media (max-width: 576px) {
+
+            .topbar .nav-link,
+            .topbar .btn {
+                font-size: 11px;
+                /* Adjust font size for smaller screens */
+                padding: 3px 5px;
+                /* Adjust padding for smaller screens */
+            }
+        }
     </style>
 
 </head>
@@ -321,6 +332,26 @@
             // arrows          : true,
             clickContent: false
         });
+
+        // Remove 'me-5' class for mobile devices
+        function adjustNavLinks() {
+            const navLinks = document.querySelectorAll('.left-group .nav-link, .right-group .nav-link');
+            if (window.innerWidth <= 576) {
+                navLinks.forEach(link => {
+                    link.classList.remove('me-5');
+                });
+            } else {
+                navLinks.forEach(link => {
+                    link.classList.add('me-5');
+                });
+            }
+        }
+
+        // Initial adjustment
+        adjustNavLinks();
+
+        // Adjust on window resize
+        window.addEventListener('resize', adjustNavLinks);
     </script>
     <!--End of Fancybox Script-->
 
