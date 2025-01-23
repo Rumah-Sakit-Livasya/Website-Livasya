@@ -1,7 +1,35 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-<nav class="navbar header navbar-expand-lg bg-white " style="border: none">
+
+<div class="topbar d-flex align-items-center"
+    style="background-color: #f8f9fa; padding: 10px 0; position: fixed; width: 100%; top: 0; z-index: 99999; transition: top 0.3s;">
+    <div class="container d-flex justify-content-between">
+        <div class="d-flex justify-content-between w-100 g-5">
+            <div class="left-group d-flex align-items-center" style="letter-spacing: 1px;">
+                <a class="nav-link d-flex align-items-center me-5" href="javascript:void(0)"> <i
+                        class="fas fa-phone me-1 text-primary"></i>
+                    {{ $identity->no_telp }} </a>
+                <a class="nav-link d-flex align-items-center me-5" href="https://wa.me/{{ $identity->no_hp }}"> <i
+                        class="fab fa-whatsapp me-1 text-primary"></i>
+                    {{ $identity->no_hp }} </a>
+                <button class="btn btn-secondary d-flex align-items-center" style="border-radius: 20px"
+                    onclick="location.href='/dokter'"> <i class="fas fa-user-md text-primary"></i>
+                    <span class="me-3 p-0">Cari Dokter</span> </button>
+            </div>
+            <div class="right-group d-flex align-items-center">
+                <a class="nav-link me-5 text-primary" href="{{ $identity->facebook }}"> <i
+                        class="fab fa-facebook-f"></i></a>
+                <a class="nav-link me-5 text-primary" href="{{ $identity->twitter }}"> <i
+                        class="fab fa-twitter"></i></a>
+                <a class="nav-link me-5 text-primary" href="{{ $identity->instagram }}/"> <i
+                        class="fab fa-instagram"></i></a>
+                <a class="nav-link text-primary" href="{{ $identity->youtube }}"> <i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="navbar header navbar-expand-lg bg-white" style="border: none; margin-top: 5.7rem">
     <div class="container mx-3" style="font-family: Montserrat ">
         <a href="/" class="logo nav-link p-3"> <img src="/img/logo.png" width="40" alt="">
         </a>
@@ -124,3 +152,19 @@
         </div>
     </div>
 </nav>
+
+<script>
+    const topbar = document.querySelector('.topbar');
+    const navbar = document.querySelector('.navbar'); // Assuming the navbar has a class of 'navbar'
+
+    window.addEventListener('scroll', function() {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrollTop > 250) {
+            topbar.style.top = "-50px"; // Hide the topbar
+            navbar.style.marginTop = "0"; // Set margin-top to 0 when topbar is hidden
+        } else {
+            topbar.style.top = "0"; // Show the topbar
+            navbar.style.marginTop = "5.7rem"; // Set margin-top to 3rem when topbar is visible
+        }
+    });
+</script>
