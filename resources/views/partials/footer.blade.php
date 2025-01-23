@@ -37,10 +37,7 @@
     <div class="credit">&copy; {{ date('Y') }} created by <a href="https://www.instagram.com/dmscndraa/"
             class="text-decoration-none"><span>Team
                 IT Livasya</span></a> | all
-        rights reserved
-        @guest
-            <a style="margin-left: -6px" href="/bukan-login" class="text-decoration-none text-black-50">.</a>
-        @endguest
+        rights reserved.
     </div>
 </section>
 <!-- footer section ends -->
