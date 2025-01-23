@@ -2,17 +2,16 @@
 
 @section('container')
     <section class="hero-berita"
-        style="background: url(img/WorldMap.svg);  background-size: cover; background-position: right; margin-top: 8rem; height: 40rem;">
-        <section class="title bg-light justify-content-center" style="margin-top:8rem;border-radius: 20em;opacity: 0,5;">
-            <center>
-                <h1 class="fw-bold " style="color: var(--primary)" data-aos="fade-right" data-aos-anchor-placement="top-bottom">
-                    Berita Terkini
-                </h1>
-            </center>
+        style="background: url(img/WorldMap.svg);  background-size: cover; background-position: right; height: 40rem;">
+        <section class="title bg-light justify-content-center" style="border-radius: 20em;opacity: 0,5;">
+            <h1 class="fw-bold text-center" style="color: var(--primary)" data-aos="fade-right"
+                data-aos-anchor-placement="top-bottom">
+                Berita Terkini
+            </h1>
         </section>
     </section>
 
-    <section class="blogs py-5" id="blogs">
+    <section class="blogs py-5 bg-white" id="blogs">
         <div class="row justify-content-center mb-5">
             <div class="col-lg-6">
                 <form action="/posts">
@@ -117,7 +116,7 @@
                                 const doc = parser.parseFromString(data, 'text/html');
                                 const newPosts = doc.querySelector('.row.g-5');
                                 const newPagination = doc.querySelector(
-                                '#pagination-container');
+                                    '#pagination-container');
 
                                 document.querySelector('.row.g-5').innerHTML = newPosts
                                     .innerHTML;

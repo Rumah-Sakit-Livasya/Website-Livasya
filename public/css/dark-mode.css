@@ -1,0 +1,66 @@
+body.dark-mode {
+    background-color: #121212; /* Dark background */
+    color: #ffffff; /* Light text color */
+}
+
+.navbar.header {
+    background-color: #1f1f1f; /* Dark navbar */
+    border: none;
+}
+
+.nav-link {
+    color: #ffffff; /* Light color for nav links */
+}
+
+.nav-link:hover {
+    color: #e0e0e0; /* Lighter color on hover */
+}
+
+.dropdown-menu {
+    background-color: #2c2c2c; /* Dark dropdown background */
+    border: none;
+}
+
+.dropdown-item {
+    color: #ffffff; /* Light color for dropdown items */
+}
+
+.dropdown-item:hover {
+    background-color: #3a3a3a; /* Darker background on hover */
+}
+
+.card {
+    background-color: #1f1f1f; /* Dark card background */
+    color: #ffffff; /* Light text color in cards */
+}
+
+.icons-container {
+    background-color: #1f1f1f; /* Dark background for icons section */
+}
+
+.icons h3, .icons p {
+    color: #ffffff; /* Light text color for icons */
+}
+
+button {
+    background-color: #3a3a3a; /* Dark button background */
+    color: #ffffff; /* Light button text */
+}
+
+button:hover {
+    background-color: #4a4a4a; /* Darker button on hover */
+}
+
+/* Additional styles for sections in dark mode */
+section {
+    background-color: #1f1f1f; /* Dark background for sections */
+    color: #ffffff; /* Light text color for sections */
+}
+
+section h1, section h2, section h3, section h4, section h5, section h6 {
+    color: #ffffff; /* Light color for headings in sections */
+}
+
+section p {
+    color: #e0e0e0; /* Slightly lighter color for paragraph text */
+}

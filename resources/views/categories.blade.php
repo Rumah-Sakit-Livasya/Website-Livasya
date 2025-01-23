@@ -1,18 +1,17 @@
 @extends('layouts.main')
 
 @section('container')
-    <section class="hero-berita mt-5"
-        style="background: url(/img/WorldMap.svg);  background-size: cover; background-position: right; margin-top: 8rem; height: 40rem;">
+    <section class="hero-berita"
+        style="background: url(/img/WorldMap.svg);  background-size: cover; background-position: right; height: 40rem;">
         <section class="title bg-light justify-content-center" style="margin-top:8rem;border-radius: 20em;opacity: 0,5;">
-            <center>
-                <h1 class="fw-bold " style="color: var(--primary)" data-aos="fade-right" data-aos-anchor-placement="top-bottom">
-                    {{ $title }}
-                </h1>
-            </center>
+            <h1 class="fw-bold text-center " style="color: var(--primary)" data-aos="fade-right"
+                data-aos-anchor-placement="top-bottom">
+                {{ $title }}
+            </h1>
         </section>
     </section>
 
-    <section class="blogs" style="padding-top: 7rem" id="blogs">
+    <section class="blogs bg-white" style="padding-top: 7rem" id="blogs">
         <div class="box-container container-fluid">
             <div class="row row-cols-lg-2 g-5 justify-content-center">
                 @foreach ($categories as $category)

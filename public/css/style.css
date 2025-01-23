@@ -57,7 +57,6 @@ section:nth-child(even) {
     url("/img/fasilitas/header.jpg");
   background-size: cover;
   background-position: right center;
-  margin-top: 4rem;
   height: 30rem;
 }
 
@@ -69,7 +68,6 @@ section:nth-child(even) {
     url("/img/jadwal-dokter.webp");
   background-size: cover;
   background-position: right center;
-  margin-top: 8rem;
   height: 30rem;
 }
 
@@ -81,7 +79,6 @@ section:nth-child(even) {
     url("/img/dokter.webp");
   background-size: cover;
   background-position: right center;
-  margin-top: 8rem;
   height: 30rem;
 }
 
@@ -93,7 +90,6 @@ section:nth-child(even) {
     url("/img/sampul.jpg");
   background-size: cover;
   background-position: right -15rem;
-  margin-top: 8rem;
   height: 30rem;
 }
 
@@ -105,7 +101,6 @@ section:nth-child(even) {
     url("/img/hero-gallery.webp");
   background-size: cover;
   background-position: right top;
-  margin-top: 8rem;
   height: 30rem;
 }
 
@@ -686,7 +681,6 @@ section:nth-child(even) {
       url("/img/igd/header.jpg");
     background-size: cover;
     background-position: -11rem;
-    margin-top: 8rem;
     height: 40rem;
   }
 }
@@ -700,7 +694,6 @@ section:nth-child(even) {
       url("/img/igd/header.jpg");
     background-size: cover;
     background-position: -11rem;
-    margin-top: 8rem;
     height: 40rem;
   }
   .hero-lab {
@@ -710,7 +703,6 @@ section:nth-child(even) {
       ),
       url("/img/lab/header.png");
     background-size: cover;
-    margin-top: 8rem;
     height: 30rem;
   }
   #menu-btn {
@@ -763,7 +755,6 @@ section:nth-child(even) {
       url("/img/igd/header.jpg");
     background-size: cover;
     background-position: -11rem;
-    margin-top: 8rem;
     height: 40rem;
   }
   .hero-lab {
@@ -773,7 +764,6 @@ section:nth-child(even) {
       ),
       url("/img/lab/header.png");
     background-size: cover;
-    margin-top: 8rem;
     height: 30rem;
   }
   .home {
@@ -822,7 +812,6 @@ section:nth-child(even) {
       ),
       url("/img/igd/header.jpg");
     background-size: cover;
-    margin-top: 8rem;
     height: 40rem;
   }
 
@@ -834,7 +823,6 @@ section:nth-child(even) {
       url("/img/lab/header.png");
     background-size: cover;
     background-position: -11rem;
-    margin-top: 8rem;
     height: 30rem;
   }
   .heading {
@@ -1448,4 +1436,13 @@ table.dataTable.dtr-inline.collapsed
 
 .kembali-parent:hover .kembali{
   transform: translateX(10px);
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
 }

@@ -84,7 +84,6 @@
         }
     </style>
 
-    <section class=""></section>
     <section class="hero-fasilitas"></section>
 
     <section class="title" style="background: var(--primary);">

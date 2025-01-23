@@ -156,7 +156,7 @@
             transform: translate(-2px, 0) rotate(-45deg);
         }
     </style>
-    <section class="title bg-primary" style="margin-top: 8rem;">
+    <section class="title bg-primary">
         <h1 class="fw-bold text-light" data-aos="fade-right" data-aos-anchor-placement="top-bottom" style="margin-top:20px;">FAQ
         </h1>
     </section>

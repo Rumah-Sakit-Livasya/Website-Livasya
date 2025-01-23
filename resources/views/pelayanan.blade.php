@@ -11,7 +11,6 @@
                 url("{{ asset('/storage/' . $pelayananPage->header) }}");
             background-size: cover;
             background-position: center center;
-            margin-top: 8rem;
             height: 40rem;
         }
 

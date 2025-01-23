@@ -26,7 +26,7 @@ class HomeController extends Controller
 
         $jumbotron = Jumbotron::first();
         $jadwal = Jadwal::first();
-        $dokter = Doctor::all();
+        $dokter = Doctor::where('is_active', 1)->get();
         $polikliniks = Poliklinik::all();
         $post = Post::where('is_active', 1)->latest()->limit(4)->get();
 

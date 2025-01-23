@@ -112,6 +112,41 @@
 
     <!-- header section ends -->
 
+    @if (!request()->is('/')) <!-- Check if not on the root menu -->
+        <nav aria-label="breadcrumb" class="bg-white p-3 rounded" style="margin-top: 8rem;">
+            <div class="container"> <!-- Added container -->
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Home</a></li>
+                    @php
+                        $segments = request()->segments();
+                        $breadcrumb = '';
+                        $currentUrl = request()->url();
+                        // Replace dashes with spaces in the URL segments
+                        $segments = array_map(function ($segment) {
+                            return str_replace('-', ' ', $segment);
+                        }, $segments);
+                    @endphp
+                    @foreach ($segments as $segment)
+                        @if ($breadcrumb)
+                            @php $breadcrumb .= '/' . ucfirst($segment); @endphp
+                        @else
+                            @php $breadcrumb = ucfirst($segment); @endphp
+                        @endif
+                        <li class="breadcrumb-item">
+                            @if ($loop->last)
+                                {{ $title }} <!-- Use $title for the last breadcrumb -->
+                            @else
+                                <a href="{{ '/' . implode('/', array_slice($segments, 0, array_search($segment, $segments) + 1)) }}"
+                                    class="text-decoration-none">{{ ucfirst($segment) }}</a>
+                            @endif
+                        </li>
+                    @endforeach
+                </ol>
+            </div> <!-- End of container -->
+        </nav>
+    @endif
+    <!-- End Breadcrumb Navigation -->
+
     <!-- home section starts  -->
 
     @yield('container')
