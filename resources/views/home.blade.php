@@ -279,12 +279,4 @@
         </div>
     </section>
     <!-- review section ends -->
-
-    {{-- <script>
-        // Mengambil elemen <div> dalam paragraf
-        var divElement = document.querySelector('#tex div');
-
-        // Menambahkan atribut data-aos dengan nilai "fade-right" ke elemen <div>
-        divElement.setAttribute('data-aos', 'fade-right');
-    </script> --}}
 @endsection
