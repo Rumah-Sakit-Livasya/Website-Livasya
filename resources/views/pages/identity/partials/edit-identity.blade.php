@@ -79,6 +79,11 @@
                             name="youtube" placeholder="Youtube">
                     </div>
                     <div class="form-group">
+                        <label for="edit-youtube-link-video">Youtube Link Video</label>
+                        <textarea class="form-control" id="edit-youtube-link-video" name="youtube_link_video"
+                            placeholder="Youtube Link Video" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
                         <label for="edit-email">Email</label>
                         <input type="text" autofocus value="" class="form-control" id="edit-email"
                             name="email" placeholder="Email">

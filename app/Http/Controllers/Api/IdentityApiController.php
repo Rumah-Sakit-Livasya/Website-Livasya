@@ -31,6 +31,7 @@ class IdentityApiController extends Controller
             'instagram' => 'required|max:255',
             'twitter' => 'required|max:255',
             'youtube' => 'required|max:255',
+            'youtube_link_video' => 'nullable',
             'email' => 'required|max:255',
             'no_hp' => 'required|max:255',
             'no_telp' => 'required|max:255',

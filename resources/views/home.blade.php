@@ -257,13 +257,34 @@
                             class="fas fa-chevron-right"></span></a>
                 </div>
             </div>
-
         </div>
     </section>
     <!-- review section ends -->
 
+    <!-- youtube section starts -->
+    <section class="youtube-section py-5 overflow-hidden" style="background: #f5f5f5;">
+        <div class="container">
+            <h1 class="heading">Video <span>Kami</span></h1>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        {!! $identity->youtube_link_video !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-3">
+                <a href="{{ $identity->youtube }}" target="_blank" class="btn mt-3 mb-5z d-block m-auto">
+                    Lihat Selengkapnya <span class="fas fa-chevron-right"></span></a>
+            </div>
+        </div>
+    </section>
+    <!-- youtube section ends -->
+
     <!-- review section starts  -->
-    <section class="review pt-5 overflow-hidden" style="background: #f5f5f5;" id="review">
+    <section class="review pt-5 overflow-hidden" style="background: #fff;" id="review">
         <h1 class="heading">Temukan <span>Kami</span></h1>
         <div class="box-container mb-5">
             <div class="row juctify-content-center">

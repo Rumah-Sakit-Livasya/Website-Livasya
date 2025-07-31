@@ -48,6 +48,10 @@
                                         <input type="text" class="form-control" disabled="" id="youtube">
                                     </div>
                                     <div class="form-group">
+                                        <label class="form-label text-muted">Youtube Link Video</label>
+                                        <textarea class="form-control" id="youtube-link-video" rows="3" disabled></textarea>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="form-label text-muted">No HP</label>
                                         <input type="text" class="form-control" disabled="" id="no-hp">
                                     </div>
@@ -142,6 +146,7 @@
                     $('#instagram').val(data.instagram);
                     $('#twitter').val(data.twitter);
                     $('#youtube').val(data.youtube);
+                    $('#youtube-link-video').val(data.youtube_link_video);
                     $('#email').val(data.email);
                     $('#no-hp').val(data.no_hp);
                     $('#no-telp').val(data.no_telp);
@@ -178,6 +183,7 @@
                         $('#edit-instagram').val(data.instagram);
                         $('#edit-twitter').val(data.twitter);
                         $('#edit-youtube').val(data.youtube);
+                        $('#edit-youtube-link-video').val(data.youtube_link_video);
                         $('#edit-email').val(data.email);
                         $('#edit-no-hp').val(data.no_hp);
                         $('#edit-no-telp').val(data.no_telp);
