@@ -1,4 +1,9 @@
 <x-guest-layout>
+    <div class="mb-4 text-center">
+        <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">Login Pelamar</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Silahkan login untuk melamar karir</p>
+    </div>
+
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -8,8 +13,8 @@
         <!-- Username -->
         <div>
             <x-input-label for="username" :value="__('Username')" />
-            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required
-                autofocus autocomplete="username" />
+            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')"
+                required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('username')" class="mt-2" />
         </div>
 
@@ -62,6 +67,5 @@
                 img.src = '/captcha/flat?' + Math.random();
             }
         </script>
-        </div>
     </form>
 </x-guest-layout>

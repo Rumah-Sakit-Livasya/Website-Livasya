@@ -29,4 +29,9 @@ class Applier extends Model
     {
         return $this->hasMany(ApplierCertification::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

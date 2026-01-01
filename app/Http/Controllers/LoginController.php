@@ -15,12 +15,19 @@ class LoginController extends Controller
         ]);
     }
 
+    public function applicantLogin()
+    {
+        return view('auth.login-pelamar');
+    }
+
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
             'username' => 'required|min:5|max:255',
-            'password' => 'required'
+            'password' => 'required',
+            'captcha' => 'required|captcha'
         ]);
+        unset($credentials['captcha']); // Remove captcha from credentials for Auth::attempt
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();

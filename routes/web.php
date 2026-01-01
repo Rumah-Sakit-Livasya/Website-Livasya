@@ -61,6 +61,9 @@ Route::get('/career/{tipe}/{career:id}', [CareerController::class, 'apply']);
 Route::get('/pelayanan/{pelayanan:slug}', [PagePelayananController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
+    Route::get('/applicant/profile', [App\Http\Controllers\Applicant\ProfileController::class, 'create'])->name('applicant.profile.create');
+    Route::post('/applicant/profile', [App\Http\Controllers\Applicant\ProfileController::class, 'store'])->name('applicant.profile.store');
+
     Route::get('/careers/{career:id}', [CareerController::class, 'appliers']);
     Route::get('/careers/{career:id}/{applier:id}', [CareerController::class, 'applier']);
     Route::get('/careers/{career:id}/{applier:id}/download-cv', [CareerController::class, 'downloadCV']);
