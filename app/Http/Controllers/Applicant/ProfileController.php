@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Applicant;
 use App\Http\Controllers\Controller;
 use App\Models\Applier;
 use App\Models\Career;
+use App\Models\Identity;
+use App\Models\Mitra;
+use App\Models\Pelayanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,8 +21,12 @@ class ProfileController extends Controller
         }
 
         $careers = Career::where('status', 'on')->get();
+        $identity = Identity::first();
+        $pelayanan = Pelayanan::all();
+        $mitras = Mitra::where('is_primary', 1)->get();
+        $title = "Profile";
 
-        return view('applicant.profile', compact('user', 'careers'));
+        return view('applicant.profile', compact('user', 'careers', 'identity', 'pelayanan', 'mitras', 'title'));
     }
 
     public function store(Request $request)
