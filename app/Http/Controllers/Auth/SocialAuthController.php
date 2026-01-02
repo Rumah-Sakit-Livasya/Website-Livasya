@@ -46,7 +46,7 @@ class SocialAuthController extends Controller
                 }
             }
 
-            Auth::login($user);
+            Auth::login($user, true);
 
             if (!$user->hasVerifiedEmail()) {
                 return redirect()->route('verification.notice');
@@ -58,7 +58,7 @@ class SocialAuthController extends Controller
 
             return redirect()->intended('/dashboard');
         } catch (\Exception $e) {
-            return redirect('/bukan-login')->withErrors(['email' => 'Google Login failed: ' . $e->getMessage()]);
+            return redirect('/verify-account')->withErrors(['email' => 'Google Login failed: ' . $e->getMessage()]);
         }
     }
 }
