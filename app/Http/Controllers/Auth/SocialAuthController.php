@@ -33,16 +33,11 @@ class SocialAuthController extends Controller
                     'password' => Hash::make(Str::random(16)), // Dummy password
                     'username' => explode('@', $googleUser->getEmail())[0] . rand(100, 999), // Generate username
                 ]);
-                $user->assignRole('pelamar');
             } else {
                 $user->update([
                     'google_id' => $googleUser->getId(),
                     'avatar' => $googleUser->getAvatar(),
                 ]);
-
-                if (!$user->hasRole('pelamar') && !$user->hasRole('super-admin') && !$user->hasRole('user')) {
-                    $user->assignRole('pelamar');
-                }
             }
 
             Auth::login($user);
@@ -51,7 +46,7 @@ class SocialAuthController extends Controller
                 return redirect()->route('applicant.profile.create');
             }
 
-            return redirect()->route('applicant.dashboard');
+            return redirect()->route('applicant.dashboard')->with('status', 'Profile already completed.');
         } catch (\Exception $e) {
             return redirect('/bukan-login')->withErrors(['email' => 'Google Login failed: ' . $e->getMessage()]);
         }
