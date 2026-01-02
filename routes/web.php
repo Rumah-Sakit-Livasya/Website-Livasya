@@ -65,6 +65,7 @@ Route::get('/pelayanan/{pelayanan:slug}', [PagePelayananController::class, 'inde
 Route::middleware('auth')->group(function () {
     Route::get('/applicant/profile', [App\Http\Controllers\Applicant\ProfileController::class, 'create'])->name('applicant.profile.create')->middleware(['verified', 'role:pelamar']);
     Route::post('/applicant/profile', [App\Http\Controllers\Applicant\ProfileController::class, 'store'])->name('applicant.profile.store')->middleware(['verified', 'role:pelamar']);
+    Route::get('/applicant/dashboard', [App\Http\Controllers\Applicant\DashboardController::class, 'index'])->name('applicant.dashboard')->middleware(['verified', 'role:pelamar']);
 
     Route::get('/careers/{career:id}', [CareerController::class, 'appliers']);
     Route::get('/careers/{career:id}/{applier:id}', [CareerController::class, 'applier']);

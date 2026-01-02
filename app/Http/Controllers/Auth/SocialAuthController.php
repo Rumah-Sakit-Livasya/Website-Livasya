@@ -51,7 +51,7 @@ class SocialAuthController extends Controller
                 return redirect()->route('applicant.profile.create');
             }
 
-            return redirect()->intended('/dashboard');
+            return redirect()->route('applicant.dashboard');
         } catch (\Exception $e) {
             return redirect('/bukan-login')->withErrors(['email' => 'Google Login failed: ' . $e->getMessage()]);
         }

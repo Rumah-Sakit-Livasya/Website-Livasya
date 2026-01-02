@@ -17,7 +17,7 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         if ($user->applier) {
-            return redirect()->route('dashboard')->with('status', 'Profile already completed.');
+            return redirect()->route('applicant.dashboard')->with('status', 'Profile already completed.');
         }
 
         $careers = Career::where('status', 'on')->get();
@@ -125,6 +125,6 @@ class ProfileController extends Controller
             'attachment' => '-',
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Profile completed successfully!');
+        return redirect()->route('applicant.dashboard')->with('success', 'Profile completed successfully!');
     }
 }
