@@ -70,7 +70,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/careers/{career:id}', [CareerController::class, 'appliers']);
     Route::get('/careers/{career:id}/{applier:id}', [CareerController::class, 'applier']);
     Route::get('/careers/{career:id}/{applier:id}/download-cv', [CareerController::class, 'downloadCV']);
-    Route::prefix('dashboard')->middleware(['role:super-admin|user'])->group(function () {
+    Route::prefix('dashboard')->middleware(['role:super-admin|user|pelamar'])->group(function () {
         // Dashboard
         Route::get("/", [DashboardController::class, 'index'])->name("dashboard");
 
