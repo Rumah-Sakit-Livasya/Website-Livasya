@@ -80,6 +80,9 @@
     <script src="/js/jquery.fancybox.min.js"></script>
     <!--End of Fancybox Style-->
 
+    <!-- Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
     <!-- custom css file link  -->
     <script src="/js/splide.min.js"></script>
     <link rel="stylesheet" href="/css/splide.min.css">

@@ -11,6 +11,37 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('applicant.dashboard', compact('user'));
+        $careers = \App\Models\Career::where('status', 'on')->latest()->get();
+        return view('applicant.dashboard', compact('user', 'careers'));
+    }
+
+    public function vacancies()
+    {
+        $user = Auth::user();
+        $careers = \App\Models\Career::where('status', 'on')->latest()->get();
+        return view('applicant.vacancies', compact('user', 'careers'));
+    }
+
+    public function storeApply(Request $request)
+    {
+        $request->validate([
+            'career_id' => 'required|exists:careers,id',
+            'education_id' => 'required',
+            'expected_salary' => 'required',
+        ]);
+
+        $applier = Auth::user()->applier;
+
+        if (!$applier) {
+            return back()->with('error', 'Silahkan lengkapi profil terlebih dahulu.');
+        }
+
+        // Update Career and Salary
+        $applier->update([
+            'career_id' => $request->career_id,
+            'compensation_salary' => $request->expected_salary,
+        ]);
+
+        return back()->with('success', 'Lamaran berhasil dikirim! Semoga sukses.');
     }
 }

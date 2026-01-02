@@ -65,7 +65,34 @@ Route::get('/pelayanan/{pelayanan:slug}', [PagePelayananController::class, 'inde
 Route::middleware('auth')->group(function () {
     Route::get('/applicant/profile', [App\Http\Controllers\Applicant\ProfileController::class, 'create'])->name('applicant.profile.create')->middleware(['verified', 'role:pelamar']);
     Route::post('/applicant/profile', [App\Http\Controllers\Applicant\ProfileController::class, 'store'])->name('applicant.profile.store')->middleware(['verified', 'role:pelamar']);
+    Route::get('/applicant/profile/edit', [App\Http\Controllers\Applicant\ProfileController::class, 'edit'])->name('applicant.profile.edit')->middleware(['verified', 'role:pelamar']);
+    Route::put('/applicant/profile', [App\Http\Controllers\Applicant\ProfileController::class, 'update'])->name('applicant.profile.update')->middleware(['verified', 'role:pelamar']);
+
+    // Profile Sub-entities
+    Route::post('/applicant/profile/work', [App\Http\Controllers\Applicant\ProfileController::class, 'storeWork'])->name('applicant.profile.work.store');
+    Route::delete('/applicant/profile/work/{id}', [App\Http\Controllers\Applicant\ProfileController::class, 'deleteWork'])->name('applicant.profile.work.delete');
+
+    Route::post('/applicant/profile/education', [App\Http\Controllers\Applicant\ProfileController::class, 'storeEducation'])->name('applicant.profile.education.store');
+    Route::delete('/applicant/profile/education/{id}', [App\Http\Controllers\Applicant\ProfileController::class, 'deleteEducation'])->name('applicant.profile.education.delete');
+
+    Route::post('/applicant/profile/certification', [App\Http\Controllers\Applicant\ProfileController::class, 'storeCertification'])->name('applicant.profile.certification.store');
+    Route::delete('/applicant/profile/certification/{id}', [App\Http\Controllers\Applicant\ProfileController::class, 'deleteCertification'])->name('applicant.profile.certification.delete');
+
+    Route::post('/applicant/profile/scholarship', [App\Http\Controllers\Applicant\ProfileController::class, 'storeScholarship'])->name('applicant.profile.scholarship.store');
+    Route::delete('/applicant/profile/scholarship/{id}', [App\Http\Controllers\Applicant\ProfileController::class, 'deleteScholarship'])->name('applicant.profile.scholarship.delete');
+
+    Route::post('/applicant/profile/license', [App\Http\Controllers\Applicant\ProfileController::class, 'storeLicense'])->name('applicant.profile.license.store');
+    Route::delete('/applicant/profile/license/{id}', [App\Http\Controllers\Applicant\ProfileController::class, 'deleteLicense'])->name('applicant.profile.license.delete');
+
+    Route::post('/applicant/profile/other', [App\Http\Controllers\Applicant\ProfileController::class, 'storeOther'])->name('applicant.profile.other.store');
+    Route::delete('/applicant/profile/other/{id}', [App\Http\Controllers\Applicant\ProfileController::class, 'deleteOther'])->name('applicant.profile.other.delete');
+
+    Route::post('/applicant/profile/upload-photo', [App\Http\Controllers\Applicant\ProfileController::class, 'uploadPhoto'])->name('applicant.profile.upload.photo')->middleware(['verified', 'role:pelamar']);
+    Route::post('/applicant/profile/upload-ktp', [App\Http\Controllers\Applicant\ProfileController::class, 'uploadKtp'])->name('applicant.profile.upload.ktp')->middleware(['verified', 'role:pelamar']);
+
     Route::get('/applicant/dashboard', [App\Http\Controllers\Applicant\DashboardController::class, 'index'])->name('applicant.dashboard')->middleware(['verified', 'role:pelamar']);
+    Route::get('/applicant/vacancies', [App\Http\Controllers\Applicant\DashboardController::class, 'vacancies'])->name('applicant.vacancies')->middleware(['verified', 'role:pelamar']);
+    Route::post('/applicant/apply', [App\Http\Controllers\Applicant\DashboardController::class, 'storeApply'])->name('applicant.apply')->middleware(['verified', 'role:pelamar']);
 
     Route::get('/careers/{career:id}', [CareerController::class, 'appliers']);
     Route::get('/careers/{career:id}/{applier:id}', [CareerController::class, 'applier']);

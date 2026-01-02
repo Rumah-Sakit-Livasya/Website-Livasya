@@ -21,25 +21,36 @@ class UserSeeder extends Seeder
                 'username' => 'd.candra',
                 'password' => bcrypt('password'),
                 'role' => 'superadmin',
-            ], [
+            ],
+            [
                 'name' => "Admin",
                 'email' => "admin@dummy.com",
                 'email_verified_at' => now(),
                 'username' => 'admin',
                 'password' => bcrypt('admin'),
                 'role' => 'admin',
-            ], [
+            ],
+            [
                 'name' => "User",
                 'email' => "user@dummy.com",
                 'email_verified_at' => now(),
                 'username' => 'user',
                 'password' => bcrypt('user'),
-                'role' => 'user',
+                'role' => 'pelamar',
             ]
         ];
 
-        foreach ($users as $user) {
-            User::create($user);
+        foreach ($users as $userData) {
+            $role = $userData['role'];
+            unset($userData['role']);
+
+            // Map legacy/typo roles to actual Spatie roles if needed
+            if ($role === 'superadmin' || $role === 'admin') {
+                $role = 'super-admin';
+            }
+
+            $user = User::create($userData);
+            $user->assignRole($role);
         }
     }
 }

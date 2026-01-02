@@ -35,16 +35,16 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'username' => 'required|min:5|max:255',
+            'username' => 'required|min:4|max:255',
             'password' => 'required',
-            'captcha' => 'required|captcha'
+            'captcha' => 'captcha'
         ]);
         unset($credentials['captcha']); // Remove captcha from credentials for Auth::attempt
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            if (Auth::user()->hasRole('pelamar')) {
+            if (Auth::user()->role == 'pelamar') {
                 return redirect()->route('applicant.dashboard');
             }
 

@@ -28,7 +28,7 @@ DOC: if you remove pace.js from core please note on Internet Explorer some CSS a
         });
     }
 
-    // Fungsi untuk menampilkan notifikasi kesalahan SweetAlert 
+    // Fungsi untuk menampilkan notifikasi kesalahan SweetAlert
     function showErrorAlert(message) {
         Swal.fire({
             icon: 'error',
@@ -40,6 +40,7 @@ DOC: if you remove pace.js from core please note on Internet Explorer some CSS a
     }
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script src="/js/script.js"></script>
 
 @yield('plugin')

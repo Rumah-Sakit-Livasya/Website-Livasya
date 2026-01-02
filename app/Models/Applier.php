@@ -17,7 +17,7 @@ class Applier extends Model
 
     public function works()
     {
-        return $this->hasMany(ApplierWork::class);
+        return $this->hasMany(ApplierWork::class, 'applier_id');
     }
 
     public function languages()
@@ -33,5 +33,25 @@ class Applier extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function scholarships()
+    {
+        return $this->hasMany(ApplierScholarship::class);
+    }
+
+    public function licenses()
+    {
+        return $this->hasMany(ApplierLicense::class);
+    }
+
+    public function others()
+    {
+        return $this->hasMany(ApplierOther::class);
+    }
+
+    public function educations()
+    {
+        return $this->hasMany(ApplierEducation::class);
     }
 }
