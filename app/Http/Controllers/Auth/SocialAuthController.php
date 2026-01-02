@@ -48,6 +48,10 @@ class SocialAuthController extends Controller
 
             Auth::login($user);
 
+            if (!$user->hasVerifiedEmail()) {
+                return redirect()->route('verification.notice');
+            }
+
             if (!$user->applier) {
                 return redirect()->route('applicant.profile.create');
             }
