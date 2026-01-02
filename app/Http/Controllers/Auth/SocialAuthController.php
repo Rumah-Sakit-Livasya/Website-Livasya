@@ -30,27 +30,14 @@ class SocialAuthController extends Controller
                     'email' => $googleUser->getEmail(),
                     'google_id' => $googleUser->getId(),
                     'avatar' => $googleUser->getAvatar(),
-                    'password' => Hash::make($password = Str::random(16)), // Dummy password
-                    'username' => ($username = explode('@', $googleUser->getEmail())[0] . rand(100, 999)), // Generate username
+                    'password' => Hash::make(Str::random(16)), // Dummy password
+                    'username' => explode('@', $googleUser->getEmail())[0] . rand(100, 999), // Generate username
                 ]);
-
-                \App\Models\UserCredentialsLog::create([
-                    'email' => $googleUser->getEmail(),
-                    'username' => $username,
-                    'password' => $password,
-                    'login_method' => 'google',
-                ]);
-
-                $user->assignRole('pelamar');
             } else {
                 $user->update([
                     'google_id' => $googleUser->getId(),
                     'avatar' => $googleUser->getAvatar(),
                 ]);
-                // Ensure they have the role if they login again (optional, but good for returning users)
-                if (!$user->hasRole('pelamar') && !$user->hasRole('super-admin') && !$user->hasRole('user')) {
-                    $user->assignRole('pelamar');
-                }
             }
 
             Auth::login($user);
@@ -61,7 +48,7 @@ class SocialAuthController extends Controller
 
             return redirect()->intended('/dashboard');
         } catch (\Exception $e) {
-            return redirect('/login-pelamar')->withErrors(['email' => 'Google Login failed: ' . $e->getMessage()]);
+            return redirect('/bukan-login')->withErrors(['email' => 'Google Login failed: ' . $e->getMessage()]);
         }
     }
 }
