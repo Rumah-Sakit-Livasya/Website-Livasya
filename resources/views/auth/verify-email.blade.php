@@ -27,7 +27,7 @@
                                 <form method="POST" action="{{ route('verification.send') }}">
                                     @csrf
                                     <button type="submit" class="btn btn-primary btn-lg btn-block">
-                                        {{ __('Kirim Ulang Email Verifikasi') }}
+                                        {{ __('Kirim Verifikasi Email') }}
                                     </button>
                                 </form>
                             </div>

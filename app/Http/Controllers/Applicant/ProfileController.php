@@ -34,8 +34,12 @@ class ProfileController extends Controller
         $applier = null;
         $works = collect([]); // Empty collection for new profile
         $certifications = collect([]);
+        $educations = collect([]);
+        $scholarships = collect([]);
+        $licenses = collect([]);
+        $others = collect([]);
 
-        return view('applicant.profile', compact('user', 'careers', 'identity', 'pelayanan', 'mitras', 'title', 'applier', 'works', 'certifications'));
+        return view('applicant.profile', compact('user', 'careers', 'identity', 'pelayanan', 'mitras', 'title', 'applier', 'works', 'certifications', 'educations', 'scholarships', 'licenses', 'others'));
     }
 
     public function edit()
