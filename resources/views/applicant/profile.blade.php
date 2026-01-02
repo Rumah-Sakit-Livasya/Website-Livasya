@@ -953,14 +953,18 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-success text-white">
-                        <h5 class="modal-title"><i class="fas fa-user-edit mr-2"></i> Edit Profil</h5>
+                        <h5 class="modal-title"><i class="fas fa-user-edit mr-2"></i>
+                            {{ $applier ? 'Edit Profil' : 'Lengkapi Profil' }}</h5>
                         <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ route('applicant.profile.update') }}" method="POST">
+                    <form action="{{ $applier ? route('applicant.profile.update') : route('applicant.profile.store') }}"
+                        method="POST">
                         @csrf
-                        @method('PUT')
+                        @if ($applier)
+                            @method('PUT')
+                        @endif
                         <div class="modal-body">
                             <div class="alert alert-warning text-sm mb-3">
                                 <i class="fas fa-exclamation-triangle"></i> Harap pastikan data diri Anda akurat.

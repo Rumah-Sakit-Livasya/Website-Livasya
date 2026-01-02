@@ -81,7 +81,7 @@ class ProfileController extends Controller
             'blood_type' => 'required|string',
             'marital_status' => 'required|string',
             'religion' => 'required|string',
-            'career_id' => 'required|exists:careers,id',
+            'position_interest' => 'required|string',
             'id_card' => 'required|string|max:20',
             'address' => 'required|string',
         ]);

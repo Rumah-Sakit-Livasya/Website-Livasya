@@ -11,6 +11,16 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+        // Redirect to profile completion if data is missing
+        if (!$user->applier) {
+            return redirect()->route('applicant.profile.create')->with('warning', 'Silahkan lengkapi data diri Anda terlebih dahulu.');
+        }
+
+        if (empty($user->applier->id_card) || empty($user->applier->phone)) {
+            return redirect()->route('applicant.profile.edit')->with('warning', 'Silahkan lengkapi data diri Anda terlebih dahulu.');
+        }
+
         $careers = \App\Models\Career::where('status', 'on')->latest()->get();
         return view('applicant.dashboard', compact('user', 'careers'));
     }

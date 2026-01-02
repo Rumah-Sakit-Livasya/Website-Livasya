@@ -31,15 +31,6 @@
                                     </button>
                                 </form>
                             </div>
-
-                            <div class="mt-4">
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="btn btn-link text-muted text-decoration-none p-0">
-                                        {{ __('Keluar') }}
-                                    </button>
-                                </form>
-                            </div>
                         </div>
                     </div>
                     <div class="text-center mt-4 text-muted">
