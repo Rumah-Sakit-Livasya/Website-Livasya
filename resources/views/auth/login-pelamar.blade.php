@@ -16,85 +16,43 @@
                             <!-- Session Status -->
                             <x-auth-session-status class="mb-4 alert alert-info" :status="session('status')" />
 
-                            <form method="POST" action="{{ route('login') }}">
-                                @csrf
+                            <!-- Terms Checkbox -->
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="agreeTerms">
+                                <label class="form-check-label text-muted small" for="agreeTerms">
+                                    Saya menyetujui <a href="{{ url('/syarat-ketentuan') }}" target="_blank"
+                                        class="text-decoration-none">Syarat & Ketentuan</a> dan <a
+                                        href="{{ url('/kebijakan-privasi') }}" target="_blank"
+                                        class="text-decoration-none">Kebijakan Privasi</a>.
+                                </label>
+                            </div>
 
-                                <!-- Username -->
-                                <div class="form-group mb-3">
-                                    <label for="username" class="form-label font-weight-bold">Username</label>
-                                    <input id="username" type="text"
-                                        class="form-control form-control-lg @error('username') is-invalid @enderror"
-                                        name="username" value="{{ old('username') }}" required autofocus
-                                        autocomplete="username" placeholder="Masukkan username anda">
-                                    @error('username')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
+                            <div class="d-grid gap-2">
+                                <a href="{{ route('auth.google') }}" id="googleLoginBtn"
+                                    class="btn btn-danger btn-lg btn-block d-flex align-items-center justify-content-center disabled"
+                                    aria-disabled="true" tabindex="-1">
+                                    <i class="fab fa-google mr-2"></i> Masuk dengan Google
+                                </a>
+                            </div>
 
-                                <!-- Password -->
-                                <div class="form-group mb-4">
-                                    <label for="password" class="form-label font-weight-bold">Password</label>
-                                    <input id="password" type="password"
-                                        class="form-control form-control-lg @error('password') is-invalid @enderror"
-                                        name="password" required autocomplete="current-password"
-                                        placeholder="Masukkan password">
-                                    @error('password')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const termsCheckbox = document.getElementById('agreeTerms');
+                                    const googleLoginBtn = document.getElementById('googleLoginBtn');
 
-                                <!-- Captcha -->
-                                <div class="form-group mb-4">
-                                    <label for="captcha" class="form-label font-weight-bold">Keamanan</label>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <div class="captcha-image border rounded mr-2 overflow-hidden">
-                                            {!! captcha_img('flat') !!}
-                                        </div>
-                                        <button type="button" class="btn btn-light border" onclick="reloadCaptcha()"
-                                            title="Reload Captcha">
-                                            <i class="fas fa-sync-alt"></i>
-                                        </button>
-                                    </div>
-                                    <input id="captcha" type="text"
-                                        class="form-control @error('captcha') is-invalid @enderror" name="captcha" required
-                                        placeholder="Masukkan kode captcha di atas">
-                                    @error('captcha')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-
-                                <!-- Remember Me -->
-                                <div class="form-group form-check mb-4">
-                                    <input type="checkbox" class="form-check-input" id="remember_me" name="remember">
-                                    <label class="form-check-label" for="remember_me">Ingat Saya</label>
-                                </div>
-
-                                <!-- Buttons -->
-                                <div class="d-grid gap-2">
-                                    <button type="submit" class="btn btn-primary btn-lg btn-block"
-                                        style="background-color: #0d6efd; border-color: #0d6efd;">
-                                        Masuk Sekarang
-                                    </button>
-                                </div>
-
-                                <div class="text-center my-3">
-                                    <span class="text-muted">Atau masuk dengan</span>
-                                </div>
-
-                                <div class="d-grid gap-2">
-                                    <a href="{{ route('auth.google') }}"
-                                        class="btn btn-outline-danger btn-block d-flex align-items-center justify-content-center">
-                                        <i class="fab fa-google mr-2"></i> Google
-                                    </a>
-                                </div>
-
-                            </form>
+                                    termsCheckbox.addEventListener('change', function() {
+                                        if (this.checked) {
+                                            googleLoginBtn.classList.remove('disabled');
+                                            googleLoginBtn.removeAttribute('aria-disabled');
+                                            googleLoginBtn.removeAttribute('tabindex');
+                                        } else {
+                                            googleLoginBtn.classList.add('disabled');
+                                            googleLoginBtn.setAttribute('aria-disabled', 'true');
+                                            googleLoginBtn.setAttribute('tabindex', '-1');
+                                        }
+                                    });
+                                });
+                            </script>
                         </div>
                     </div>
                     <div class="text-center mt-4 text-muted">
