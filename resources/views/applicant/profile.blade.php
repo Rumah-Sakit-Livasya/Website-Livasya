@@ -1096,6 +1096,11 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
+            // Check if profile is incomplete and show modal
+            @if (!$applier || empty($applier->phone) || empty($applier->id_card) || empty($applier->address))
+                $('#modal-edit-profile').modal('show');
+            @endif
+
             // Custom file input label change
             $('.custom-file-input').on('change', function() {
                 var fileName = $(this).val().split('\\').pop();
