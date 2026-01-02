@@ -17,7 +17,7 @@ class ProfileController extends Controller
             return redirect()->route('dashboard')->with('status', 'Profile already completed.');
         }
 
-        $careers = Career::where('is_active', true)->get();
+        $careers = Career::where('status', 'on')->get();
 
         return view('applicant.profile', compact('user', 'careers'));
     }
