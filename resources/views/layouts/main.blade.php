@@ -203,7 +203,7 @@
     <script src="/js/script.js"></script>
 
     <script>
-        // Dropdown Menu Fade    
+        // Dropdown Menu Fade
         jQuery(document).ready(function() {
             $(".dropdown").hover(
                 function() {

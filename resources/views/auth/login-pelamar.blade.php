@@ -1,71 +1,114 @@
-<x-guest-layout>
-    <div class="mb-4 text-center">
-        <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">Login Pelamar</h2>
-        <p class="text-sm text-gray-600 dark:text-gray-400">Silahkan login untuk melamar karir</p>
-    </div>
+@extends('layouts.main')
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@section('title', 'Login Pelamar')
+@section('container')
+    <section class="login-section py-5" style="min-height: 80vh; background-color: #f8f9fa;">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-6 col-lg-5">
+                    <div class="card shadow-lg border-0 rounded-lg">
+                        <div class="card-header bg-white border-0 text-center pt-4 pb-0">
+                            <img src="{{ asset('img/logo.png') }}" alt="Logo RSIA Livasya" style="width: 80px;" class="mb-3">
+                            <h3 class="font-weight-bold text-dark">Login Pelamar</h3>
+                            <p class="text-muted">Portal Karir RSIA Livasya</p>
+                        </div>
+                        <div class="card-body p-5">
+                            <!-- Session Status -->
+                            <x-auth-session-status class="mb-4 alert alert-info" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+                            <form method="POST" action="{{ route('login') }}">
+                                @csrf
 
-        <!-- Username -->
-        <div>
-            <x-input-label for="username" :value="__('Username')" />
-            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')"
-                required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('username')" class="mt-2" />
-        </div>
+                                <!-- Username -->
+                                <div class="form-group mb-3">
+                                    <label for="username" class="form-label font-weight-bold">Username</label>
+                                    <input id="username" type="text"
+                                        class="form-control form-control-lg @error('username') is-invalid @enderror"
+                                        name="username" value="{{ old('username') }}" required autofocus
+                                        autocomplete="username" placeholder="Masukkan username anda">
+                                    @error('username')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+                                <!-- Password -->
+                                <div class="form-group mb-4">
+                                    <label for="password" class="form-label font-weight-bold">Password</label>
+                                    <input id="password" type="password"
+                                        class="form-control form-control-lg @error('password') is-invalid @enderror"
+                                        name="password" required autocomplete="current-password"
+                                        placeholder="Masukkan password">
+                                    @error('password')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
 
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                autocomplete="current-password" />
+                                <!-- Captcha -->
+                                <div class="form-group mb-4">
+                                    <label for="captcha" class="form-label font-weight-bold">Keamanan</label>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div class="captcha-image border rounded mr-2 overflow-hidden">
+                                            {!! captcha_img('flat') !!}
+                                        </div>
+                                        <button type="button" class="btn btn-light border" onclick="reloadCaptcha()"
+                                            title="Reload Captcha">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                    </div>
+                                    <input id="captcha" type="text"
+                                        class="form-control @error('captcha') is-invalid @enderror" name="captcha" required
+                                        placeholder="Masukkan kode captcha di atas">
+                                    @error('captcha')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+                                <!-- Remember Me -->
+                                <div class="form-group form-check mb-4">
+                                    <input type="checkbox" class="form-check-input" id="remember_me" name="remember">
+                                    <label class="form-check-label" for="remember_me">Ingat Saya</label>
+                                </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox"
-                    class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
-                    name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+                                <!-- Buttons -->
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block"
+                                        style="background-color: #0d6efd; border-color: #0d6efd;">
+                                        Masuk Sekarang
+                                    </button>
+                                </div>
 
-        <!-- Captcha -->
-        <div class="mt-4">
-            <x-input-label for="captcha" :value="__('Captcha')" />
-            <div class="flex items-center gap-4 mt-1">
-                <span class="captcha-image">{!! captcha_img('flat') !!}</span>
-                <button type="button" class="btn btn-sm btn-secondary reload-captcha"
-                    onclick="reloadCaptcha()">↻</button>
+                                <div class="text-center my-3">
+                                    <span class="text-muted">Atau masuk dengan</span>
+                                </div>
+
+                                <div class="d-grid gap-2">
+                                    <a href="{{ route('auth.google') }}"
+                                        class="btn btn-outline-danger btn-block d-flex align-items-center justify-content-center">
+                                        <i class="fab fa-google mr-2"></i> Google
+                                    </a>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="text-center mt-4 text-muted">
+                        <small>&copy; {{ date('Y') }} RSIA Livasya. All rights reserved.</small>
+                    </div>
+                </div>
             </div>
-            <x-text-input id="captcha" class="block mt-2 w-full" type="text" name="captcha" required />
-            <x-input-error :messages="$errors->get('captcha')" class="mt-2" />
         </div>
+    </section>
 
-        <div class="flex items-center justify-end mt-4">
-            <a href="{{ route('auth.google') }}"
-                class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 me-3">
-                {{ __('Login with Google') }}
-            </a>
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-
-        <script>
-            function reloadCaptcha() {
-                let img = document.querySelector('.captcha-image img');
-                img.src = '/captcha/flat?' + Math.random();
-            }
-        </script>
-    </form>
-</x-guest-layout>
+    <script>
+        function reloadCaptcha() {
+            let img = document.querySelector('.captcha-image img');
+            img.src = '/captcha/flat?' + Math.random();
+        }
+    </script>
+@endsection

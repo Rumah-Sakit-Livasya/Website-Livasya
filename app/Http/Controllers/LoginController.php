@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Identity;
+use App\Models\Mitra;
+use App\Models\Pelayanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,14 +13,23 @@ class LoginController extends Controller
     public function index()
     {
         return view('login.index', [
-            'name' => 'RSIA Livasya',
+            'name' => 'Rumah Sakit Livasya',
             'title' => 'Login Admin',
         ]);
     }
 
     public function applicantLogin()
     {
-        return view('auth.login-pelamar');
+        $identity = Identity::first();
+        $pelayanan = Pelayanan::all();
+        $mitras = Mitra::where('is_primary', 1)->get();
+
+        return view('auth.login-pelamar', [
+            'title' => 'Login Pelamar',
+            'identity' => $identity,
+            'pelayanan' => $pelayanan,
+            'mitras' => $mitras,
+        ]);
     }
 
     public function authenticate(Request $request)
