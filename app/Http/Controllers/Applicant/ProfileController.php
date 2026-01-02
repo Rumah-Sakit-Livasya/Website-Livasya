@@ -39,7 +39,10 @@ class ProfileController extends Controller
         $licenses = collect([]);
         $others = collect([]);
 
-        return view('applicant.profile', compact('user', 'careers', 'identity', 'pelayanan', 'mitras', 'title', 'applier', 'works', 'certifications', 'educations', 'scholarships', 'licenses', 'others'));
+        // Dynamic Job Positions
+        $jobPositions = \App\Models\JobPosition::where('is_active', true)->orderBy('name')->get();
+
+        return view('applicant.profile', compact('user', 'careers', 'identity', 'pelayanan', 'mitras', 'title', 'applier', 'works', 'certifications', 'educations', 'scholarships', 'licenses', 'others', 'jobPositions'));
     }
 
     public function edit()
