@@ -15,8 +15,15 @@ class EmailVerificationPromptController extends Controller
      */
     public function __invoke(Request $request): RedirectResponse|View
     {
-        return $request->user()->hasVerifiedEmail()
-                    ? redirect()->intended(RouteServiceProvider::HOME)
-                    : view('auth.verify-email');
+        if ($request->user()->hasVerifiedEmail()) {
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+
+        $identity = \App\Models\Identity::first();
+        $pelayanan = \App\Models\Pelayanan::all();
+        $mitras = \App\Models\Mitra::where('is_primary', 1)->get();
+        $title = "Verifikasi Email";
+
+        return view('auth.verify-email', compact('identity', 'pelayanan', 'mitras', 'title'));
     }
 }
