@@ -48,9 +48,9 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = Auth::user();
-        if (!$user->applier) {
-            return redirect()->route('applicant.profile.create');
-        }
+        // if (!$user->applier) {
+        //     return redirect()->route('applicant.profile.create');
+        // }
 
         $applier = $user->applier;
         // Load relationships
