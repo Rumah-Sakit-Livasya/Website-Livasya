@@ -2,14 +2,13 @@
 @section('title', 'Karir')
 @section('content')
     <main id="js-page-content" role="main" class="page-content">
-        <div class="row mb-5">
-            <div class="col-xl-12">
-                <button type="button" class="btn btn-primary waves-effect waves-themed" data-backdrop="static"
-                    data-keyboard="false" data-toggle="modal" data-target="#tambah-karir" title="Tambah Karir">
-                    <span class="fal fa-plus-circle mr-1"></span>
-                    Tambah Karir
-                </button>
-            </div>
+        <div class="subheader">
+            <h1 class="subheader-title">
+                <i class='subheader-icon fal fa-briefcase'></i> Manajemen Karir
+                <small>
+                    Kelola daftar lowongan pekerjaan dan seleksi pelamar.
+                </small>
+            </h1>
         </div>
 
         <div class="row">
@@ -17,8 +16,15 @@
                 <div id="panel-1" class="panel">
                     <div class="panel-hdr">
                         <h2>
-                            Table <span class="fw-300"><i>Karir</i></span>
+                            Daftar <span class="fw-300"><i>Lowongan</i></span>
                         </h2>
+                        <div class="panel-toolbar">
+                            <button type="button" class="btn btn-sm btn-primary waves-effect waves-themed"
+                                data-backdrop="static" data-keyboard="false" data-toggle="modal"
+                                data-target="#tambah-karir">
+                                <span class="fal fa-plus-circle mr-1"></span> Tambah Karir
+                            </button>
+                        </div>
                     </div>
                     <div class="panel-container show">
                         <div class="panel-content">
@@ -37,39 +43,61 @@
                                 <tbody>
                                     @foreach ($careers as $career)
                                         <tr>
-                                            <td style="white-space: nowrap">{{ $loop->iteration }}</td>
-                                            <td style="white-space: nowrap">{{ $career->title }}</td>
-                                            <td style="white-space: nowrap">{{ $career->tipe }}</td>
-                                            <td style="white-space: nowrap">{{ $career->deskripsi }}</td>
-                                            <td style="white-space: nowrap">{{ $career->status }}</td>
+                                            <td style="white-space: nowrap" class="text-center">{{ $loop->iteration }}</td>
+                                            <td style="white-space: nowrap" class="font-weight-bold">{{ $career->title }}
+                                            </td>
+                                            <td style="white-space: nowrap">
+                                                @if ($career->tipe == 'medis')
+                                                    <span class="badge badge-info badge-pill">Medis</span>
+                                                @else
+                                                    <span class="badge badge-primary badge-pill">Non-Medis</span>
+                                                @endif
+                                            </td>
+                                            <td style="white-space: nowrap">
+                                                {!! \Illuminate\Support\Str::limit($career->deskripsi, 50) !!}</td>
+                                            <td style="white-space: nowrap">
+                                                @if ($career->status == 'on')
+                                                    <span class="badge badge-success">Aktif</span>
+                                                @else
+                                                    <span class="badge badge-secondary">Non-Aktif</span>
+                                                @endif
+                                            </td>
 
                                             <td style="white-space: nowrap">
-                                                <!-- Add a data-career-id attribute to the edit button -->
+                                                <!-- Edit Button -->
                                                 <button type="button" data-backdrop="static" data-keyboard="false"
-                                                    class="badge mx-1 badge-primary p-2 border-0 text-white edit-button"
-                                                    data-toggle="modal" data-target="#edit-karir" title="Ubah"
+                                                    class="btn btn-sm btn-outline-primary btn-icon waves-effect waves-themed edit-button"
+                                                    data-toggle="modal" data-target="#edit-karir" title="Ubah Info"
                                                     data-career-id="{{ $career->id }}">
-                                                    <span class="fal fa-pencil"></span>
+                                                    <i class="fal fa-edit"></i>
                                                 </button>
 
-                                                <!-- Add a new button for opening in a new window -->
+                                                <!-- View Applicants Button -->
                                                 <button type="button"
-                                                    class="badge mx-1 badge-success p-2 border-0 text-white"
-                                                    onclick="openWindows({{ $career->id }})">
-                                                    <span class="fal fa-eye"></span>
+                                                    class="btn btn-sm btn-outline-info waves-effect waves-themed"
+                                                    onclick="openWindows({{ $career->id }})" title="Lihat Pelamar">
+                                                    <i class="fal fa-users mr-1"></i>
+                                                    <span class="badge badge-info ml-1">{{ $career->applier_count }}</span>
                                                 </button>
+
+                                                <!-- Delete Button (Optional, simply adding UI placeholder or delete logic if exists) -->
+                                                {{--
+                                                <button type="button" class="btn btn-sm btn-outline-danger btn-icon waves-effect waves-themed" title="Hapus">
+                                                    <i class="fal fa-trash-alt"></i>
+                                                </button>
+                                                --}}
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
-                                <tfoot>
+                                <tfoot class="thead-themed">
                                     <tr>
-                                        <th style="white-space: nowrap">No</th>
-                                        <th style="white-space: nowrap">Judul</th>
-                                        <th style="white-space: nowrap">Tipe</th>
-                                        <th style="white-space: nowrap">Keterangan</th>
-                                        <th style="white-space: nowrap">Status</th>
-                                        <th style="white-space: nowrap">Aksi</th>
+                                        <th class="text-center">No</th>
+                                        <th>Judul</th>
+                                        <th>Tipe</th>
+                                        <th>Keterangan</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </tfoot>
                             </table>

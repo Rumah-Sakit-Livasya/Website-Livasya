@@ -14,33 +14,72 @@
             </div>
         </div>
 
-        <div class="alert alert-danger fade show mb-4" role="alert">
-            <div class="d-flex align-items-center">
-                <div class="alert-icon">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
-                <div class="flex-1">
-                    <span class="h5">Harap mengisi formulir online dan melengkapi dokumen secara benar dan
-                        lengkap.</span>
-                    <br>
-                    <strong>Dokumen yang wajib dilengkapi:</strong>
-                    <div class="row mt-2">
-                        <div class="col-md-6">
-                            <ul class="mb-0 pl-3">
-                                <li>Upload Foto Profil (jpg/jpeg)</li>
-                                <li>Upload KTP (pdf)</li>
-                                <li>Upload Ijazah (pdf)</li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <ul class="mb-0 pl-3">
-                                <li>Upload Transkrip Nilai (pdf)</li>
-                                <li>Upload STR (pdf) untuk pelamar profesi</li>
-                            </ul>
-                        </div>
+        <div class="card mb-4 border-info shadow-sm">
+            <div class="card-header bg-info text-white d-flex align-items-center">
+                <i class="fas fa-tasks mr-2 fa-lg"></i>
+                <h5 class="mb-0 font-weight-bold">Checklist Kelengkapan Data Diri</h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-3 text-muted">Harap lengkapi seluruh data wajib berikut agar lamaran Anda dapat diproses lebih
+                    lanjut.</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <span><i class="fas fa-id-card mr-2 text-primary"></i> Biodata Diri</span>
+                                @if ($applier)
+                                    <i class="fas fa-check-circle text-success fa-lg"></i>
+                                @else
+                                    <i class="fas fa-times-circle text-danger fa-lg"></i>
+                                @endif
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <span><i class="fas fa-camera mr-2 text-primary"></i> Foto Profil</span>
+                                @if (Auth::user()->avatar)
+                                    <i class="fas fa-check-circle text-success fa-lg"></i>
+                                @else
+                                    <i class="fas fa-times-circle text-danger fa-lg"></i>
+                                @endif
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <span><i class="fas fa-address-card mr-2 text-primary"></i> Upload e-KTP</span>
+                                @if ($applier->attachment)
+                                    <i class="fas fa-check-circle text-success fa-lg"></i>
+                                @else
+                                    <i class="fas fa-times-circle text-danger fa-lg"></i>
+                                @endif
+                            </li>
+                        </ul>
                     </div>
-                    <div class="mt-2 font-weight-bold text-danger">
-                        Ketidaklengkapan formulir dan dokumen mengakibatkan lamaran Anda TIDAK diproses lebih lanjut.
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <span><i class="fas fa-file-pdf mr-2 text-primary"></i> Curriculum Vitae (CV)</span>
+                                @if ($applier->cv)
+                                    <i class="fas fa-check-circle text-success fa-lg"></i>
+                                @else
+                                    <i class="fas fa-times-circle text-danger fa-lg"></i>
+                                @endif
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <span><i class="fas fa-graduation-cap mr-2 text-primary"></i> Ijazah & Transkrip</span>
+                                @if ($educations->whereNotNull('certificate')->count() > 0 && $educations->whereNotNull('transcript')->count() > 0)
+                                    <i class="fas fa-check-circle text-success fa-lg"></i>
+                                @else
+                                    <i class="fas fa-times-circle text-danger fa-lg"></i>
+                                @endif
+                            </li>
+                            @if ($applier->career && $applier->career->tipe == 'medis')
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <span><i class="fas fa-user-md mr-2 text-primary"></i> STR/SIP (Wajib Medis)</span>
+                                    @if ($licenses->whereNotNull('file')->count() > 0)
+                                        <i class="fas fa-check-circle text-success fa-lg"></i>
+                                    @else
+                                        <i class="fas fa-times-circle text-danger fa-lg"></i>
+                                    @endif
+                                </li>
+                            @endif
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -55,6 +94,10 @@
                 <button type="button" class="btn btn-warning waves-effect waves-themed mr-2" data-toggle="modal"
                     data-target="#modal-upload-photo">
                     <i class="fas fa-upload mr-1"></i> Upload Foto
+                </button>
+                <button type="button" class="btn btn-warning waves-effect waves-themed mr-2" data-toggle="modal"
+                    data-target="#modal-upload-cv">
+                    <i class="fas fa-file-pdf mr-1"></i> Upload CV
                 </button>
                 <button type="button" class="btn btn-warning waves-effect waves-themed" data-toggle="modal"
                     data-target="#modal-upload-ktp">
@@ -148,13 +191,16 @@
 
             <!-- Right Column: Tabs -->
             <div class="col-lg-8">
-                <div id="panel-tabs" class="panel">
-                    <div class="panel-hdr">
-                        <h2>
+                <div id="panel-tabs" class="panel" data-panel-close="false" data-panel-fullscreen="false"
+                    data-panel-collapsed="false" data-panel-color="false" data-panel-locked="false"
+                    data-panel-refresh="false" data-panel-reset="false">
+                    <div class="panel-hdr d-flex flex-column flex-md-row align-items-center">
+                        <h2 class="mb-2 mb-md-0">
                             Riwayat <span class="fw-300"><i>Data</i></span>
                         </h2>
-                        <div class="panel-toolbar">
-                            <ul class="nav nav-tabs nav-tabs-clean" role="tablist">
+                        <div class="panel-toolbar w-100 w-md-auto" style="overflow-x: auto; white-space: nowrap;">
+                            <ul class="nav nav-tabs nav-tabs-clean flex-nowrap justify-content-start justify-content-md-end"
+                                role="tablist">
                                 <li class="nav-item"><a class="nav-link" data-toggle="tab"
                                         href="#content-lain">Lain-lain</a></li>
                                 <li class="nav-item"><a class="nav-link" data-toggle="tab"
@@ -172,14 +218,7 @@
                     </div>
                     <div class="panel-container show">
                         <div class="panel-content">
-                            <div class="alert alert-info">
-                                <i class="fas fa-info-circle mr-1"></i> Jika pilihan inputan tidak muncul, silahkan refresh
-                                halaman ini
-                            </div>
-                            <div class="alert alert-warning">
-                                <i class="fas fa-exclamation-circle mr-1"></i> Untuk melakukan edit, hapus, dan upload,
-                                pilih atau select terlebih dahulu data yang ingin diproses
-                            </div>
+                            <!-- Removed Tooltips/Alerts -->
 
                             <div class="tab-content mt-3">
                                 <!-- Pendidikan Tab -->
@@ -188,35 +227,45 @@
                                     <div class="mb-3">
                                         <button class="btn btn-success waves-effect waves-themed" data-toggle="modal"
                                             data-target="#modal-pendidikan">Tambah</button>
-                                        <button class="btn btn-secondary waves-effect waves-themed" disabled>Edit</button>
+                                        {{-- <button class="btn btn-secondary waves-effect waves-themed" disabled>Edit</button>
                                         <button class="btn btn-danger waves-effect waves-themed" disabled>Hapus</button>
                                         <button class="btn btn-warning waves-effect waves-themed" disabled>Upload
                                             Ijazah</button>
                                         <button class="btn btn-warning waves-effect waves-themed" disabled>Upload
-                                            Transkrip</button>
+                                            Transkrip</button> --}}
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-hover w-100">
                                             <thead>
                                                 <tr>
-                                                    <th>No</th>
-                                                    <th>Akhir</th>
-                                                    <th>Institusi</th>
-                                                    <th>Jurusan</th>
-                                                    <th>Ijazah</th>
-                                                    <th>Transkrip</th>
+                                                    <th>Pendidikan terakhir</th>
+                                                    <th>Nama institusi</th>
+                                                    <th>IPK/Nilai akhir</th>
+                                                    <th>Pendidikan tambahan (Bila Ada)</th>
+                                                    <th>Dokumen</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @forelse($educations as $index => $edu)
                                                     <tr>
-                                                        <td>{{ $index + 1 }}</td>
-                                                        <td>{{ $edu->graduation_year ?? '-' }}</td>
+                                                        <td>{{ $edu->level ?? '-' }}</td>
                                                         <td>{{ $edu->institution }}</td>
-                                                        <td>{{ $edu->major }}</td>
-                                                        <td><span class="badge badge-secondary">Belum Upload</span></td>
-                                                        <td><span class="badge badge-secondary">Belum Upload</span></td>
+                                                        <td>{{ $edu->gpa ?? '-' }}</td>
+                                                        <td>{{ $edu->additional_notes ?? '-' }}</td>
+                                                        <td>
+                                                            @if ($edu->certificate)
+                                                                <a href="{{ asset('storage/' . $edu->certificate) }}"
+                                                                    target="_blank" class="badge badge-primary">Ijazah</a>
+                                                            @endif
+                                                            @if ($edu->transcript)
+                                                                <a href="{{ asset('storage/' . $edu->transcript) }}"
+                                                                    target="_blank" class="badge badge-info">Transkrip</a>
+                                                            @endif
+                                                            @if (!$edu->certificate && !$edu->transcript)
+                                                                <span class="text-muted">-</span>
+                                                            @endif
+                                                        </td>
                                                         <td>
                                                             <form
                                                                 action="{{ route('applicant.profile.education.delete', $edu->id) }}"
@@ -230,8 +279,7 @@
                                                     </tr>
                                                 @empty
                                                     <tr>
-                                                        <td colspan="7" class="text-center">No data available in table
-                                                        </td>
+                                                        <td colspan="5" class="text-center">Belum ada data</td>
                                                     </tr>
                                                 @endforelse
                                             </tbody>
@@ -302,6 +350,7 @@
                                                     <th>Mulai</th>
                                                     <th>Selesai</th>
                                                     <th>Keterangan</th>
+                                                    <th>Dokumen</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
@@ -312,6 +361,15 @@
                                                         <td>{{ $cert->start_date }}</td>
                                                         <td>{{ $cert->end_date }}</td>
                                                         <td>{{ $cert->description }}</td>
+                                                        <td>
+                                                            @if ($cert->file)
+                                                                <a href="{{ asset('storage/' . $cert->file) }}"
+                                                                    target="_blank" class="badge badge-primary">Lihat
+                                                                    File</a>
+                                                            @else
+                                                                -
+                                                            @endif
+                                                        </td>
                                                         <td>
                                                             <form
                                                                 action="{{ route('applicant.profile.certification.delete', $cert->id) }}"
@@ -348,6 +406,7 @@
                                                     <th class="text-white">Nomor</th>
                                                     <th class="text-white">Periode</th>
                                                     <th class="text-white">Penerbit</th>
+                                                    <th class="text-white">Dokumen</th>
                                                     <th class="text-white">Aksi</th>
                                                 </tr>
                                             </thead>
@@ -359,6 +418,15 @@
                                                         <td>{{ $license->number }}</td>
                                                         <td>{{ $license->start_date }} - {{ $license->end_date }}</td>
                                                         <td>{{ $license->issuer }}</td>
+                                                        <td>
+                                                            @if ($license->file)
+                                                                <a href="{{ asset('storage/' . $license->file) }}"
+                                                                    target="_blank" class="badge badge-primary">Lihat
+                                                                    File</a>
+                                                            @else
+                                                                -
+                                                            @endif
+                                                        </td>
                                                         <td>
                                                             <form
                                                                 action="{{ route('applicant.profile.license.delete', $license->id) }}"
@@ -560,7 +628,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ route('applicant.profile.education.store') }}" method="POST">
+                    <form action="{{ route('applicant.profile.education.store') }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
                             <div class="alert alert-warning text-sm">
@@ -585,6 +654,24 @@
                                 <label class="text-danger form-label">Alamat</label>
                                 <textarea class="form-control" name="address" required></textarea>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="form-label">Upload Ijazah (PDF)</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="eduCert"
+                                            name="certificate_file" accept=".pdf">
+                                        <label class="custom-file-label" for="eduCert">Pilih file...</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="form-label">Upload Transkrip (PDF)</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="eduTrans"
+                                            name="transcript_file" accept=".pdf">
+                                        <label class="custom-file-label" for="eduTrans">Pilih file...</label>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="text-danger form-label">Jurusan Pendidikan</label>
                                 <select class="form-control select2" name="major" required>
@@ -598,6 +685,16 @@
                                 <label class="form-label">Jurusan Pendidikan Lainnya</label>
                                 <input type="text" class="form-control" name="other_major"
                                     placeholder="Masukan jurusan pendidikan lain-lain">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-danger form-label">IPK / Nilai Akhir</label>
+                                <input type="text" class="form-control" name="gpa" placeholder="Contoh: 3.50"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Pendidikan Tambahan (Bila Ada)</label>
+                                <textarea class="form-control" name="additional_notes" rows="2"
+                                    placeholder="Masukan pendidikan tambahan jika ada"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
@@ -681,7 +778,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ route('applicant.profile.certification.store') }}" method="POST">
+                    <form action="{{ route('applicant.profile.certification.store') }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
                             <div class="alert alert-warning text-sm">
@@ -710,6 +808,14 @@
                                 <div class="col-md-6 form-group">
                                     <label class="form-label">Keterangan</label>
                                     <input type="text" class="form-control" name="description">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="text-danger form-label">Upload Sertifikat (PDF)</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="certFile" name="file"
+                                        accept=".pdf">
+                                    <label class="custom-file-label" for="certFile">Pilih file...</label>
                                 </div>
                             </div>
                         </div>
@@ -890,7 +996,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ route('applicant.profile.license.store') }}" method="POST">
+                    <form action="{{ route('applicant.profile.license.store') }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
                             <div class="alert alert-warning text-sm">
@@ -938,6 +1045,14 @@
                             <div class="form-group">
                                 <label class="form-label">Keterangan</label>
                                 <textarea class="form-control" name="description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="text-danger form-label">Upload STR/SIP (PDF)</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="strFile" name="file"
+                                        accept=".pdf">
+                                    <label class="custom-file-label" for="strFile">Pilih file...</label>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
@@ -1094,6 +1209,37 @@
                 </div>
             </div>
         </div>
+        <!-- Modal Upload CV -->
+        <div class="modal fade" id="modal-upload-cv" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-warning text-white">
+                        <h5 class="modal-title"><i class="fas fa-file-pdf mr-2"></i> Upload CV</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ route('applicant.profile.upload.cv') }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="form-label">Pilih CV (PDF, Max 2MB)</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="cvInput" name="cv"
+                                        required accept=".pdf">
+                                    <label class="custom-file-label" for="cvInput">Pilih file...</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </main>
 @endsection
 
@@ -1101,7 +1247,7 @@
     <script>
         $(document).ready(function() {
             // Check if profile is incomplete and show modal
-            @if (!$applier || empty($applier->phone) || empty($applier->id_card) || empty($applier->address))
+            @if (!$applier || empty($applier->whatsapp_number) || empty($applier->id_card) || empty($applier->permanent_address))
                 $('#modal-edit-profile').modal('show');
             @endif
 

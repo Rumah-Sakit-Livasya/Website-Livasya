@@ -7,13 +7,17 @@ use App\Models\Applier;
 use App\Models\ApplierCertification;
 use App\Models\ApplierLanguage;
 use App\Models\ApplierWork;
+use App\Models\ApplierEducation;
+use App\Models\ApplierLicense;
+use App\Models\ApplierScholarship;
+use App\Models\ApplierOther;
 use App\Models\Career;
 use App\Models\Doctor;
 use App\Models\Galery;
 use App\Models\Identity;
 use App\Models\Mitra;
 use App\Models\Pelayanan;
-use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class CareerController extends Controller
@@ -47,7 +51,7 @@ class CareerController extends Controller
 
     public function admin()
     {
-        $careers = Career::all();
+        $careers = Career::withCount('applier')->get();
         $identity = Identity::first();
         $mitras = Mitra::where('is_primary', 1)->get();
 
@@ -114,17 +118,28 @@ class CareerController extends Controller
     public function applier($career, $applierId)
     {
         $mitras = Mitra::where('is_primary', 1)->get();
-        $applier = Applier::where('id', $applierId)->first();
+        $applier = Applier::with('user')->where('id', $applierId)->first();
+
         $languages = ApplierLanguage::where('applier_id', $applier->id)->get();
         $certifications = ApplierCertification::where('applier_id', $applier->id)->get();
         $works = ApplierWork::where('applier_id', $applier->id)->get();
+
+        // Added relations
+        $educations = ApplierEducation::where('applier_id', $applier->id)->get();
+        $licenses = ApplierLicense::where('applier_id', $applier->id)->get();
+        $scholarships = ApplierScholarship::where('applier_id', $applier->id)->get();
+        $others = ApplierOther::where('applier_id', $applier->id)->get();
 
         return view('pages.careers.partials.applier-detail', [
             'mitras' => $mitras,
             'applier' => $applier,
             'languages' => $languages,
             'certifications' => $certifications,
-            'works' => $works
+            'works' => $works,
+            'educations' => $educations,
+            'licenses' => $licenses,
+            'scholarships' => $scholarships,
+            'others' => $others
         ]);
     }
 
@@ -157,5 +172,13 @@ class CareerController extends Controller
             // Jika path file CV tidak ada
             abort(404, 'CV not found');
         }
+    }
+
+    public function updateStatus(Request $request, $careerId, $applierId)
+    {
+        $applier = Applier::findOrFail($applierId);
+        $applier->update(['status' => $request->input('status')]);
+
+        return back()->with('success', 'Status pelamar berhasil diperbarui.');
     }
 }

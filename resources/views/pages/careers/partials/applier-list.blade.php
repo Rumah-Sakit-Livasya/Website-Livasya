@@ -20,6 +20,7 @@
                                     <th style="white-space: nowrap">Jenis Kelamin</th>
                                     <th style="white-space: nowrap">Lulusan</th>
                                     <th style="white-space: nowrap">Tgl. Lahir</th>
+                                    <th style="white-space: nowrap">Status</th>
                                     <th style="white-space: nowrap">Input</th>
                                     <th style="white-space: nowrap">Aksi</th>
                                 </tr>
@@ -34,29 +35,55 @@
                                         <td style="white-space: nowrap">{{ $applier->sex }}</td>
                                         <td style="white-space: nowrap">{{ $applier->school_name }}</td>
                                         <td style="white-space: nowrap">{{ $applier->birth_day }}</td>
+                                        <td style="white-space: nowrap">
+                                            @if ($applier->status == 'processed')
+                                                <span class="badge badge-warning">Diproses</span>
+                                            @elseif($applier->status == 'accepted')
+                                                <span class="badge badge-success">Diterima</span>
+                                            @elseif($applier->status == 'rejected')
+                                                <span class="badge badge-danger">Ditolak</span>
+                                            @else
+                                                <span class="badge badge-secondary">{{ $applier->status }}</span>
+                                            @endif
+                                        </td>
                                         <td style="white-space: nowrap">{{ $applier->created_at->diffForHumans() }}</td>
 
                                         <td style="white-space: nowrap">
-                                            <!-- Add a data-applier-id attribute to the edit button -->
-                                            <button type="button" data-backdrop="static" data-keyboard="false"
-                                                class="badge mx-1 badge-primary p-2 border-0 text-white edit-button"
-                                                data-toggle="modal" data-target="#edit-karir" title="Ubah"
-                                                data-applier-id="{{ $applier->id }}">
-                                                <span class="fal fa-pencil"></span>
-                                            </button>
+                                            @if ($applier->status == 'processed')
+                                                <form
+                                                    action="{{ action([\App\Http\Controllers\Pages\CareerController::class, 'updateStatus'], ['career' => $applier->career->id, 'applier' => $applier->id]) }}"
+                                                    method="POST" class="d-inline">
+                                                    @csrf @method('PUT')
+                                                    <input type="hidden" name="status" value="accepted">
+                                                    <button class="badge mx-1 badge-success p-2 border-0 text-white"
+                                                        onclick="return confirm('Terima pelamar ini?')">
+                                                        <span class="fal fa-check"></span> Terima
+                                                    </button>
+                                                </form>
+                                                <form
+                                                    action="{{ action([\App\Http\Controllers\Pages\CareerController::class, 'updateStatus'], ['career' => $applier->career->id, 'applier' => $applier->id]) }}"
+                                                    method="POST" class="d-inline">
+                                                    @csrf @method('PUT')
+                                                    <input type="hidden" name="status" value="rejected">
+                                                    <button class="badge mx-1 badge-danger p-2 border-0 text-white"
+                                                        onclick="return confirm('Tolak pelamar ini?')">
+                                                        <span class="fal fa-times"></span> Tolak
+                                                    </button>
+                                                </form>
+                                            @endif
 
                                             <!-- Add a new button for opening in a new window -->
                                             <a href="/careers/{{ $applier->career->id }}/{{ $applier->id }}"
-                                                class="badge mx-1 badge-success p-2 border-0 text-white open-new-window-button"
+                                                class="badge mx-1 badge-info p-2 border-0 text-white open-new-window-button"
                                                 data-applier-id="{{ $applier->id }}">
-                                                <span class="fal fa-eye"></span>
+                                                <span class="fal fa-eye"></span> Detail
                                             </a>
 
                                             <!-- Add a new button for opening in a new window -->
                                             <a href="/careers/{{ $applier->career->id }}/{{ $applier->id }}/download-cv"
                                                 class="badge mx-1 badge-warning p-2 border-0 text-white open-new-window-button"
                                                 data-applier-id="{{ $applier->id }}">
-                                                <span class="fal fa-download"></span>
+                                                <span class="fal fa-download"></span> CV
                                             </a>
                                         </td>
                                     </tr>

@@ -45,10 +45,17 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             if (Auth::user()->role == 'pelamar') {
+                if (!Auth::user()->applier) {
+                    return redirect()->route('applicant.profile.create');
+                }
                 return redirect()->route('applicant.dashboard');
             }
 
-            return redirect()->intended('/dashboard');
+            if (Auth::user()->role == 'hrd') {
+                return redirect()->route('career.index');
+            }
+
+            return redirect()->route('identity.index');
         }
 
         return back()->with('loginError', 'Login Gagal!');

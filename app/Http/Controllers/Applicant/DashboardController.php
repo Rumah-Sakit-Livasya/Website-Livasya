@@ -50,6 +50,7 @@ class DashboardController extends Controller
         $applier->update([
             'career_id' => $request->career_id,
             'compensation_salary' => $request->expected_salary,
+            'status' => 'processed',
         ]);
 
         return back()->with('success', 'Lamaran berhasil dikirim! Semoga sukses.');
