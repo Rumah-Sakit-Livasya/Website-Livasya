@@ -89,6 +89,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/applicant/profile/upload-photo', [App\Http\Controllers\Applicant\ProfileController::class, 'uploadPhoto'])->name('applicant.profile.upload.photo')->middleware(['verified', 'role:pelamar']);
     Route::post('/applicant/profile/upload-ktp', [App\Http\Controllers\Applicant\ProfileController::class, 'uploadKtp'])->name('applicant.profile.upload.ktp')->middleware(['verified', 'role:pelamar']);
+    Route::post('/applicant/profile/upload-cv', [App\Http\Controllers\Applicant\ProfileController::class, 'uploadCv'])->name('applicant.profile.upload.cv')->middleware(['verified', 'role:pelamar']);
 
     Route::get('/applicant/dashboard', [App\Http\Controllers\Applicant\DashboardController::class, 'index'])->name('applicant.dashboard')->middleware(['verified', 'role:pelamar']);
     Route::get('/applicant/vacancies', [App\Http\Controllers\Applicant\DashboardController::class, 'vacancies'])->name('applicant.vacancies')->middleware(['verified', 'role:pelamar']);
@@ -97,7 +98,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/careers/{career:id}', [CareerController::class, 'appliers']);
     Route::get('/careers/{career:id}/{applier:id}', [CareerController::class, 'applier']);
     Route::get('/careers/{career:id}/{applier:id}/download-cv', [CareerController::class, 'downloadCV']);
-    Route::prefix('dashboard')->middleware(['role:super-admin|user|pelamar'])->group(function () {
+    Route::put('/careers/{career:id}/{applier:id}/status', [CareerController::class, 'updateStatus']); // Implicitly linked for action() helper if needed, or manual route usage
+    Route::prefix('dashboard')->middleware(['role:super-admin|user|hrd'])->group(function () {
         // Dashboard
         Route::get("/", [DashboardController::class, 'index'])->name("dashboard");
 

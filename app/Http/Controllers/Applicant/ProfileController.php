@@ -23,26 +23,19 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         if ($user->applier) {
-            return redirect()->route('applicant.profile.edit');
+            return redirect()->route('applicant.dashboard');
         }
 
-        $careers = Career::where('status', 'on')->get();
+        // Required for layout.main
         $identity = Identity::first();
         $pelayanan = Pelayanan::all();
         $mitras = Mitra::where('is_primary', 1)->get();
-        $title = "Lengkapi Profil";
-        $applier = null;
-        $works = collect([]); // Empty collection for new profile
-        $certifications = collect([]);
-        $educations = collect([]);
-        $scholarships = collect([]);
-        $licenses = collect([]);
-        $others = collect([]);
+        $title = "Lengkapi Biodata";
 
         // Dynamic Job Positions
         $jobPositions = \App\Models\JobPosition::where('is_active', true)->orderBy('name')->get();
 
-        return view('applicant.profile', compact('user', 'careers', 'identity', 'pelayanan', 'mitras', 'title', 'applier', 'works', 'certifications', 'educations', 'scholarships', 'licenses', 'others', 'jobPositions'));
+        return view('applicant.biodata', compact('user', 'jobPositions', 'identity', 'pelayanan', 'mitras', 'title'));
     }
 
     public function edit()
@@ -76,29 +69,40 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'phone' => 'required|string|max:20',
+            'full_name' => 'required|string|max:255',
+            'id_card' => 'required|string|max:20',
+            'birth_place' => 'required|string',
+            'birth_day' => 'required|date',
             'sex' => 'required|string',
-            'blood_type' => 'required|string',
             'marital_status' => 'required|string',
             'religion' => 'required|string',
-            'position_interest' => 'required|string',
-            'id_card' => 'required|string|max:20',
+            'nationality' => 'required|string',
+            'whatsapp_number' => 'required|string|max:20',
             'address' => 'required|string',
+            'position_interest' => 'required|string',
+            'about_me' => 'required|string',
         ]);
 
         $user = Auth::user();
 
-        $firstName = $user->name;
+        // Parse Full Name
+        $firstName = $request->full_name;
         $lastName = '';
-        if (strpos($user->name, ' ') !== false) {
-            $nameParts = explode(' ', $user->name, 2);
+        if (strpos($request->full_name, ' ') !== false) {
+            $nameParts = explode(' ', $request->full_name, 2);
             $firstName = $nameParts[0];
             $lastName = $nameParts[1] ?? '';
         }
 
+        // Update User Name if different
+        if ($user->name !== $request->full_name) {
+            $user->name = $request->full_name;
+            $user->save();
+        }
+
         Applier::create([
             'user_id' => $user->id,
-            'position_interest' => $request->position_interest, // Updated from career_id
+            'position_interest' => $request->position_interest,
             'find_vacancy' => 'Website',
             'first_name' => $firstName,
             'last_name' => $lastName,
@@ -109,11 +113,16 @@ class ProfileController extends Controller
             'id_card' => $request->id_card,
             'ktp_address' => $request->address,
             'permanent_address' => $request->address,
-            'family_contact' => $request->phone,
+            'family_contact' => $request->whatsapp_number, // Compatibility
 
-            'birth_place' => $request->birth_place ?? '-',
-            'birth_day' => $request->birth_day ?? now(),
-            'suku' => $request->suku ?? '-',
+            // New Fields
+            'nationality' => $request->nationality,
+            'whatsapp_number' => $request->whatsapp_number,
+            'about_me' => $request->about_me,
+
+            'birth_place' => $request->birth_place,
+            'birth_day' => $request->birth_day,
+            'suku' => '-',
 
             'family_name' => '-',
             'family_sex' => '-',
@@ -145,7 +154,7 @@ class ProfileController extends Controller
             'attachment' => '-',
         ]);
 
-        return redirect()->route('applicant.dashboard')->with('success', 'Profile completed successfully!');
+        return redirect()->route('applicant.dashboard')->with('success', 'Biodata berhasil disimpan! Selamat datang di dashboard pelamar.');
     }
 
     public function update(Request $request)
@@ -186,6 +195,22 @@ class ProfileController extends Controller
         return back()->with('success', 'Profil berhasil diperbarui!');
     }
 
+    // --- UPLOAD CV ---
+    public function uploadCv(Request $request)
+    {
+        $request->validate([
+            'cv' => 'required|mimes:pdf|max:2048', // Max 2MB
+        ]);
+
+        $user = Auth::user();
+        if ($request->hasFile('cv')) {
+            $path = $request->file('cv')->store('documents/cv', 'public');
+            $user->applier->update(['cv' => $path]);
+        }
+
+        return back()->with('success', 'CV berhasil diupload');
+    }
+
     // --- WORK ---
     public function storeWork(Request $request)
     {
@@ -212,7 +237,22 @@ class ProfileController extends Controller
     // --- EDUCATION ---
     public function storeEducation(Request $request)
     {
+        $request->validate([
+            'certificate_file' => 'nullable|mimes:pdf|max:2048',
+            'transcript_file' => 'nullable|mimes:pdf|max:2048',
+        ]);
+
         $applier = Auth::user()->applier;
+        $certificatePath = null;
+        $transcriptPath = null;
+
+        if ($request->hasFile('certificate_file')) {
+            $certificatePath = $request->file('certificate_file')->store('documents/certificates', 'public');
+        }
+        if ($request->hasFile('transcript_file')) {
+            $transcriptPath = $request->file('transcript_file')->store('documents/transcripts', 'public');
+        }
+
         ApplierEducation::create([
             'applier_id' => $applier->id,
             'level' => $request->level,
@@ -220,6 +260,10 @@ class ProfileController extends Controller
             'address' => $request->address,
             'major' => $request->major,
             'other_major' => $request->other_major,
+            'gpa' => $request->gpa,
+            'additional_notes' => $request->additional_notes,
+            'certificate' => $certificatePath,
+            'transcript' => $transcriptPath,
         ]);
         return back()->with('success', 'Data pendidikan berhasil ditambahkan');
     }
@@ -233,7 +277,18 @@ class ProfileController extends Controller
     // --- CERTIFICATION/TRAINING ---
     public function storeCertification(Request $request)
     {
+        $data = $request->validate([
+            'certification_name' => 'required',
+            'file' => 'nullable|mimes:pdf|max:2048',
+        ]);
+
         $applier = Auth::user()->applier;
+        $filePath = null;
+
+        if ($request->hasFile('file')) {
+            $filePath = $request->file('file')->store('documents/training_certificates', 'public');
+        }
+
         ApplierCertification::create([
             'applier_id' => $applier->id,
             'certification_name' => $request->certification_name,
@@ -241,6 +296,7 @@ class ProfileController extends Controller
             'end_date' => $request->end_date,
             'certificate_end_date' => $request->certificate_end_date,
             'description' => $request->description,
+            'file' => $filePath,
         ]);
         return back()->with('success', 'Data pelatihan berhasil ditambahkan');
     }
@@ -274,7 +330,17 @@ class ProfileController extends Controller
     // --- LICENSE (STR/SIP) ---
     public function storeLicense(Request $request)
     {
+        $request->validate([
+            'file' => 'nullable|mimes:pdf|max:2048',
+        ]);
+
         $applier = Auth::user()->applier;
+        $filePath = null;
+
+        if ($request->hasFile('file')) {
+            $filePath = $request->file('file')->store('documents/licenses', 'public');
+        }
+
         ApplierLicense::create([
             'applier_id' => $applier->id,
             'type' => $request->type,
@@ -285,6 +351,7 @@ class ProfileController extends Controller
             'issuer' => $request->issuer,
             'facility' => $request->facility,
             'description' => $request->description,
+            'file' => $filePath,
         ]);
         return back()->with('success', 'Data STR/SIP berhasil ditambahkan');
     }

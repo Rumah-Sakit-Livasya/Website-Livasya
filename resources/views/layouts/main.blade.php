@@ -52,6 +52,8 @@
 
     <!-- Select2 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css"
+        rel="stylesheet" />
 
     <!-- Add the slick-theme.css if you want default styling -->
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
@@ -81,7 +83,7 @@
     <!--End of Fancybox Style-->
 
     <!-- Select2 JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <!-- Script moved to footer to resolving conflicts -->
 
     <!-- custom css file link  -->
     <script src="/js/splide.min.js"></script>
@@ -170,6 +172,9 @@
     <script src="/js/footer.jquery.min.js"
         integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Select2 JS Moved to Footer -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
     <script src="/js/swiper-bundle.min.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/aos.js"></script>
@@ -218,14 +223,16 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            new Splide('.splide', {
-                type: 'loop',
-                perPage: 1,
-                pauseOnHover: true,
-                autoplay: true,
-                interval: 2000,
-                pagination: false,
-            }).mount();
+            if (document.querySelector('.splide')) {
+                new Splide('.splide', {
+                    type: 'loop',
+                    perPage: 1,
+                    pauseOnHover: true,
+                    autoplay: true,
+                    interval: 2000,
+                    pagination: false,
+                }).mount();
+            }
         });
 
         AOS.init({

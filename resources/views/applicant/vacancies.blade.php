@@ -135,33 +135,17 @@
                                 </ul>
                             </div>
 
-                            <div class="mt-4 w-100">
-                                @if (Auth::user()->applier && Auth::user()->applier->career_id == $career->id)
-                                    <button class="btn btn-secondary btn-block waves-effect waves-themed" disabled>
-                                        <i class="fas fa-check mr-1"></i> Sudah Dilamar
-                                    </button>
-                                @else
-                                    <form action="{{ route('applicant.apply') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="career_id" value="{{ $career->id }}">
-                                        {{-- Assuming education and expected salary are pre-filled or handled in a modal application flow. --}}
-                                        {{-- For direct apply, we need these. --}}
-                                        {{-- Let's make it a button that opens a confirmation modal or link to detail --}}
-                                        <button type="submit" class="btn btn-primary btn-block waves-effect waves-themed"
-                                            onclick="return confirm('Apakah Anda yakin ingin melamar posisi {{ $career->title }}?')">
-                                            Apply Sekarang
-                                        </button>
-                                        {{-- Hack: the controller requires education_id and expected_salary.
-                                            We might need to pass dummy values or change controller to use profile data.
-                                            For now, add hidden inputs using user's existing data if possible, or updated requirement.
-                                        --}}
-                                        <input type="hidden" name="education_id"
-                                            value="{{ Auth::user()->applier->educations->first()->id ?? 0 }}">
-                                        <input type="hidden" name="expected_salary"
-                                            value="{{ Auth::user()->applier->compensation_salary ?? 0 }}">
-                                    </form>
-                                @endif
-                            </div>
+                            @if (Auth::user()->applier && Auth::user()->applier->career_id == $career->id)
+                                <button class="btn btn-secondary btn-block waves-effect waves-themed" disabled>
+                                    <i class="fas fa-check mr-1"></i> Sudah Dilamar
+                                </button>
+                            @else
+                                <button type="button" class="btn btn-primary btn-block waves-effect waves-themed btn-apply"
+                                    onclick="setApplyData('{{ $career->id }}', '{{ $career->title }}')"
+                                    data-toggle="modal" data-target="#modal-apply">
+                                    Apply Sekarang
+                                </button>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -172,10 +156,56 @@
             @endforelse
         </div>
     </main>
+
+    <!-- Modal Apply -->
+    <div class="modal fade" id="modal-apply" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="fas fa-paper-plane mr-2"></i> Lamar Pekerjaan</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('applicant.apply') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="alert alert-info text-sm">
+                            <i class="fas fa-info-circle"></i> Pastikan profil Anda sudah lengkap sebelum melamar.
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Posisi yang Dilamar</label>
+                            <input type="text" class="form-control" id="apply-position" readonly>
+                            <input type="hidden" name="career_id" id="apply-career-id">
+                            {{-- Using the first education ID as default/required by controller --}}
+                            <input type="hidden" name="education_id"
+                                value="{{ Auth::user()->applier->educations->first()->id ?? 0 }}">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-danger form-label">Gaji yang Diharapkan (Rp)</label>
+                            <input type="number" class="form-control" name="expected_salary"
+                                placeholder="Contoh: 5000000" min="0" required
+                                value="{{ Auth::user()->applier->compensation_salary ?? '' }}">
+                            <small class="text-muted">Masukkan nominal angka saja tanpa titik/koma.</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Kirim Lamaran</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
     <script>
+        function setApplyData(id, title) {
+            document.getElementById('apply-career-id').value = id;
+            document.getElementById('apply-position').value = title;
+        }
+
         $(document).ready(function() {
             // Filter Logic
             $('#btn-filter').click(function() {
@@ -194,6 +224,8 @@
                     else $(this).hide();
                 });
             });
+
+
         });
     </script>
 @endsection
