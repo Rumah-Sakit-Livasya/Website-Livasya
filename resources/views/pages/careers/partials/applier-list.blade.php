@@ -85,6 +85,21 @@
                                                 data-applier-id="{{ $applier->id }}">
                                                 <span class="fal fa-download"></span> CV
                                             </a>
+
+                                            @php
+                                                $waNumber = $applier->whatsapp_number ?? '';
+                                                if (substr($waNumber, 0, 1) == '0') {
+                                                    $waNumber = '62' . substr($waNumber, 1);
+                                                }
+                                                $message = "Halo {$applier->first_name}, kami dari HRD RS Livasya terkait lamaran Anda untuk posisi {$applier->career->title}...";
+                                            @endphp
+                                            @if ($waNumber)
+                                                <a href="https://wa.me/{{ $waNumber }}?text={{ urlencode($message) }}"
+                                                    target="_blank" class="badge mx-1 badge-success p-2 border-0 text-white"
+                                                    title="Hubungi via WhatsApp">
+                                                    <span class="fab fa-whatsapp"></span> WA
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

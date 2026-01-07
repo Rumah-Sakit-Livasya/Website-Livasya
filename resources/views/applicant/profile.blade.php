@@ -35,7 +35,7 @@
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                 <span><i class="fas fa-camera mr-2 text-primary"></i> Foto Profil</span>
-                                @if (Auth::user()->avatar)
+                                @if (Auth::user()->avatar && !Str::startsWith(Auth::user()->avatar, 'http'))
                                     <i class="fas fa-check-circle text-success fa-lg"></i>
                                 @else
                                     <i class="fas fa-times-circle text-danger fa-lg"></i>
@@ -43,7 +43,7 @@
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                 <span><i class="fas fa-address-card mr-2 text-primary"></i> Upload e-KTP</span>
-                                @if ($applier->attachment)
+                                @if ($applier->attachment && $applier->attachment != '-')
                                     <i class="fas fa-check-circle text-success fa-lg"></i>
                                 @else
                                     <i class="fas fa-times-circle text-danger fa-lg"></i>

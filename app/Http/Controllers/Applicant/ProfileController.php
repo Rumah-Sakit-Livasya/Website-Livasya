@@ -151,7 +151,7 @@ class ProfileController extends Controller
             'declare_politic' => '-',
             'declare_government' => '-',
             'declare_business' => '-',
-            'attachment' => '-',
+            'attachment' => null,
         ]);
 
         return redirect()->route('applicant.dashboard')->with('success', 'Biodata berhasil disimpan! Selamat datang di dashboard pelamar.');

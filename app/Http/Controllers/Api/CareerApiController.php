@@ -10,6 +10,8 @@ use App\Models\ApplierWork;
 use App\Models\Career;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Storage;
+
 class CareerApiController extends Controller
 {
     public function getCareer()
@@ -21,18 +23,29 @@ class CareerApiController extends Controller
 
     public function store(Request $request)
     {
-        if (!$request['status']) {
-            $request['status'] = "off";
-        } else {
-            $request['status'] = "on";
+        $request['status'] = "on";
+
+        // Provide default for deskripsi if empty to satisfy DB constraint
+        if (!$request->deskripsi) {
+            $request['deskripsi'] = "-";
         }
 
         $validatedData = $request->validate([
             'title' => 'required|max:255',
-            'tipe' => 'required',
-            'deskripsi' => 'required',
+            'tipe' => 'required', // Keep required as it's a dropdown
+            'deskripsi' => 'nullable',
             'status' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Required on create
         ]);
+
+        if ($request->hasFile('image')) {
+            $validatedData['image'] = $request->file('image')->store('career-images', 'public');
+        }
+
+        // Ensure deskripsi is set in validatedData
+        if (!isset($validatedData['deskripsi']) || empty($validatedData['deskripsi'])) {
+            $validatedData['deskripsi'] = "-";
+        }
 
         $career = Career::create($validatedData);
 
@@ -46,18 +59,32 @@ class CareerApiController extends Controller
 
     public function update(Request $request, Career $career)
     {
-        if (!$request['status']) {
-            $request['status'] = "off";
-        } else {
-            $request['status'] = "on";
+        $request['status'] = "on";
+
+        // Provide default for deskripsi if empty
+        if (!$request->deskripsi) {
+            $request['deskripsi'] = "-";
         }
 
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'tipe' => 'required',
-            'deskripsi' => 'required',
+            'deskripsi' => 'nullable',
             'status' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Optional on update
         ]);
+
+        if ($request->hasFile('image')) {
+            if ($career->image) {
+                Storage::delete($career->image);
+            }
+            $validatedData['image'] = $request->file('image')->store('career-images', 'public');
+        }
+
+        // Ensure deskripsi is set
+        if (!isset($validatedData['deskripsi']) || empty($validatedData['deskripsi'])) {
+            $validatedData['deskripsi'] = "-";
+        }
 
         $career->update($validatedData);
 

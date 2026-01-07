@@ -29,9 +29,17 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="edit-deskripsi" class="form-label">Deskripsi</label>
-                        <input id="edit-deskripsi" type="hidden" name="deskripsi" value="{{ old('deskripsi') }}">
-                        <trix-editor input="edit-deskripsi" id="edit-deskripsi-text"></trix-editor>
+                        <label class="form-label">Upload Poster/Gambar (Biarkan kosong jika tidak ingin
+                            mengubah)</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="edit-image" name="image"
+                                accept="image/*">
+                            <label class="custom-file-label" for="edit-image">Pilih file gambar...</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                        <textarea class="form-control summernote" id="edit-deskripsi" name="deskripsi" rows="5">{{ old('deskripsi') }}</textarea>
                         @error('deskripsi')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror

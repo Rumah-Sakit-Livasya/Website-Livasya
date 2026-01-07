@@ -13,7 +13,7 @@
                     <div class="form-group">
                         <label for="create-title">Judul Lamaran</label>
                         <input type="text" autofocus value="" class="form-control" id="create-title"
-                            name="title" placeholder="Judul Lamaran">
+                            name="title" placeholder="Judul Lamaran" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="create-tipe">
@@ -27,20 +27,19 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="create-deskripsi" class="form-label">Deskripsi</label>
-                        <input id="create-deskripsi" type="hidden" name="deskripsi" value="{{ old('deskripsi') }}">
-                        <trix-editor input="create-deskripsi"></trix-editor>
+                        <label class="form-label">Upload Poster/Gambar</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="create-image" name="image"
+                                accept="image/*">
+                            <label class="custom-file-label" for="create-image">Pilih file gambar...</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="create-deskripsi" class="form-label">Deskripsi (Opsional)</label>
+                        <textarea class="form-control summernote" id="create-deskripsi" name="deskripsi" rows="5">{{ old('deskripsi') }}</textarea>
                         @error('deskripsi')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="" class="form-label">Status</label>
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="create-status" name="status"
-                                value="on">
-                            <label class="custom-control-label" for="create-status">Aktif</label>
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -34,6 +34,7 @@
                                     <tr>
                                         <th style="white-space: nowrap">No</th>
                                         <th style="white-space: nowrap">Judul</th>
+                                        <th style="white-space: nowrap">Poster</th>
                                         <th style="white-space: nowrap">Tipe</th>
                                         <th style="white-space: nowrap">Keterangan</th>
                                         <th style="white-space: nowrap">Status</th>
@@ -46,6 +47,17 @@
                                             <td style="white-space: nowrap" class="text-center">{{ $loop->iteration }}</td>
                                             <td style="white-space: nowrap" class="font-weight-bold">{{ $career->title }}
                                             </td>
+                                            <td class="text-center">
+                                                @if ($career->image)
+                                                    <a href="{{ Storage::url($career->image) }}" target="_blank">
+                                                        <img src="{{ Storage::url($career->image) }}" alt="Poster"
+                                                            class="img-thumbnail"
+                                                            style="height: 50px; width: 50px; object-fit: cover;">
+                                                    </a>
+                                                @else
+                                                    <span class="text-muted small">No Image</span>
+                                                @endif
+                                            </td>
                                             <td style="white-space: nowrap">
                                                 @if ($career->tipe == 'medis')
                                                     <span class="badge badge-info badge-pill">Medis</span>
@@ -53,8 +65,8 @@
                                                     <span class="badge badge-primary badge-pill">Non-Medis</span>
                                                 @endif
                                             </td>
-                                            <td style="white-space: nowrap">
-                                                {!! \Illuminate\Support\Str::limit($career->deskripsi, 50) !!}</td>
+                                            <td style="text-wrap: wrap; min-width: 200px;">
+                                                {!! \Illuminate\Support\Str::limit(strip_tags($career->deskripsi), 100) !!}</td>
                                             <td style="white-space: nowrap">
                                                 @if ($career->status == 'on')
                                                     <span class="badge badge-success">Aktif</span>
@@ -94,6 +106,7 @@
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th>Judul</th>
+                                        <th>Poster</th>
                                         <th>Tipe</th>
                                         <th>Keterangan</th>
                                         <th>Status</th>
@@ -115,6 +128,7 @@
 @section('plugin')
     <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
     <script src="/js/formplugins/select2/select2.bundle.js"></script>
+    <script src="/js/formplugins/summernote/summernote.js"></script>
     <script>
         function openWindows(careerId) {
             // Construct the URL based on your application's logic
@@ -125,6 +139,17 @@
         }
 
         $(document).ready(function() {
+            // Initialize Summernote
+            $('.summernote').summernote({
+                height: 200,
+                dialogsInBody: true,
+                callbacks: {
+                    onInit: function(e) {
+                        $('body > .note-popover').hide();
+                    }
+                }
+            });
+
             // SELECT2
             $(function() {
                 $('#create-tipe').select2({
@@ -137,28 +162,30 @@
             // SELECT2
 
 
+            // Custom file input label change
+            $('.custom-file-input').on('change', function() {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').addClass("selected").html(fileName);
+            });
+
             // Kirim formulir tambah melalui AJAX
             $('#create-button').on('click', function() {
+                var formData = new FormData($('#create-career-form')[0]);
                 $.ajax({
                     type: 'POST',
                     url: '/api/careers',
-                    data: $('#create-career-form').serialize(),
+                    data: formData,
+                    processData: false,
+                    contentType: false,
                     success: function(response) {
-                        // Tangani keberhasilan, misalnya, tutup modal atau perbarui UI
                         $('#tambah-karir').modal('hide');
-                        // Lakukan sesuatu setelah berhasil, seperti memuat kembali data karir
-
-                        //tampilkan pesan
                         showSuccessAlert('Karir Ditambah!');
-
-                        // Tunda reload selama 2 detik
                         setTimeout(function() {
                             location.reload();
                         }, 1000);
                     },
                     error: function(error) {
                         $('#tambah-karir').modal('hide');
-                        // Tangani kesalahan, misalnya, tampilkan pesan kesalahan validasi
                         showErrorAlert('Cek kembali data yang dikirim');
                     }
                 });
@@ -177,8 +204,9 @@
                     url: '/api/careers/' + careerId,
                     success: function(data) {
                         $('#edit-title').val(data.title);
-                        $('#edit-deskripsi').val(data.deskripsi);
-                        $('#edit-deskripsi-text').val(data.deskripsi);
+                        // Populate Summernote
+                        $('#edit-deskripsi').summernote('code', data.deskripsi);
+
                         $('#edit-status').val(data.status);
                         // Check the checkbox if status is "on"
                         if (data.status === 'on') {
@@ -190,6 +218,10 @@
                         $('#edit-tipe').val(data.tipe).select2({
                             dropdownParent: $('#edit-karir')
                         });
+
+                        // Reset file input label
+                        $('#edit-image').next('.custom-file-label').html(
+                            'Pilih file gambar...');
 
                         // Show the modal
                         $('#edit-karir').modal('show');
@@ -205,26 +237,25 @@
                 e.preventDefault();
 
                 var careerId = $('#edit-career-id').val();
+                var formData = new FormData(this);
+                // Ensure method is PUT for Laravel via POST
+                formData.append('_method', 'PUT');
 
                 $.ajax({
-                    type: 'PUT',
+                    type: 'POST', // Use POST with _method=PUT for file uploads
                     url: '/api/careers/' + careerId,
-                    data: $(this).serialize(),
+                    data: formData,
+                    processData: false,
+                    contentType: false,
                     success: function(response) {
-                        // Handle success, e.g., close modal or update UI
                         $('#edit-karir').modal('hide');
-
-                        //tampilkan pesan
                         showSuccessAlert('Karir Diubah!');
-
-                        // Tunda reload selama 2 detik
                         setTimeout(function() {
                             location.reload();
                         }, 1000);
                     },
                     error: function(error) {
                         $('#edit-karir').modal('hide');
-                        // Handle errors, e.g., display validation errors
                         showErrorAlert('Cek kembali data yang dikirim');
                     }
                 });
@@ -245,22 +276,9 @@
                 $('#dt-basic-example').removeClassPrefix('bg-').addClass(theadColor);
             });
 
-            // Slugable
-            const createtitle = document.querySelector('#create-title');
-            const createslug = document.querySelector('#create-deskripsi');
-            const edittitle = document.querySelector('#edit-title');
-            const editslug = document.querySelector('#edit-deskripsi');
-
-            createtitle.addEventListener('change', function() {
-                fetch('/dashboard/careers/checkSlug?title=' + createtitle.value)
-                    .then(response => response.json())
-                    .then(data => createslug.value = data.slug)
-            });
-
-            edittitle.addEventListener('change', function() {
-                fetch('/dashboard/careers/checkSlug?title=' + edittitle.value)
-                    .then(response => response.json())
-                    .then(data => editslug.value = data.slug)
+            $('.js-tbody-colors a').on('click', function() {
+                var theadColor = $(this).attr("data-bg");
+                $('#dt-basic-example').removeClassPrefix('bg-').addClass(theadColor);
             });
         });
     </script>
