@@ -8,6 +8,14 @@
             <h1 class="display-4 fw-bolder mb-3" data-aos="fade-up">{{ $title }}</h1>
             <p class="lead fw-light mb-0" data-aos="fade-up" data-aos-delay="100">Bergabunglah bersama kami untuk masa depan
                 kesehatan yang lebih baik.</p>
+
+            <div class="mt-4" data-aos="fade-up" data-aos-delay="200">
+                <span class="d-block mb-2 text-white-50 small">Sudah melamar sebelumnya?</span>
+                <a href="{{ route('login.pelamar') }}"
+                    class="btn btn-light text-white fw-bold px-4 py-2 rounded-3 shadow-lg">
+                    <i class="fas fa-sign-in-alt me-2"></i> Login Pelamar
+                </a>
+            </div>
         </div>
     </section>
 
