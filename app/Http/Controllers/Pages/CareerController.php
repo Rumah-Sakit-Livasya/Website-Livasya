@@ -24,16 +24,8 @@ class CareerController extends Controller
 {
     public function index()
     {
-        $medis = Career::where('status', 'on')
-            ->where('tipe', 'medis')
-            ->get()
-            ->count();
-        $nonMedis = Career::where('status', 'on')
-            ->where('tipe', 'non-medis')
-            ->get()
-            ->count();
+        $careers = Career::where('status', 'on')->get();
         $identity = Identity::first();
-
         $mitras = Mitra::where('is_primary', 1)->get();
 
         return view('career', [
@@ -43,9 +35,8 @@ class CareerController extends Controller
             'identity' => $identity,
             'pelayanan' => Pelayanan::all(),
             'galleries' => Galery::all(),
-            'medis' => $medis,
+            'careers' => $careers,
             'mitras' => $mitras,
-            'nonMedis' => $nonMedis,
         ]);
     }
 
