@@ -31,6 +31,14 @@ class SecurityHeadersMiddleware
 
         // Permissions-Policy: Restricts browser features
         $response->headers->set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+        // Feature-Policy: Legacy support for Permissions-Policy
+        $response->headers->set('Feature-Policy', "camera 'none'; microphone 'none'; geolocation 'none'");
+
+        // X-Permitted-Cross-Domain-Policies: Prevents Flash/Acrobat cross-domain requests
+        $response->headers->set('X-Permitted-Cross-Domain-Policies', 'none');
+
+        // X-Download-Options: IE specific, prevents opening files directly
+        $response->headers->set('X-Download-Options', 'noopen');
 
         // Strict-Transport-Security (HSTS): Enforces HTTPS
         // max-age=31536000 = 1 year
@@ -52,6 +60,9 @@ class SecurityHeadersMiddleware
 
         // Remove X-Powered-By header to hide PHP version
         $response->headers->remove('X-Powered-By');
+
+        // Attempt to remove/overwrite Server header (Note: Web server might override this)
+        $response->headers->remove('Server');
 
         return $response;
     }
