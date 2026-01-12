@@ -13,6 +13,13 @@ if (function_exists('header_remove')) {
     header_remove('X-Powered-By');
 }
 
+// FINAL RESORT: Force Runtime Configuration
+// Bypass Laravel config cache entirely
+ini_set('session.cookie_secure', 1);
+ini_set('session.cookie_httponly', 1);
+ini_set('session.cookie_samesite', 'Strict');
+ini_set('session.use_strict_mode', 1);
+
 // Attempt to overwrite Server header (Tricks Nginx into using this instead of default)
 header('Server: LivasyaSecure');
 
@@ -28,8 +35,8 @@ header('X-Permitted-Cross-Domain-Policies: none');
 header('X-Download-Options: noopen');
 
 // Simplified CSP for entry point (Application middleware will add full CSP later)
-// This ensures at least basic protection is always active
-header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' https: data:; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-ancestors 'self';");
+// REMOVED 'unsafe-eval' to satisfy scanner requirements (May break Alpine.js if not built)
+header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' https: data:; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-ancestors 'self';");
 
 /*
 |--------------------------------------------------------------------------
