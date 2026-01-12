@@ -5,6 +5,27 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
+// PARANOID SECURITY MODE: Force headers at PHP entry point
+// This bypasses middleware and frameworks to ensure headers are always present
+if (function_exists('header_remove')) {
+    header_remove('X-Powered-By');
+}
+
+// Enforce Security Headers
+header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
+header('X-Frame-Options: SAMEORIGIN');
+header('X-Content-Type-Options: nosniff');
+header('X-XSS-Protection: 1; mode=block');
+header('Referrer-Policy: strict-origin-when-cross-origin');
+header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
+header('Feature-Policy: camera \'none\'; microphone \'none\'; geolocation \'none\'');
+header('X-Permitted-Cross-Domain-Policies: none');
+header('X-Download-Options: noopen');
+
+// Simplified CSP for entry point (Application middleware will add full CSP later)
+// This ensures at least basic protection is always active
+header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' https: data:; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-ancestors 'self';");
+
 /*
 |--------------------------------------------------------------------------
 | Check If The Application Is Under Maintenance
