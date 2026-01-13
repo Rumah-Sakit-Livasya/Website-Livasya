@@ -34,8 +34,8 @@
 
                                 <div class="career-image mb-3 rounded overflow-hidden position-relative">
                                     @if ($flyerImage)
-                                        <a href="javascript:void(0)" onclick="showPreview('{{ $flyerImage }}')"
-                                            class="d-block cursor-pointer zoom-effect position-relative">
+                                        <a href="javascript:void(0)" data-src="{{ $flyerImage }}"
+                                            class="d-block cursor-pointer zoom-effect position-relative preview-trigger">
                                             <img src="{{ $flyerImage }}" alt="{{ $career->title }}"
                                                 class="img-fluid w-100" style="object-fit: cover; min-height: 300px;">
                                             <div class="hover-overlay d-flex align-items-center justify-content-center"
@@ -57,8 +57,8 @@
 
                                 <!-- Description (Hidden by default if image exists, or minimal) -->
                                 <!-- <div class="career-description flex-grow-1 mb-4">
-                                                    {!! $career->deskripsi !!}
-                                                </div> -->
+                                                            {!! $career->deskripsi !!}
+                                                        </div> -->
 
                                 <!-- Action -->
                                 <div class="mt-auto">
@@ -176,10 +176,17 @@
         </div>
     </div>
 
-    <script>
-        function showPreview(src) {
-            $('#previewImage').attr('src', src);
-            $('#imagePreviewModal').modal('show');
-        }
+    <script nonce="{{ $nonce }}">
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.addEventListener('click', function(e) {
+                var target = e.target.closest('.preview-trigger');
+                if (target) {
+                    e.preventDefault();
+                    var src = target.getAttribute('data-src');
+                    $('#previewImage').attr('src', src);
+                    $('#imagePreviewModal').modal('show');
+                }
+            });
+        });
     </script>
 @endsection
