@@ -41,7 +41,8 @@ header('X-Download-Options: noopen');
 // REMOVED 'unsafe-inline' from script-src and added 'nonce'
 // REMOVED 'unsafe-eval' to satisfy strict security requirements
 // style-src MUST have 'unsafe-inline' for JS libs.
-header("Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-{$nonce}' https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' https: data:; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-ancestors 'self'; frame-src 'self' https://www.instagram.com https://www.google.com https://maps.google.com;");
+// Syncing with Middleware: Added 'blob:', 'fonts.googleapis.com'
+header("Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-{$nonce}' https: blob:; style-src 'self' 'unsafe-inline' https: blob: fonts.googleapis.com; font-src 'self' https: data:; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-ancestors 'self'; frame-src 'self' https://www.instagram.com https://www.google.com https://maps.google.com;");
 
 /*
 |--------------------------------------------------------------------------
