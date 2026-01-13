@@ -31,8 +31,9 @@ class SecurityHeadersMiddleware
 
         // Permissions-Policy: Restricts browser features
         $response->headers->set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
-        // Feature-Policy: Legacy support for Permissions-Policy
-        $response->headers->set('Feature-Policy', "camera 'none'; microphone 'none'; geolocation 'none'");
+
+        // Feature-Policy: Legacy support (Removed to prevent conflicts with Permissions-Policy)
+        // $response->headers->set('Feature-Policy', "camera 'none'; microphone 'none'; geolocation 'none'");
 
         // X-Permitted-Cross-Domain-Policies: Prevents Flash/Acrobat cross-domain requests
         $response->headers->set('X-Permitted-Cross-Domain-Policies', 'none');
@@ -50,9 +51,11 @@ class SecurityHeadersMiddleware
         // Content-Security-Policy: Prevents XSS and injection attacks
         $csp = implode('; ', [
             "default-src 'self'",
-            // Note: 'unsafe-inline' is removed! We now use 'nonce-...'
+            // Script: Strict Nonce-based (No unsafe-inline)
             "script-src 'self' 'nonce-{$nonce}' 'unsafe-eval' https: blob:",
-            "style-src 'self' 'nonce-{$nonce}' https: blob:",
+            // Style: Must allow unsafe-inline for JS libraries (SweetAlert, etc) to inject styles.
+            // We DO NOT use nonce here because it would disable unsafe-inline.
+            "style-src 'self' 'unsafe-inline' https: blob: fonts.googleapis.com",
             "font-src 'self' https: data:",
             "img-src 'self' data: https: blob:",
             "connect-src 'self' https:",

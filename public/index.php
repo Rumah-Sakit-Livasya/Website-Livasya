@@ -33,12 +33,13 @@ header('X-Content-Type-Options: nosniff');
 header('X-XSS-Protection: 1; mode=block');
 header('Referrer-Policy: strict-origin-when-cross-origin');
 header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
-header('Feature-Policy: camera \'none\'; microphone \'none\'; geolocation \'none\'');
+// Feature-Policy: camera 'none'; microphone 'none'; geolocation 'none' (Deprecated, using Permissions-Policy)
 header('X-Permitted-Cross-Domain-Policies: none');
 header('X-Download-Options: noopen');
 
 // Simplified CSP for entry point
 // REMOVED 'unsafe-inline' from script-src and added 'nonce'
+// style-src MUST have 'unsafe-inline' for JS libs (SweetAlert, etc). Nonce disables unsafe-inline for styles, so we DO NOT use nonce for styles.
 header("Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-{$nonce}' https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' https: data:; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-ancestors 'self'; frame-src 'self' https://www.instagram.com https://www.google.com https://maps.google.com;");
 
 /*
