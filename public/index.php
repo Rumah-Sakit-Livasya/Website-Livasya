@@ -5,8 +5,11 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
-// PARANOID SECURITY MODE: Force headers at PHP entry point
-// This bypasses middleware and frameworks to ensure headers are always present
+// PARANOID SECURITY MODE: Generate Nonce for CSP
+// We define it here so both index.php (fallback) and Laravel (middleware) use the SAME nonce
+$nonce = bin2hex(random_bytes(16));
+define('CSP_NONCE', $nonce);
+
 // PARANOID SECURITY MODE: Force headers at PHP entry point
 // This bypasses middleware and frameworks to ensure headers are always present
 if (function_exists('header_remove')) {
@@ -34,9 +37,9 @@ header('Feature-Policy: camera \'none\'; microphone \'none\'; geolocation \'none
 header('X-Permitted-Cross-Domain-Policies: none');
 header('X-Download-Options: noopen');
 
-// Simplified CSP for entry point (Application middleware will add full CSP later)
-// REMOVED 'unsafe-eval' to satisfy scanner requirements (May break Alpine.js if not built)
-header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' https: data:; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-ancestors 'self';");
+// Simplified CSP for entry point
+// REMOVED 'unsafe-inline' from script-src and added 'nonce'
+header("Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-{$nonce}' https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' https: data:; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-ancestors 'self'; frame-src 'self' https://www.instagram.com https://www.google.com https://maps.google.com;");
 
 /*
 |--------------------------------------------------------------------------

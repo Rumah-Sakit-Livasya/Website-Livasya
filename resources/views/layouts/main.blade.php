@@ -10,7 +10,7 @@
     <meta name="description"
         content="Rumah Sakit Livasya merupakan Rumah Sakit di Majalengka yang menyelenggarakan pelayanan medik spesialistik atau pelayanan dasar dan spesialistik.">
     <!-- Google Tag Manager -->
-    <script>
+    <script nonce="{{ $nonce }}">
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
@@ -183,10 +183,10 @@
     <script src="/js/purecounter_vanilla.js"></script>
     <script src="/js/gsap.min.js"></script>
     <script src="/js/text-plugin.min.js"></script>
-    <script>
+    <script nonce="{{ $nonce }}">
         // Konfigurasi GSAP
     </script>
-    <script>
+    <script nonce="{{ $nonce }}">
         new PureCounter({
             // Setting that can't' be overriden on pre-element
             selector: ".purecounter", // HTML query selector for spesific element
@@ -210,7 +210,7 @@
     <!-- custom js file link  -->
     <script src="/js/script.js"></script>
 
-    <script>
+    <script nonce="{{ $nonce }}">
         // Dropdown Menu Fade
         jQuery(document).ready(function() {
             $(".dropdown").hover(

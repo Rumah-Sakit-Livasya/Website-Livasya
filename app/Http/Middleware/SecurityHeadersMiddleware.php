@@ -44,19 +44,24 @@ class SecurityHeadersMiddleware
         // max-age=31536000 = 1 year
         $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
 
+        // Get the nonce generated in AppServiceProvider
+        $nonce = \Illuminate\Support\Facades\View::shared('nonce');
+
         // Content-Security-Policy: Prevents XSS and injection attacks
         $csp = implode('; ', [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://code.jquery.com https://unpkg.com https://www.googletagmanager.com https://static.cloudflareinsights.com",
-            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.bunny.net https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://unpkg.com",
-            "font-src 'self' https://fonts.gstatic.com https://fonts.bunny.net https://cdnjs.cloudflare.com data:",
+            // Note: 'unsafe-inline' is removed! We now use 'nonce-...'
+            "script-src 'self' 'nonce-{$nonce}' 'unsafe-eval' https: blob:",
+            "style-src 'self' 'nonce-{$nonce}' https: blob:",
+            "font-src 'self' https: data:",
             "img-src 'self' data: https: blob:",
-            "connect-src 'self' https://www.googletagmanager.com https://static.cloudflareinsights.com",
+            "connect-src 'self' https:",
             "frame-ancestors 'self'",
+            "frame-src 'self' https://www.instagram.com https://www.google.com https://maps.google.com",
             "base-uri 'self'",
             "form-action 'self'",
         ]);
-        // $response->headers->set('Content-Security-Policy', $csp);
+        $response->headers->set('Content-Security-Policy', $csp);
 
         // Remove X-Powered-By header to hide PHP version
         $response->headers->remove('X-Powered-By');
