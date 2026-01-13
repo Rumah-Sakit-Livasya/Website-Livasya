@@ -56,7 +56,7 @@ class SecurityHeadersMiddleware
             "base-uri 'self'",
             "form-action 'self'",
         ]);
-        $response->headers->set('Content-Security-Policy', $csp);
+        // $response->headers->set('Content-Security-Policy', $csp);
 
         // Remove X-Powered-By header to hide PHP version
         $response->headers->remove('X-Powered-By');
