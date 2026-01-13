@@ -679,7 +679,7 @@
                     <div class="d-flex flex-row align-items-center mt-1 mb-1 color-white">
                         <span class="mr-2">
                             <img src="/img/demo/avatars/avatar-admin.png" class="rounded-circle profile-image"
-                                alt="Dr. Codex Lantern">
+                                alt="{{ Auth::user()->name ?? 'User Avatar' }}">
                         </span>
                         <div class="info-card-text">
                             <div class="fs-lg text-truncate text-truncate-lg">Dr. Codex Lantern</div>

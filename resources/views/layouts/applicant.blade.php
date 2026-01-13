@@ -109,7 +109,7 @@
         <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="border-bottom: 3px solid #f39c12;">
             <div class="container-fluid">
                 <a href="{{ url('/') }}" class="navbar-brand">
-                    <img src="/img/logo.png" alt="Logo" class="brand-image img-circle elevation-3"
+                    <img src="/img/logo.png" alt="RSIA Livasya Logo" class="brand-image img-circle elevation-3"
                         style="opacity: .8">
                     <span class="brand-text font-weight-light">RSIA LIVASYA</span>
                     <small class="badge badge-warning ml-2" style="font-size: 0.6rem;">PELAMAR</small>
