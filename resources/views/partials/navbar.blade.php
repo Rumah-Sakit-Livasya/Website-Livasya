@@ -44,7 +44,8 @@
 </div>
 <nav class="navbar header navbar-expand-lg bg-white" style="border: none; margin-top: 4.5rem">
     <div class="container mx-3" style="font-family: Montserrat ">
-        <a href="/" class="logo nav-link p-3"> <img src="/img/logo.png" width="40" alt="">
+        <a href="/" class="logo nav-link p-3"> <img src="/img/logo.png" width="40"
+                alt="Livasya Hospital Logo">
         </a>
         <a href="/" class="nav-link fw-bold"> {{ $identity->name }}</a>
         <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"

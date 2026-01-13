@@ -5,7 +5,7 @@
 
     <div class="box-container mt-5">
         <div class="box">
-            <img src="/img/logofooter.png" width="150px" alt="" class="mb-5">
+            <img src="/img/logofooter.png" width="150px" alt="Livasya Hospital Footer Logo" class="mb-5">
             <p>{{ $identity->alamat }}</p>
             <div class="col">
                 <a class="nav-link" href="{{ $identity->facebook }}"> <i class="fab fa-facebook-f"></i> Facebook </a>

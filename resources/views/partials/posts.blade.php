@@ -8,7 +8,7 @@
                     <div class="card img-parent overflow-hidden position-relative shadow"
                         style=" outline: none; border: none;">
                         <div class="card-header bg-white m-3" style="border: none; display: flex; align-items: center;">
-                            <img src="{{ asset('img/ig.jpg') }}" alt="Image"
+                            <img src="{{ asset('img/ig.jpg') }}" alt="Livasya Instagram Profile"
                                 style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px; vertical-align: middle;">
                             <div class="ml-3"
                                 style="display: flex; flex-direction: column; line-height: 1.2; font-size: 12px;">
