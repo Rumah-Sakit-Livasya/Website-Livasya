@@ -409,7 +409,7 @@
 @endsection
 
 @section('scripts')
-    <script>
+    <script nonce="{{ $nonce }}">
         $(function() {
             $('.btn-apply').on('click', function() {
                 var title = $(this).data('title');
