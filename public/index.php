@@ -39,7 +39,8 @@ header('X-Download-Options: noopen');
 
 // Simplified CSP for entry point
 // REMOVED 'unsafe-inline' from script-src and added 'nonce'
-// style-src MUST have 'unsafe-inline' for JS libs (SweetAlert, etc). Nonce disables unsafe-inline for styles, so we DO NOT use nonce for styles.
+// REMOVED 'unsafe-eval' to satisfy strict security requirements
+// style-src MUST have 'unsafe-inline' for JS libs.
 header("Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-{$nonce}' https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' https: data:; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-ancestors 'self'; frame-src 'self' https://www.instagram.com https://www.google.com https://maps.google.com;");
 
 /*

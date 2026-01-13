@@ -51,8 +51,8 @@ class SecurityHeadersMiddleware
         // Content-Security-Policy: Prevents XSS and injection attacks
         $csp = implode('; ', [
             "default-src 'self'",
-            // Script: Strict Nonce-based (No unsafe-inline)
-            "script-src 'self' 'nonce-{$nonce}' 'unsafe-eval' https: blob:",
+            // Script: Strict Nonce-based (No unsafe-inline, No unsafe-eval)
+            "script-src 'self' 'nonce-{$nonce}' https: blob:",
             // Style: Must allow unsafe-inline for JS libraries (SweetAlert, etc) to inject styles.
             // We DO NOT use nonce here because it would disable unsafe-inline.
             "style-src 'self' 'unsafe-inline' https: blob: fonts.googleapis.com",
