@@ -18,4 +18,18 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+    # Security Headers and Hardening
+    <IfModule mod_headers.c>
+        # Unset dangerous headers
+        Header always unset X-Powered-By
+        Header always unset Server
+
+        # Ensure security headers are set (in case middleware fails or static files)
+        Header always set X-Frame-Options "SAMEORIGIN"
+        Header always set X-Content-Type-Options "nosniff"
+        Header always set X-XSS-Protection "1; mode=block"
+    </IfModule>
+
+    # Disable Server Signature
+    ServerSignature Off
 </IfModule>

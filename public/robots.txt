@@ -1,2 +1,9 @@
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /nova
+Disallow: /telescope
+Disallow: /horizon
+Disallow: /api/
+Disallow: /storage/*.key
+Disallow: /storage/*.pem

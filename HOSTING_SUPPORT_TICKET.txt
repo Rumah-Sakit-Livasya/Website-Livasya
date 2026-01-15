@@ -1,0 +1,27 @@
+Subject: Request for Security Configuration Updates (Server Hardening)
+
+Dear Support Team,
+
+I am working on hardening the security of my website (livasya.com) and have implemented all possible application-level security measures (Headers, CSP, HSTS, Secure Cookies).
+
+However, our security scans (grade 73/100) indicate issues that can ONLY be resolved at the server/infrastructure level. I request your assistance with the following configurations:
+
+1. Hide Server Version (Critical)
+   - The server banner currently exposes the version information (e.g., "nginx/1.x").
+   - Please configure Nginx/Apache to hide this.
+   - For Nginx: `server_tokens off;`
+   - For Apache: `ServerTokens Prod` and `ServerSignature Off`
+
+2. DNSSEC Configuration
+   - Our DNS Security Extensions (DNSSEC) are currently disabled.
+   - Please enable DNSSEC for our domain or provide the DS records so we can configure them at our registrar.
+
+3. Bot Protection (Optional but Recommended)
+   - If available on our plan, please check if any Web Application Firewall (WAF) or Bot Protection features can be enabled to mitigate scraping.
+
+We have already handled X-Powered-By removal and all security headers via the application, but the Server banner persists, indicating the web server config is overriding our settings.
+
+Thank you for your assistance.
+
+Best regards,
+Livasya IT Team

@@ -6,11 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Dimas Candra Pebriyanto">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="google-site-verification" content="MjWeqIR2ma9ZcSuasskrxDQRls8DtQ513RE1NybH9fc" />
     <meta name="description"
         content="Rumah Sakit Livasya merupakan Rumah Sakit di Majalengka yang menyelenggarakan pelayanan medik spesialistik atau pelayanan dasar dan spesialistik.">
     <!-- Google Tag Manager -->
-    <script>
+    <script nonce="{{ $nonce }}">
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
@@ -183,10 +184,10 @@
     <script src="/js/purecounter_vanilla.js"></script>
     <script src="/js/gsap.min.js"></script>
     <script src="/js/text-plugin.min.js"></script>
-    <script>
+    <script nonce="{{ $nonce }}">
         // Konfigurasi GSAP
     </script>
-    <script>
+    <script nonce="{{ $nonce }}">
         new PureCounter({
             // Setting that can't' be overriden on pre-element
             selector: ".purecounter", // HTML query selector for spesific element
@@ -210,7 +211,7 @@
     <!-- custom js file link  -->
     <script src="/js/script.js"></script>
 
-    <script>
+    <script nonce="{{ $nonce }}">
         // Dropdown Menu Fade
         jQuery(document).ready(function() {
             $(".dropdown").hover(

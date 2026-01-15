@@ -55,8 +55,9 @@
                                                     method="POST" class="d-inline">
                                                     @csrf @method('PUT')
                                                     <input type="hidden" name="status" value="accepted">
-                                                    <button class="badge mx-1 badge-success p-2 border-0 text-white"
-                                                        onclick="return confirm('Terima pelamar ini?')">
+                                                    <button
+                                                        class="badge mx-1 badge-success p-2 border-0 text-white js-confirm-action"
+                                                        data-message="Terima pelamar ini?">
                                                         <span class="fal fa-check"></span> Terima
                                                     </button>
                                                 </form>
@@ -65,8 +66,9 @@
                                                     method="POST" class="d-inline">
                                                     @csrf @method('PUT')
                                                     <input type="hidden" name="status" value="rejected">
-                                                    <button class="badge mx-1 badge-danger p-2 border-0 text-white"
-                                                        onclick="return confirm('Tolak pelamar ini?')">
+                                                    <button
+                                                        class="badge mx-1 badge-danger p-2 border-0 text-white js-confirm-action"
+                                                        data-message="Tolak pelamar ini?">
                                                         <span class="fal fa-times"></span> Tolak
                                                     </button>
                                                 </form>
@@ -111,4 +113,18 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('plugin')
+    <script nonce="{{ $nonce }}">
+        $(document).ready(function() {
+            // Handle confirmation buttons
+            $(document).on('click', '.js-confirm-action', function(e) {
+                var message = $(this).data('message');
+                if (!confirm(message)) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
 @endsection

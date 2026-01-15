@@ -86,8 +86,8 @@
 
                                                 <!-- View Applicants Button -->
                                                 <button type="button"
-                                                    class="btn btn-sm btn-outline-info waves-effect waves-themed"
-                                                    onclick="openWindows({{ $career->id }})" title="Lihat Pelamar">
+                                                    class="btn btn-sm btn-outline-info waves-effect waves-themed js-open-window"
+                                                    data-url="/careers/{{ $career->id }}" title="Lihat Pelamar">
                                                     <i class="fal fa-users mr-1"></i>
                                                     <span class="badge badge-info ml-1">{{ $career->applier_count }}</span>
                                                 </button>
@@ -129,16 +129,13 @@
     <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
     <script src="/js/formplugins/select2/select2.bundle.js"></script>
     <script src="/js/formplugins/summernote/summernote.js"></script>
-    <script>
-        function openWindows(careerId) {
-            // Construct the URL based on your application's logic
-            var url = '/careers/' + careerId; // Change this to match your route
-
-            // Open the URL in a new window with full screen size
-            window.open(url, '_blank', 'width=' + screen.width + ',height=' + screen.height);
-        }
-
+    <script nonce="{{ $nonce }}">
         $(document).ready(function() {
+            $(document).on('click', '.js-open-window', function() {
+                var url = $(this).data('url');
+                window.open(url, '_blank', 'width=' + screen.width + ',height=' + screen.height);
+            });
+
             // Initialize Summernote
             $('.summernote').summernote({
                 height: 200,

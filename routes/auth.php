@@ -13,7 +13,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
+Route::middleware(['guest', 'throttle:auth'])->group(function () {
     Route::get('/bukan-login', [LoginController::class, 'index'])->middleware('guest')->name('login');
     Route::get('/login-pelamar', [LoginController::class, 'applicantLogin'])->middleware('guest')->name('login.pelamar');
     Route::post('/bukan-login', [LoginController::class, 'authenticate']);

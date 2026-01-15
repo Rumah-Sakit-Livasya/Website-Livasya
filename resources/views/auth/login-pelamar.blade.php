@@ -8,9 +8,9 @@
                 <div class="col-md-6 col-lg-5">
                     <div class="card shadow-lg border-0 rounded-lg">
                         <div class="card-header bg-white border-0 text-center pt-4 pb-0">
-                            <img src="{{ asset('img/logo.png') }}" alt="Logo RSIA Livasya" style="width: 80px;" class="mb-3">
+                            <img src="{{ asset('img/logo.png') }}" alt="Logo Rumah Sakit Livasya" style="width: 80px;" class="mb-3">
                             <h3 class="font-weight-bold text-dark">Login Pelamar</h3>
-                            <p class="text-muted">Portal Karir RSIA Livasya</p>
+                            <p class="text-muted">Portal Karir Rumah Sakit Livasya</p>
                         </div>
                         <div class="card-body p-5">
                             <!-- Session Status -->
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="text-center mt-4 text-muted">
-                        <small>&copy; {{ date('Y') }} RSIA Livasya. All rights reserved.</small>
+                        <small>&copy; {{ date('Y') }} Rumah Sakit Livasya. All rights reserved.</small>
                     </div>
                 </div>
             </div>

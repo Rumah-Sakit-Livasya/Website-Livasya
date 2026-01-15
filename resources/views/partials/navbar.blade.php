@@ -25,10 +25,10 @@
                 <a class="nav-link d-flex align-items-center me-5" href="https://wa.me/{{ $identity->no_hp }}"> <i
                         class="fab fa-whatsapp me-1 text-primary"></i>
                     {{ $identity->no_hp }} </a>
-                <button class="btn btn-secondary d-flex align-items-center"
-                    style="border-radius: 20px; padding: 5px 10px;" onclick="location.href='/dokter'"> <i
+                <a href="/dokter" class="btn btn-secondary d-flex align-items-center"
+                    style="border-radius: 20px; padding: 5px 10px; text-decoration: none; color: white;"> <i
                         class="fas fa-user-md"></i>
-                    <span class="me-2 p-0">Cari Dokter</span> </button>
+                    <span class="me-2 p-0">Cari Dokter</span> </a>
             </div>
             <div class="right-group d-flex align-items-center">
                 <a class="nav-link me-5 text-primary" href="{{ $identity->facebook }}"> <i
@@ -44,7 +44,8 @@
 </div>
 <nav class="navbar header navbar-expand-lg bg-white" style="border: none; margin-top: 4.5rem">
     <div class="container mx-3" style="font-family: Montserrat ">
-        <a href="/" class="logo nav-link p-3"> <img src="/img/logo.png" width="40" alt="">
+        <a href="/" class="logo nav-link p-3"> <img src="/img/logo.png" width="40"
+                alt="Livasya Hospital Logo">
         </a>
         <a href="/" class="nav-link fw-bold"> {{ $identity->name }}</a>
         <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -55,8 +56,8 @@
             <div class="navbar-nav ">
                 <a class="nav-link" href="/">Beranda</a>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         Pelayanan
                     </a>
                     <ul class="dropdown-menu p-4 border-top shadow"
@@ -87,8 +88,8 @@
                 </li>
                 {{-- <a class="nav-link" href="/posts">Berita & Acara</a> --}}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         Berita
                     </a>
                     <div class="dropdown-menu p-4 border-top shadow " style="border:none; border-radius:15px;">
@@ -144,8 +145,8 @@
                 </li> --}}
                 @auth
                     <li class="nav-link dropdown p-0">
-                        <a class="nav-link dropdown-toggle" href="javasript:void(0)" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
                             {{ auth()->user()->name }}
                         </a>
                         <ul class="dropdown-menu">
