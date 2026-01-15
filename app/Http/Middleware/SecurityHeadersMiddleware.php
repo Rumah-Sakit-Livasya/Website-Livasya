@@ -52,11 +52,11 @@ class SecurityHeadersMiddleware
         $csp = implode('; ', [
             "default-src 'self'",
             // Script: Strict Nonce-based (No unsafe-inline, No unsafe-eval)
-            "script-src 'self' 'nonce-{$nonce}' https: blob:",
+            "script-src 'self' 'nonce-{$nonce}' https: http: blob: cdn.jsdelivr.net",
             // Style: Must allow unsafe-inline for JS libraries (SweetAlert, etc) to inject styles.
             // We DO NOT use nonce here because it would disable unsafe-inline.
-            "style-src 'self' 'unsafe-inline' https: blob: fonts.googleapis.com",
-            "font-src 'self' https: data:",
+            "style-src 'self' 'unsafe-inline' https: http: blob: fonts.googleapis.com cdn.jsdelivr.net",
+            "font-src 'self' https: data: fonts.gstatic.com",
             "img-src 'self' data: https: blob:",
             "connect-src 'self' https:",
             "frame-ancestors 'self'",

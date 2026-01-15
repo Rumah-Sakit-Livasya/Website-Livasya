@@ -8,7 +8,8 @@
                 <div class="col-md-6 col-lg-5">
                     <div class="card shadow-lg border-0 rounded-lg">
                         <div class="card-header bg-white border-0 text-center pt-4 pb-0">
-                            <img src="{{ asset('img/logo.png') }}" alt="Logo Rumah Sakit Livasya" style="width: 80px;" class="mb-3">
+                            <img src="{{ asset('img/logo.png') }}" alt="Logo Rumah Sakit Livasya" style="width: 80px;"
+                                class="mb-3">
                             <h3 class="font-weight-bold text-dark">Login Pelamar</h3>
                             <p class="text-muted">Portal Karir Rumah Sakit Livasya</p>
                         </div>
@@ -46,7 +47,7 @@
     </section>
 
     <script src="{{ asset('js/login-pelamar.js') }}"></script>
-    <script>
+    <script nonce="{{ $nonce }}">
         // Fallback for any other inline scripts or if immediate execution is needed for variables passed from PHP
     </script>
 @endsection
