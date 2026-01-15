@@ -35,24 +35,6 @@
                                 </a>
                             </div>
 
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    const termsCheckbox = document.getElementById('agreeTerms');
-                                    const googleLoginBtn = document.getElementById('googleLoginBtn');
-
-                                    termsCheckbox.addEventListener('change', function() {
-                                        if (this.checked) {
-                                            googleLoginBtn.classList.remove('disabled');
-                                            googleLoginBtn.removeAttribute('aria-disabled');
-                                            googleLoginBtn.removeAttribute('tabindex');
-                                        } else {
-                                            googleLoginBtn.classList.add('disabled');
-                                            googleLoginBtn.setAttribute('aria-disabled', 'true');
-                                            googleLoginBtn.setAttribute('tabindex', '-1');
-                                        }
-                                    });
-                                });
-                            </script>
                         </div>
                     </div>
                     <div class="text-center mt-4 text-muted">
@@ -63,10 +45,8 @@
         </div>
     </section>
 
+    <script src="{{ asset('js/login-pelamar.js') }}"></script>
     <script>
-        function reloadCaptcha() {
-            let img = document.querySelector('.captcha-image img');
-            img.src = '/captcha/flat?' + Math.random();
-        }
+        // Fallback for any other inline scripts or if immediate execution is needed for variables passed from PHP
     </script>
 @endsection
