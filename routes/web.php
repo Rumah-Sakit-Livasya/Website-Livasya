@@ -151,6 +151,7 @@ Route::middleware('auth')->group(function () {
 
         // Jadwal
         Route::get("/jadwal", [JadwalController::class, 'index'])->name("jadwal.index");
+        Route::put("/jadwal", [JadwalController::class, 'update'])->name("jadwal.update");
 
         // Users
         Route::get("/users", [UserController::class, 'index'])->name("user.index");

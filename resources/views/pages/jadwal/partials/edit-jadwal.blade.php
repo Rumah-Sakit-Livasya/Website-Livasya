@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form autocomplete="off" novalidate method="post" enctype="multipart/form-data" id="update-jadwal-form"
-                data-id="">
+                action="{{ route('jadwal.update') }}" data-id="">
                 @method('put')
                 @csrf
                 <input type="hidden" id="oldImage" name="oldImage" value="">
