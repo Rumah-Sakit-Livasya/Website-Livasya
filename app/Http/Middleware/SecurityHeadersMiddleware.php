@@ -52,12 +52,12 @@ class SecurityHeadersMiddleware
         $csp = implode('; ', [
             "default-src 'self'",
             // Script: Relaxed (Allow unsafe-inline, unsafe-eval) as per user request
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http: blob: cdn.jsdelivr.net",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'nonce-{$nonce}' https: http: blob: cdn.jsdelivr.net http://localhost:5173 http://[::1]:5173",
             // Style: Must allow unsafe-inline for JS libraries (SweetAlert, etc) to inject styles.
-            "style-src 'self' 'unsafe-inline' https: http: blob: fonts.googleapis.com cdn.jsdelivr.net",
+            "style-src 'self' 'unsafe-inline' https: http: blob: fonts.googleapis.com cdn.jsdelivr.net http://localhost:5173 http://[::1]:5173",
             "font-src 'self' https: data: fonts.gstatic.com",
             "img-src 'self' data: https: blob: http:",
-            "connect-src 'self' https:",
+            "connect-src 'self' https: http://localhost:5173 http://[::1]:5173 ws://localhost:5173 ws://[::1]:5173",
             "frame-ancestors 'self'",
             "frame-src 'self' https://www.instagram.com https://www.google.com https://maps.google.com",
             "base-uri 'self'",
