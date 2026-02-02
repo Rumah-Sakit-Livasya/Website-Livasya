@@ -24,7 +24,7 @@ class CareerController extends Controller
 {
     public function index()
     {
-        $careers = Career::where('status', 'on')->get();
+        $careers = Career::where('status', 'on')->orderBy('created_at', 'desc')->get();
         $identity = Identity::first();
         $mitras = Mitra::where('is_primary', 1)->get();
 
