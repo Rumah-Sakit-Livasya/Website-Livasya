@@ -13,8 +13,9 @@ class FacilityController extends Controller
     public function index()
     {
         $facilities = Facility::all();
+        $identity = Identity::first();
 
-        return view('pages.facilities.index', compact('identity'), [
+        return view('pages.facilities.index', compact('identity', 'facilities'), [
             'title' => 'Fasilitas Unggulan'
         ]);
     }
