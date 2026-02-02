@@ -112,7 +112,7 @@
 @section('plugin')
     <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
     <script src="/js/formplugins/select2/select2.bundle.js"></script>
-    <script>
+    <script nonce="{{ $nonce }}">
         function editPreviewImage() {
             const image = document.querySelector('#edit-image');
             const imgPreview = document.querySelector('.edit-img-preview')

@@ -42,7 +42,7 @@ header('X-Download-Options: noopen');
 // REMOVED 'unsafe-eval' to satisfy strict security requirements
 // style-src MUST have 'unsafe-inline' for JS libs.
 // Syncing with Middleware: Added 'blob:', 'fonts.googleapis.com'
-header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-eval' 'nonce-{$nonce}' https: blob: cdn.jsdelivr.net http://localhost:5173 http://[::1]:5173; style-src 'self' 'unsafe-inline' https: blob: fonts.googleapis.com cdn.jsdelivr.net http://localhost:5173 http://[::1]:5173; font-src 'self' https: data:; img-src 'self' data: https: blob: http:; connect-src 'self' https: http://localhost:5173 http://[::1]:5173 ws://localhost:5173 ws://[::1]:5173; frame-ancestors 'self'; frame-src 'self' https://www.instagram.com https://www.google.com https://maps.google.com;");
+header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-eval' 'nonce-{$nonce}' https: blob: cdn.jsdelivr.net http://localhost:5173; style-src 'self' 'unsafe-inline' https: blob: fonts.googleapis.com cdn.jsdelivr.net http://localhost:5173; font-src 'self' https: data:; img-src 'self' data: https: blob: http:; connect-src 'self' https: http://localhost:5173 ws://localhost:5173; frame-ancestors 'self'; frame-src 'self' https://www.instagram.com https://www.google.com https://maps.google.com;");
 
 /*
 |--------------------------------------------------------------------------

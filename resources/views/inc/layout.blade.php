@@ -37,7 +37,7 @@
     </div>
 
     @if (session()->has('success'))
-        <script>
+        <script nonce="{{ $nonce }}">
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -58,7 +58,7 @@
     @endif
 
     @if (session()->has('error'))
-        <script>
+        <script nonce="{{ $nonce }}">
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
