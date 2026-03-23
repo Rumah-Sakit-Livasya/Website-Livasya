@@ -170,5 +170,5 @@
     </div>
 </nav>
 @section('plugin')
-    <script src="{{ asset('js/navbar.js') }}"></script>
+    <script src="{{ secure_asset('js/navbar.js') }}"></script>
 @endsection

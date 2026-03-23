@@ -184,7 +184,7 @@
     <script src="/js/purecounter_vanilla.js"></script>
     <script src="/js/gsap.min.js"></script>
     <script src="/js/text-plugin.min.js"></script>
-    <script src="{{ asset('js/main-init.js') }}"></script>
+    <script src="{{ secure_asset('js/main-init.js') }}"></script>
 
 
     @yield('plugin')
