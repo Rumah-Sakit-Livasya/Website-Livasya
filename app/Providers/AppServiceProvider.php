@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,8 +26,19 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapFive();
         Paginator::useBootstrapFour();
 
-        if ($this->app->environment('production')) {
-            \Illuminate\Support\Facades\URL::forceScheme('https');
+        $request = request();
+        $appUrl = (string) config('app.url');
+        $forwardedProto = strtolower((string) $request->header('x-forwarded-proto'));
+
+        if (
+            $this->app->environment('production')
+            || str_starts_with($appUrl, 'https://')
+            || $request->isSecure()
+            || $forwardedProto === 'https'
+            || $request->getHost() === 'livasya.com'
+            || $request->getHost() === 'www.livasya.com'
+        ) {
+            URL::forceScheme('https');
         }
 
         // Generate CSP Nonce (Use the one from index.php if available)
