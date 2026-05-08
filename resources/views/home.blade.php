@@ -299,6 +299,14 @@
             font-size: 1.9rem;
         }
 
+        .quick-icon i,
+        .service-icon i {
+            display: block;
+            color: #ffffff;
+            font-size: 2.15rem;
+            line-height: 1;
+        }
+
         .quick-card strong {
             display: block;
             font-size: 1.55rem;
@@ -563,6 +571,10 @@
             color: #ffffff;
             background: linear-gradient(135deg, var(--primary), #16a085);
             font-size: 2.5rem;
+        }
+
+        .service-feature .service-icon i {
+            font-size: 2.2rem;
         }
 
         .service-card h3 {
