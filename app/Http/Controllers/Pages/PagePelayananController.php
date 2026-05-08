@@ -3,24 +3,16 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
-use App\Models\Galery;
-use App\Models\Identity;
-use App\Models\Mitra;
-use App\Models\Pelayanan;
-use Illuminate\Http\Request;
+use App\Services\Frontend\ServicePageService;
 
 class PagePelayananController extends Controller
 {
+    public function __construct(private ServicePageService $servicePageService)
+    {
+    }
+
     public function index($slug)
     {
-        $identity = Identity::first();
-        $pelayanan = Pelayanan::all();
-        $mitras = Mitra::where('is_primary', 1)->get();
-
-        $pelayananPage = Pelayanan::where('slug', $slug)->first();
-
-        return view('pelayanan', compact('identity', 'pelayanan', 'mitras', 'pelayananPage'), [
-            'title' => $pelayananPage->title,
-        ]);
+        return view('pelayanan', $this->servicePageService->detail($slug));
     }
 }

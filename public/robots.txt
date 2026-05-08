@@ -7,3 +7,6 @@ Disallow: /horizon
 Disallow: /api/
 Disallow: /storage/*.key
 Disallow: /storage/*.pem
+
+Allow: /
+Sitemap: https://livasya.com/sitemap.xml

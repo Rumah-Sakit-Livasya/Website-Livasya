@@ -22,10 +22,12 @@
                             <div class="card-body">
                                 @if ($facility->image)
                                     <img src="{{ asset('storage/' . $facility->image) }}" class="img-fluid"
-                                        alt="{{ $facility->gambar }}" style="border: none; border-radius: 20px">
+                                        alt="{{ $facility->name }}" fetchpriority="high" decoding="async"
+                                        style="border: none; border-radius: 20px">
                                 @else
-                                    <img src="https://source.unsplash.com/400x200/?{{ $facility->name }}" class="img-fluid"
-                                        alt="{{ $facility->image }}" style="border: none; border-radius: 20px">
+                                    <img src="{{ asset('img/rsialivasya.webp') }}" class="img-fluid"
+                                        alt="{{ $facility->name }}" fetchpriority="high" decoding="async"
+                                        style="border: none; border-radius: 20px">
                                 @endif
                             </div>
                             <div class="card-footer">

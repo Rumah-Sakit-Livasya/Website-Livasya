@@ -1,5 +1,8 @@
 @extends('layouts.main')
 
+@section('title', $dokter->name)
+@section('meta_description', trim($dokter->name . ' - ' . $dokter->jabatan . '. Lihat profil dan jadwal praktik dokter RS Livasya Majalengka.'))
+
 @section('container')
     <!-- doctors section starts  -->
     <div class="hero-dokter"></div>

@@ -16,10 +16,11 @@
                             <div class="card-body">
                                 @if ($post->image)
                                     <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid"
-                                        alt="{{ $post->gambar }}" style="border: none; border-radius: 20px">
+                                        alt="{{ $post->title }}" fetchpriority="high" decoding="async"
+                                        style="border: none; border-radius: 20px">
                                 @else
-                                    <img src="https://source.unsplash.com/400x200/?{{ $post->category->name }}"
-                                        class="img-fluid" alt="{{ $post->gambar }}"
+                                    <img src="{{ asset('img/rsialivasya.webp') }}" class="img-fluid"
+                                        alt="{{ $post->title }}" fetchpriority="high" decoding="async"
                                         style="border: none; border-radius: 20px">
                                 @endif
                             </div>

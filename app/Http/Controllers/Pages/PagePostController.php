@@ -4,37 +4,28 @@ namespace App\Http\Controllers\Pages;
 
 use App\Models\Post;
 use App\Http\Controllers\Controller;
-use App\Models\Identity;
-use App\Models\Mitra;
-use App\Models\Pelayanan;
+use App\Services\Frontend\NewsPageService;
+use Illuminate\Http\Request;
 
 class PagePostController extends Controller
 {
-    public function index()
+    public function __construct(private NewsPageService $newsPageService)
     {
-        $identity = Identity::first();
-        $pelayanan = Pelayanan::all();
-        $mitras = Mitra::where('is_primary', 1)->get();
+    }
 
-        $posts = Post::where('is_active', 1)->latest()->filter(request(['search']))->paginate(9)->withQueryString();
+    public function index(Request $request)
+    {
+        $data = $this->newsPageService->list($request->only('search'));
 
-        if (request()->ajax()) {
-            return view('partials.posts', compact('posts'));
+        if ($request->ajax()) {
+            return view('partials.posts', ['posts' => $data['posts']]);
         }
 
-        return view('posts', compact('identity', 'pelayanan', 'mitras', 'posts'), [
-            'title' => 'Berita Terkini',
-        ]);
+        return view('posts', $data);
     }
 
     public function show(Post $post)
     {
-        $identity = Identity::first();
-        $pelayanan = Pelayanan::all();
-        $mitras = Mitra::where('is_primary', 1)->get();
-
-        return view('post', compact('identity', 'pelayanan', 'mitras', 'post'), [
-            'title' => $post->title,
-        ]);
+        return view('post', $this->newsPageService->detail($post));
     }
 }

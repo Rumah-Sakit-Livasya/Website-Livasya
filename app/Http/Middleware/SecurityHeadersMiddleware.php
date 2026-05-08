@@ -43,7 +43,9 @@ class SecurityHeadersMiddleware
 
         // Strict-Transport-Security (HSTS): Enforces HTTPS
         // max-age=31536000 = 1 year
-        $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+        if ($request->isSecure() || app()->environment('production')) {
+            $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+        }
 
         // Get the nonce generated in AppServiceProvider
         $nonce = \Illuminate\Support\Facades\View::shared('nonce');
@@ -51,15 +53,15 @@ class SecurityHeadersMiddleware
         // Content-Security-Policy: Prevents XSS and injection attacks
         $csp = implode('; ', [
             "default-src 'self'",
-            // Script: Relaxed (Allow unsafe-inline, unsafe-eval) as per user request
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'nonce-{$nonce}' https: http: blob: cdn.jsdelivr.net http://localhost:5173 http://[::1]:5173",
+            // Existing templates still use inline scripts and CDN assets, so this policy keeps compatibility while blocking framing and mixed origins more tightly than the previous catch-all.
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'nonce-{$nonce}' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.rawgit.com http://localhost:5173 http://[::1]:5173",
             // Style: Must allow unsafe-inline for JS libraries (SweetAlert, etc) to inject styles.
-            "style-src 'self' 'unsafe-inline' https: http: blob: fonts.googleapis.com cdn.jsdelivr.net http://localhost:5173 http://[::1]:5173",
-            "font-src 'self' https: data: fonts.gstatic.com",
-            "img-src 'self' data: https: blob: http:",
-            "connect-src 'self' https: http://localhost:5173 http://[::1]:5173 ws://localhost:5173 ws://[::1]:5173",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com http://localhost:5173 http://[::1]:5173",
+            "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com",
+            "img-src 'self' data: blob: https:",
+            "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com http://localhost:5173 http://[::1]:5173 ws://localhost:5173 ws://[::1]:5173",
             "frame-ancestors 'self'",
-            "frame-src 'self' https://www.instagram.com https://www.google.com https://maps.google.com",
+            "frame-src 'self' https://www.googletagmanager.com https://www.youtube.com https://www.youtube-nocookie.com https://www.google.com https://maps.google.com https://www.instagram.com https://copafacil.com",
             "base-uri 'self'",
             "form-action 'self'",
         ]);

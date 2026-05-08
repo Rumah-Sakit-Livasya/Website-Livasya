@@ -1,6 +1,3 @@
-@php
-    use App\Models\ImagePelayanan;
-@endphp
 @extends('layouts.main')
 
 @section('container')
@@ -53,20 +50,22 @@
                     <div class="row overflow-hidden">
                         <div class="column small-11 small-centered">
                             <div class="slider slider-single">
-                                @foreach (ImagePelayanan::where('pelayanan_id', $pelayananPage->id)->get() as $item)
+                                @foreach ($pelayananImages as $item)
                                     <div>
                                         <img src="{{ asset('/storage/' . $item->thumbnail) }}"
                                             alt="{{ $pelayananPage->title }}" class="img-fluid img-thumbnail"
+                                            loading="lazy" decoding="async"
                                             style="filter: brightness(1); border-radius: 20px">
                                     </div>
                                 @endforeach
                             </div>
 
                             <div class="slider slider-nav mt-3">
-                                @foreach (ImagePelayanan::where('pelayanan_id', $pelayananPage->id)->get() as $item)
+                                @foreach ($pelayananImages as $item)
                                     <div>
-                                        <img src="{{ asset('/storage/' . $item->image) }}" alt="IGD"
-                                            class="img-fluid mx-3 img-thumbnail" style="border-radius: 20px">
+                                        <img src="{{ asset('/storage/' . $item->image) }}"
+                                            alt="{{ $pelayananPage->title }}" class="img-fluid mx-3 img-thumbnail"
+                                            loading="lazy" decoding="async" style="border-radius: 20px">
                                     </div>
                                 @endforeach
                             </div>

@@ -1,16 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
+    @php
+        $siteName = $identity->name ?? config('app.name', 'Rumah Sakit Livasya');
+        $pageTitle = trim($__env->yieldContent('title', $title ?? 'Home'));
+        $pageDescription = trim($__env->yieldContent('meta_description', $metaDescription ?? 'Rumah Sakit Livasya adalah rumah sakit di Majalengka yang menyediakan layanan kesehatan, dokter, fasilitas medis, dan informasi layanan RS untuk masyarakat Majalengka dan sekitarnya.'));
+        $currentUrl = url()->current();
+        $metaImage = asset('img/logo.png');
+    @endphp
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Dimas Candra Pebriyanto">
+    <meta name="robots" content="index,follow">
+    <meta name="geo.region" content="ID-JB">
+    <meta name="geo.placename" content="Majalengka">
+    <meta name="ICBM" content="-6.765136,108.175662">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="google-site-verification" content="MjWeqIR2ma9ZcSuasskrxDQRls8DtQ513RE1NybH9fc" />
-    <meta name="description"
-        content="Rumah Sakit Livasya merupakan Rumah Sakit di Majalengka yang menyelenggarakan pelayanan medik spesialistik atau pelayanan dasar dan spesialistik.">
+    <meta name="description" content="{{ $pageDescription }}">
+    <link rel="canonical" href="{{ $currentUrl }}">
+    <meta property="og:site_name" content="{{ $siteName }}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ $pageTitle }} - {{ $siteName }}">
+    <meta property="og:description" content="{{ $pageDescription }}">
+    <meta property="og:url" content="{{ $currentUrl }}">
+    <meta property="og:image" content="{{ $metaImage }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $pageTitle }} - {{ $siteName }}">
+    <meta name="twitter:description" content="{{ $pageDescription }}">
+    <meta name="twitter:image" content="{{ $metaImage }}">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="//cdn-icons-png.flaticon.com">
     <!-- Google Tag Manager -->
+    @isset($seoSchemas)
+        @foreach ($seoSchemas as $schema)
+            <script type="application/ld+json" nonce="{{ $nonce }}">{!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+        @endforeach
+    @endisset
+
     <script nonce="{{ $nonce }}">
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
@@ -30,10 +61,10 @@
     <!-- End Google Tag Manager -->
 
 
-    @if ($title === 'Home')
-        <title>Rumah Sakit Livasya Majalengka</title>
+    @if ($pageTitle === 'Home')
+        <title>{{ $siteName }}</title>
     @else
-        <title>RS LIVASYA MAJALENGKA | {{ $title }}</title>
+        <title>{{ $pageTitle }} | {{ $siteName }}</title>
     @endif
 
     <!-- font awesome cdn link  -->
@@ -49,7 +80,7 @@
     <link rel="stylesheet" href="/css/buttons.bootstrap4.min.css"> --}}
 
     {{-- SweetAlert2 --}}
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Select2 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
@@ -57,9 +88,10 @@
         rel="stylesheet" />
 
     <!-- Add the slick-theme.css if you want default styling -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <!-- Add the slick-theme.css if you want default styling -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 
     <!--Start of Tawk.to Script-->
     {{-- <script type="text/javascript">

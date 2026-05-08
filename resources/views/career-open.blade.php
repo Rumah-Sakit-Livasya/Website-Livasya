@@ -1,6 +1,3 @@
-@php
-    use App\Models\Career;
-@endphp
 @extends('layouts.main')
 
 @section('container')
@@ -9,7 +6,7 @@
 
         <div class="container">
             <div class="row g-4">
-                @foreach (Career::where('status', 'on')->where('tipe', $tipe)->get() as $career)
+                @foreach ($careers as $career)
                     <div class="col-md-12 col-lg-4">
                         <div class="card career-card h-100 border-0 shadow-sm">
                             <div class="card-body p-4 d-flex flex-column position-relative overflow-hidden">
@@ -37,7 +34,8 @@
                                         <a href="javascript:void(0)" data-src="{{ $flyerImage }}"
                                             class="d-block cursor-pointer zoom-effect position-relative preview-trigger">
                                             <img src="{{ $flyerImage }}" alt="{{ $career->title }}"
-                                                class="img-fluid w-100" style="object-fit: cover; min-height: 300px;">
+                                                class="img-fluid w-100" loading="lazy" decoding="async"
+                                                style="object-fit: cover; min-height: 300px;">
                                             <div class="hover-overlay d-flex align-items-center justify-content-center"
                                                 style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); opacity: 0; transition: all 0.3s;">
                                                 <i class="fas fa-search-plus text-white fa-3x"></i>

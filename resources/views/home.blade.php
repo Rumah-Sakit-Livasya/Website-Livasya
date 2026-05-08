@@ -47,21 +47,31 @@
         }
     </style>
     <link rel="stylesheet" href="css/animasi.css">
+    @php
+        $heroImage = $jumbotron->main_image ?? null;
+        $heroTitle = $jumbotron->title ?? 'RSIA Livasya';
+        $heroDescription = $jumbotron->title_description ?? 'Melayani dengan sepenuh hati untuk keluarga Anda.';
+        $jumlahPasienPuas = $identity->jml_pasien_puas ?? 0;
+        $jumlahFasilitasKamar = $identity->jml_fasilitas_kamar ?? 0;
+        $youtubeEmbed = $identity->youtube_link_video ?? '';
+        $youtubeUrl = $identity->youtube ?? '#';
+    @endphp
     <!-- home section start -->
     <section class="home my-5 overflow-x-hidden" id="home">
         <div class="row align-items-center">
             <div class="col-lg-6">
                 <div class="image row juctify-content-center">
                     <div class="">
-                        <img src="{{ asset('storage/' . $jumbotron->main_image) }}"
-                            class="d-block img-fluid m-auto p-5 rounded-circle" alt="">
+                        <img src="{{ $heroImage ? asset('storage/' . $heroImage) : asset('img/header.png') }}"
+                            class="d-block img-fluid m-auto p-5 rounded-circle" alt="Rumah Sakit Livasya Majalengka"
+                            fetchpriority="high" decoding="async">
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="wrap-text">
-                    <h1 class="heading section-heading-lg title-web">{!! $jumbotron->title !!}</h1>
-                    <p id="tex">{!! ucwords($jumbotron->title_description) !!}
+                    <h1 class="heading section-heading-lg title-web">{!! $heroTitle !!}</h1>
+                    <p id="tex">{!! ucwords($heroDescription) !!}
                     </p>
                     <div class="row">
                         <div class="col" data-aos="fade-left">
@@ -74,6 +84,17 @@
         </div>
     </section>
     <!-- home section ends -->
+
+    <section class="bg-white py-4">
+        <div class="container">
+            <p class="fs-4 text-center mb-0">
+                Rumah Sakit Livasya adalah rumah sakit di Majalengka yang menyediakan layanan kesehatan untuk ibu,
+                anak, dan keluarga. Sebagai RS di Majalengka, Livasya menghadirkan layanan dokter, IGD, rawat jalan,
+                rawat inap, radiologi, laboratorium, dan fasilitas kesehatan yang mudah diakses masyarakat Majalengka
+                dan sekitarnya.
+            </p>
+        </div>
+    </section>
 
     <!-- icons section starts  -->
     {{-- Waves --}}
@@ -99,14 +120,14 @@
         </div>
         <div class="icons" data-aos="fade-up">
             <i class="fas fa-users"></i>
-            <h3><span data-purecounter-start="0" data-purecounter-end="{{ $identity->jml_pasien_puas }}"
+            <h3><span data-purecounter-start="0" data-purecounter-end="{{ $jumlahPasienPuas }}"
                     data-purecounter-duration="5" class="purecounter"></span>+</h3>
             <p>Pasien Puas</p>
         </div>
         <div class="icons" data-aos="fade-left">
             <i class="fas fa-procedures"></i>
-            <h3 data-purecounter-start="0" data-purecounter-end="{{ $identity->jml_fasilitas_kamar }}"
-                data-purecounter-duration="2" class="purecounter">{{ $identity->jml_fasilitas_kamar }}+</h3>
+            <h3 data-purecounter-start="0" data-purecounter-end="{{ $jumlahFasilitasKamar }}"
+                data-purecounter-duration="2" class="purecounter">{{ $jumlahFasilitasKamar }}+</h3>
             <p>Fasilitas Tempat Tidur</p>
         </div>
     </section>
@@ -131,7 +152,8 @@
                                     <div class="card mx-3 border-0 " style="border-radius:20px;">
                                         <div class="card-body mt-4 text-center">
                                             <img src="{{ asset('storage/' . $poliklinik->image) }}"
-                                                alt="{{ $poliklinik->name }}" width="50">
+                                                alt="{{ $poliklinik->name }}" width="50" height="50" loading="lazy"
+                                                decoding="async">
                                             <p class="fs-3 mt-3 text fw-bold" style="color: #e97f0d;">
                                                 {{ $poliklinik->name }}</p>
                                         </div>
@@ -166,18 +188,23 @@
         <div class="container">
             <div class="row justify-content-center g-5">
                 <p class="imglist">
-                    {{-- @foreach ($jadwals as $jadwal) --}}
-                <div class="col-12 col-lg-6">
-                    <a href="{{ asset('/storage/' . $jadwal->image) }}" data-fancybox="group"
-                        data-caption="{{ $jadwal->caption }}">
-                        <img src="{{ asset('/storage/' . $jadwal->image) }}" class="img-thumbnail" alt=""
-                            style="border: none; border-radius: 20px">
-                        <div class="card-img-top img overflow-hidden img-thumbnail"
-                            style="z-index: 0; background-image: url({{ asset('/storage/' . $jadwal->image) }}); background-size: cover; background-position: center top;">
+                    @if (isset($jadwal) && $jadwal && $jadwal->image)
+                        <div class="col-12 col-lg-6">
+                            <a href="{{ asset('/storage/' . $jadwal->image) }}" data-fancybox="group"
+                                data-caption="{{ $jadwal->caption }}">
+                                    <img src="{{ asset('/storage/' . $jadwal->image) }}" class="img-thumbnail"
+                                        alt="Jadwal dokter RS Livasya Majalengka" loading="lazy" decoding="async"
+                                        style="border: none; border-radius: 20px">
+                                <div class="card-img-top img overflow-hidden img-thumbnail"
+                                    style="z-index: 0; background-image: url({{ asset('/storage/' . $jadwal->image) }}); background-size: cover; background-position: center top;">
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-                {{-- @endforeach --}}
+                    @else
+                        <div class="col-12 text-center">
+                            <p class="text-muted">Jadwal dokter belum tersedia.</p>
+                        </div>
+                    @endif
                 </p>
             </div>
         </div>
@@ -199,7 +226,8 @@
                                     style=" outline: none; border: none;">
                                     <div class="card-header bg-white m-3"
                                         style="border: none; display: flex; align-items: center;">
-                                        <img src="{{ asset('img/ig.jpg') }}" alt="Image"
+                                        <img src="{{ asset('img/ig.jpg') }}" alt="Image" loading="lazy"
+                                            decoding="async"
                                             style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px; vertical-align: middle;">
                                         <div class="ml-3"
                                             style="display: flex; flex-direction: column; line-height: 1.2; font-size: 12px;">
@@ -216,7 +244,7 @@
                                     @else
                                         <div class="card-img-top overflow-hidden">
                                             <div
-                                                style="background-image: url(https://source.unsplash.com/random/900×700/?{{ $p->category->slug }}); background-size: cover; height: 470px;">
+                                                style="background-image: url({{ asset('img/rsialivasya.webp') }}); background-size: cover; height: 470px;">
                                             </div>
                                         </div>
                                     @endif
@@ -228,13 +256,16 @@
                                             style="gap: 10px;">
                                             <span class="text-muted"><img
                                                     src="https://cdn-icons-png.flaticon.com/128/1077/1077035.png"
-                                                    width="24"></span>
+                                                    width="24" height="24" alt="Ikon suka" loading="lazy"
+                                                    decoding="async"></span>
                                             <span class="text-muted" style="opacity: 0.7;"><img
                                                     src="https://cdn-icons-png.flaticon.com/128/5948/5948565.png"
-                                                    width="24"></span>
+                                                    width="24" height="24" alt="Ikon komentar" loading="lazy"
+                                                    decoding="async"></span>
                                             <span class="text-muted" style="opacity: 0.7; transform: rotate(-90deg)"><img
                                                     src="https://cdn-icons-png.flaticon.com/128/1286/1286853.png"
-                                                    width="24"></span>
+                                                    width="24" height="24" alt="Ikon bagikan" loading="lazy"
+                                                    decoding="async"></span>
                                         </div>
                                         <p class="text-bold mt-2 text-left">99k likes</p>
                                     </div>
@@ -243,6 +274,7 @@
                                         <h6 class="ml-3 text-muted">Add a comment...</h6>
                                         <img src="https://cdn-icons-png.flaticon.com/128/1384/1384031.png"
                                             class="mr-3 mb-3" alt="Instagram Icon"
+                                            loading="lazy" decoding="async"
                                             style="width: 24px; height: 24px; margin-left: auto;">
                                     </div>
                                 </div>
@@ -268,7 +300,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="embed-responsive embed-responsive-16by9">
-                        {!! $identity->youtube_link_video !!}
+                        {!! $youtubeEmbed !!}
                     </div>
                 </div>
             </div>
@@ -276,7 +308,7 @@
 
         <div class="row justify-content-center align-items-center">
             <div class="col-lg-3">
-                <a href="{{ $identity->youtube }}" target="_blank" class="btn mt-3 mb-5z d-block m-auto">
+                <a href="{{ $youtubeUrl }}" target="_blank" class="btn mt-3 mb-5z d-block m-auto">
                     Lihat Selengkapnya <span class="fas fa-chevron-right"></span></a>
             </div>
         </div>

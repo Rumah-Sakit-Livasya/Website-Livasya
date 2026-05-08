@@ -58,7 +58,8 @@
                                         <a href="javascript:void(0)" data-src="{{ $flyerImage }}"
                                             class="d-block cursor-pointer zoom-effect position-relative preview-trigger">
                                             <img src="{{ $flyerImage }}" alt="{{ $career->title }}"
-                                                class="img-fluid w-100" style="object-fit: cover; min-height: 300px;">
+                                                class="img-fluid w-100" loading="lazy" decoding="async"
+                                                style="object-fit: cover; min-height: 300px;">
                                             <div class="hover-overlay d-flex align-items-center justify-content-center"
                                                 style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); opacity: 0; transition: all 0.3s;">
                                                 <i class="fas fa-search-plus text-white fa-3x"></i>

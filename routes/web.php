@@ -24,6 +24,7 @@ use App\Http\Controllers\Pages\UserController;
 use App\Http\Controllers\Pages\PostController;
 use App\Http\Controllers\Pages\TentangController;
 use App\Http\Controllers\Pages\TimelineController;
+use App\Services\Frontend\SitemapService;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +39,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/sitemap.xml', function (SitemapService $sitemapService) {
+    return response()
+        ->view('sitemap', ['urls' => $sitemapService->urls()])
+        ->header('Content-Type', 'application/xml');
+});
 Route::get('/service/{pelayanan:slug}', [HomeController::class, 'index']);
 Route::get('/categories', [HomeController::class, 'categories']);
 Route::get('/categories/{category:slug}', [HomeController::class, 'category']);

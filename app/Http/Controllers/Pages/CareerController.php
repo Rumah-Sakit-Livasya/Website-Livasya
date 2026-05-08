@@ -12,32 +12,21 @@ use App\Models\ApplierLicense;
 use App\Models\ApplierScholarship;
 use App\Models\ApplierOther;
 use App\Models\Career;
-use App\Models\Doctor;
-use App\Models\Galery;
 use App\Models\Identity;
 use App\Models\Mitra;
-use App\Models\Pelayanan;
+use App\Services\Frontend\CareerPageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class CareerController extends Controller
 {
+    public function __construct(private CareerPageService $careerPageService)
+    {
+    }
+
     public function index()
     {
-        $careers = Career::where('status', 'on')->orderBy('created_at', 'desc')->get();
-        $identity = Identity::first();
-        $mitras = Mitra::where('is_primary', 1)->get();
-
-        return view('career', [
-            'name' => $identity->name,
-            'title' => 'Lowongan Kerja',
-            'dokter' => Doctor::all(),
-            'identity' => $identity,
-            'pelayanan' => Pelayanan::all(),
-            'galleries' => Galery::all(),
-            'careers' => $careers,
-            'mitras' => $mitras,
-        ]);
+        return view('career', $this->careerPageService->list());
     }
 
     public function admin()
@@ -56,41 +45,12 @@ class CareerController extends Controller
 
     public function career($tipe)
     {
-        $identity = Identity::first();
-        $mitras = Mitra::where('is_primary', 1)->get();
-
-        return view('career-open', [
-            'mitras' => $mitras,
-            'name' => $identity->name,
-            // 'careers' => Career::where('status', 'on')->get(),
-            'title' => "Lowongan tenaga $tipe",
-            'tipe' => $tipe,
-            'identity' => $identity,
-            'pelayanan' => Pelayanan::all(),
-            'galleries' => Galery::all()
-        ]);
+        return view('career-open', $this->careerPageService->byType($tipe));
     }
 
     public function apply($tipe, $id)
     {
-        $identity = Identity::first();
-        $career = Career::where('id', $id)->where('status', 'on')->where('tipe', $tipe)->first();
-        $mitras = Mitra::where('is_primary', 1)->get();
-
-        if ($career) {
-            return view('career-apply', [
-                'mitras' => $mitras,
-                'name' => $identity->name,
-                'title' => "Formulir Data Pelamar - $career->title",
-                'tipe' => $tipe,
-                'identity' => $identity,
-                'career' => $career,
-                'pelayanan' => Pelayanan::all(),
-                'galleries' => Galery::all()
-            ]);
-        } else {
-            return abort(404);
-        }
+        return view('career-apply', $this->careerPageService->apply($tipe, $id));
     }
 
     public function appliers($career)
