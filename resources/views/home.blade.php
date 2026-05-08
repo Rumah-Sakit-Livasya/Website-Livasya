@@ -85,17 +85,6 @@
     </section>
     <!-- home section ends -->
 
-    <section class="bg-white py-4">
-        <div class="container">
-            <p class="fs-4 text-center mb-0">
-                Rumah Sakit Livasya adalah rumah sakit di Majalengka yang menyediakan layanan kesehatan untuk ibu,
-                anak, dan keluarga. Sebagai RS di Majalengka, Livasya menghadirkan layanan dokter, IGD, rawat jalan,
-                rawat inap, radiologi, laboratorium, dan fasilitas kesehatan yang mudah diakses masyarakat Majalengka
-                dan sekitarnya.
-            </p>
-        </div>
-    </section>
-
     <!-- icons section starts  -->
     {{-- Waves --}}
     <svg class="waves mt-5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
