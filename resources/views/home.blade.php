@@ -1,324 +1,1016 @@
 @extends('layouts.main')
 
 @section('container')
-    <style>
-        .home {
-            background: transparent !important;
-        }
-
-        .book .row {
-            gap: 0;
-        }
-
-        .swiper {
-            width: 600px;
-            height: 300px;
-        }
-
-        .home .image img {
-            background: rgba(255, 255, 255, .5);
-            animation: anim 5s ease-in-out infinite;
-        }
-
-        @keyframes anim {
-            0% {
-                transform: translatey(0px);
-            }
-
-            50% {
-                transform: translatey(-30px);
-            }
-
-            100% {
-                transform: translatey(0px);
-            }
-        }
-
-        .title-web {
-            font-size: 3rem;
-            text-align: right !important;
-            line-height: 4rem;
-            font-family: poppins;
-            font-weight: 800;
-        }
-
-        .wrap-text div {
-            text-align: justify !important;
-        }
-    </style>
-    <link rel="stylesheet" href="css/animasi.css">
     @php
         $heroImage = $jumbotron->main_image ?? null;
-        $heroTitle = $jumbotron->title ?? 'RSIA Livasya';
-        $heroDescription = $jumbotron->title_description ?? 'Melayani dengan sepenuh hati untuk keluarga Anda.';
+        $heroTitle = trim(strip_tags($jumbotron->title ?? 'Rumah Sakit Livasya Majalengka'));
+        $heroDescription = trim(strip_tags($jumbotron->title_description ?? 'Rumah sakit di Majalengka dengan layanan kesehatan keluarga, dokter, fasilitas medis, dan pelayanan yang mudah diakses.'));
         $jumlahPasienPuas = $identity->jml_pasien_puas ?? 0;
         $jumlahFasilitasKamar = $identity->jml_fasilitas_kamar ?? 0;
         $youtubeEmbed = $identity->youtube_link_video ?? '';
         $youtubeUrl = $identity->youtube ?? '#';
+        $featuredPosts = $post->take(3);
+        $quickMenus = [
+            ['title' => 'Pelayanan', 'text' => 'Lihat layanan medis RS Livasya.', 'url' => '/pelayanan', 'icon' => 'fas fa-heartbeat'],
+            ['title' => 'Cari Dokter', 'text' => 'Temukan dokter dan jadwal praktik.', 'url' => '/dokter', 'icon' => 'fas fa-user-md'],
+            ['title' => 'Jadwal Dokter', 'text' => 'Cek jadwal sebelum berkunjung.', 'url' => '/jadwal-dokter', 'icon' => 'fas fa-calendar-check'],
+            ['title' => 'Fasilitas', 'text' => 'Kenali fasilitas rumah sakit.', 'url' => '/fasilitas-unggulan', 'icon' => 'fas fa-hospital'],
+            ['title' => 'Berita', 'text' => 'Baca edukasi dan kabar terbaru.', 'url' => '/posts', 'icon' => 'fas fa-newspaper'],
+            ['title' => 'Karir', 'text' => 'Lihat lowongan RS Livasya.', 'url' => '/career', 'icon' => 'fas fa-briefcase-medical'],
+        ];
+        $homeFaqs = [
+            [
+                'question' => 'Apakah RS Livasya melayani pasien di Majalengka dan sekitarnya?',
+                'answer' => 'Ya. RS Livasya berada di Majalengka dan menyediakan informasi layanan kesehatan, dokter, fasilitas medis, dan jadwal dokter untuk masyarakat Majalengka dan sekitarnya.',
+            ],
+            [
+                'question' => 'Bagaimana cara melihat jadwal dokter RS Livasya?',
+                'answer' => 'Pengunjung dapat membuka menu Jadwal Dokter atau Cari Dokter untuk melihat informasi dokter dan jadwal praktik yang tersedia.',
+            ],
+            [
+                'question' => 'Apakah pendaftaran online tersedia?',
+                'answer' => 'Tersedia. Tombol Daftar Sekarang mengarahkan pengunjung ke kanal pendaftaran online resmi RS Livasya.',
+            ],
+        ];
     @endphp
-    <!-- home section start -->
-    <section class="home my-5 overflow-x-hidden" id="home">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <div class="image row juctify-content-center">
-                    <div class="">
-                        <img src="{{ $heroImage ? asset('storage/' . $heroImage) : asset('img/header.png') }}"
-                            class="d-block img-fluid m-auto p-5 rounded-circle" alt="Rumah Sakit Livasya Majalengka"
-                            fetchpriority="high" decoding="async">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="wrap-text">
-                    <h1 class="heading section-heading-lg title-web">{!! $heroTitle !!}</h1>
-                    <p id="tex">{!! ucwords($heroDescription) !!}
+
+    <style>
+        .home-page {
+            background: #ffffff;
+        }
+
+        .home-hero {
+            position: relative;
+            min-height: 680px;
+            display: flex;
+            align-items: center;
+            padding: 14rem 9% 7rem;
+            background:
+                linear-gradient(90deg, rgba(255, 255, 255, .97) 0%, rgba(255, 255, 255, .86) 48%, rgba(255, 255, 255, .42) 100%),
+                url("{{ $heroImage ? asset('storage/' . $heroImage) : asset('img/rsialivasya.webp') }}") center right / cover no-repeat;
+            overflow: hidden;
+        }
+
+        .hero-layout {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(300px, .72fr);
+            gap: 42px;
+            align-items: center;
+        }
+
+        .home-hero::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 90px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0), #ffffff);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 720px;
+        }
+
+        .hero-spotlight {
+            justify-self: end;
+            width: min(420px, 100%);
+        }
+
+        .spotlight-card {
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .7);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .88);
+            box-shadow: 0 28px 70px rgba(16, 58, 90, .18);
+            backdrop-filter: blur(14px);
+        }
+
+        .spotlight-image {
+            min-height: 210px;
+            background: url("{{ asset('img/rsialivasya.webp') }}") center / cover no-repeat;
+        }
+
+        .spotlight-body {
+            padding: 24px;
+        }
+
+        .spotlight-body h2 {
+            margin: 0;
+            color: #17324d;
+            font-size: 2.25rem;
+            font-weight: 800;
+            line-height: 1.25;
+        }
+
+        .spotlight-body p {
+            margin: 12px 0 0;
+            color: #52677b;
+            font-size: 1.45rem;
+            line-height: 1.7;
+        }
+
+        .spotlight-list {
+            display: grid;
+            gap: 10px;
+            margin: 18px 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .spotlight-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #29455d;
+            font-size: 1.42rem;
+            font-weight: 600;
+        }
+
+        .spotlight-list i {
+            color: var(--secondary);
+        }
+
+        .hero-kicker,
+        .section-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            color: var(--primary);
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+        }
+
+        .hero-kicker::before,
+        .section-kicker::before {
+            content: "";
+            width: 36px;
+            height: 3px;
+            border-radius: 999px;
+            background: var(--secondary);
+        }
+
+        .hero-title {
+            margin: 0;
+            max-width: 680px;
+            color: #17324d;
+            font-size: clamp(3.2rem, 5vw, 6.4rem);
+            line-height: 1.08;
+            font-weight: 800;
+            letter-spacing: 0;
+            text-shadow: none;
+            text-transform: none;
+        }
+
+        .hero-copy {
+            max-width: 620px;
+            margin: 22px 0 0;
+            color: #43566b;
+            font-size: 1.8rem;
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 30px;
+        }
+
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1.55rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+
+        .home-btn-primary {
+            color: #ffffff;
+            background: var(--primary);
+            box-shadow: 0 12px 28px rgba(0, 108, 191, .22);
+        }
+
+        .home-btn-secondary {
+            color: var(--primary);
+            background: #ffffff;
+            border: 1px solid #d8e7f2;
+        }
+
+        .hero-trust {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            max-width: 760px;
+            margin-top: 38px;
+        }
+
+        .trust-item {
+            padding: 18px;
+            border: 1px solid #dceaf3;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .9);
+            box-shadow: 0 16px 34px rgba(16, 58, 90, .08);
+        }
+
+        .trust-item i {
+            color: var(--primary);
+            font-size: 2.4rem;
+        }
+
+        .trust-item strong {
+            display: block;
+            margin-top: 10px;
+            color: #17324d;
+            font-size: 2.6rem;
+            line-height: 1;
+        }
+
+        .trust-item span {
+            display: block;
+            margin-top: 6px;
+            color: #6a7b8c;
+            font-size: 1.35rem;
+        }
+
+        .seo-intro,
+        .home-section {
+            padding: 7rem 9%;
+        }
+
+        .quick-access {
+            position: relative;
+            z-index: 2;
+            margin-top: -54px;
+            padding: 0 9% 6rem;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .quick-card {
+            min-height: 150px;
+            padding: 20px;
+            border: 1px solid #dceaf3;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #17324d;
+            text-decoration: none;
+            box-shadow: 0 18px 42px rgba(16, 58, 90, .10);
+        }
+
+        .quick-card:hover {
+            color: #17324d;
+            text-decoration: none;
+            transform: translateY(-5px);
+            box-shadow: 0 24px 54px rgba(16, 58, 90, .15);
+        }
+
+        .quick-icon {
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--primary), #16a085);
+            font-size: 1.9rem;
+        }
+
+        .quick-card strong {
+            display: block;
+            font-size: 1.55rem;
+            line-height: 1.25;
+        }
+
+        .quick-card span {
+            display: block;
+            margin-top: 8px;
+            color: #617487;
+            font-size: 1.25rem;
+            line-height: 1.55;
+        }
+
+        .seo-intro {
+            background: #ffffff;
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
+            gap: 36px;
+            align-items: center;
+        }
+
+        .section-title {
+            margin: 0;
+            color: #17324d;
+            font-size: clamp(2.8rem, 3vw, 4.2rem);
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: 0;
+            text-transform: none;
+            text-shadow: none;
+        }
+
+        .section-copy {
+            margin: 18px 0 0;
+            color: #52677b;
+            font-size: 1.65rem;
+            line-height: 1.8;
+        }
+
+        .intro-list {
+            display: grid;
+            gap: 12px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .intro-list li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 16px;
+            border: 1px solid #e0edf4;
+            border-radius: 8px;
+            background: #f8fcff;
+            color: #2f455a;
+            font-size: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .intro-list i {
+            margin-top: 4px;
+            color: var(--secondary);
+        }
+
+        .service-section {
+            background: #f5f9fc;
+        }
+
+        .service-section-refined {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-section-refined::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(135deg, rgba(0, 108, 191, .08), rgba(22, 160, 133, .05)),
+                radial-gradient(circle at 90% 10%, rgba(233, 127, 13, .10), transparent 34%);
+            pointer-events: none;
+        }
+
+        .service-section-refined > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 24px;
+            align-items: end;
+            margin-bottom: 34px;
+        }
+
+        .service-showcase {
+            display: grid;
+            grid-template-columns: minmax(280px, .72fr) minmax(0, 1.28fr);
+            gap: 22px;
+            margin-bottom: 26px;
+        }
+
+        .service-feature {
+            min-height: 310px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px;
+            border-radius: 8px;
+            color: #ffffff;
+            background:
+                linear-gradient(135deg, rgba(0, 108, 191, .95), rgba(22, 160, 133, .92)),
+                url("{{ asset('img/rsialivasya.webp') }}") center / cover no-repeat;
+            box-shadow: 0 24px 58px rgba(0, 108, 191, .20);
+        }
+
+        .service-feature .service-icon {
+            background: rgba(255, 255, 255, .18);
+            border: 1px solid rgba(255, 255, 255, .30);
+        }
+
+        .service-feature h3 {
+            margin: 22px 0 12px;
+            font-size: 2.7rem;
+            font-weight: 800;
+            line-height: 1.18;
+        }
+
+        .service-feature p {
+            margin: 0;
+            color: rgba(255, 255, 255, .88);
+            font-size: 1.5rem;
+            line-height: 1.75;
+        }
+
+        .service-feature-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+            margin-top: 24px;
+            color: #ffffff;
+            font-size: 1.45rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .service-feature-link:hover {
+            color: #ffffff;
+            text-decoration: none;
+            transform: translateX(4px);
+        }
+
+        .polyclinic-strip {
+            min-height: 310px;
+            padding: 22px;
+            border-radius: 8px;
+            background: #ffffff;
+            border: 1px solid #e0edf4;
+            box-shadow: 0 18px 42px rgba(16, 58, 90, .08);
+        }
+
+        .polyclinic-strip h3 {
+            margin: 0 0 16px;
+            color: #17324d;
+            font-size: 1.9rem;
+            font-weight: 800;
+        }
+
+        .polyclinic-list {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .polyclinic-empty {
+            min-height: 220px;
+            display: grid;
+            place-items: center;
+            border-radius: 8px;
+            color: #617487;
+            background: #f8fcff;
+            font-size: 1.45rem;
+        }
+
+        .polyclinic-card {
+            min-height: 124px;
+            display: grid;
+            place-items: center;
+            padding: 16px;
+            border-radius: 8px;
+            background: #f8fcff;
+            text-align: center;
+            border: 1px solid #e9f1f6;
+        }
+
+        .polyclinic-card img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .polyclinic-card span {
+            display: block;
+            margin-top: 12px;
+            color: #17324d;
+            font-size: 1.45rem;
+            font-weight: 700;
+        }
+
+        .service-grid,
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .service-card {
+            min-height: 238px;
+            display: flex;
+            flex-direction: column;
+            padding: 26px;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #17324d;
+            text-decoration: none;
+            border: 1px solid #e0edf4;
+            box-shadow: 0 14px 34px rgba(16, 58, 90, .07);
+        }
+
+        .service-card::after {
+            content: "Lihat detail";
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            margin-top: auto;
+            padding-top: 18px;
+            color: var(--primary);
+            font-size: 1.35rem;
+            font-weight: 800;
+        }
+
+        .service-card:hover {
+            color: #17324d;
+            text-decoration: none;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 42px rgba(16, 58, 90, .12);
+        }
+
+        .service-icon {
+            width: 58px;
+            height: 58px;
+            display: grid;
+            place-items: center;
+            border-radius: 8px;
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--primary), #16a085);
+            font-size: 2.5rem;
+        }
+
+        .service-card h3 {
+            margin: 22px 0 10px;
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .service-card p {
+            margin: 0;
+            color: #617487;
+            font-size: 1.45rem;
+            line-height: 1.7;
+        }
+
+        .schedule-card {
+            display: grid;
+            grid-template-columns: minmax(0, .9fr) minmax(280px, 1.1fr);
+            gap: 34px;
+            align-items: center;
+            padding: 34px;
+            border-radius: 8px;
+            background: #ffffff;
+            border: 1px solid #e0edf4;
+            box-shadow: 0 18px 44px rgba(16, 58, 90, .08);
+        }
+
+        .schedule-image img,
+        .schedule-image .schedule-placeholder {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .schedule-placeholder {
+            min-height: 280px;
+            display: grid;
+            place-items: center;
+            color: #6d7d8c;
+            background: #f2f7fa;
+            font-size: 1.6rem;
+        }
+
+        .news-card {
+            overflow: hidden;
+            border-radius: 8px;
+            background: #ffffff;
+            border: 1px solid #e0edf4;
+            box-shadow: 0 14px 34px rgba(16, 58, 90, .07);
+        }
+
+        .news-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 42px rgba(16, 58, 90, .12);
+        }
+
+        .news-thumb {
+            display: block;
+            height: 240px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .news-body {
+            padding: 22px;
+        }
+
+        .news-body h3 {
+            margin: 0 0 10px;
+            color: #17324d;
+            font-size: 1.9rem;
+            font-weight: 800;
+            line-height: 1.35;
+        }
+
+        .news-body p {
+            margin: 0;
+            color: #617487;
+            font-size: 1.4rem;
+            line-height: 1.7;
+        }
+
+        .media-section {
+            background: #f5f9fc;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(280px, .85fr);
+            gap: 30px;
+            align-items: center;
+        }
+
+        .video-shell,
+        .map-shell {
+            overflow: hidden;
+            border-radius: 8px;
+            background: #ffffff;
+            border: 1px solid #e0edf4;
+            box-shadow: 0 18px 44px rgba(16, 58, 90, .08);
+        }
+
+        .video-shell iframe,
+        .map-shell iframe {
+            width: 100%;
+            border: 0;
+        }
+
+        .video-shell iframe {
+            min-height: 420px;
+        }
+
+        .map-shell iframe {
+            min-height: 440px;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 30px;
+        }
+
+        .faq-card {
+            padding: 24px;
+            border: 1px solid #e0edf4;
+            border-radius: 8px;
+            background: #ffffff;
+            box-shadow: 0 14px 34px rgba(16, 58, 90, .07);
+        }
+
+        .faq-card h3 {
+            margin: 0;
+            color: #17324d;
+            font-size: 1.85rem;
+            font-weight: 800;
+            line-height: 1.35;
+        }
+
+        .faq-card p {
+            margin: 12px 0 0;
+            color: #617487;
+            font-size: 1.45rem;
+            line-height: 1.75;
+        }
+
+        @media (max-width: 991px) {
+            .home-hero {
+                min-height: auto;
+                padding-top: 13rem;
+                background:
+                    linear-gradient(180deg, rgba(255, 255, 255, .96), rgba(255, 255, 255, .84)),
+                    url("{{ $heroImage ? asset('storage/' . $heroImage) : asset('img/rsialivasya.webp') }}") center / cover no-repeat;
+            }
+
+            .hero-trust,
+            .hero-layout,
+            .quick-grid,
+            .intro-grid,
+            .service-showcase,
+            .service-grid,
+            .news-grid,
+            .schedule-card,
+            .media-grid,
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-header {
+                display: block;
+            }
+
+            .polyclinic-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 575px) {
+            .home-hero,
+            .quick-access,
+            .seo-intro,
+            .home-section {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .hero-spotlight {
+                display: none;
+            }
+
+            .hero-actions {
+                display: grid;
+            }
+
+            .home-btn {
+                width: 100%;
+            }
+
+            .schedule-card {
+                padding: 22px;
+            }
+
+            .polyclinic-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <main class="home-page">
+        <section class="home-hero" id="home" aria-labelledby="home-title">
+            <div class="hero-layout">
+                <div class="hero-content">
+                    <span class="hero-kicker">Rumah Sakit Livasya Majalengka</span>
+                    <h1 class="hero-title" id="home-title">{!! $heroTitle !!}</h1>
+                    <p class="hero-copy">
+                        {{ $heroDescription }} RS Livasya hadir untuk membantu keluarga Majalengka mendapatkan informasi dokter, layanan medis, jadwal praktik, dan fasilitas rumah sakit dengan lebih mudah.
                     </p>
-                    <div class="row">
-                        <div class="col" data-aos="fade-left">
-                            <a href="https://dafol.livasya.com" target="_blank" class="btn mt-3"> Daftar Sekarang <span
-                                    class="fas fa-chevron-right"></span></a>
+
+                    <div class="hero-actions">
+                        <a href="https://dafol.livasya.com" target="_blank" rel="noopener" class="home-btn home-btn-primary">
+                            Daftar Sekarang <span class="fas fa-chevron-right ml-2"></span>
+                        </a>
+                        <a href="/dokter" class="home-btn home-btn-secondary">
+                            Cari Dokter <span class="fas fa-user-md ml-2"></span>
+                        </a>
+                    </div>
+
+                    <div class="hero-trust" aria-label="Ringkasan Rumah Sakit Livasya">
+                        <div class="trust-item">
+                            <i class="fas fa-user-md" aria-hidden="true"></i>
+                            <strong>{{ count($dokter) }}+</strong>
+                            <span>Dokter aktif</span>
+                        </div>
+                        <div class="trust-item">
+                            <i class="fas fa-users" aria-hidden="true"></i>
+                            <strong>{{ $jumlahPasienPuas }}+</strong>
+                            <span>Pasien puas</span>
+                        </div>
+                        <div class="trust-item">
+                            <i class="fas fa-procedures" aria-hidden="true"></i>
+                            <strong>{{ $jumlahFasilitasKamar }}+</strong>
+                            <span>Tempat tidur</span>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-    <!-- home section ends -->
 
-    <!-- icons section starts  -->
-    {{-- Waves --}}
-    <svg class="waves mt-5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-        viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-        <defs>
-            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-        </defs>
-        <g class="parallax">
-            <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
-            <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
-            <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
-            <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
-        </g>
-    </svg>
-    {{-- ./Waves --}}
-    <section class="icons-container overflow-hidden bg-white" style="margin-top: 0 !important">
-        <div class="icons" data-aos="fade-right">
-            <i class="fas fa-user-md"></i>
-            <h3><span data-purecounter-start="0" data-purecounter-end="{{ count($dokter) }}" data-purecounter-duration="1"
-                    class="purecounter"></span></h3>
-            <p>Dokter</p>
-        </div>
-        <div class="icons" data-aos="fade-up">
-            <i class="fas fa-users"></i>
-            <h3><span data-purecounter-start="0" data-purecounter-end="{{ $jumlahPasienPuas }}"
-                    data-purecounter-duration="5" class="purecounter"></span>+</h3>
-            <p>Pasien Puas</p>
-        </div>
-        <div class="icons" data-aos="fade-left">
-            <i class="fas fa-procedures"></i>
-            <h3 data-purecounter-start="0" data-purecounter-end="{{ $jumlahFasilitasKamar }}"
-                data-purecounter-duration="2" class="purecounter">{{ $jumlahFasilitasKamar }}+</h3>
-            <p>Fasilitas Tempat Tidur</p>
-        </div>
-    </section>
-    <!-- icons section ends -->
-
-    <!-- services section starts  -->
-    <section class="services py-5 overflow-hidden" style="background: #f5f5f5;" id="services">
-        <div class="box-custom row d-flex justify-content-center align-items-center">
-            <div class="pelayanan col-lg-2 d-flex m-5 align-items-center">
-                <div class="card-body mt-4 text-center ">
-                    <i class="fas fa-heartbeat" style="font-size: 5rem"></i>
-                    <p class="fs-3 mt-3 text fw-bold">Poliklinik</p>
-                </div>
-            </div>
-
-            <div class="col-lg-9 align-items-center" style="height: 18rem;">
-                <section class="splide" aria-labelledby="carousel-heading">
-                    <div class="splide__track">
-                        <ul class="splide__list">
-                            @foreach ($polikliniks as $poliklinik)
-                                <li class="splide__slide">
-                                    <div class="card mx-3 border-0 " style="border-radius:20px;">
-                                        <div class="card-body mt-4 text-center">
-                                            <img src="{{ asset('storage/' . $poliklinik->image) }}"
-                                                alt="{{ $poliklinik->name }}" width="50" height="50" loading="lazy"
-                                                decoding="async">
-                                            <p class="fs-3 mt-3 text fw-bold" style="color: #e97f0d;">
-                                                {{ $poliklinik->name }}</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </section>
-            </div>
-        </div>
-
-        <h1 class="heading mt-5"> Pelayanan <span>Kami</span> </h1>
-        <div class="box-custom row justify-content-center align-items-center">
-            @foreach ($pelayanan as $p)
-                <a href="/pelayanan/{{ $p->slug }}"
-                    class="pelayanan g-5 shadow col-lg-3 mx-5 d-flex align-items-center text-decoration-none"
-                    style="height: 23rem; border-radius: 2rem">
-                    <div class="card-body text-center">
-                        <i class="{{ $p->icon }} mb-3" style="font-size: 7rem;"></i>
-                        <p class="fs-1 mt-3 text fw-bold">{{ $p->title }}</p>
-                    </div>
-                </a>
-            @endforeach
-        </div>
-    </section>
-    <!-- services section end  -->
-
-    <!-- booking section starts   -->
-    <section class="gallery overflow-hidden" style="background: #f5f5f5;" id="services">
-        <h1 class="heading pt-5" style="margin-bottom:-10px;"> <span>Jadwal</span> Dokter </h1>
-        <div class="container">
-            <div class="row justify-content-center g-5">
-                <p class="imglist">
-                    @if (isset($jadwal) && $jadwal && $jadwal->image)
-                        <div class="col-12 col-lg-6">
-                            <a href="{{ asset('/storage/' . $jadwal->image) }}" data-fancybox="group"
-                                data-caption="{{ $jadwal->caption }}">
-                                    <img src="{{ asset('/storage/' . $jadwal->image) }}" class="img-thumbnail"
-                                        alt="Jadwal dokter RS Livasya Majalengka" loading="lazy" decoding="async"
-                                        style="border: none; border-radius: 20px">
-                                <div class="card-img-top img overflow-hidden img-thumbnail"
-                                    style="z-index: 0; background-image: url({{ asset('/storage/' . $jadwal->image) }}); background-size: cover; background-position: center top;">
-                                </div>
-                            </a>
+                <aside class="hero-spotlight" aria-label="Keunggulan Rumah Sakit Livasya">
+                    <div class="spotlight-card">
+                        <div class="spotlight-image"></div>
+                        <div class="spotlight-body">
+                            <h2>Akses layanan RS lebih cepat dari halaman depan.</h2>
+                            <p>Pengunjung bisa langsung menuju pendaftaran, dokter, jadwal, pelayanan, dan fasilitas.</p>
                         </div>
-                    @else
-                        <div class="col-12 text-center">
-                            <p class="text-muted">Jadwal dokter belum tersedia.</p>
-                        </div>
-                    @endif
-                </p>
-            </div>
-        </div>
-    </section>
-    <!-- booking section ends -->
-
-    <!-- review section starts  -->
-    <section class="review pt-5 overflow-hidden bg-white" id="review">
-        <h1 class="heading">Berita <span>Terbaru</span></h1>
-        <div class="box-container mb-5 mt-3">
-            <div class="row g-5 align-content-between justify-content-center">
-                @foreach ($post->take($post->count() - 1) as $p)
-                    <div class="col-lg-3 m-4">
-                        @if ($p->is_embeded)
-                            {!! $p->body !!}
-                        @else
-                            <a href="/posts/{{ $p->slug }}" class="text-decoration-none">
-                                <div class="card img-parent overflow-hidden position-relative shadow"
-                                    style=" outline: none; border: none;">
-                                    <div class="card-header bg-white m-3"
-                                        style="border: none; display: flex; align-items: center;">
-                                        <img src="{{ asset('img/ig.jpg') }}" alt="Image" loading="lazy"
-                                            decoding="async"
-                                            style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px; vertical-align: middle;">
-                                        <div class="ml-3"
-                                            style="display: flex; flex-direction: column; line-height: 1.2; font-size: 12px;">
-                                            <strong class="mb-1">rslivasya</strong>
-                                            <p class="mb-0">Majalengka</p>
-                                        </div>
-                                    </div>
-                                    @if ($p->image)
-                                        <div class="card-img-top overflow-hidden">
-                                            <div
-                                                style="background-image: url({{ asset('/storage/' . $p->image) }}); background-size: cover; height: 470px; background-position: center;">
-                                            </div>
-                                        </div>
-                                    @else
-                                        <div class="card-img-top overflow-hidden">
-                                            <div
-                                                style="background-image: url({{ asset('img/rsialivasya.webp') }}); background-size: cover; height: 470px;">
-                                            </div>
-                                        </div>
-                                    @endif
-                                    <div class="card-body text-center" style="background-color: #fff; padding: 1rem;">
-                                        <h5 class="card-title" style="font-size: 1.2rem; font-weight: bold;">
-                                            {{ $p->title }}
-                                        </h5>
-                                        <div class="d-flex justify-content-start align-items-center mt-5"
-                                            style="gap: 10px;">
-                                            <span class="text-muted"><img
-                                                    src="https://cdn-icons-png.flaticon.com/128/1077/1077035.png"
-                                                    width="24" height="24" alt="Ikon suka" loading="lazy"
-                                                    decoding="async"></span>
-                                            <span class="text-muted" style="opacity: 0.7;"><img
-                                                    src="https://cdn-icons-png.flaticon.com/128/5948/5948565.png"
-                                                    width="24" height="24" alt="Ikon komentar" loading="lazy"
-                                                    decoding="async"></span>
-                                            <span class="text-muted" style="opacity: 0.7; transform: rotate(-90deg)"><img
-                                                    src="https://cdn-icons-png.flaticon.com/128/1286/1286853.png"
-                                                    width="24" height="24" alt="Ikon bagikan" loading="lazy"
-                                                    decoding="async"></span>
-                                        </div>
-                                        <p class="text-bold mt-2 text-left">99k likes</p>
-                                    </div>
-                                    <hr>
-                                    <div class="add-comment" style="height: 30px; display: flex; align-items: center;">
-                                        <h6 class="ml-3 text-muted">Add a comment...</h6>
-                                        <img src="https://cdn-icons-png.flaticon.com/128/1384/1384031.png"
-                                            class="mr-3 mb-3" alt="Instagram Icon"
-                                            loading="lazy" decoding="async"
-                                            style="width: 24px; height: 24px; margin-left: auto;">
-                                    </div>
-                                </div>
-                            </a>
-                        @endif
                     </div>
+                </aside>
+            </div>
+        </section>
+
+        <nav class="quick-access" aria-label="Akses cepat Rumah Sakit Livasya">
+            <div class="quick-grid">
+                @foreach ($quickMenus as $menu)
+                    <a href="{{ $menu['url'] }}" class="quick-card">
+                        <span class="quick-icon"><i class="{{ $menu['icon'] }}" aria-hidden="true"></i></span>
+                        <strong>{{ $menu['title'] }}</strong>
+                        <span>{{ $menu['text'] }}</span>
+                    </a>
                 @endforeach
             </div>
-            <div class="row justify-content-center align-items-center">
-                <div class="col-lg-3">
-                    <a href="/posts" class="btn mt-3 mb-5z d-block m-auto"> Lihat Selengkapnya <span
-                            class="fas fa-chevron-right"></span></a>
+        </nav>
+
+        <section class="seo-intro" aria-labelledby="intro-title">
+            <div class="intro-grid">
+                <div>
+                    <span class="section-kicker">Layanan Kesehatan Keluarga</span>
+                    <h2 class="section-title" id="intro-title">RS Livasya, pilihan rumah sakit di Majalengka untuk layanan kesehatan yang mudah dijangkau.</h2>
+                    <p class="section-copy">
+                        Rumah Sakit Livasya Majalengka menyediakan informasi layanan medis, jadwal dokter, fasilitas rumah sakit, berita kesehatan, dan akses pendaftaran online dalam satu halaman yang ringkas.
+                    </p>
+                </div>
+                <ul class="intro-list">
+                    <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Informasi dokter dan jadwal praktik dapat ditemukan lebih cepat.</span></li>
+                    <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Layanan rumah sakit disusun jelas untuk pasien Majalengka dan sekitarnya.</span></li>
+                    <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Fasilitas, berita, dan lokasi tersedia untuk membantu pengunjung mengambil keputusan.</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="home-section service-section service-section-refined" aria-labelledby="service-title">
+            <div class="service-header">
+                <div>
+                    <span class="section-kicker">Pelayanan</span>
+                    <h2 class="section-title" id="service-title">Pelayanan RS Livasya</h2>
+                    <p class="section-copy">Temukan layanan dan poliklinik Rumah Sakit Livasya Majalengka sesuai kebutuhan kesehatan Anda.</p>
+                </div>
+                <a href="/pelayanan" class="home-btn home-btn-secondary">Lihat Semua Pelayanan</a>
+            </div>
+
+            <div class="service-showcase">
+                <article class="service-feature">
+                    <div>
+                        <span class="service-icon"><i class="fas fa-heartbeat" aria-hidden="true"></i></span>
+                        <h3>Layanan RS yang lebih mudah dipilih dari depan halaman.</h3>
+                        <p>Pengunjung bisa langsung melihat layanan utama, poliklinik, dan akses ke detail pelayanan tanpa harus scroll jauh.</p>
+                    </div>
+                    <a href="/pelayanan" class="service-feature-link">
+                        Telusuri semua pelayanan <span class="fas fa-arrow-right"></span>
+                    </a>
+                </article>
+
+                <div class="polyclinic-strip">
+                    <h3>Poliklinik Unggulan</h3>
+                    @if ($polikliniks->isNotEmpty())
+                        <div class="polyclinic-list">
+                            @foreach ($polikliniks->take(6) as $poliklinik)
+                                <div class="polyclinic-card">
+                                    <img src="{{ asset('storage/' . $poliklinik->image) }}" alt="Poliklinik {{ $poliklinik->name }} RS Livasya" width="48" height="48" loading="lazy" decoding="async">
+                                    <span>{{ $poliklinik->name }}</span>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="polyclinic-empty">Data poliklinik belum tersedia.</div>
+                    @endif
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- review section ends -->
 
-    <!-- youtube section starts -->
-    <section class="youtube-section py-5 overflow-hidden" style="background: #f5f5f5;">
-        <div class="container">
-            <h1 class="heading">Video <span>Kami</span></h1>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
+            <div class="service-grid">
+                @foreach ($pelayanan->take(6) as $p)
+                    <a href="/pelayanan/{{ $p->slug }}" class="service-card">
+                        <span class="service-icon"><i class="{{ $p->icon }}" aria-hidden="true"></i></span>
+                        <h3>{{ $p->title }}</h3>
+                        <p>Lihat informasi layanan {{ $p->title }} di Rumah Sakit Livasya Majalengka.</p>
+                    </a>
+                @endforeach
+            </div>
+        </section>
+
+        <section class="home-section" aria-labelledby="schedule-title">
+            <div class="schedule-card">
+                <div>
+                    <span class="section-kicker">Jadwal Dokter</span>
+                    <h2 class="section-title" id="schedule-title">Cek jadwal dokter RS Livasya sebelum berkunjung.</h2>
+                    <p class="section-copy">
+                        Jadwal dokter membantu pasien memilih waktu kunjungan yang tepat. Gunakan halaman dokter untuk melihat informasi dokter dan pelayanan terkait.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="/jadwal-dokter" class="home-btn home-btn-primary">Lihat Jadwal Dokter</a>
+                        <a href="/dokter" class="home-btn home-btn-secondary">Daftar Dokter</a>
+                    </div>
+                </div>
+                <div class="schedule-image">
+                    @if (isset($jadwal) && $jadwal && $jadwal->image)
+                        <a href="{{ asset('/storage/' . $jadwal->image) }}" data-fancybox="group" data-caption="{{ $jadwal->caption }}">
+                            <img src="{{ asset('/storage/' . $jadwal->image) }}" alt="Jadwal dokter Rumah Sakit Livasya Majalengka" loading="lazy" decoding="async">
+                        </a>
+                    @else
+                        <div class="schedule-placeholder">Jadwal dokter belum tersedia.</div>
+                    @endif
+                </div>
+            </div>
+        </section>
+
+        <section class="home-section service-section" aria-labelledby="news-title">
+            <div class="service-header">
+                <div>
+                    <span class="section-kicker">Berita Kesehatan</span>
+                    <h2 class="section-title" id="news-title">Informasi terbaru dari RS Livasya</h2>
+                    <p class="section-copy">Baca berita dan edukasi kesehatan terbaru dari Rumah Sakit Livasya Majalengka.</p>
+                </div>
+                <a href="/posts" class="home-btn home-btn-secondary">Lihat Semua Berita</a>
+            </div>
+
+            <div class="news-grid">
+                @forelse ($featuredPosts as $p)
+                    @if ($p->is_embeded)
+                        <article class="news-card">{!! $p->body !!}</article>
+                    @else
+                        <article class="news-card">
+                            <a href="/posts/{{ $p->slug }}" class="news-thumb" aria-label="{{ $p->title }}"
+                                style="background-image: url({{ $p->image ? asset('/storage/' . $p->image) : asset('img/rsialivasya.webp') }});"></a>
+                            <div class="news-body">
+                                <h3><a href="/posts/{{ $p->slug }}" class="text-decoration-none text-reset">{{ $p->title }}</a></h3>
+                                <p>{{ \Illuminate\Support\Str::limit(strip_tags($p->body), 118) }}</p>
+                            </div>
+                        </article>
+                    @endif
+                @empty
+                    <p class="section-copy">Berita terbaru belum tersedia.</p>
+                @endforelse
+            </div>
+        </section>
+
+        <section class="home-section media-section" aria-labelledby="media-title">
+            <div class="media-grid">
+                <div>
+                    <span class="section-kicker">Profil & Lokasi</span>
+                    <h2 class="section-title" id="media-title">Kenali RS Livasya dan temukan lokasi kami.</h2>
+                    <p class="section-copy">
+                        Livasya berlokasi di Majalengka dan terus mengembangkan layanan untuk mendukung kebutuhan kesehatan masyarakat. Kunjungi kanal resmi kami untuk informasi terbaru.
+                    </p>
+                    @if ($youtubeUrl && $youtubeUrl !== '#')
+                        <div class="hero-actions">
+                            <a href="{{ $youtubeUrl }}" target="_blank" rel="noopener" class="home-btn home-btn-primary">Kunjungi YouTube</a>
+                        </div>
+                    @endif
+                </div>
+                <div class="video-shell">
                     <div class="embed-responsive embed-responsive-16by9">
                         {!! $youtubeEmbed !!}
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="row justify-content-center align-items-center">
-            <div class="col-lg-3">
-                <a href="{{ $youtubeUrl }}" target="_blank" class="btn mt-3 mb-5z d-block m-auto">
-                    Lihat Selengkapnya <span class="fas fa-chevron-right"></span></a>
+        <section class="home-section service-section" aria-labelledby="faq-title">
+            <div class="service-header">
+                <div>
+                    <span class="section-kicker">Pertanyaan Umum</span>
+                    <h2 class="section-title" id="faq-title">Informasi penting sebelum berkunjung ke RS Livasya</h2>
+                    <p class="section-copy">Jawaban singkat untuk membantu pengunjung menemukan layanan rumah sakit di Majalengka dengan lebih cepat.</p>
+                </div>
+                <a href="/faq" class="home-btn home-btn-secondary">FAQ Lengkap</a>
             </div>
-        </div>
-    </section>
-    <!-- youtube section ends -->
+            <div class="faq-grid">
+                @foreach ($homeFaqs as $faq)
+                    <article class="faq-card">
+                        <h3>{{ $faq['question'] }}</h3>
+                        <p>{{ $faq['answer'] }}</p>
+                    </article>
+                @endforeach
+            </div>
+        </section>
 
-    <!-- review section starts  -->
-    <section class="review pt-5 overflow-hidden" style="background: #fff;" id="review">
-        <h1 class="heading">Temukan <span>Kami</span></h1>
-        <div class="box-container mb-5">
-            <div class="row juctify-content-center">
-                <div class="card" style="border: none; border-radius: 20px">
-                    <div class="card-body">
-                        <iframe class="w-100" style="height: 50rem; border: none; border-radius: 20px"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.0386969407605!2d108.17566195081062!3d-6.765136368012836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6f29b82be5b779%3A0xfc24e001da3669f9!2sRSIA%20Livasya%20Majalengka!5e0!3m2!1sid!2sid!4v1667793553251!5m2!1sid!2sid style="
-                            border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
+        <section class="home-section" aria-labelledby="location-title">
+            <div class="service-header">
+                <div>
+                    <span class="section-kicker">Lokasi</span>
+                    <h2 class="section-title" id="location-title">Temukan Rumah Sakit Livasya Majalengka</h2>
+                    <p class="section-copy">Gunakan peta untuk melihat lokasi RS Livasya dan merencanakan kunjungan Anda.</p>
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- review section ends -->
+            <div class="map-shell">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.0386969407605!2d108.17566195081062!3d-6.765136368012836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6f29b82be5b779%3A0xfc24e001da3669f9!2sRSIA%20Livasya%20Majalengka!5e0!3m2!1sid!2sid!4v1667793553251!5m2!1sid!2sid"
+                    title="Lokasi Rumah Sakit Livasya Majalengka"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </section>
+    </main>
 @endsection

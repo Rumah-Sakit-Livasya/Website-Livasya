@@ -23,6 +23,112 @@ if (typeof PureCounter !== "undefined") {
     });
 }
 
+function markImageLoaded(image) {
+    image.classList.remove("asset-is-loading");
+    image.classList.add("asset-is-loaded");
+}
+
+function initImageSkeletons(root) {
+    var scope = root || document;
+    var images = Array.prototype.slice.call(
+        scope.querySelectorAll("img:not([data-skeleton-ready])")
+    );
+
+    if (scope.matches && scope.matches("img:not([data-skeleton-ready])")) {
+        images.unshift(scope);
+    }
+
+    images.forEach(function (image) {
+        image.dataset.skeletonReady = "true";
+        image.classList.add("asset-skeleton-img");
+
+        if (image.complete && image.naturalWidth > 0) {
+            markImageLoaded(image);
+            return;
+        }
+
+        image.classList.add("asset-is-loading");
+        image.addEventListener(
+            "load",
+            function () {
+                markImageLoaded(image);
+            },
+            { once: true }
+        );
+        image.addEventListener(
+            "error",
+            function () {
+                markImageLoaded(image);
+            },
+            { once: true }
+        );
+    });
+}
+
+function getBackgroundImageUrl(element) {
+    var backgroundImage = window.getComputedStyle(element).backgroundImage;
+    var match = backgroundImage && backgroundImage.match(/url\(["']?(.*?)["']?\)/);
+
+    return match ? match[1] : null;
+}
+
+function initBackgroundSkeletons(root) {
+    var scope = root || document;
+    var elements = Array.prototype.slice.call(
+        scope.querySelectorAll("[style*='background']:not([data-bg-skeleton-ready])")
+    );
+
+    if (scope.matches && scope.matches("[style*='background']:not([data-bg-skeleton-ready])")) {
+        elements.unshift(scope);
+    }
+
+    elements.forEach(function (element) {
+        var imageUrl = getBackgroundImageUrl(element);
+
+        if (!imageUrl) {
+            return;
+        }
+
+        element.dataset.bgSkeletonReady = "true";
+        element.classList.add("asset-skeleton-bg");
+
+        var loader = new Image();
+        loader.onload = function () {
+            element.classList.add("asset-is-loaded");
+        };
+        loader.onerror = function () {
+            element.classList.add("asset-is-loaded");
+        };
+        loader.src = imageUrl;
+    });
+}
+
+function initAssetSkeletons(root) {
+    initImageSkeletons(root);
+    initBackgroundSkeletons(root);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    initAssetSkeletons(document);
+
+    if ("MutationObserver" in window) {
+        var observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                mutation.addedNodes.forEach(function (node) {
+                    if (node.nodeType === 1) {
+                        initAssetSkeletons(node);
+                    }
+                });
+            });
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+        });
+    }
+});
+
 // Dropdown Menu Fade
 if (typeof jQuery !== "undefined") {
     jQuery(document).ready(function () {

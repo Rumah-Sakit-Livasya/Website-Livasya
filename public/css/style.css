@@ -15,6 +15,60 @@
   --slideBgColor: #fff;
 }
 
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.asset-skeleton-img {
+  background: linear-gradient(90deg, #eef3f7 25%, #f8fbfd 37%, #eef3f7 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.25s ease-in-out infinite;
+}
+
+.asset-skeleton-img.asset-is-loading {
+  color: transparent;
+}
+
+.asset-skeleton-img.asset-is-loaded {
+  animation: none;
+  background: transparent;
+}
+
+.asset-skeleton-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.asset-skeleton-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(90deg, #eef3f7 25%, #f8fbfd 37%, #eef3f7 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.25s ease-in-out infinite;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+.asset-skeleton-bg.asset-is-loaded::before {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .asset-skeleton-img,
+  .asset-skeleton-bg::before {
+    animation: none;
+  }
+}
+
 * {
   font-family: "Poppins", sans-serif;
   margin: 0;
