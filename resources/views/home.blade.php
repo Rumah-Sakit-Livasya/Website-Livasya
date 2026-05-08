@@ -290,21 +290,26 @@
         .quick-icon {
             width: 44px;
             height: 44px;
-            display: grid;
-            place-items: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 16px;
             border-radius: 8px;
             color: #ffffff;
             background: linear-gradient(135deg, var(--primary), #16a085);
-            font-size: 1.9rem;
+            box-shadow: 0 10px 22px rgba(0, 108, 191, .18);
         }
 
         .quick-icon i,
         .service-icon i {
-            display: block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             color: #ffffff;
-            font-size: 2.15rem;
+            font-size: 2rem;
             line-height: 1;
+            width: 1em;
+            height: 1em;
         }
 
         .quick-card strong {
@@ -313,7 +318,7 @@
             line-height: 1.25;
         }
 
-        .quick-card span {
+        .quick-card .quick-text {
             display: block;
             margin-top: 8px;
             color: #617487;
@@ -838,7 +843,7 @@
                     <a href="{{ $menu['url'] }}" class="quick-card">
                         <span class="quick-icon"><i class="{{ $menu['icon'] }}" aria-hidden="true"></i></span>
                         <strong>{{ $menu['title'] }}</strong>
-                        <span>{{ $menu['text'] }}</span>
+                        <span class="quick-text">{{ $menu['text'] }}</span>
                     </a>
                 @endforeach
             </div>
