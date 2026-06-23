@@ -22,9 +22,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
-        // $this->call(CategorySeeder::class);
-        // $this->call(JumbotronSeeder::class);
-        // $this->call(IdentitySeeder::class);
-        // $this->call(JadwalSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(JumbotronSeeder::class);
+        $this->call(IdentitySeeder::class);
+        $this->call(JadwalSeeder::class);
+        $this->call(JobPositionSeeder::class);
     }
 }
