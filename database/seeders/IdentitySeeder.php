@@ -15,6 +15,7 @@ class IdentitySeeder extends Seeder
     {
         Identity::create([
             'name' => "Rumah Sakit Livasya",
+            'shortname' => "RSIA Livasya",
             'visi' => "Test",
             'misi' => "Test",
             'tujuan' => "Test",
