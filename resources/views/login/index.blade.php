@@ -22,26 +22,6 @@
         </div>
     @endif
 
-    @if (session('loginError'))
-        <script nonce="{{ $nonce }}">
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Login Gagal!',
-            })
-        </script>
-    @endif
-
-    @if ($errors->has('email'))
-        <script nonce="{{ $nonce }}">
-            Swal.fire({
-                icon: 'error',
-                title: 'Google Login Failed',
-                text: '{{ $errors->first('email') }}',
-            })
-        </script>
-    @endif
-
 
 
 
@@ -103,6 +83,26 @@
             timer: 3000,
         });
     </script>
+
+    @if (session('loginError'))
+        <script nonce="{{ $nonce }}">
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Login Gagal!',
+            })
+        </script>
+    @endif
+
+    @if ($errors->has('email'))
+        <script nonce="{{ $nonce }}">
+            Swal.fire({
+                icon: 'error',
+                title: 'Google Login Failed',
+                text: '{{ $errors->first('email') }}',
+            })
+        </script>
+    @endif
 
 </body>
 
