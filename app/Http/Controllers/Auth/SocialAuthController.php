@@ -26,14 +26,13 @@ class SocialAuthController extends Controller
 
             if (!$user) {
                 $user = User::create([
-                    'name' => $googleUser->getName(),
-                    'email' => $googleUser->getEmail(),
+                    'name'     => $googleUser->getName(),
+                    'email'    => $googleUser->getEmail(),
                     'google_id' => $googleUser->getId(),
-                    'avatar' => $googleUser->getAvatar(),
-                    'password' => Hash::make(Str::random(16)), // Dummy password
-                    'username' => explode('@', $googleUser->getEmail())[0] . rand(100, 999), // Generate username
+                    'avatar'   => $googleUser->getAvatar(),
+                    'password' => Hash::make(Str::random(16)),
+                    'username' => explode('@', $googleUser->getEmail())[0] . rand(100, 999),
                 ]);
-                $user->role = 'pelamar';
                 $user->email_verified_at = now();
                 $user->save();
 
@@ -41,18 +40,15 @@ class SocialAuthController extends Controller
             } else {
                 $user->update([
                     'google_id' => $googleUser->getId(),
-                    'avatar' => $googleUser->getAvatar(),
+                    'avatar'    => $googleUser->getAvatar(),
                 ]);
 
-                if ($user->role === 'user' || empty($user->role)) {
-                    $user->role = 'pelamar';
-                }
                 if (is_null($user->email_verified_at)) {
                     $user->email_verified_at = now();
+                    $user->save();
                 }
-                $user->save();
 
-                // Ensure user has the role
+                // Pastikan user punya role Spatie
                 if (!$user->hasRole('pelamar') && !$user->hasRole('super-admin') && !$user->hasRole('user')) {
                     $user->assignRole('pelamar');
                 }

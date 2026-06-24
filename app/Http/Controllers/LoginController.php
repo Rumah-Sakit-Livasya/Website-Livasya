@@ -44,15 +44,11 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            if (Auth::user()->role == 'pelamar') {
+            if (Auth::user()->hasRole('pelamar')) {
                 if (!Auth::user()->applier) {
                     return redirect()->route('applicant.profile.create');
                 }
                 return redirect()->route('applicant.dashboard');
-            }
-
-            if (Auth::user()->role == 'hrd') {
-                return redirect()->route('career.index');
             }
 
             return redirect()->route('identity.index');

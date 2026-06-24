@@ -7,6 +7,7 @@ use App\Models\Identity;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -23,15 +24,20 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required',
+            'name'     => 'required',
             'username' => 'required|unique:users',
-            'email' => 'required|email|unique:users',
+            'email'    => 'required|email|unique:users',
             'password' => 'required',
+            'role'     => 'required|in:super-admin,user,pelamar',
         ]);
 
         $validatedData['password'] = Hash::make($request['password']);
+        $roleName = $validatedData['role'];
+        unset($validatedData['role']);
 
-        User::create($validatedData);
+        $user = User::create($validatedData);
+        $user->assignRole($roleName);
+
         return back()->with('success', 'User dibuat!');
     }
 
@@ -49,12 +55,13 @@ class UserController extends Controller
 
     public function akses(Request $request, User $user)
     {
-        // return $user;
-        $validatedData = $request->validate([
-            'role' => 'max:255',
+        $request->validate([
+            'role' => 'required|in:super-admin,user,pelamar',
         ]);
 
-        User::where('id', $user->id)->update($validatedData);
+        // Ganti semua role user dengan role baru (Spatie syncRoles)
+        $user->syncRoles([$request->role]);
+
         return back()->with('success', 'User Akses berhasil diubah!');
     }
 

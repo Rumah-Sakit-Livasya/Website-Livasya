@@ -16,7 +16,7 @@ class VerifyEmailController extends Controller
     public function __invoke(EmailVerificationRequest $request): RedirectResponse
     {
         $redirect = RouteServiceProvider::HOME . '?verified=1';
-        if ($request->user()->role === 'pelamar') {
+        if ($request->user()->hasRole('pelamar')) {
             $redirect = route('applicant.dashboard') . '?verified=1';
         }
 
