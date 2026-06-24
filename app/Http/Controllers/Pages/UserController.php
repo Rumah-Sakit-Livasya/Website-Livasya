@@ -28,7 +28,7 @@ class UserController extends Controller
             'username' => 'required|unique:users',
             'email'    => 'required|email|unique:users',
             'password' => 'required',
-            'role'     => 'required|in:super-admin,user,hrd,pelamar',
+            'role'     => 'required|in:super-admin,user,hrd,pelamar,marketing',
         ]);
 
         $validatedData['password'] = Hash::make($request['password']);
@@ -56,7 +56,7 @@ class UserController extends Controller
     public function akses(Request $request, User $user)
     {
         $request->validate([
-            'role' => 'required|in:super-admin,user,hrd,pelamar',
+            'role' => 'required|in:super-admin,user,hrd,pelamar,marketing',
         ]);
 
         // Ganti semua role user dengan role baru (Spatie syncRoles)

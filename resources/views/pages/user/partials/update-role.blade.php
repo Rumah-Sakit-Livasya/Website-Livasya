@@ -29,6 +29,9 @@
                             <option value="hrd" {{ $currentRole == 'hrd' ? 'selected' : '' }}>
                                 HRD
                             </option>
+                            <option value="marketing" {{ $currentRole == 'marketing' ? 'selected' : '' }}>
+                                Marketing
+                            </option>
                             <option value="pelamar" {{ $currentRole == 'pelamar' ? 'selected' : '' }}>
                                 Pelamar
                             </option>

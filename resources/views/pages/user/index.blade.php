@@ -45,6 +45,8 @@
                                                     <span class="badge badge-danger">Super Admin</span>
                                                 @elseif($userRole == 'hrd')
                                                     <span class="badge badge-info">HRD</span>
+                                                @elseif($userRole == 'marketing')
+                                                    <span class="badge badge-warning">Marketing</span>
                                                 @elseif($userRole == 'user')
                                                     <span class="badge badge-primary">User</span>
                                                 @elseif($userRole == 'pelamar')

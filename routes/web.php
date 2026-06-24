@@ -119,7 +119,7 @@ Route::middleware('auth')->group(function () {
     });
     // ── End HRD Area ──────────────────────────────────────────────────────────
 
-    Route::prefix('dashboard')->middleware(['role:super-admin|user|hrd'])->group(function () {
+    Route::prefix('dashboard')->middleware(['role:super-admin|user|hrd|marketing'])->group(function () {
         // Dashboard
         Route::get("/", [DashboardController::class, 'index'])->name("dashboard");
 

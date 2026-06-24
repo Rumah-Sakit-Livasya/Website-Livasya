@@ -50,10 +50,11 @@
                     <div class="form-group">
                         <label for="role-create">Role</label>
                         <select class="form-control @error('role') is-invalid @enderror" id="role-create" name="role">
-                            <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>🔵 User (Staff)</option>
-                            <option value="hrd" {{ old('role') == 'hrd' ? 'selected' : '' }}>🟣 HRD</option>
-                            <option value="super-admin" {{ old('role') == 'super-admin' ? 'selected' : '' }}>🔴 Super Admin</option>
-                            <option value="pelamar" {{ old('role') == 'pelamar' ? 'selected' : '' }}>🟢 Pelamar</option>
+                            <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User (Staff)</option>
+                            <option value="hrd" {{ old('role') == 'hrd' ? 'selected' : '' }}>HRD</option>
+                            <option value="marketing" {{ old('role') == 'marketing' ? 'selected' : '' }}>Marketing</option>
+                            <option value="super-admin" {{ old('role') == 'super-admin' ? 'selected' : '' }}>Super Admin</option>
+                            <option value="pelamar" {{ old('role') == 'pelamar' ? 'selected' : '' }}>Pelamar</option>
                         </select>
                         @error('role')
                             <div class="invalid-feedback">{{ $message }}</div>
