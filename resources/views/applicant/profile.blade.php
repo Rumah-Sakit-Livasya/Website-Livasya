@@ -246,7 +246,7 @@
                                                             </span>
                                                             <form action="{{ route('applicant.profile.education.delete', $edu->id) }}" method="POST" class="d-inline">
                                                                 @csrf @method('DELETE')
-                                                                <button class="btn btn-danger btn-xs btn-action-premium" onclick="return confirm('Hapus?')">
+                                                                <button type="submit" class="btn btn-danger btn-xs btn-action-premium btn-delete-confirm">
                                                                     <i class="fas fa-trash"></i>
                                                                 </button>
                                                             </form>
@@ -308,7 +308,7 @@
                                                             </span>
                                                             <form action="{{ route('applicant.profile.work.delete', $work->id) }}" method="POST" class="d-inline">
                                                                 @csrf @method('DELETE')
-                                                                <button class="btn btn-danger btn-xs btn-action-premium" onclick="return confirm('Hapus?')">
+                                                                <button type="submit" class="btn btn-danger btn-xs btn-action-premium btn-delete-confirm">
                                                                     <i class="fas fa-trash"></i>
                                                                 </button>
                                                             </form>
@@ -354,7 +354,7 @@
                                                             </span>
                                                             <form action="{{ route('applicant.profile.certification.delete', $cert->id) }}" method="POST" class="d-inline">
                                                                 @csrf @method('DELETE')
-                                                                <button class="btn btn-danger btn-xs btn-action-premium" onclick="return confirm('Hapus?')">
+                                                                <button type="submit" class="btn btn-danger btn-xs btn-action-premium btn-delete-confirm">
                                                                     <i class="fas fa-trash"></i>
                                                                 </button>
                                                             </form>
@@ -405,7 +405,7 @@
                                                             </span>
                                                             <form action="{{ route('applicant.profile.license.delete', $license->id) }}" method="POST" class="d-inline">
                                                                 @csrf @method('DELETE')
-                                                                <button class="btn btn-danger btn-xs btn-action-premium" onclick="return confirm('Hapus data?')">
+                                                                <button type="submit" class="btn btn-danger btn-xs btn-action-premium btn-delete-confirm">
                                                                     <i class="fas fa-trash"></i>
                                                                 </button>
                                                             </form>
@@ -453,7 +453,7 @@
                                                                 </span>
                                                                 <form action="{{ route('applicant.profile.scholarship.delete', $scholarship->id ?? 0) }}" method="POST" class="d-inline">
                                                                     @csrf @method('DELETE')
-                                                                    <button class="btn btn-danger btn-xs btn-action-premium" onclick="return confirm('Hapus data?')">
+                                                                    <button type="submit" class="btn btn-danger btn-xs btn-action-premium btn-delete-confirm">
                                                                         <i class="fas fa-trash"></i>
                                                                     </button>
                                                                 </form>
@@ -501,11 +501,11 @@
                                                                 <i class="fas fa-file-alt mr-1"></i> {{ $other->document_type }}
                                                             </span>
                                                             <form action="{{ route('applicant.profile.other.delete', $other->id) }}" method="POST" class="d-inline">
-                                                                @csrf @method('DELETE')
-                                                                <button class="btn btn-danger btn-xs btn-action-premium" onclick="return confirm('Hapus data?')">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </button>
-                                                            </form>
+                                                                    @csrf @method('DELETE')
+                                                                    <button type="submit" class="btn btn-danger btn-xs btn-action-premium btn-delete-confirm">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </button>
+                                                                </form>
                                                         </div>
                                                         <p class="text-muted small mb-2"><i class="far fa-calendar-alt mr-1"></i> Periode: {{ $other->start_date }} - {{ $other->end_date }}</p>
                                                         @if($other->description)
@@ -1243,6 +1243,29 @@
             $('.custom-file-input').on('change', function() {
                 var fileName = $(this).val().split('\\').pop();
                 $(this).next('.custom-file-label').addClass("selected").html('<i class="fas fa-file mr-1 text-primary"></i> ' + fileName);
+            });
+
+            // Delete confirmation with SweetAlert2
+            $(document).on('click', '.btn-delete-confirm', function(e) {
+                e.preventDefault();
+                var button = $(this);
+                var form = button.closest('form');
+                
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: "Data yang dihapus tidak dapat dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#fd3995', // Pink accent for delete/confirm
+                    cancelButtonColor: '#868e96',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal',
+                    heightAuto: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
             });
         });
     </script>
