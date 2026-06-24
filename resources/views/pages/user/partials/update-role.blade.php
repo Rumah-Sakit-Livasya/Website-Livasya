@@ -17,19 +17,19 @@
                     @php $currentRole = $user->getRoleNames()->first() ?? ''; @endphp
                     <div class="form-group mb-0">
                         <label for="aksesUser{{ $user->id }}">Pilih Role</label>
-                        <select class="form-control w-100 @error('role') is-invalid @enderror"
-                            id="aksesUser{{ $user->id }}" name="role">
+                        <select class="form-control w-100 no-select2 @error('role') is-invalid @enderror"
+                            id="aksesUser{{ $user->id }}" name="role" style="height:42px">
                             <option value="super-admin" {{ $currentRole == 'super-admin' ? 'selected' : '' }}>
-                                🔴 Super Admin
+                                Super Admin
                             </option>
                             <option value="user" {{ $currentRole == 'user' ? 'selected' : '' }}>
-                                🔵 User (Staff)
+                                User (Staff)
                             </option>
                             <option value="hrd" {{ $currentRole == 'hrd' ? 'selected' : '' }}>
-                                🟣 HRD
+                                HRD
                             </option>
                             <option value="pelamar" {{ $currentRole == 'pelamar' ? 'selected' : '' }}>
-                                🟢 Pelamar
+                                Pelamar
                             </option>
                         </select>
                         @error('role')
