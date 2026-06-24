@@ -231,7 +231,7 @@
 @endsection
 
 @section('scripts')
-    <script>
+    <script nonce="{{ $nonce }}">
         function setApplyData(id, title) {
             document.getElementById('apply-career-id').value = id;
             document.getElementById('apply-position').value = title;
