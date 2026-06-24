@@ -811,7 +811,7 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label class="form-label">Pilih Foto (JPG/JPEG/PNG, Max 2MB)</label>
+                                <label class="form-label">Pilih Foto (JPG/JPEG/PNG, Max 10MB)</label>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="photoInput" name="photo"
                                         required accept="image/*">
@@ -852,7 +852,7 @@
                                 <i class="fas fa-info-circle"></i> Upload scan eKTP asli Anda.
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Pilih File (PDF/JPG/PNG, Max 2MB)</label>
+                                <label class="form-label">Pilih File (PDF/JPG/PNG, Max 10MB)</label>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="ktpInput" name="ktp_file"
                                         required accept=".pdf,image/*">
@@ -1204,7 +1204,7 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label class="form-label">Pilih CV (PDF, Max 2MB)</label>
+                                <label class="form-label">Pilih CV (PDF, Max 10MB)</label>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="cvInput" name="cv"
                                         required accept=".pdf">

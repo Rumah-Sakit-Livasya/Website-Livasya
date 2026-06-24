@@ -199,7 +199,7 @@ class ProfileController extends Controller
     public function uploadCv(Request $request)
     {
         $request->validate([
-            'cv' => 'required|mimes:pdf|max:2048', // Max 2MB
+            'cv' => 'required|mimes:pdf|max:10240', // Max 10MB
         ]);
 
         $user = Auth::user();
@@ -238,8 +238,8 @@ class ProfileController extends Controller
     public function storeEducation(Request $request)
     {
         $request->validate([
-            'certificate_file' => 'nullable|mimes:pdf|max:2048',
-            'transcript_file' => 'nullable|mimes:pdf|max:2048',
+            'certificate_file' => 'nullable|mimes:pdf|max:10240',
+            'transcript_file' => 'nullable|mimes:pdf|max:10240',
         ]);
 
         $applier = Auth::user()->applier;
@@ -279,7 +279,7 @@ class ProfileController extends Controller
     {
         $data = $request->validate([
             'certification_name' => 'required',
-            'file' => 'nullable|mimes:pdf|max:2048',
+            'file' => 'nullable|mimes:pdf|max:10240',
         ]);
 
         $applier = Auth::user()->applier;
@@ -331,7 +331,7 @@ class ProfileController extends Controller
     public function storeLicense(Request $request)
     {
         $request->validate([
-            'file' => 'nullable|mimes:pdf|max:2048',
+            'file' => 'nullable|mimes:pdf|max:10240',
         ]);
 
         $applier = Auth::user()->applier;
@@ -385,7 +385,7 @@ class ProfileController extends Controller
     public function uploadPhoto(Request $request)
     {
         $request->validate([
-            'photo' => 'required|image|max:2048', // Max 2MB
+            'photo' => 'required|image|max:10240', // Max 10MB
         ]);
 
         /** @var \App\Models\User $user */
@@ -403,7 +403,7 @@ class ProfileController extends Controller
     public function uploadKtp(Request $request)
     {
         $request->validate([
-            'ktp_file' => 'required|mimes:pdf,jpg,jpeg,png|max:2048', // Max 2MB
+            'ktp_file' => 'required|mimes:pdf,jpg,jpeg,png|max:10240', // Max 10MB
         ]);
 
         $applier = Auth::user()->applier;

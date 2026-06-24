@@ -293,6 +293,16 @@
         </script>
     @endif
 
+    @if ($errors->any())
+        <script nonce="{{ $nonce }}">
+            Swal.fire({
+                icon: 'error',
+                title: 'Terjadi Kesalahan',
+                html: '<ul class="text-left">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>',
+            })
+        </script>
+    @endif
+
     <!-- END Page Wrapper -->
     <!-- BEGIN Quick Menu -->
     @include('inc.quickmenu')
