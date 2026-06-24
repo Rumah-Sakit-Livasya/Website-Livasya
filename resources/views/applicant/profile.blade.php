@@ -628,7 +628,7 @@
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="eduCert"
                                             name="certificate_file" accept=".pdf">
-                                        <label class="custom-file-label" for="eduCert">Pilih file...</label>
+                                        <label class="custom-file-label" for="eduCert">Pilih file (Max 10MB)...</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 form-group">
@@ -636,7 +636,7 @@
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="eduTrans"
                                             name="transcript_file" accept=".pdf">
-                                        <label class="custom-file-label" for="eduTrans">Pilih file...</label>
+                                        <label class="custom-file-label" for="eduTrans">Pilih file (Max 10MB)...</label>
                                     </div>
                                 </div>
                             </div>
@@ -783,7 +783,7 @@
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="certFile" name="file"
                                         accept=".pdf">
-                                    <label class="custom-file-label" for="certFile">Pilih file...</label>
+                                    <label class="custom-file-label" for="certFile">Pilih file (Max 10MB)...</label>
                                 </div>
                             </div>
                         </div>
@@ -819,7 +819,7 @@
                                         @if (Auth::user()->avatar && !Str::startsWith(Auth::user()->avatar, 'http'))
                                             <i class="fas fa-check-circle text-success mr-1"></i> {{ basename(Auth::user()->avatar) }}
                                         @else
-                                            Pilih file...
+                                            Pilih file (Max 10MB)...
                                         @endif
                                     </label>
                                 </div>
@@ -860,7 +860,7 @@
                                         @if ($applier && $applier->attachment && $applier->attachment != '-')
                                             <i class="fas fa-check-circle text-success mr-1"></i> {{ basename($applier->attachment) }}
                                         @else
-                                            Pilih file...
+                                            Pilih file (Max 10MB)...
                                         @endif
                                     </label>
                                 </div>
@@ -1031,7 +1031,7 @@
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="strFile" name="file"
                                         accept=".pdf">
-                                    <label class="custom-file-label" for="strFile">Pilih file...</label>
+                                    <label class="custom-file-label" for="strFile">Pilih file (Max 10MB)...</label>
                                 </div>
                             </div>
                         </div>
@@ -1212,7 +1212,7 @@
                                         @if ($applier && $applier->cv)
                                             <i class="fas fa-check-circle text-success mr-1"></i> {{ basename($applier->cv) }}
                                         @else
-                                            Pilih file...
+                                            Pilih file (Max 10MB)...
                                         @endif
                                     </label>
                                 </div>
