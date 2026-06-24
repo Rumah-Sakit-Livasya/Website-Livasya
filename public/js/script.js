@@ -11,7 +11,7 @@ if ($.fn.modal && $.fn.modal.Constructor && $.fn.modal.Constructor.prototype) {
 }
 
 $(document).ready(function () {
-    $("select").not(".no-select2").each(function () {
+    $("select").not(".no-select2, .swal2-select").each(function () {
         $(this).select2({
             width: '100%'
         });
