@@ -108,6 +108,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/careers/{career:id}/{applier:id}/download-cv', [CareerController::class, 'downloadCV']);
         Route::put('/careers/{career:id}/{applier:id}/status', [CareerController::class, 'updateStatus']);
     });
+
+    // ── HRD Area ──────────────────────────────────────────────────────────────
+    Route::prefix('hrd')->middleware(['role:super-admin|user|hrd'])->group(function () {
+        Route::get('/', [\App\Http\Controllers\Hrd\HrdController::class, 'index'])->name('hrd.index');
+        Route::get('/pelamar/{career}', [\App\Http\Controllers\Hrd\HrdController::class, 'appliers'])->name('hrd.appliers');
+        Route::get('/pelamar/{career}/{applier}', [\App\Http\Controllers\Hrd\HrdController::class, 'detail'])->name('hrd.detail');
+        Route::put('/pelamar/{career}/{applier}/status', [\App\Http\Controllers\Hrd\HrdController::class, 'updateStatus'])->name('hrd.status');
+        Route::get('/pelamar/{career}/{applier}/dokumen/{type}', [\App\Http\Controllers\Hrd\HrdController::class, 'downloadDoc'])->name('hrd.download');
+    });
+    // ── End HRD Area ──────────────────────────────────────────────────────────
+
     Route::prefix('dashboard')->middleware(['role:super-admin|user|hrd'])->group(function () {
         // Dashboard
         Route::get("/", [DashboardController::class, 'index'])->name("dashboard");

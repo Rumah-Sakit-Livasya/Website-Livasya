@@ -52,7 +52,7 @@ class LoginController extends Controller
             }
 
             if (Auth::user()->hasRole('hrd')) {
-                return redirect()->route('career.index');
+                return redirect()->route('hrd.index');
             }
 
             return redirect()->route('identity.index');
