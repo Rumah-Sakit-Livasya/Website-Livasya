@@ -25,19 +25,19 @@ class SocialAuthController extends Controller
             $user = User::where('email', $googleUser->getEmail())->first();
 
             if (!$user) {
+                // User baru: buat akun dan assign role pelamar
                 $user = User::create([
-                    'name'     => $googleUser->getName(),
-                    'email'    => $googleUser->getEmail(),
+                    'name'      => $googleUser->getName(),
+                    'email'     => $googleUser->getEmail(),
                     'google_id' => $googleUser->getId(),
-                    'avatar'   => $googleUser->getAvatar(),
-                    'password' => Hash::make(Str::random(16)),
-                    'username' => explode('@', $googleUser->getEmail())[0] . rand(100, 999),
+                    'avatar'    => $googleUser->getAvatar(),
+                    'password'  => Hash::make(Str::random(16)),
+                    'username'  => explode('@', $googleUser->getEmail())[0] . rand(100, 999),
                 ]);
                 $user->email_verified_at = now();
                 $user->save();
-
-                $user->assignRole('pelamar');
             } else {
+                // User sudah ada: update data Google
                 $user->update([
                     'google_id' => $googleUser->getId(),
                     'avatar'    => $googleUser->getAvatar(),
@@ -47,12 +47,10 @@ class SocialAuthController extends Controller
                     $user->email_verified_at = now();
                     $user->save();
                 }
-
-                // Pastikan user punya role Spatie
-                if (!$user->hasRole('pelamar') && !$user->hasRole('super-admin') && !$user->hasRole('user')) {
-                    $user->assignRole('pelamar');
-                }
             }
+
+            // Login Google SELALU jadi pelamar
+            $user->syncRoles(['pelamar']);
 
             Auth::login($user);
 
@@ -60,9 +58,9 @@ class SocialAuthController extends Controller
                 return redirect()->route('applicant.profile.create');
             }
 
-            return redirect()->route('applicant.dashboard')->with('status', 'Profile already completed.');
+            return redirect()->route('applicant.dashboard');
         } catch (\Exception $e) {
-            return redirect()->route('login.pelamar')->withErrors(['email' => 'Google Login failed. Please try again. error: ' . $e->getMessage()]);
+            return redirect()->route('login.pelamar')->withErrors(['email' => 'Google Login gagal. Silakan coba lagi. Error: ' . $e->getMessage()]);
         }
     }
 }
