@@ -13,7 +13,7 @@
                                 <i class="fas fa-user-circle mr-2"></i> Formulir Biodata Diri
                             </h4>
                         </div>
-                        <div class="card-body p-4 p-md-5">
+                        <div class="card-body p-3 p-md-5">
                             <div class="alert alert-light border-left-info mb-5 shadow-sm">
                                 <div class="d-flex align-items-center">
                                     <i class="fas fa-info-circle fa-2x text-info mr-3"></i>
@@ -60,7 +60,7 @@
                                     <div class="col-md-4 mb-4">
                                         <label class="form-label font-weight-bold text-dark">Jenis Kelamin <span
                                                 class="text-danger">*</span></label>
-                                        <select class="form-control select2" name="sex" required>
+                                        <select class="form-control no-select2" name="sex" required>
                                             <option value="">PILIH</option>
                                             <option value="Laki-laki">Laki-laki</option>
                                             <option value="Perempuan">Perempuan</option>
@@ -69,7 +69,7 @@
                                     <div class="col-md-4 mb-4">
                                         <label class="form-label font-weight-bold text-dark">Status Pernikahan <span
                                                 class="text-danger">*</span></label>
-                                        <select class="form-control select2" name="marital_status" required>
+                                        <select class="form-control no-select2" name="marital_status" required>
                                             <option value="">PILIH</option>
                                             <option value="Lajang">Lajang</option>
                                             <option value="Menikah">Menikah</option>
@@ -79,7 +79,7 @@
                                     <div class="col-md-4 mb-4">
                                         <label class="form-label font-weight-bold text-dark">Agama <span
                                                 class="text-danger">*</span></label>
-                                        <select class="form-control select2" name="religion" required>
+                                        <select class="form-control no-select2" name="religion" required>
                                             <option value="Islam">Islam</option>
                                             <option value="Katolik">Katolik</option>
                                             <option value="Protestan">Protestan</option>
@@ -93,7 +93,7 @@
                                     <div class="col-md-6 mb-4">
                                         <label class="form-label font-weight-bold text-dark">Kewarganegaraan <span
                                                 class="text-danger">*</span></label>
-                                        <select class="form-control select2" name="nationality" required>
+                                        <select class="form-control no-select2" name="nationality" required>
                                             <option value="WNI">WNI (Warga Negara Indonesia)</option>
                                             <option value="WNA">WNA (Warga Negara Asing)</option>
                                         </select>
@@ -102,7 +102,7 @@
                                     <div class="col-md-6 mb-4">
                                         <label class="form-label font-weight-bold text-dark">Minat Bagian <span
                                                 class="text-danger">*</span></label>
-                                        <select class="form-control select2" name="position_interest" required>
+                                        <select class="form-control no-select2" name="position_interest" required>
                                             <option value="">PILIH</option>
                                             @foreach ($jobPositions as $position)
                                                 <option value="{{ $position->name }}">{{ $position->name }}</option>
@@ -149,7 +149,7 @@
 
                                 <div class="mt-4 text-right">
                                     <button type="submit"
-                                        class="btn btn-success btn-lg px-5 shadow-sm rounded-pill font-weight-bold">
+                                        class="btn btn-success btn-lg w-100 w-sm-auto px-5 shadow-sm rounded-pill font-weight-bold">
                                         Simpan & Lanjutkan <i class="fas fa-arrow-right ml-2"></i>
                                     </button>
                                 </div>
@@ -162,13 +162,4 @@
     </section>
 @endsection
 
-@section('plugin')
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2({
-                width: '100%',
-                theme: 'bootstrap4'
-            });
-        });
-    </script>
-@endsection
+

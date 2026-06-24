@@ -50,4 +50,14 @@
     <script nonce="{{ $nonce }}">
         // Fallback for any other inline scripts or if immediate execution is needed for variables passed from PHP
     </script>
+
+    @if ($errors->has('email'))
+        <script nonce="{{ $nonce }}">
+            Swal.fire({
+                icon: 'error',
+                title: 'Google Login Failed',
+                text: '{{ $errors->first('email') }}',
+            })
+        </script>
+    @endif
 @endsection

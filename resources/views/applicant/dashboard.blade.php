@@ -18,7 +18,7 @@
         </div>
         <div class="row">
             <!-- Profile Column (Left) -->
-            <div class="col-lg-4">
+            <div class="col-lg-4 order-2 order-lg-1">
                 <!-- User Profile Panel -->
                 <div id="panel-1" class="panel">
                     <div class="panel-hdr">
@@ -112,43 +112,40 @@
             </div>
 
             <!-- Content Column (Right) -->
-            <div class="col-lg-8">
+            <div class="col-lg-8 order-1 order-lg-2">
                 <!-- Stat Widgets (SmartAdmin Style) -->
                 <div class="row">
-                    <div class="col-sm-4">
-                        <div class="p-3 bg-info-300 rounded overflow-hidden position-relative text-white mb-g">
-                            <div class="">
-                                <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                                    {{ Auth::user()->applier && Auth::user()->applier->attachment != '-' ? 'Ada' : 'Kosong' }}
-                                    <small class="m-0 l-h-n">Dokumen</small>
-                                </h3>
+                    <div class="col-12 col-sm-4 mb-3">
+                        <div class="d-flex align-items-center p-3 bg-info-300 rounded overflow-hidden text-white shadow-sm h-100">
+                            <div class="mr-3">
+                                <i class="fas fa-file-upload opacity-50" style="font-size: 2.2rem;"></i>
                             </div>
-                            <i class="fas fa-file-upload position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1"
-                                style="font-size:4rem"></i>
+                            <div>
+                                <h4 class="m-0 font-weight-bold">{{ Auth::user()->applier && Auth::user()->applier->attachment != '-' ? 'Ada' : 'Kosong' }}</h4>
+                                <small class="text-white-50">Dokumen</small>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="p-3 bg-success-300 rounded overflow-hidden position-relative text-white mb-g">
-                            <div class="">
-                                <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                                    {{ Auth::user()->hasVerifiedEmail() ? 'Verified' : 'Pending' }}
-                                    <small class="m-0 l-h-n">Status Email</small>
-                                </h3>
+                    <div class="col-12 col-sm-4 mb-3">
+                        <div class="d-flex align-items-center p-3 bg-success-300 rounded overflow-hidden text-white shadow-sm h-100">
+                            <div class="mr-3">
+                                <i class="fas fa-check-circle opacity-50" style="font-size: 2.2rem;"></i>
                             </div>
-                            <i class="fas fa-check-circle position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1"
-                                style="font-size:4rem"></i>
+                            <div>
+                                <h4 class="m-0 font-weight-bold">{{ Auth::user()->hasVerifiedEmail() ? 'Verified' : 'Pending' }}</h4>
+                                <small class="text-white-50">Status Email</small>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="p-3 bg-warning-400 rounded overflow-hidden position-relative text-white mb-g">
-                            <div class="">
-                                <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                                    {{ \App\Models\Career::where('status', 'on')->count() }}
-                                    <small class="m-0 l-h-n">Lowongan Aktif</small>
-                                </h3>
+                    <div class="col-12 col-sm-4 mb-3">
+                        <div class="d-flex align-items-center p-3 bg-warning-400 rounded overflow-hidden text-white shadow-sm h-100">
+                            <div class="mr-3">
+                                <i class="fas fa-briefcase opacity-50" style="font-size: 2.2rem;"></i>
                             </div>
-                            <i class="fas fa-briefcase position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1"
-                                style="font-size:4rem"></i>
+                            <div>
+                                <h4 class="m-0 font-weight-bold">{{ \App\Models\Career::where('status', 'on')->count() }}</h4>
+                                <small class="text-white-50">Lowongan Aktif</small>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -230,46 +227,35 @@
                                         </h3>
                                     </div>
 
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-striped w-100">
-                                            <thead class="bg-primary-600">
-                                                <tr>
-                                                    <th class="text-white">Posisi</th>
-                                                    <th class="text-white">Tipe</th>
-                                                    <th class="text-white" style="width: 150px">Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @forelse($careers as $job)
-                                                    <tr>
-                                                        <td class="align-middle font-weight-bold">{{ $job->title }}</td>
-                                                        <td class="align-middle">
-                                                            @if ($job->tipe == 'medis')
-                                                                <span class="badge badge-success badge-pill">Medis</span>
-                                                            @else
-                                                                <span class="badge badge-info badge-pill">Non-Medis</span>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            <button type="button"
-                                                                class="btn btn-sm btn-outline-primary btn-block btn-apply waves-effect waves-themed"
-                                                                data-id="{{ $job->id }}"
-                                                                data-title="{{ $job->title }}" data-toggle="modal"
-                                                                data-target="#modal-apply">
-                                                                Lamar Sekarang
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                @empty
-                                                    <tr>
-                                                        <td colspan="3" class="text-center text-muted py-4">
-                                                            <i class="fal fa-search fa-3x mb-3 d-block opacity-50"></i>
-                                                            Tidak ada lowongan aktif saat ini.
-                                                        </td>
-                                                    </tr>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
+                                    <div class="row mt-3">
+                                        @forelse($careers as $job)
+                                            <div class="col-12 col-md-6 mb-4">
+                                                <div class="card premium-card job-premium-card h-100">
+                                                    <div class="premium-card-accent-top {{ $job->tipe == 'medis' ? 'accent-success' : 'accent-info' }}"></div>
+                                                    <div class="card-body">
+                                                        <div class="d-flex justify-content-between align-items-center mb-3 mt-1">
+                                                            <span class="badge premium-badge {{ $job->tipe == 'medis' ? 'premium-badge-success' : 'premium-badge-info' }}">
+                                                                {{ ucfirst($job->tipe) }}
+                                                            </span>
+                                                            <small class="text-muted"><i class="fas fa-map-marker-alt text-danger mr-1"></i> RS Livasya</small>
+                                                        </div>
+                                                        <h5 class="card-title-premium text-dark mb-4">{{ $job->title }}</h5>
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-primary btn-block btn-apply waves-effect waves-themed px-4 py-2 font-weight-bold rounded-pill"
+                                                            data-id="{{ $job->id }}"
+                                                            data-title="{{ $job->title }}" data-toggle="modal"
+                                                            data-target="#modal-apply">
+                                                            Lamar Sekarang <i class="fas fa-arrow-right ml-1"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="col-12 text-center text-muted py-4">
+                                                <i class="fal fa-search fa-3x mb-3 d-block opacity-50"></i>
+                                                Tidak ada lowongan aktif saat ini.
+                                            </div>
+                                        @endforelse
                                     </div>
                                 </div>
                                 <!-- /.tab-pane -->

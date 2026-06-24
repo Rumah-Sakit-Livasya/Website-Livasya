@@ -66,7 +66,7 @@ class SocialAuthController extends Controller
 
             return redirect()->route('applicant.dashboard')->with('status', 'Profile already completed.');
         } catch (\Exception $e) {
-            return redirect('/bukan-login')->withErrors(['email' => 'Google Login failed. Please try again. error: ' . $e->getMessage()]);
+            return redirect()->route('login.pelamar')->withErrors(['email' => 'Google Login failed. Please try again. error: ' . $e->getMessage()]);
         }
     }
 }

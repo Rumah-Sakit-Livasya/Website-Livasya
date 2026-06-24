@@ -14,10 +14,10 @@
             </div>
         </div>
 
-        <div class="card mb-4 border-info shadow-sm">
-            <div class="card-header bg-info text-white d-flex align-items-center">
+        <div class="card mb-4 checklist-premium-card border-0 shadow-sm">
+            <div class="card-header checklist-premium-header text-white d-flex align-items-center">
                 <i class="fas fa-tasks mr-2 fa-lg"></i>
-                <h5 class="mb-0 font-weight-bold">Checklist Kelengkapan Data Diri</h5>
+                <h5 class="mb-0 font-weight-bold text-white">Checklist Kelengkapan Data Diri</h5>
             </div>
             <div class="card-body">
                 <p class="mb-3 text-muted">Harap lengkapi seluruh data wajib berikut agar lamaran Anda dapat diproses lebih
@@ -85,21 +85,27 @@
             </div>
         </div>
 
-        <div class="row mb-4">
-            <div class="col-12">
-                <button type="button" class="btn btn-success waves-effect waves-themed mr-2" data-toggle="modal"
+        <div class="row mb-3 mx-n2">
+            <div class="col-6 col-sm-auto mb-2 mb-sm-0 px-2">
+                <button type="button" class="btn btn-success btn-block waves-effect waves-themed" data-toggle="modal"
                     data-target="#modal-edit-profile">
                     <i class="fas fa-edit mr-1"></i> Edit Profil
                 </button>
-                <button type="button" class="btn btn-warning waves-effect waves-themed mr-2" data-toggle="modal"
+            </div>
+            <div class="col-6 col-sm-auto mb-2 mb-sm-0 px-2">
+                <button type="button" class="btn btn-warning btn-block waves-effect waves-themed" data-toggle="modal"
                     data-target="#modal-upload-photo">
                     <i class="fas fa-upload mr-1"></i> Upload Foto
                 </button>
-                <button type="button" class="btn btn-warning waves-effect waves-themed mr-2" data-toggle="modal"
+            </div>
+            <div class="col-6 col-sm-auto mb-2 mb-sm-0 px-2">
+                <button type="button" class="btn btn-warning btn-block waves-effect waves-themed" data-toggle="modal"
                     data-target="#modal-upload-cv">
                     <i class="fas fa-file-pdf mr-1"></i> Upload CV
                 </button>
-                <button type="button" class="btn btn-warning waves-effect waves-themed" data-toggle="modal"
+            </div>
+            <div class="col-6 col-sm-auto mb-2 mb-sm-0 px-2">
+                <button type="button" class="btn btn-warning btn-block waves-effect waves-themed" data-toggle="modal"
                     data-target="#modal-upload-ktp">
                     <i class="fas fa-id-card mr-1"></i> Upload eKTP
                 </button>
@@ -109,7 +115,7 @@
         <div class="row">
             <!-- Left Column: Bio -->
             <div class="col-lg-4">
-                <div id="panel-bio" class="panel">
+                <div id="panel-bio" class="panel profile-premium-panel">
                     <div class="panel-container show">
                         <div class="panel-content">
                             <div class="d-flex flex-column align-items-center mb-4">
@@ -133,48 +139,48 @@
                                     ({{ \Carbon\Carbon::parse($applier->birth_day ?? now())->age }} Tahun)</p>
                             </div>
 
-                            <ul class="list-unstyled">
-                                <li class="mb-2">
-                                    <i class="fas fa-phone mr-2 text-muted" style="width: 20px;"></i>
-                                    {{ $applier->family_contact ?? (Auth::user()->phone ?? '-') }}
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-envelope mr-2 text-muted" style="width: 20px;"></i>
-                                    {{ Auth::user()->email }}
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-male mr-2 text-muted" style="width: 20px;"></i>
-                                    {{ $applier->sex ?? '-' }}
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-tint mr-2 text-muted" style="width: 20px;"></i>
-                                    GOL. Darah {{ $applier->blood_type ?? '-' }}
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-heart mr-2 text-muted" style="width: 20px;"></i>
-                                    {{ $applier->marital_status ?? '-' }}
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-moon mr-2 text-muted" style="width: 20px;"></i>
-                                    {{ $applier->religion ?? '-' }}
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-user-tag mr-2 text-muted" style="width: 20px;"></i>
-                                    Minat bagian: {{ $applier->position_interest ?? 'BELUM MEMILIH' }}
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-hospital mr-2 text-muted" style="width: 20px;"></i>
-                                    Minat Faskes: {{ \App\Models\Identity::first()->name ?? 'RS Livasya' }}
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-id-card mr-2 text-muted" style="width: 20px;"></i>
-                                    KTP: {{ $applier->id_card ?? '-' }}
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-home mr-2 text-muted" style="width: 20px;"></i>
-                                    {{ $applier->ktp_address ?? '-' }}
-                                </li>
-                            </ul>
+                            <div class="row no-gutters">
+                                <div class="col-6 col-lg-12 mb-3">
+                                    <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 0.7rem;"><i class="fas fa-phone mr-1"></i> No. Telepon</small>
+                                    <span class="text-dark font-weight-medium">{{ $applier->family_contact ?? (Auth::user()->phone ?? '-') }}</span>
+                                </div>
+                                <div class="col-6 col-lg-12 mb-3">
+                                    <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 0.7rem;"><i class="fas fa-envelope mr-1"></i> Email</small>
+                                    <span class="text-dark font-weight-medium text-truncate d-block" title="{{ Auth::user()->email }}">{{ Auth::user()->email }}</span>
+                                </div>
+                                <div class="col-6 col-lg-12 mb-3">
+                                    <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 0.7rem;"><i class="fas fa-male mr-1"></i> Jenis Kelamin</small>
+                                    <span class="text-dark font-weight-medium">{{ $applier->sex ?? '-' }}</span>
+                                </div>
+                                <div class="col-6 col-lg-12 mb-3">
+                                    <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 0.7rem;"><i class="fas fa-tint mr-1"></i> Gol. Darah</small>
+                                    <span class="text-dark font-weight-medium">{{ $applier->blood_type ?? '-' }}</span>
+                                </div>
+                                <div class="col-6 col-lg-12 mb-3">
+                                    <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 0.7rem;"><i class="fas fa-heart mr-1"></i> Pernikahan</small>
+                                    <span class="text-dark font-weight-medium">{{ $applier->marital_status ?? '-' }}</span>
+                                </div>
+                                <div class="col-6 col-lg-12 mb-3">
+                                    <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 0.7rem;"><i class="fas fa-moon mr-1"></i> Agama</small>
+                                    <span class="text-dark font-weight-medium">{{ $applier->religion ?? '-' }}</span>
+                                </div>
+                                <div class="col-6 col-lg-12 mb-3">
+                                    <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 0.7rem;"><i class="fas fa-user-tag mr-1"></i> Minat Bagian</small>
+                                    <span class="text-dark font-weight-medium text-truncate d-block" title="{{ $applier->position_interest ?? 'BELUM MEMILIH' }}">{{ $applier->position_interest ?? 'BELUM MEMILIH' }}</span>
+                                </div>
+                                <div class="col-6 col-lg-12 mb-3">
+                                    <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 0.7rem;"><i class="fas fa-hospital mr-1"></i> Minat Faskes</small>
+                                    <span class="text-dark font-weight-medium text-truncate d-block" title="{{ \App\Models\Identity::first()->name ?? 'RS Livasya' }}">{{ \App\Models\Identity::first()->name ?? 'RS Livasya' }}</span>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 0.7rem;"><i class="fas fa-id-card mr-1"></i> NIK KTP</small>
+                                    <span class="text-dark font-weight-medium">{{ $applier->id_card ?? '-' }}</span>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <small class="text-muted d-block text-uppercase font-weight-bold" style="font-size: 0.7rem;"><i class="fas fa-home mr-1"></i> Alamat KTP</small>
+                                    <span class="text-dark font-weight-medium small d-block">{{ $applier->ktp_address ?? '-' }}</span>
+                                </div>
+                            </div>
 
                             <h5 class="mt-4 mb-2">Tentang Saya...</h5>
                             <blockquote class="blockquote">
@@ -227,63 +233,59 @@
                                     <div class="mb-3">
                                         <button class="btn btn-success waves-effect waves-themed" data-toggle="modal"
                                             data-target="#modal-pendidikan">Tambah</button>
-                                        {{-- <button class="btn btn-secondary waves-effect waves-themed" disabled>Edit</button>
-                                        <button class="btn btn-danger waves-effect waves-themed" disabled>Hapus</button>
-                                        <button class="btn btn-warning waves-effect waves-themed" disabled>Upload
-                                            Ijazah</button>
-                                        <button class="btn btn-warning waves-effect waves-themed" disabled>Upload
-                                            Transkrip</button> --}}
                                     </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover w-100">
-                                            <thead>
-                                                <tr>
-                                                    <th>Pendidikan terakhir</th>
-                                                    <th>Nama institusi</th>
-                                                    <th>IPK/Nilai akhir</th>
-                                                    <th>Pendidikan tambahan (Bila Ada)</th>
-                                                    <th>Dokumen</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @forelse($educations as $index => $edu)
-                                                    <tr>
-                                                        <td>{{ $edu->level ?? '-' }}</td>
-                                                        <td>{{ $edu->institution }}</td>
-                                                        <td>{{ $edu->gpa ?? '-' }}</td>
-                                                        <td>{{ $edu->additional_notes ?? '-' }}</td>
-                                                        <td>
-                                                            @if ($edu->certificate)
-                                                                <a href="{{ asset('storage/' . $edu->certificate) }}"
-                                                                    target="_blank" class="badge badge-primary">Ijazah</a>
-                                                            @endif
-                                                            @if ($edu->transcript)
-                                                                <a href="{{ asset('storage/' . $edu->transcript) }}"
-                                                                    target="_blank" class="badge badge-info">Transkrip</a>
-                                                            @endif
-                                                            @if (!$edu->certificate && !$edu->transcript)
-                                                                <span class="text-muted">-</span>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            <form
-                                                                action="{{ route('applicant.profile.education.delete', $edu->id) }}"
-                                                                method="POST" class="d-inline">
+                                    <div class="row pt-2">
+                                        @forelse($educations as $edu)
+                                            <div class="col-12 col-md-6 mb-4">
+                                                <div class="card premium-card h-100">
+                                                    <div class="premium-card-accent-left accent-success"></div>
+                                                    <div class="card-body">
+                                                        <div class="d-flex justify-content-between align-items-start mb-3">
+                                                            <span class="badge premium-badge premium-badge-success">
+                                                                <i class="fas fa-graduation-cap mr-1"></i> {{ $edu->level }}
+                                                            </span>
+                                                            <form action="{{ route('applicant.profile.education.delete', $edu->id) }}" method="POST" class="d-inline">
                                                                 @csrf @method('DELETE')
-                                                                <button class="btn btn-xs btn-danger btn-icon"
-                                                                    onclick="return confirm('Hapus?')"><i
-                                                                        class="fas fa-trash"></i></button>
+                                                                <button class="btn btn-danger btn-xs btn-action-premium" onclick="return confirm('Hapus?')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
                                                             </form>
-                                                        </td>
-                                                    </tr>
-                                                @empty
-                                                    <tr>
-                                                        <td colspan="5" class="text-center">Belum ada data</td>
-                                                    </tr>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
+                                                        </div>
+                                                        <h5 class="card-title-premium">{{ $edu->institution }}</h5>
+                                                        <p class="text-muted small mb-2">
+                                                            @if($edu->major)
+                                                                <span class="d-block mb-1 text-dark"><i class="fas fa-book mr-1 text-muted"></i> Jurusan: <strong>{{ $edu->major }}</strong></span>
+                                                            @endif
+                                                            @if($edu->gpa)
+                                                                <span class="d-block"><i class="fas fa-star mr-1 text-warning"></i> IPK/Nilai: <strong>{{ $edu->gpa }}</strong></span>
+                                                            @endif
+                                                        </p>
+                                                        @if($edu->additional_notes)
+                                                            <p class="text-muted small mb-3 font-italic bg-light p-2 rounded">{{ $edu->additional_notes }}</p>
+                                                        @endif
+                                                        @if ($edu->certificate || $edu->transcript)
+                                                            <div class="border-top pt-3 mt-3 d-flex flex-wrap">
+                                                                @if ($edu->certificate)
+                                                                    <a href="{{ asset('storage/' . $edu->certificate) }}" target="_blank" class="btn btn-sm btn-outline-success mr-2 mb-1 px-3 rounded-pill">
+                                                                        <i class="fas fa-file-pdf mr-1"></i> Ijazah
+                                                                    </a>
+                                                                @endif
+                                                                @if ($edu->transcript)
+                                                                    <a href="{{ asset('storage/' . $edu->transcript) }}" target="_blank" class="btn btn-sm btn-outline-info mb-1 px-3 rounded-pill">
+                                                                        <i class="fas fa-file-pdf mr-1"></i> Transkrip
+                                                                    </a>
+                                                                @endif
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="col-12 text-center py-4 text-muted">
+                                                <i class="fal fa-folder-open fa-3x mb-2 opacity-50"></i>
+                                                <p class="mb-0">Belum ada data pendidikan.</p>
+                                            </div>
+                                        @endforelse
                                     </div>
                                 </div>
 
@@ -294,44 +296,42 @@
                                         <button class="btn btn-success waves-effect waves-themed" data-toggle="modal"
                                             data-target="#modal-kerja">Tambah</button>
                                     </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover w-100">
-                                            <thead>
-                                                <tr>
-                                                    <th>Perusahaan</th>
-                                                    <th>Jabatan</th>
-                                                    <th>Masih Kerja</th>
-                                                    <th>Mulai</th>
-                                                    <th>Selesai</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @forelse($works as $work)
-                                                    <tr>
-                                                        <td>{{ $work->work_name }}</td>
-                                                        <td>{{ $work->work_position }}</td>
-                                                        <td>{{ $work->is_active ? 'Ya' : 'Tidak' }}</td>
-                                                        <td>{{ $work->work_start }}</td>
-                                                        <td>{{ $work->work_end }}</td>
-                                                        <td>
-                                                            <form
-                                                                action="{{ route('applicant.profile.work.delete', $work->id) }}"
-                                                                method="POST" class="d-inline">
+                                    <div class="row pt-2">
+                                        @forelse($works as $work)
+                                            <div class="col-12 col-md-6 mb-4">
+                                                <div class="card premium-card h-100">
+                                                    <div class="premium-card-accent-left accent-primary"></div>
+                                                    <div class="card-body">
+                                                        <div class="d-flex justify-content-between align-items-start mb-3">
+                                                            <span class="badge premium-badge {{ $work->is_active ? 'premium-badge-success' : 'premium-badge-secondary' }}">
+                                                                <i class="fas fa-briefcase mr-1"></i> {{ $work->is_active ? 'Masih Bekerja' : 'Mantan Karyawan' }}
+                                                            </span>
+                                                            <form action="{{ route('applicant.profile.work.delete', $work->id) }}" method="POST" class="d-inline">
                                                                 @csrf @method('DELETE')
-                                                                <button class="btn btn-xs btn-danger btn-icon"
-                                                                    onclick="return confirm('Hapus?')"><i
-                                                                        class="fas fa-trash"></i></button>
+                                                                <button class="btn btn-danger btn-xs btn-action-premium" onclick="return confirm('Hapus?')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
                                                             </form>
-                                                        </td>
-                                                    </tr>
-                                                @empty
-                                                    <tr>
-                                                        <td colspan="6" class="text-center">Belum ada data</td>
-                                                    </tr>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
+                                                        </div>
+                                                        <h5 class="card-title-premium">{{ $work->work_position }}</h5>
+                                                        <h6 class="card-subtitle-premium text-primary"><i class="fas fa-building mr-1 text-muted"></i> {{ $work->work_name }}</h6>
+                                                        <p class="text-muted small mb-2">
+                                                            <i class="far fa-calendar-alt mr-1"></i>
+                                                            {{ \Carbon\Carbon::parse($work->work_start)->format('d M Y') }} - 
+                                                            {{ $work->is_active ? 'Sekarang' : \Carbon\Carbon::parse($work->work_end)->format('d M Y') }}
+                                                        </p>
+                                                        @if($work->description)
+                                                            <p class="text-muted small mb-0 font-italic bg-light p-2 rounded">{{ $work->description }}</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="col-12 text-center py-4 text-muted">
+                                                <i class="fal fa-folder-open fa-3x mb-2 opacity-50"></i>
+                                                <p class="mb-0">Belum ada data pengalaman kerja.</p>
+                                            </div>
+                                        @endforelse
                                     </div>
                                 </div>
 
@@ -342,212 +342,186 @@
                                         <button class="btn btn-success waves-effect waves-themed" data-toggle="modal"
                                             data-target="#modal-pelatihan">Tambah</button>
                                     </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover w-100">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nama Pelatihan</th>
-                                                    <th>Mulai</th>
-                                                    <th>Selesai</th>
-                                                    <th>Keterangan</th>
-                                                    <th>Dokumen</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @forelse($certifications as $cert)
-                                                    <tr>
-                                                        <td>{{ $cert->certification_name }}</td>
-                                                        <td>{{ $cert->start_date }}</td>
-                                                        <td>{{ $cert->end_date }}</td>
-                                                        <td>{{ $cert->description }}</td>
-                                                        <td>
-                                                            @if ($cert->file)
-                                                                <a href="{{ asset('storage/' . $cert->file) }}"
-                                                                    target="_blank" class="badge badge-primary">Lihat
-                                                                    File</a>
-                                                            @else
-                                                                -
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            <form
-                                                                action="{{ route('applicant.profile.certification.delete', $cert->id) }}"
-                                                                method="POST" class="d-inline">
+                                    <div class="row pt-2">
+                                        @forelse($certifications as $cert)
+                                            <div class="col-12 col-md-6 mb-4">
+                                                <div class="card premium-card h-100">
+                                                    <div class="premium-card-accent-left accent-warning"></div>
+                                                    <div class="card-body">
+                                                        <div class="d-flex justify-content-between align-items-start mb-3">
+                                                            <span class="badge premium-badge premium-badge-warning">
+                                                                <i class="fas fa-certificate mr-1"></i> Sertifikat Pelatihan
+                                                            </span>
+                                                            <form action="{{ route('applicant.profile.certification.delete', $cert->id) }}" method="POST" class="d-inline">
                                                                 @csrf @method('DELETE')
-                                                                <button class="btn btn-xs btn-danger btn-icon"
-                                                                    onclick="return confirm('Hapus?')"><i
-                                                                        class="fas fa-trash"></i></button>
+                                                                <button class="btn btn-danger btn-xs btn-action-premium" onclick="return confirm('Hapus?')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
                                                             </form>
-                                                        </td>
-                                                    </tr>
-                                                @empty
-                                                    <tr>
-                                                        <td colspan="5" class="text-center">Belum ada data</td>
-                                                    </tr>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
+                                                        </div>
+                                                        <h5 class="card-title-premium">{{ $cert->certification_name }}</h5>
+                                                        <p class="text-muted small mb-2">
+                                                            <i class="far fa-calendar-alt mr-1"></i> 
+                                                            {{ $cert->start_date ?? '-' }} s/d {{ $cert->end_date ?? '-' }}
+                                                        </p>
+                                                        @if($cert->description)
+                                                            <p class="text-muted small mb-3 font-italic bg-light p-2 rounded">{{ $cert->description }}</p>
+                                                        @endif
+                                                        @if ($cert->file)
+                                                            <div class="border-top pt-3 mt-3">
+                                                                <a href="{{ asset('storage/' . $cert->file) }}" target="_blank" class="btn btn-sm btn-outline-warning text-dark border-warning px-3 rounded-pill">
+                                                                    <i class="fas fa-file-pdf mr-1"></i> Lihat Dokumen
+                                                                </a>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="col-12 text-center py-4 text-muted">
+                                                <i class="fal fa-folder-open fa-3x mb-2 opacity-50"></i>
+                                                <p class="mb-0">Belum ada data pelatihan.</p>
+                                            </div>
+                                        @endforelse
                                     </div>
                                 </div>
 
+                                <!-- STR/SIP Tab -->
                                 <div class="tab-pane fade" id="content-str">
                                     <h4 class="mb-3">Riwayat STR/SIP</h4>
                                     <div class="mb-3">
                                         <button class="btn btn-success waves-effect waves-themed" data-toggle="modal"
                                             data-target="#modal-str">Tambah</button>
                                     </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-striped table-hover w-100">
-                                            <thead class="bg-primary-600">
-                                                <tr>
-                                                    <th class="text-white">Jenis</th>
-                                                    <th class="text-white">Bagian</th>
-                                                    <th class="text-white">Nomor</th>
-                                                    <th class="text-white">Periode</th>
-                                                    <th class="text-white">Penerbit</th>
-                                                    <th class="text-white">Dokumen</th>
-                                                    <th class="text-white">Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @forelse($licenses as $license)
-                                                    <tr>
-                                                        <td>{{ $license->type }}</td>
-                                                        <td>{{ $license->section }}</td>
-                                                        <td>{{ $license->number }}</td>
-                                                        <td>{{ $license->start_date }} - {{ $license->end_date }}</td>
-                                                        <td>{{ $license->issuer }}</td>
-                                                        <td>
-                                                            @if ($license->file)
-                                                                <a href="{{ asset('storage/' . $license->file) }}"
-                                                                    target="_blank" class="badge badge-primary">Lihat
-                                                                    File</a>
-                                                            @else
-                                                                -
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            <form
-                                                                action="{{ route('applicant.profile.license.delete', $license->id) }}"
-                                                                method="POST" class="d-inline">
+                                    <div class="row pt-2">
+                                        @forelse($licenses as $license)
+                                            <div class="col-12 col-md-6 mb-4">
+                                                <div class="card premium-card h-100">
+                                                    <div class="premium-card-accent-left accent-danger"></div>
+                                                    <div class="card-body">
+                                                        <div class="d-flex justify-content-between align-items-start mb-3">
+                                                            <span class="badge premium-badge premium-badge-danger">
+                                                                <i class="fas fa-id-card mr-1"></i> {{ $license->type }}
+                                                            </span>
+                                                            <form action="{{ route('applicant.profile.license.delete', $license->id) }}" method="POST" class="d-inline">
                                                                 @csrf @method('DELETE')
-                                                                <button
-                                                                    class="btn btn-xs btn-danger btn-icon waves-effect waves-themed"
-                                                                    onclick="return confirm('Hapus data?')"><i
-                                                                        class="fas fa-trash"></i></button>
+                                                                <button class="btn btn-danger btn-xs btn-action-premium" onclick="return confirm('Hapus data?')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
                                                             </form>
-                                                        </td>
-                                                    </tr>
-                                                @empty
-                                                    <tr>
-                                                        <td colspan="6" class="text-center text-muted">Belum ada data.
-                                                        </td>
-                                                    </tr>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
+                                                        </div>
+                                                        <h5 class="card-title-premium">{{ $license->section }}</h5>
+                                                        <p class="text-muted small mb-2"><i class="fas fa-hashtag mr-1 text-muted"></i> No: <span class="font-weight-bold text-dark">{{ $license->number }}</span></p>
+                                                        <p class="text-muted small mb-2"><i class="far fa-calendar-alt mr-1"></i> Periode: {{ $license->start_date }} - {{ $license->end_date }}</p>
+                                                        <p class="text-muted small mb-2"><i class="fas fa-building mr-1 text-muted"></i> Penerbit: {{ $license->issuer }}</p>
+                                                        @if ($license->file)
+                                                            <div class="border-top pt-3 mt-3">
+                                                                <a href="{{ asset('storage/' . $license->file) }}" target="_blank" class="btn btn-sm btn-outline-danger px-3 rounded-pill">
+                                                                    <i class="fas fa-file-pdf mr-1"></i> Lihat Dokumen
+                                                                </a>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="col-12 text-center py-4 text-muted">
+                                                <i class="fal fa-folder-open fa-3x mb-2 opacity-50"></i>
+                                                <p class="mb-0">Belum ada data STR/SIP.</p>
+                                            </div>
+                                        @endforelse
                                     </div>
                                 </div>
 
+                                <!-- Beasiswa Tab -->
                                 <div class="tab-pane fade" id="content-beasiswa">
                                     <h4 class="mb-3">Riwayat Beasiswa</h4>
                                     <div class="mb-3">
                                         <button class="btn btn-success waves-effect waves-themed" data-toggle="modal"
                                             data-target="#modal-beasiswa">Tambah</button>
                                     </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-striped table-hover w-100">
-                                            <thead class="bg-primary-600">
-                                                <tr>
-                                                    <th class="text-white">Nama Beasiswa</th>
-                                                    <th class="text-white">Periode</th>
-                                                    <th class="text-white">Keterangan</th>
-                                                    <th class="text-white">Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if (isset($scholarships))
-                                                    @forelse($scholarships as $scholarship)
-                                                        <tr>
-                                                            <td>{{ $scholarship->name }}</td>
-                                                            <td>{{ $scholarship->start_date }} -
-                                                                {{ $scholarship->end_date }}</td>
-                                                            <td>{{ $scholarship->description }}</td>
-                                                            <td>
-                                                                <form
-                                                                    action="{{ route('applicant.profile.scholarship.delete', $scholarship->id ?? 0) }}"
-                                                                    method="POST" class="d-inline">
+                                    <div class="row pt-2">
+                                        @if (isset($scholarships))
+                                            @forelse($scholarships as $scholarship)
+                                                <div class="col-12 col-md-6 mb-4">
+                                                    <div class="card premium-card h-100">
+                                                        <div class="premium-card-accent-left accent-purple"></div>
+                                                        <div class="card-body">
+                                                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                                                <span class="badge premium-badge premium-badge-purple">
+                                                                    <i class="fas fa-award mr-1"></i> Penerima Beasiswa
+                                                                </span>
+                                                                <form action="{{ route('applicant.profile.scholarship.delete', $scholarship->id ?? 0) }}" method="POST" class="d-inline">
                                                                     @csrf @method('DELETE')
-                                                                    <button
-                                                                        class="btn btn-xs btn-danger btn-icon waves-effect waves-themed"
-                                                                        onclick="return confirm('Hapus data?')"><i
-                                                                            class="fas fa-trash"></i></button>
+                                                                    <button class="btn btn-danger btn-xs btn-action-premium" onclick="return confirm('Hapus data?')">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </button>
                                                                 </form>
-                                                            </td>
-                                                        </tr>
-                                                    @empty
-                                                        <tr>
-                                                            <td colspan="4" class="text-center text-muted">Belum ada
-                                                                data beasiswa.</td>
-                                                        </tr>
-                                                    @endforelse
-                                                @else
-                                                    <tr>
-                                                        <td colspan="4" class="text-center text-muted">Fitur Beasiswa
-                                                            belum tersedia.</td>
-                                                    </tr>
-                                                @endif
-                                            </tbody>
-                                        </table>
+                                                            </div>
+                                                            <h5 class="card-title-premium">{{ $scholarship->name }}</h5>
+                                                            <p class="text-muted small mb-2">
+                                                                <i class="far fa-calendar-alt mr-1"></i> Periode: {{ $scholarship->start_date }} - {{ $scholarship->end_date }}
+                                                            </p>
+                                                            @if($scholarship->description)
+                                                                <p class="text-muted small mb-0 font-italic bg-light p-2 rounded">{{ $scholarship->description }}</p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @empty
+                                                <div class="col-12 text-center py-4 text-muted">
+                                                    <i class="fal fa-folder-open fa-3x mb-2 opacity-50"></i>
+                                                    <p class="mb-0">Belum ada data beasiswa.</p>
+                                                </div>
+                                            @endforelse
+                                        @else
+                                            <div class="col-12 text-center py-4 text-muted">
+                                                <i class="fal fa-folder-open fa-3x mb-2 opacity-50"></i>
+                                                <p class="mb-0">Fitur Beasiswa belum tersedia.</p>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
 
+                                <!-- Dokumen Lain Tab -->
                                 <div class="tab-pane fade" id="content-lain">
                                     <h4 class="mb-3">Dokumen Lain</h4>
                                     <div class="mb-3">
                                         <button class="btn btn-success waves-effect waves-themed" data-toggle="modal"
                                             data-target="#modal-lain">Tambah</button>
                                     </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-striped table-hover w-100">
-                                            <thead class="bg-primary-600">
-                                                <tr>
-                                                    <th class="text-white">Jenis Dokumen</th>
-                                                    <th class="text-white">Periode</th>
-                                                    <th class="text-white">Keterangan</th>
-                                                    <th class="text-white">Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @forelse($others as $other)
-                                                    <tr>
-                                                        <td>{{ $other->document_type }}</td>
-                                                        <td>{{ $other->start_date }} - {{ $other->end_date }}</td>
-                                                        <td>{{ $other->description }}</td>
-                                                        <td>
-                                                            <form
-                                                                action="{{ route('applicant.profile.other.delete', $other->id) }}"
-                                                                method="POST" class="d-inline">
+                                    <div class="row pt-2">
+                                        @forelse($others as $other)
+                                            <div class="col-12 col-md-6 mb-4">
+                                                <div class="card premium-card h-100">
+                                                    <div class="premium-card-accent-left accent-secondary"></div>
+                                                    <div class="card-body">
+                                                        <div class="d-flex justify-content-between align-items-start mb-3">
+                                                            <span class="badge premium-badge premium-badge-secondary">
+                                                                <i class="fas fa-file-alt mr-1"></i> {{ $other->document_type }}
+                                                            </span>
+                                                            <form action="{{ route('applicant.profile.other.delete', $other->id) }}" method="POST" class="d-inline">
                                                                 @csrf @method('DELETE')
-                                                                <button
-                                                                    class="btn btn-xs btn-outline-danger btn-icon waves-effect waves-themed"
-                                                                    onclick="return confirm('Hapus data?')"><i
-                                                                        class="fas fa-trash"></i></button>
+                                                                <button class="btn btn-danger btn-xs btn-action-premium" onclick="return confirm('Hapus data?')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
                                                             </form>
-                                                        </td>
-                                                    </tr>
-                                                @empty
-                                                    <tr>
-                                                        <td colspan="4" class="text-center text-muted">Belum ada
-                                                            dokumen pendukung.</td>
-                                                    </tr>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
+                                                        </div>
+                                                        <p class="text-muted small mb-2"><i class="far fa-calendar-alt mr-1"></i> Periode: {{ $other->start_date }} - {{ $other->end_date }}</p>
+                                                        @if($other->description)
+                                                            <p class="text-muted small mb-0 font-italic bg-light p-2 rounded">{{ $other->description }}</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="col-12 text-center py-4 text-muted">
+                                                <i class="fal fa-folder-open fa-3x mb-2 opacity-50"></i>
+                                                <p class="mb-0">Belum ada dokumen pendukung.</p>
+                                            </div>
+                                        @endforelse
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -576,41 +550,35 @@
                         <button class="btn btn-danger waves-effect waves-themed">Batal</button>
                         <button class="btn btn-warning waves-effect waves-themed">Cetak</button>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover w-100">
-                            <thead>
-                                <tr>
-                                    <th>NO</th>
-                                    <th>Faskes</th>
-                                    <th>Tanggal</th>
-                                    <th>Bagian</th>
-                                    <th>Ijazah</th>
-                                    <th>No Apply</th>
-                                    <th>Salary</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Auth::user()->applier && Auth::user()->applier->career)
-                                    <tr>
-                                        <td>1</td>
-                                        <td>{{ \App\Models\Identity::first()->name ?? 'RS Livasya' }}</td>
-                                        <td>{{ Auth::user()->applier->created_at->format('d/m/Y') }}</td>
-                                        <td>{{ Auth::user()->applier->career->title }}</td>
-                                        <td>-</td>
-                                        <td>APP-{{ str_pad(Auth::user()->applier->id, 5, '0', STR_PAD_LEFT) }}</td>
-                                        <td>Rp
-                                            {{ number_format((float) Auth::user()->applier->compensation_salary, 0, ',', '.') }}
-                                        </td>
-                                        <td><span class="badge badge-info">Submitted</span></td>
-                                    </tr>
-                                @else
-                                    <tr>
-                                        <td colspan="8" class="text-center">Belum ada lamaran</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
+                    <div class="row pt-2">
+                        @if (Auth::user()->applier && Auth::user()->applier->career)
+                             <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                 <div class="card premium-card h-100">
+                                     <div class="premium-card-accent-top accent-info"></div>
+                                     <div class="card-body">
+                                         <div class="d-flex justify-content-between align-items-center mb-3">
+                                             <span class="text-muted small">No: <span class="font-weight-bold text-dark">APP-{{ str_pad(Auth::user()->applier->id, 5, '0', STR_PAD_LEFT) }}</span></span>
+                                             <span class="badge premium-badge premium-badge-info">Submitted</span>
+                                         </div>
+                                         <h5 class="card-title-premium">{{ Auth::user()->applier->career->title }}</h5>
+                                         <p class="text-primary small mb-2 font-weight-bold"><i class="fas fa-hospital mr-1"></i> {{ \App\Models\Identity::first()->name ?? 'RS Livasya' }}</p>
+                                         <hr class="my-3">
+                                         <p class="text-muted small mb-2"><i class="far fa-calendar-alt mr-1"></i> Tgl Apply: <strong>{{ Auth::user()->applier->created_at->format('d/m/Y') }}</strong></p>
+                                         <p class="text-muted small mb-0">
+                                             <i class="fas fa-money-bill-wave mr-1 text-success"></i> Gaji Diharapkan: 
+                                             <span class="font-weight-bold text-dark">
+                                                 Rp {{ number_format((float) Auth::user()->applier->compensation_salary, 0, ',', '.') }}
+                                             </span>
+                                         </p>
+                                     </div>
+                                 </div>
+                             </div>
+                        @else
+                            <div class="col-12 text-center py-4 text-muted">
+                                <i class="fal fa-folder-open fa-3x mb-2 opacity-50"></i>
+                                <p class="mb-0">Belum ada lamaran</p>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -638,7 +606,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="text-danger form-label">Tingkat Pendidikan</label>
-                                <select class="form-control select2" name="level" required>
+                                <select class="form-control no-select2" name="level" required>
                                     <option value="">PILIH TINGKATAN</option>
                                     <option value="SMA/SMK">SMA/SMK</option>
                                     <option value="D3">D3</option>
@@ -674,7 +642,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="text-danger form-label">Jurusan Pendidikan</label>
-                                <select class="form-control select2" name="major" required>
+                                <select class="form-control no-select2" name="major" required>
                                     <option value="Lain-lain">Lain-lain</option>
                                     <option value="Keperawatan">Keperawatan</option>
                                     <option value="Kebidanan">Kebidanan</option>
@@ -744,7 +712,7 @@
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label class="form-label">Masih Bekerja</label>
-                                    <select class="form-control select2" name="is_active">
+                                    <select class="form-control no-select2" name="is_active">
                                         <option value="0">TIDAK</option>
                                         <option value="1">YA</option>
                                     </select>
@@ -847,7 +815,13 @@
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="photoInput" name="photo"
                                         required accept="image/*">
-                                    <label class="custom-file-label" for="photoInput">Pilih file...</label>
+                                    <label class="custom-file-label text-truncate" for="photoInput">
+                                        @if (Auth::user()->avatar && !Str::startsWith(Auth::user()->avatar, 'http'))
+                                            <i class="fas fa-check-circle text-success mr-1"></i> {{ basename(Auth::user()->avatar) }}
+                                        @else
+                                            Pilih file...
+                                        @endif
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -882,7 +856,13 @@
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="ktpInput" name="ktp_file"
                                         required accept=".pdf,image/*">
-                                    <label class="custom-file-label" for="ktpInput">Pilih file...</label>
+                                    <label class="custom-file-label text-truncate" for="ktpInput">
+                                        @if ($applier && $applier->attachment && $applier->attachment != '-')
+                                            <i class="fas fa-check-circle text-success mr-1"></i> {{ basename($applier->attachment) }}
+                                        @else
+                                            Pilih file...
+                                        @endif
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -1006,7 +986,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="text-danger form-label">Jenis</label>
-                                <select class="form-control select2" name="type" required>
+                                <select class="form-control no-select2" name="type" required>
                                     <option value="">PILIH JENIS STR/SIPP</option>
                                     <option value="STR">STR</option>
                                     <option value="SIP">SIP</option>
@@ -1014,7 +994,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="text-danger form-label">Bagian</label>
-                                <select class="form-control select2" name="section" required>
+                                <select class="form-control no-select2" name="section" required>
                                     <option value="">PILIH BAGIAN</option>
                                     <option value="Umum">Umum</option>
                                     <option value="Spesialis">Spesialis</option>
@@ -1095,7 +1075,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Jenis Kelamin</label>
-                                        <select class="form-control select2" name="sex" required>
+                                        <select class="form-control no-select2" name="sex" required>
                                             <option value="Laki-laki"
                                                 {{ ($applier->sex ?? '') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki
                                             </option>
@@ -1106,7 +1086,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Golongan Darah</label>
-                                        <select class="form-control select2" name="blood_type" required>
+                                        <select class="form-control no-select2" name="blood_type" required>
                                             <option value="A"
                                                 {{ ($applier->blood_type ?? '') == 'A' ? 'selected' : '' }}>A</option>
                                             <option value="B"
@@ -1121,7 +1101,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Status Pernikahan</label>
-                                        <select class="form-control select2" name="marital_status" required>
+                                        <select class="form-control no-select2" name="marital_status" required>
                                             <option value="Lajang"
                                                 {{ ($applier->marital_status ?? '') == 'Lajang' ? 'selected' : '' }}>Lajang
                                             </option>
@@ -1142,7 +1122,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Agama</label>
-                                        <select class="form-control select2" name="religion" required>
+                                        <select class="form-control no-select2" name="religion" required>
                                             <option value="Islam"
                                                 {{ ($applier->religion ?? '') == 'Islam' ? 'selected' : '' }}>Islam
                                             </option>
@@ -1173,7 +1153,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Minat Bagian</label>
-                                        <select class="form-control select2" name="position_interest" required>
+                                        <select class="form-control no-select2" name="position_interest" required>
                                             <option value="">Pilih Minat Bagian</option>
                                             @foreach ($jobPositions as $pos)
                                                 <option value="{{ $pos->name }}"
@@ -1228,7 +1208,13 @@
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="cvInput" name="cv"
                                         required accept=".pdf">
-                                    <label class="custom-file-label" for="cvInput">Pilih file...</label>
+                                    <label class="custom-file-label text-truncate" for="cvInput">
+                                        @if ($applier && $applier->cv)
+                                            <i class="fas fa-check-circle text-success mr-1"></i> {{ basename($applier->cv) }}
+                                        @else
+                                            Pilih file...
+                                        @endif
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -1244,17 +1230,19 @@
 @endsection
 
 @section('scripts')
-    <script>
+    <script nonce="{{ $nonce }}">
         $(document).ready(function() {
             // Check if profile is incomplete and show modal
             @if (!$applier || empty($applier->whatsapp_number) || empty($applier->id_card) || empty($applier->permanent_address))
                 $('#modal-edit-profile').modal('show');
             @endif
 
+
+
             // Custom file input label change
             $('.custom-file-input').on('change', function() {
                 var fileName = $(this).val().split('\\').pop();
-                $(this).next('.custom-file-label').addClass("selected").html(fileName);
+                $(this).next('.custom-file-label').addClass("selected").html('<i class="fas fa-file mr-1 text-primary"></i> ' + fileName);
             });
         });
     </script>

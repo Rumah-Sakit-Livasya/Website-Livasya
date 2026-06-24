@@ -6,7 +6,7 @@
     <main id="js-page-content" role="main" class="page-content">
         @include('inc.breadcrumb', ['bcrumb' => 'bc_level_satu', 'bc_1' => 'Lowongan Kerja'])
 
-        <div class="subheader mb-5">
+        <div class="subheader mb-3 mb-md-4">
             <h1 class="subheader-title text-center mx-auto">
                 <i class='subheader-icon fal fa-briefcase text-primary'></i> Lowongan Kerja <span
                     class='fw-300'>Tersedia</span>
@@ -14,7 +14,7 @@
             </h1>
         </div>
 
-        <div class="row justify-content-center mb-5">
+        <div class="row justify-content-center mb-3 mb-md-4">
             <div class="col-lg-10">
                 <div class="card border-0 shadow-sm rounded-lg">
                     <div class="card-body p-4">
@@ -36,7 +36,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-2 d-flex align-items-end">
+                            <div class="col-md-2 d-flex align-items-end mt-3 mt-md-0">
                                 <button class="btn btn-primary btn-block shadow-sm font-weight-bold" id="btn-filter">
                                     <i class="fas fa-search mr-2"></i> Cari
                                 </button>
@@ -52,18 +52,19 @@
                 <div class="col-md-6 col-lg-4 col-xl-3 loker-item mb-4"
                     data-faskes="{{ \App\Models\Identity::first()->name ?? 'RS Livasya' }}"
                     data-bagian="{{ $career->title }}">
-                    <div class="card border-0 shadow-sm h-100 position-relative transition-all hover-lift overflow-hidden">
+                    <div class="card premium-card job-premium-card h-100">
                         <!-- Accent Bar -->
-                        <div class="card-header bg-primary py-2 border-0"></div>
+                        <div class="premium-card-accent-top {{ $career->tipe == 'medis' ? 'accent-success' : 'accent-info' }}"></div>
 
-                        <div class="card-body p-4 d-flex flex-column text-center">
-                            <div class="mb-3">
-                                <span class="badge badge-pill badge-light text-primary font-weight-bold p-2 px-3 shadow-sm">
-                                    {{ \App\Models\Identity::first()->name ?? 'RS Livasya' }}
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3 mt-1">
+                                <span class="badge premium-badge {{ $career->tipe == 'medis' ? 'premium-badge-success' : 'premium-badge-info' }}">
+                                    {{ ucfirst($career->tipe) }}
                                 </span>
+                                <small class="text-muted"><i class="fas fa-map-marker-alt text-danger mr-1"></i> RS Livasya</small>
                             </div>
 
-                            <h4 class="card-title font-weight-bold text-dark mb-3">
+                            <h4 class="card-title-premium text-dark text-left mb-3">
                                 {{ $career->title }}
                             </h4>
 
@@ -78,13 +79,13 @@
                                 }
                             @endphp
 
-                            <div class="text-left w-100 flex-grow-1 mt-3">
+                            <div class="text-left w-100 flex-grow-1 mt-2">
                                 @if ($flyerImage)
                                     <div class="rounded-lg overflow-hidden shadow-sm mb-3 position-relative zoom-effect">
                                         <a href="javascript:void(0)" onclick="showPreview('{{ $flyerImage }}')"
                                             class="d-block">
                                             <img src="{{ $flyerImage }}" alt="{{ $career->title }}"
-                                                class="img-fluid w-100" style="object-fit: cover;">
+                                                class="img-fluid w-100" style="height: 180px; object-fit: cover;">
                                             <div class="hover-overlay d-flex align-items-center justify-content-center"
                                                 style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); opacity: 0; transition: all 0.3s;">
                                                 <i class="fas fa-search-plus text-white fa-2x"></i>
@@ -93,55 +94,20 @@
                                     </div>
                                 @else
                                     {{-- Fallback or empty if no image --}}
-                                    <div class="text-center text-muted p-4 bg-light rounded">
-                                        <i class="fas fa-image fa-2x mb-2"></i>
-                                        <p class="small mb-0">Lihat detail untuk informasi lengkap.</p>
+                                    <div class="text-center text-muted p-4 bg-light rounded mb-3">
+                                        <i class="fas fa-image fa-2x mb-2 text-muted"></i>
+                                        <p class="small mb-0 text-muted">Lihat detail untuk informasi lengkap.</p>
                                     </div>
                                 @endif
-
-                                {{-- Commented out text requirements as requested --}}
-                                {{-- <h6 class="text-muted text-uppercase font-weight-bold small mb-3 border-bottom pb-2">
-                                    Kualifikasi
-                                </h6>
-                                <style>
-                                    .custom-list {
-                                        list-style: none;
-                                        padding-left: 0;
-                                        font-size: 0.85rem;
-                                    }
-
-                                    .custom-list li {
-                                        margin-bottom: 0.5rem;
-                                        position: relative;
-                                        padding-left: 1.5rem;
-                                        color: #555;
-                                    }
-
-                                    .custom-list li::before {
-                                        content: "\f00c";
-                                        font-family: "Font Awesome 5 Pro";
-                                        position: absolute;
-                                        left: 0;
-                                        color: #1dc9b7;
-                                        font-weight: 900;
-                                        font-size: 0.8rem;
-                                        top: 2px;
-                                    }
-                                </style>
-                                <ul class="custom-list">
-                                    <li>Usia Maks: {{ $career->max_age ?? '-' }} Tahun</li>
-                                    <li>Pend. Min: {{ $career->min_education ?? '-' }}</li>
-                                    <li>Jurusan: {{ $career->major ?? 'Semua Jurusan' }}</li>
-                                </ul> --}}
                             </div>
 
-                            <div class="mt-4">
+                            <div class="mt-3">
                                 @if (Auth::user()->applier && Auth::user()->applier->career_id == $career->id)
-                                    <button class="btn btn-secondary btn-block shadow-none" disabled>
+                                    <button class="btn btn-secondary btn-block rounded-pill py-2 font-weight-bold" disabled>
                                         <i class="fas fa-check-circle mr-1"></i> Sudah Dilamar
                                     </button>
                                 @else
-                                    <button type="button" class="btn btn-primary btn-block shadow-md btn-apply"
+                                    <button type="button" class="btn btn-primary btn-block rounded-pill py-2 font-weight-bold btn-apply"
                                         onclick="setApplyData('{{ $career->id }}', '{{ $career->title }}')"
                                         data-toggle="modal" data-target="#modal-apply">
                                         Lamar Sekarang <i class="fas fa-arrow-right ml-1"></i>

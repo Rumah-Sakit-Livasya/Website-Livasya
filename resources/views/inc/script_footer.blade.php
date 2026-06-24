@@ -13,7 +13,7 @@ DOC: if you remove pace.js from core please note on Internet Explorer some CSS a
 + src/../jquery-snippets.js (core) -->
 <script src="/js/vendors.bundle.js"></script>
 <script src="/js/app.bundle.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" nonce="{{ $nonce }}">
     /* Activate smart panels */
     $('#js-page-content').smartPanel();
 
@@ -40,7 +40,7 @@ DOC: if you remove pace.js from core please note on Internet Explorer some CSS a
     }
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="/js/formplugins/select2/select2.bundle.js"></script>
 <script src="/js/script.js?v={{ time() }}"></script>
 
 @yield('plugin')

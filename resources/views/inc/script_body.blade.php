@@ -1,5 +1,5 @@
 <!-- DOC: script to save and load page settings -->
-<script>
+<script nonce="{{ $nonce }}">
     /**
      *	This script should be placed right after the body tag for fast execution
         *	Note: the script is written in pure javascript and does not depend on thirdparty library

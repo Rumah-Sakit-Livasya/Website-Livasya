@@ -5,15 +5,16 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
+// Disable Bootstrap modal enforceFocus to fix Select2 search focus trap
+if ($.fn.modal && $.fn.modal.Constructor && $.fn.modal.Constructor.prototype) {
+    $.fn.modal.Constructor.prototype._enforceFocus = function () {};
+}
+
 $(document).ready(function () {
-    $("select").each(function () {
-        var $this = $(this);
-        var $modal = $this.closest(".modal");
-        var options = {};
-        if ($modal.length) {
-            options.dropdownParent = $modal;
-        }
-        $this.select2(options);
+    $("select").not(".no-select2").each(function () {
+        $(this).select2({
+            width: '100%'
+        });
     });
 });
 

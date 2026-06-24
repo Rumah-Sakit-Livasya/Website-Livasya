@@ -1,6 +1,16 @@
 @php
     use App\Models\Identity;
     $identity = Identity::first();
+    
+    $user = auth()->user();
+    $avatarUrl = '/img/demo/avatars/avatar-admin.png';
+    if ($user && $user->avatar) {
+        if (\Illuminate\Support\Str::startsWith($user->avatar, ['http://', 'https://'])) {
+            $avatarUrl = $user->avatar;
+        } else {
+            $avatarUrl = asset('storage/' . $user->avatar);
+        }
+    }
 @endphp
 
 <!-- BEGIN Left Aside -->
@@ -26,7 +36,7 @@
             </div>
         </div>
         <div class="info-card">
-            <img src="{{ auth()->user()->profile_photo_url ?? '/img/demo/avatars/avatar-admin.png' }}"
+            <img src="{{ $avatarUrl }}"
                 class="profile-image rounded-circle" alt="{{ auth()->user()->name }}">
             <div class="info-card-text">
                 <a href="#" class="d-flex align-items-center text-white">
