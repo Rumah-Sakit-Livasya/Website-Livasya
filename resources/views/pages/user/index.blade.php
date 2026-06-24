@@ -70,7 +70,7 @@
                                                     class="badge mx-1 badge-secondary p-2 border-0 text-white"
                                                     data-toggle="modal" data-target="#ubah-akses{{ $user->id }}"
                                                     title="Ubah Role">
-                                                    <span class="fal fa-user-shield"></span>
+                                                    <span class="fal fa-user-lock"></span>
                                                 </button>
                                             </td>
                                         </tr>

@@ -1,7 +1,8 @@
 <div class="modal fade" id="ubah-akses{{ $user->id }}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
-            <form autocomplete="off" novalidate action="/user/{{ $user->id }}/akses" method="post"
+            <form autocomplete="off" novalidate
+                action="{{ route('user.update.role', $user->id) }}" method="post"
                 enctype="multipart/form-data">
                 @method('put')
                 @csrf
