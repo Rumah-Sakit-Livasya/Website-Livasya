@@ -26,21 +26,33 @@
                             <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                                 <thead>
                                     <tr>
-                                        {{-- <th style="white-space: nowrap">Foto</th> --}}
                                         <th style="white-space: nowrap">Nama User</th>
                                         <th style="white-space: nowrap">Username</th>
                                         <th style="white-space: nowrap">Email</th>
+                                        <th style="white-space: nowrap">Role</th>
                                         <th style="white-space: nowrap">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($users as $user)
                                         <tr>
-                                            {{-- <td style="white-space: nowrap">{{ $user->template_user->foto }}</td> --}}
                                             <td style="white-space: nowrap">{{ $user->name }}</td>
                                             <td style="white-space: nowrap">{{ $user->username }}</td>
                                             <td style="white-space: nowrap">{{ $user->email }}</td>
-
+                                            <td style="white-space: nowrap">
+                                                @php $userRole = $user->getRoleNames()->first() ?? '-'; @endphp
+                                                @if($userRole == 'super-admin')
+                                                    <span class="badge badge-danger">Super Admin</span>
+                                                @elseif($userRole == 'hrd')
+                                                    <span class="badge badge-info">HRD</span>
+                                                @elseif($userRole == 'user')
+                                                    <span class="badge badge-primary">User</span>
+                                                @elseif($userRole == 'pelamar')
+                                                    <span class="badge badge-success">Pelamar</span>
+                                                @else
+                                                    <span class="badge badge-secondary">{{ $userRole }}</span>
+                                                @endif
+                                            </td>
                                             <td style="white-space: nowrap">
                                                 <button type="button" data-backdrop="static" data-keyboard="false"
                                                     class="badge mx-1 badge-primary p-2 border-0 text-white"
@@ -51,15 +63,15 @@
                                                 <button type="button" data-backdrop="static" data-keyboard="false"
                                                     class="badge mx-1 badge-success p-2 border-0 text-white"
                                                     data-toggle="modal" data-target="#ubah-password{{ $user->id }}"
-                                                    title="Ubah">
+                                                    title="Ubah Password">
                                                     <span class="fal fa-key"></span>
                                                 </button>
-                                                {{-- <button type="button"
+                                                <button type="button" data-backdrop="static" data-keyboard="false"
                                                     class="badge mx-1 badge-secondary p-2 border-0 text-white"
-                                                    data-backdrop="static" data-keyboard="false" data-toggle="modal"
-                                                    data-target="#ubah-akses{{ $user->id }}" title="Ubah Akses">
-                                                    <span class="fal fa-user-secret"></span>
-                                                </button> --}}
+                                                    data-toggle="modal" data-target="#ubah-akses{{ $user->id }}"
+                                                    title="Ubah Role">
+                                                    <span class="fal fa-user-shield"></span>
+                                                </button>
                                             </td>
                                         </tr>
 
