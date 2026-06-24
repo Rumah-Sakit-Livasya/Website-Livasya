@@ -109,19 +109,10 @@
         $(document).ready(function() {
 
             @foreach ($users as $u)
-                $('#unitUser{{ $u->id }}').select2({
-                    placeholder: 'Pilih Unit',
-                    dropdownParent: $('#unit{{ $u->id }}'),
-                });
-                $('#aksesUser{{ $u->id }}').select2({
-                    placeholder: 'Pilih Akses',
-                    dropdownParent: $('#ubah-akses{{ $u->id }}'),
-                });
+                {{-- Select2 tidak digunakan untuk role agar dropdown tidak keluar modal --}}
             @endforeach
 
-            $('#namaUnit').select2({
-                placeholder: 'Pilih Unit',
-            });
+            {{-- '#namaUnit' tidak dipakai di form ini, skip --}}
 
             $('#dt-basic-example').dataTable({
                 responsive: true
