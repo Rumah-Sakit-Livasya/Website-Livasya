@@ -624,7 +624,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                    <label class="form-label">Upload Ijazah (PDF)</label>
+                                    <label class="form-label">Upload Ijazah (PDF, Max 10MB)</label>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="eduCert"
                                             name="certificate_file" accept=".pdf">
@@ -632,7 +632,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label class="form-label">Upload Transkrip (PDF)</label>
+                                    <label class="form-label">Upload Transkrip (PDF, Max 10MB)</label>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="eduTrans"
                                             name="transcript_file" accept=".pdf">
@@ -779,7 +779,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="text-danger form-label">Upload Sertifikat (PDF)</label>
+                                <label class="text-danger form-label">Upload Sertifikat (PDF, Max 10MB)</label>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="certFile" name="file"
                                         accept=".pdf">
@@ -1027,7 +1027,7 @@
                                 <textarea class="form-control" name="description"></textarea>
                             </div>
                             <div class="form-group">
-                                <label class="text-danger form-label">Upload STR/SIP (PDF)</label>
+                                <label class="text-danger form-label">Upload STR/SIP (PDF, Max 10MB)</label>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="strFile" name="file"
                                         accept=".pdf">
