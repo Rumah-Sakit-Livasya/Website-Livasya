@@ -4,115 +4,105 @@
     <main id="js-page-content" role="main" class="page-content">
         <div class="subheader">
             <h1 class="subheader-title">
-                <i class='subheader-icon fal fa-briefcase'></i> Manajemen Karir
+                <i class='subheader-icon bx bxs-briefcase text-primary'></i> Manajemen Karir
                 <small>
-                    Kelola daftar lowongan pekerjaan dan seleksi pelamar.
+                    Kelola daftar lowongan pekerjaan dan proses seleksi berkas pelamar.
                 </small>
             </h1>
         </div>
 
         <div class="row">
             <div class="col-xl-12">
-                <div id="panel-1" class="panel">
-                    <div class="panel-hdr">
+                <div id="panel-1" class="panel shadow-sm">
+                    <div class="panel-hdr bg-faded">
                         <h2>
-                            Daftar <span class="fw-300"><i>Lowongan</i></span>
+                            Daftar <span class="fw-300"><i>Lowongan Karir</i></span>
                         </h2>
                         <div class="panel-toolbar">
-                            <button type="button" class="btn btn-sm btn-primary waves-effect waves-themed"
+                            <button type="button" class="btn btn-sm btn-primary waves-effect waves-themed font-weight-bold"
                                 data-backdrop="static" data-keyboard="false" data-toggle="modal"
                                 data-target="#tambah-karir">
-                                <span class="fal fa-plus-circle mr-1"></span> Tambah Karir
+                                <i class="fal fa-plus-circle mr-1"></i> Tambah Karir
                             </button>
                         </div>
                     </div>
                     <div class="panel-container show">
                         <div class="panel-content">
                             <!-- datatable start -->
-                            <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
-                                <thead>
+                            <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100 align-middle-table">
+                                <thead class="bg-primary text-white">
                                     <tr>
-                                        <th style="white-space: nowrap">No</th>
-                                        <th style="white-space: nowrap">Judul</th>
-                                        <th style="white-space: nowrap">Poster</th>
-                                        <th style="white-space: nowrap">Tipe</th>
-                                        <th style="white-space: nowrap">Keterangan</th>
-                                        <th style="white-space: nowrap">Status</th>
-                                        <th style="white-space: nowrap">Aksi</th>
+                                        <th style="width: 50px;" class="text-center">No</th>
+                                        <th>Judul Lowongan</th>
+                                        <th style="width: 80px;" class="text-center">Poster</th>
+                                        <th style="width: 110px;" class="text-center">Tipe</th>
+                                        <th>Keterangan</th>
+                                        <th style="width: 100px;" class="text-center">Status</th>
+                                        <th style="width: 140px;" class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($careers as $career)
                                         <tr>
-                                            <td style="white-space: nowrap" class="text-center">{{ $loop->iteration }}</td>
-                                            <td style="white-space: nowrap" class="font-weight-bold">{{ $career->title }}
+                                            <td class="text-center font-weight-bold">{{ $loop->iteration }}</td>
+                                            <td>
+                                                <div class="font-weight-bold text-dark fs-md">{{ $career->title }}</div>
                                             </td>
                                             <td class="text-center">
-                                                @if ($career->image)
+                                                @if ($career->image && Storage::disk('public')->exists($career->image))
                                                     <a href="{{ Storage::url($career->image) }}" target="_blank">
                                                         <img src="{{ Storage::url($career->image) }}" alt="Poster"
-                                                            class="img-thumbnail"
-                                                            style="height: 50px; width: 50px; object-fit: cover;">
+                                                            class="img-thumbnail shadow-xs"
+                                                            style="height: 40px; width: 40px; object-fit: cover; border-radius: 6px;">
                                                     </a>
                                                 @else
-                                                    <span class="text-muted small">No Image</span>
+                                                    <div class="d-inline-flex align-items-center justify-content-center bg-light text-muted border rounded shadow-2" 
+                                                         style="height: 40px; width: 40px; border-style: dashed !important;" 
+                                                         title="Poster tidak tersedia">
+                                                        <i class="fal fa-image fs-sm"></i>
+                                                    </div>
                                                 @endif
                                             </td>
-                                            <td style="white-space: nowrap">
+                                            <td class="text-center">
                                                 @if ($career->tipe == 'medis')
-                                                    <span class="badge badge-info badge-pill">Medis</span>
+                                                    <span class="badge badge-info px-2 py-1" style="border-radius: 4px;">Medis</span>
                                                 @else
-                                                    <span class="badge badge-primary badge-pill">Non-Medis</span>
+                                                    <span class="badge badge-primary px-2 py-1" style="border-radius: 4px;">Non-Medis</span>
                                                 @endif
                                             </td>
-                                            <td style="text-wrap: wrap; min-width: 200px;">
-                                                {!! \Illuminate\Support\Str::limit(strip_tags($career->deskripsi), 100) !!}</td>
-                                            <td style="white-space: nowrap">
+                                            <td style="text-wrap: wrap; min-width: 220px; font-size: 0.85rem;" class="text-muted">
+                                                {!! \Illuminate\Support\Str::limit(strip_tags($career->deskripsi), 80) !!}
+                                            </td>
+                                            <td class="text-center">
                                                 @if ($career->status == 'on')
-                                                    <span class="badge badge-success">Aktif</span>
+                                                    <span class="badge badge-success px-2 py-1" style="border-radius: 4px;"><i class="fal fa-check-circle mr-1"></i>Aktif</span>
                                                 @else
-                                                    <span class="badge badge-secondary">Non-Aktif</span>
+                                                    <span class="badge badge-secondary px-2 py-1" style="border-radius: 4px;"><i class="fal fa-times-circle mr-1"></i>Non-Aktif</span>
                                                 @endif
                                             </td>
 
-                                            <td style="white-space: nowrap">
-                                                <!-- Edit Button -->
-                                                <button type="button" data-backdrop="static" data-keyboard="false"
-                                                    class="btn btn-sm btn-outline-primary btn-icon waves-effect waves-themed edit-button"
-                                                    data-toggle="modal" data-target="#edit-karir" title="Ubah Info"
-                                                    data-career-id="{{ $career->id }}">
-                                                    <i class="fal fa-edit"></i>
-                                                </button>
+                                            <td class="text-center">
+                                                <div class="d-flex align-items-center justify-content-center" style="gap: 6px;">
+                                                    <!-- Edit Button -->
+                                                    <button type="button" data-backdrop="static" data-keyboard="false"
+                                                        class="btn btn-sm btn-outline-primary btn-icon waves-effect waves-themed edit-button"
+                                                        data-toggle="modal" data-target="#edit-karir" title="Ubah Info"
+                                                        data-career-id="{{ $career->id }}">
+                                                        <i class="fal fa-edit"></i>
+                                                    </button>
 
-                                                <!-- View Applicants Button -->
-                                                <button type="button"
-                                                    class="btn btn-sm btn-outline-info waves-effect waves-themed js-open-window"
-                                                    data-url="/careers/{{ $career->id }}" title="Lihat Pelamar">
-                                                    <i class="fal fa-users mr-1"></i>
-                                                    <span class="badge badge-info ml-1">{{ $career->applier_count }}</span>
-                                                </button>
-
-                                                <!-- Delete Button (Optional, simply adding UI placeholder or delete logic if exists) -->
-                                                {{--
-                                                <button type="button" class="btn btn-sm btn-outline-danger btn-icon waves-effect waves-themed" title="Hapus">
-                                                    <i class="fal fa-trash-alt"></i>
-                                                </button>
-                                                --}}
+                                                    <!-- View Applicants Button -->
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-info waves-effect waves-themed js-open-window font-weight-bold d-flex align-items-center"
+                                                        data-url="/careers/{{ $career->id }}" title="Lihat Pelamar">
+                                                        <i class="fal fa-users mr-1"></i> Pelamar
+                                                        <span class="badge badge-light ml-2" style="border-radius: 3px; font-size: 0.75rem;">{{ $career->applier_count }}</span>
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
-                                <tfoot class="thead-themed">
-                                    <tr>
-                                        <th class="text-center">No</th>
-                                        <th>Judul</th>
-                                        <th>Poster</th>
-                                        <th>Tipe</th>
-                                        <th>Keterangan</th>
-                                        <th>Status</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </tfoot>
                             </table>
                             <!-- datatable end -->
                             <!-- Modal -->
@@ -124,6 +114,12 @@
             </div>
         </div>
     </main>
+
+    <style nonce="{{ $nonce }}">
+        .align-middle-table td {
+            vertical-align: middle !important;
+        }
+    </style>
 @endsection
 @section('plugin')
     <script src="/js/datagrid/datatables/datatables.bundle.js"></script>

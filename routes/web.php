@@ -119,66 +119,78 @@ Route::middleware('auth')->group(function () {
     });
     // ── End HRD Area ──────────────────────────────────────────────────────────
 
-    Route::prefix('dashboard')->middleware(['role:super-admin|user|hrd|marketing'])->group(function () {
-        // Dashboard
-        Route::get("/", [DashboardController::class, 'index'])->name("dashboard");
+    Route::prefix('dashboard')->middleware(['auth'])->group(function () {
+        // Dashboard Index (accessible by all authorized panel roles)
+        Route::get("/", [DashboardController::class, 'index'])->name("dashboard")->middleware('role:super-admin|user|hrd|marketing');
 
-        // Category
-        Route::get("/categories", [CategoryController::class, 'index'])->name("category.index");
-        Route::get('/categories/checkSlug', [CategoryController::class, 'checkSlug']);
+        // 1. Marketing / General Content Routes
+        Route::middleware(['role:super-admin|user|marketing'])->group(function () {
+            // Category
+            Route::get("/categories", [CategoryController::class, 'index'])->name("category.index");
+            Route::get('/categories/checkSlug', [CategoryController::class, 'checkSlug']);
 
-        // Career
-        Route::get("/careers", [CareerController::class, 'admin'])->name("career.index");
+            // Posts
+            Route::get("/posts", [PostController::class, 'index'])->name("posts.index");
+            Route::get('/posts/checkSlug', [PostController::class, 'checkSlug']);
 
-        // Posts
-        Route::get("/posts", [PostController::class, 'index'])->name("posts.index");
-        Route::get('/posts/checkSlug', [PostController::class, 'checkSlug']);
+            // Facility
+            Route::get("/facilities", [FacilityController::class, 'index'])->name("facilities.index");
+            Route::get('/facilities/checkSlug', [FacilityController::class, 'checkSlug']);
 
-        // Facility
-        Route::get("/facilities", [FacilityController::class, 'index'])->name("facilities.index");
-        Route::get('/facilities/checkSlug', [FacilityController::class, 'checkSlug']);
+            // Doctor
+            Route::get("/doctors", [DoctorController::class, 'index'])->name("doctors.index");
 
-        // Doctor
-        Route::get("/doctors", [DoctorController::class, 'index'])->name("doctors.index");
+            // Departement
+            Route::get("/departements", [DepartementController::class, 'index'])->name("departements.index");
+        });
 
-        // Departement
-        Route::get("/departements", [DepartementController::class, 'index'])->name("departements.index");
+        // 2. Career / Recruitment Routes
+        Route::middleware(['role:super-admin|user|hrd'])->group(function () {
+            // Career
+            Route::get("/careers", [CareerController::class, 'admin'])->name("career.index");
+        });
 
-        // Jumbotron
-        Route::get("/jumbotron", [JumbotronController::class, 'index'])->name("jumbotron.index");
+        // 3. User Management Routes
+        Route::middleware(['role:super-admin|user'])->group(function () {
+            // Users
+            Route::get("/users", [UserController::class, 'index'])->name("user.index");
+            Route::post("/users", [UserController::class, 'store'])->name("user.store");
+            Route::put("/users/{users:id}", [UserController::class, 'update'])->name("user.update");
+            Route::put('/user/{user:id}/akses', [UserController::class, 'akses'])->name('user.update.role');
+            Route::put('/user/{user:id}/update-password', [UserController::class, 'updatePassword'])->name('user.update.password');
+        });
 
-        // Pelayanan
-        Route::get("/pelayanan", [PelayananController::class, 'index'])->name("pelayanan.index");
-        Route::get("/pelayanan/{pelayanan:id}/images", [PelayananController::class, 'images'])->name("pelayanan.image");
+        // 4. Super Admin Specific Pages
+        Route::middleware(['role:super-admin'])->group(function () {
+            // Jumbotron
+            Route::get("/jumbotron", [JumbotronController::class, 'index'])->name("jumbotron.index");
 
-        // Timeline
-        Route::get("/timeline", [TimelineController::class, 'index'])->name("timeline.index");
+            // Pelayanan
+            Route::get("/pelayanan", [PelayananController::class, 'index'])->name("pelayanan.index");
+            Route::get("/pelayanan/{pelayanan:id}/images", [PelayananController::class, 'images'])->name("pelayanan.image");
 
-        // Poliklinik
-        Route::get("/poliklinik", [PoliklinikController::class, 'index'])->name("poliklinik.index");
+            // Timeline
+            Route::get("/timeline", [TimelineController::class, 'index'])->name("timeline.index");
 
-        // Mitra
-        Route::get("/mitra", [MitraController::class, 'index'])->name("mitra.index");
+            // Poliklinik
+            Route::get("/poliklinik", [PoliklinikController::class, 'index'])->name("poliklinik.index");
 
-        // Faq
-        Route::get("/faq", [FaqController::class, 'index'])->name("faq.index");
+            // Mitra
+            Route::get("/mitra", [MitraController::class, 'index'])->name("mitra.index");
 
-        // Identity
-        Route::get("/identity", [IdentityController::class, 'index'])->name("identity.index");
+            // Faq
+            Route::get("/faq", [FaqController::class, 'index'])->name("faq.index");
 
-        // Galery
-        Route::get("/galery", [GaleryController::class, 'index'])->name("galery.index");
+            // Identity
+            Route::get("/identity", [IdentityController::class, 'index'])->name("identity.index");
 
-        // Jadwal
-        Route::get("/jadwal", [JadwalController::class, 'index'])->name("jadwal.index");
-        Route::put("/jadwal", [JadwalController::class, 'update'])->name("jadwal.update");
+            // Galery
+            Route::get("/galery", [GaleryController::class, 'index'])->name("galery.index");
 
-        // Users
-        Route::get("/users", [UserController::class, 'index'])->name("user.index");
-        Route::post("/users", [UserController::class, 'store'])->name("user.store");
-        Route::put("/users/{users:id}", [UserController::class, 'update'])->name("user.update");
-        Route::put('/user/{user:id}/akses', [UserController::class, 'akses'])->name('user.update.role');
-        Route::put('/user/{user:id}/update-password', [UserController::class, 'updatePassword'])->name('user.update.password');
+            // Jadwal
+            Route::get("/jadwal", [JadwalController::class, 'index'])->name("jadwal.index");
+            Route::put("/jadwal", [JadwalController::class, 'update'])->name("jadwal.update");
+        });
     });
 });
 

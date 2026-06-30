@@ -1,17 +1,22 @@
-@extends('hrd.layout')
+@extends('inc.layout')
 
-@section('breadcrumb')
-    <div class="hrd-breadcrumb">
-        <i class="fal fa-home"></i>
-        <a href="{{ route('hrd.index') }}">Dashboard HRD</a>
-        <span>/</span>
-        <a href="{{ route('hrd.appliers', $career->id) }}">{{ $career->title }}</a>
-        <span>/</span>
-        <span>{{ $applier->first_name }} {{ $applier->last_name }}</span>
-    </div>
-@endsection
+@section('title', 'Detail Pelamar - ' . $applier->first_name . ' ' . $applier->last_name)
 
 @section('content')
+<main id="js-page-content" role="main" class="page-content">
+    <div class="subheader">
+        <h1 class="subheader-title">
+            <i class='subheader-icon bx bxs-user-detail text-primary'></i> Detail Pelamar: {{ $applier->first_name }} {{ $applier->last_name }}
+            <small>
+                Posisi yang dilamar: {{ $career->title }}
+            </small>
+        </h1>
+        <div class="subheader-block">
+            <a href="{{ route('hrd.appliers', $career->id) }}" class="btn btn-sm btn-outline-secondary font-weight-bold">
+                <i class="fal fa-arrow-left mr-1"></i> Kembali ke Daftar Pelamar
+            </a>
+        </div>
+    </div>
 <style nonce="{{ $nonce }}">
     .detail-card {
         background: #fff; border-radius: 16px;
@@ -415,7 +420,7 @@
         </div>
     </div>
 </div>
-
+</main>
 @endsection
 
 @section('scripts')
