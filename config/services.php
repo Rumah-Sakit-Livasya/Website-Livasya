@@ -36,4 +36,8 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT_URL'),
     ],
+
+    'vcon' => [
+        'url' => env('VCON_URL', env('APP_ENV') === 'production' ? 'https://vcon.livasya.com' : 'http://localhost:8000'),
+    ],
 ];
