@@ -20,11 +20,17 @@ class HrdController extends Controller
     /**
      * Halaman utama HRD: list semua lowongan + jumlah pelamar.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $careers = Career::withCount('applier')
-            ->orderByDesc('created_at')
-            ->get();
+        $query = Career::withCount('applier')
+            ->orderByDesc('created_at');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('title', 'like', "%{$search}%");
+        }
+
+        $careers = $query->get();
 
         return view('hrd.index', [
             'title'   => 'Dashboard HRD',

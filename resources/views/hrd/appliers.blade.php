@@ -8,7 +8,7 @@
         <h1 class="subheader-title">
             <i class='subheader-icon bx bxs-group text-primary'></i> Pelamar: {{ $career->title }}
             <small>
-                Total {{ $appliers->total() }} pelamar ditemukan untuk lowongan ini.
+                Dibuat pada: <strong class="text-dark">{{ $career->created_at ? $career->created_at->format('d M Y') : '-' }}</strong> &bull; Total {{ $appliers->total() }} pelamar ditemukan untuk lowongan ini.
             </small>
         </h1>
         <div class="subheader-block">

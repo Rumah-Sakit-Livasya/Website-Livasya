@@ -73,6 +73,25 @@
         </div>
     </div>
 
+    {{-- Filter / Search Bar --}}
+    <div class="card p-3 mb-g shadow-xs border-light-blue bg-white">
+        <form method="GET" action="{{ route('hrd.index') }}" class="row g-2 align-items-center">
+            <div class="col-md-5">
+                <input type="text" name="search" class="form-control form-control-sm" placeholder="Cari nama lowongan pekerjaan..." value="{{ request('search') }}">
+            </div>
+            <div class="col-auto mt-2 mt-md-0">
+                <button type="submit" class="btn btn-sm btn-primary font-weight-bold px-3">
+                    <i class="fal fa-search mr-1"></i> Cari Lowongan
+                </button>
+                @if(request()->filled('search'))
+                    <a href="{{ route('hrd.index') }}" class="btn btn-sm btn-outline-secondary ml-1 font-weight-bold">
+                        <i class="fal fa-times mr-1"></i> Reset
+                    </a>
+                @endif
+            </div>
+        </form>
+    </div>
+
     {{-- Career List --}}
     <div id="panel-careers" class="panel">
         <div class="panel-hdr bg-faded">
@@ -97,14 +116,19 @@
                         @foreach($careers as $career)
                         <div class="col-md-6 col-lg-4 mb-4">
                             <div class="card shadow-xs border-light-blue h-100 transition-hover bg-white" style="border-radius: 8px; border-left: 4px solid #1a56db !important;">
-                                <div class="card-body d-flex flex-column justify-content-between p-3" style="min-height: 120px;">
-                                    <div class="d-flex align-items-start justify-content-between mb-2">
-                                        <h6 class="font-weight-bold text-dark mb-0 fs-md pr-2" style="line-height: 1.35; font-size: 0.925rem;">
-                                            {{ $career->title }}
-                                        </h6>
-                                        <span class="badge {{ $career->tipe == 'medis' ? 'badge-info' : 'badge-primary' }} px-2 py-1" style="font-size: 0.7rem; border-radius: 4px; flex-shrink: 0;">
-                                            {{ $career->tipe == 'medis' ? 'Medis' : 'Non-Medis' }}
-                                        </span>
+                                <div class="card-body d-flex flex-column justify-content-between p-3" style="min-height: 130px;">
+                                    <div>
+                                        <div class="d-flex align-items-start justify-content-between">
+                                            <h6 class="font-weight-bold text-dark mb-0 fs-md pr-2" style="line-height: 1.35; font-size: 0.925rem;">
+                                                {{ $career->title }}
+                                            </h6>
+                                            <span class="badge {{ $career->tipe == 'medis' ? 'badge-info' : 'badge-primary' }} px-2 py-1" style="font-size: 0.7rem; border-radius: 4px; flex-shrink: 0;">
+                                                {{ $career->tipe == 'medis' ? 'Medis' : 'Non-Medis' }}
+                                            </span>
+                                        </div>
+                                        <div class="text-muted mt-2 font-weight-semibold" style="font-size: 0.75rem;">
+                                            <i class="fal fa-calendar-alt mr-1 text-primary"></i> Dibuat: {{ $career->created_at ? $career->created_at->format('d M Y') : '-' }}
+                                        </div>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between mt-3 pt-3 border-top" style="border-color: #f3f4f6 !important;">
                                         <span class="text-muted fs-xs font-weight-semibold">
