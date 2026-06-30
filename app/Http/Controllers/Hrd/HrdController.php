@@ -30,6 +30,10 @@ class HrdController extends Controller
             $query->where('title', 'like', "%{$search}%");
         }
 
+        if ($request->filled('tipe')) {
+            $query->where('tipe', $request->tipe);
+        }
+
         $careers = $query->get();
 
         return view('hrd.index', [

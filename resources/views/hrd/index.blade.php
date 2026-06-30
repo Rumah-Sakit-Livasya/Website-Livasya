@@ -76,14 +76,21 @@
     {{-- Filter / Search Bar --}}
     <div class="card p-3 mb-g shadow-xs border-light-blue bg-white">
         <form method="GET" action="{{ route('hrd.index') }}" class="row g-2 align-items-center">
-            <div class="col-md-5">
+            <div class="col-md-5 mb-2 mb-md-0">
                 <input type="text" name="search" class="form-control form-control-sm" placeholder="Cari nama lowongan pekerjaan..." value="{{ request('search') }}">
             </div>
-            <div class="col-auto mt-2 mt-md-0">
+            <div class="col-md-3 mb-2 mb-md-0">
+                <select name="tipe" class="form-control form-control-sm">
+                    <option value="">Semua Tipe</option>
+                    <option value="medis" {{ request('tipe') == 'medis' ? 'selected' : '' }}>Medis</option>
+                    <option value="non-medis" {{ request('tipe') == 'non-medis' ? 'selected' : '' }}>Non-Medis</option>
+                </select>
+            </div>
+            <div class="col-auto">
                 <button type="submit" class="btn btn-sm btn-primary font-weight-bold px-3">
-                    <i class="fal fa-search mr-1"></i> Cari Lowongan
+                    <i class="fal fa-filter mr-1"></i> Filter
                 </button>
-                @if(request()->filled('search'))
+                @if(request()->filled('search') || request()->filled('tipe'))
                     <a href="{{ route('hrd.index') }}" class="btn btn-sm btn-outline-secondary ml-1 font-weight-bold">
                         <i class="fal fa-times mr-1"></i> Reset
                     </a>
