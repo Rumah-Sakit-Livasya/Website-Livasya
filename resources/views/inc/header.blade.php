@@ -68,6 +68,175 @@
         transform: scale(1.5);
         margin-right: 1rem;
     }
+
+    /* Global Table & Nowrap Styles */
+    .align-middle-table td, .align-middle-table th,
+    .table-nowrap td, .table-nowrap th {
+        vertical-align: middle !important;
+        white-space: nowrap !important;
+    }
+
+    /* Premium Soft Badges Override */
+    .badge {
+        padding: 5px 12px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-radius: 30px;
+        display: inline-block;
+        border: 1px solid transparent;
+        transition: all 0.2s ease;
+    }
+    .badge-warning {
+        background-color: #fffbeb !important;
+        color: #d97706 !important;
+        border-color: #fde68a !important;
+    }
+    .badge-success {
+        background-color: #ecfdf5 !important;
+        color: #059669 !important;
+        border-color: #a7f3d0 !important;
+    }
+    .badge-danger {
+        background-color: #fef2f2 !important;
+        color: #dc2626 !important;
+        border-color: #fecaca !important;
+    }
+    .badge-info {
+        background-color: #e0f2fe !important;
+        color: #0284c7 !important;
+        border-color: #bae6fd !important;
+    }
+    .badge-primary {
+        background-color: #eff6ff !important;
+        color: #2563eb !important;
+        border-color: #bfdbfe !important;
+    }
+    .badge-secondary {
+        background-color: #f3f4f6 !important;
+        color: #4b5563 !important;
+        border-color: #e5e7eb !important;
+    }
+
+    /* Global Custom Action Buttons */
+    .btn-action-custom {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
+        padding: 0 12px;
+        font-size: 11.5px;
+        font-weight: 600;
+        border-radius: 6px;
+        border: 1px solid transparent;
+        transition: all 0.2s ease-in-out;
+        gap: 6px;
+        text-decoration: none !important;
+    }
+    .btn-action-custom:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    }
+    .btn-action-custom:active {
+        transform: translateY(0);
+    }
+    .btn-action-custom i {
+        font-size: 13px;
+        margin-right: 0 !important;
+    }
+    .btn-action-custom.btn-icon-only {
+        width: 32px;
+        padding: 0;
+    }
+
+    .btn-action-detail {
+        background-color: #eff6ff;
+        color: #2563eb !important;
+        border-color: #bfdbfe;
+    }
+    .btn-action-detail:hover {
+        background-color: #2563eb;
+        color: #ffffff !important;
+        border-color: #2563eb;
+    }
+
+    .btn-action-interview1 {
+        background-color: #fffbeb;
+        color: #d97706 !important;
+        border-color: #fde68a;
+    }
+    .btn-action-interview1:hover {
+        background-color: #d97706;
+        color: #ffffff !important;
+        border-color: #d97706;
+    }
+
+    .btn-action-interview2 {
+        background-color: #f3e8ff;
+        color: #7c3aed !important;
+        border-color: #e9d5ff;
+    }
+    .btn-action-interview2:hover {
+        background-color: #7c3aed;
+        color: #ffffff !important;
+        border-color: #7c3aed;
+    }
+
+    .btn-action-result {
+        background-color: #f9fafb;
+        color: #4b5563 !important;
+        border-color: #e5e7eb;
+    }
+    .btn-action-result:hover {
+        background-color: #4b5563;
+        color: #ffffff !important;
+        border-color: #4b5563;
+    }
+
+    .btn-action-whatsapp {
+        background-color: #ecfdf5;
+        color: #10b981 !important;
+        border-color: #a7f3d0;
+    }
+    .btn-action-whatsapp:hover {
+        background-color: #10b981;
+        color: #ffffff !important;
+        border-color: #10b981;
+    }
+
+    .btn-action-accept {
+        background-color: #ecfdf5;
+        color: #10b981 !important;
+        border-color: #a7f3d0;
+    }
+    .btn-action-accept:hover {
+        background-color: #10b981;
+        color: #ffffff !important;
+        border-color: #10b981;
+    }
+
+    .btn-action-reject {
+        background-color: #fef2f2;
+        color: #ef4444 !important;
+        border-color: #fecaca;
+    }
+    .btn-action-reject:hover {
+        background-color: #ef4444;
+        color: #ffffff !important;
+        border-color: #ef4444;
+    }
+
+    .btn-action-vcon {
+        background-color: #ecfeff;
+        color: #0891b2 !important;
+        border-color: #a5f3fc;
+    }
+    .btn-action-vcon:hover {
+        background-color: #0891b2;
+        color: #ffffff !important;
+        border-color: #0891b2;
+    }
 </style>
 
 @yield('css')
