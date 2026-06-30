@@ -113,13 +113,130 @@ class HrdController extends Controller
     public function updateStatus(Request $request, $careerId, $applierId)
     {
         $request->validate([
-            'status' => 'required|in:processed,accepted,rejected',
+            'status' => 'required|in:processed,interview_1,interview_2,accepted,rejected',
         ]);
 
         $applier = Applier::where('id', $applierId)->where('career_id', $careerId)->firstOrFail();
-        $applier->update(['status' => $request->status]);
+        
+        $newStatus = $request->status;
+        if ($applier->status == 'processed' && $newStatus == 'accepted') {
+            $newStatus = 'interview_1';
+        }
+
+        $applier->update(['status' => $newStatus]);
 
         return back()->with('success', 'Status pelamar berhasil diperbarui.');
+    }
+
+    /**
+     * Tampilkan formulir wawancara (Lembar Penilaian Wawancara).
+     */
+    public function interviewForm($careerId, $applierId)
+    {
+        $career = Career::findOrFail($careerId);
+        $applier = Applier::with(['user', 'interview', 'educations'])->where('id', $applierId)->where('career_id', $careerId)->firstOrFail();
+
+        // Get candidate's main education details from appliers table
+        $latestEdu = (object) [
+            'level' => $applier->school_qual ?? '-',
+            'school_name' => $applier->school_name ?? '-',
+            'graduation_year' => $applier->school_year ?? '-',
+        ];
+
+        return view('hrd.wawancara', [
+            'title'     => 'Lembar Penilaian Wawancara - ' . $applier->first_name . ' ' . $applier->last_name,
+            'career'    => $career,
+            'applier'   => $applier,
+            'latestEdu' => $latestEdu,
+            'interview' => $applier->interview,
+        ]);
+    }
+
+    /**
+     * Simpan data wawancara.
+     */
+    public function storeInterview(Request $request, $careerId, $applierId)
+    {
+        $applier = Applier::where('id', $applierId)->where('career_id', $careerId)->firstOrFail();
+
+        // Validation based on input values (scale 40-100 for rated factors)
+        $rules = [
+            // Keadaan Fisik
+            'tinggi_badan'    => 'nullable|string|max:50',
+            'berat_badan'     => 'nullable|string|max:50',
+            'riwayat_penyakit'=> 'nullable|string|max:255',
+            'kacamata'        => 'nullable|in:YA,TIDAK',
+            'hobi'            => 'nullable|string|max:255',
+            'olahraga'        => 'nullable|string|max:255',
+
+            // 10 Faktor Penilaian
+            'f_penampilan'                  => 'nullable|integer|between:40,100',
+            'f_kematangan_emosi'            => 'nullable|integer|between:40,100',
+            'f_kemampuan_mengungkap_pikiran'=> 'nullable|integer|between:40,100',
+            'f_motivasi_inisiatif'          => 'nullable|integer|between:40,100',
+            'f_keterampilan_pemecahan_masalah' => 'nullable|integer|between:40,100',
+            'f_kemampuan_komunikasi_persuasi' => 'nullable|integer|between:40,100',
+            'f_rasa_percaya_diri'           => 'nullable|integer|between:40,100',
+            'f_kesesuaian_persyaratan'      => 'nullable|integer|between:40,100',
+            'f_pengetahuan_bidang'          => 'nullable|integer|between:40,100',
+            'f_kemampuan_kerjasama'         => 'nullable|integer|between:40,100',
+            
+            'rekomendasi' => 'nullable|in:MEMENUHI SYARAT,PERTIMBANGAN,TIDAK DISARANKAN',
+        ];
+
+        if ($applier->status == 'interview_1') {
+            $rules['interviewer_name_1'] = 'required|string|max:255';
+            $rules['interview_date_1']   = 'required|date';
+        } elseif ($applier->status == 'interview_2') {
+            $rules['interviewer_name_2'] = 'required|string|max:255';
+            $rules['interview_date_2']   = 'required|date';
+            $rules['final_decision']     = 'required|in:accepted,rejected';
+        }
+
+        $validated = $request->validate($rules);
+
+        // Calculate average score
+        $factors = [
+            $request->f_penampilan,
+            $request->f_kematangan_emosi,
+            $request->f_kemampuan_mengungkap_pikiran,
+            $request->f_motivasi_inisiatif,
+            $request->f_keterampilan_pemecahan_masalah,
+            $request->f_kemampuan_komunikasi_persuasi,
+            $request->f_rasa_percaya_diri,
+            $request->f_kesesuaian_persyaratan,
+            $request->f_pengetahuan_bidang,
+            $request->f_kemampuan_kerjasama
+        ];
+        
+        $total = 0;
+        $count = 0;
+        foreach ($factors as $val) {
+            if ($val !== null && $val !== '') {
+                $total += intval($val);
+                $count++;
+            }
+        }
+        $validated['rata_rata'] = $count > 0 ? round($total / $count, 2) : null;
+
+        // Upsert interview details record
+        $applier->interview()->updateOrCreate(
+            ['applier_id' => $applier->id],
+            $validated
+        );
+
+        // Update applicant status
+        if ($applier->status == 'interview_1') {
+            $applier->update(['status' => 'interview_2']);
+            $msg = 'Wawancara Tahap 1 berhasil disimpan. Pelamar dialihkan ke Tahap 2 (Direktur).';
+        } elseif ($applier->status == 'interview_2') {
+            $applier->update(['status' => $request->final_decision]);
+            $msg = 'Wawancara Tahap 2 berhasil disimpan dan keputusan akhir status pelamar telah ditetapkan.';
+        } else {
+            $msg = 'Formulir Wawancara berhasil diperbarui.';
+        }
+
+        return redirect()->route('hrd.appliers', $careerId)->with('success', $msg);
     }
 
     /**

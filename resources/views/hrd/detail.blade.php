@@ -53,6 +53,10 @@
                 <div class="mb-3">
                     @if($applier->status == 'processed')
                         <span class="badge badge-warning px-3 py-1 font-weight-bold" style="border-radius: 4px; font-size: 0.75rem;"><i class="fal fa-clock mr-1"></i>Diproses</span>
+                    @elseif($applier->status == 'interview_1')
+                        <span class="badge badge-info px-3 py-1 font-weight-bold" style="border-radius: 4px; font-size: 0.75rem;"><i class="fal fa-comments mr-1"></i>Wawancara 1</span>
+                    @elseif($applier->status == 'interview_2')
+                        <span class="badge badge-warning px-3 py-1 text-white bg-warning-800 font-weight-bold" style="border-radius: 4px; font-size: 0.75rem;"><i class="fal fa-user-shield mr-1"></i>Wawancara 2</span>
                     @elseif($applier->status == 'accepted')
                         <span class="badge badge-success px-3 py-1 font-weight-bold" style="border-radius: 4px; font-size: 0.75rem;"><i class="fal fa-check mr-1"></i>Diterima</span>
                     @elseif($applier->status == 'rejected')
@@ -67,17 +71,38 @@
                         <form action="{{ route('hrd.status', [$career->id, $applier->id]) }}" method="POST" class="mb-2">
                             @csrf @method('PUT')
                             <input type="hidden" name="status" value="accepted">
-                            <button type="submit" class="btn btn-success btn-block font-weight-bold js-confirm" data-msg="Terima pelamar ini?">
-                                <i class="fal fa-check-circle mr-1"></i> Terima Pelamar
+                            <button type="submit" class="btn btn-success btn-block font-weight-bold js-confirm" data-msg="Terima berkas administrasi pelamar & jadwalkan Wawancara Tahap 1?">
+                                <i class="fal fa-check-circle mr-1"></i> Terima Berkas
                             </button>
                         </form>
                         <form action="{{ route('hrd.status', [$career->id, $applier->id]) }}" method="POST">
                             @csrf @method('PUT')
                             <input type="hidden" name="status" value="rejected">
-                            <button type="submit" class="btn btn-danger btn-block font-weight-bold js-confirm" data-msg="Tolak pelamar ini?">
-                                <i class="fal fa-times-circle mr-1"></i> Tolak Pelamar
+                            <button type="submit" class="btn btn-danger btn-block font-weight-bold js-confirm" data-msg="Tolak berkas administrasi pelamar ini?">
+                                <i class="fal fa-times-circle mr-1"></i> Tolak Berkas
                             </button>
                         </form>
+                    </div>
+                @elseif($applier->status == 'interview_1')
+                    <hr class="my-3">
+                    <div class="d-grid gap-2">
+                        <a href="{{ route('hrd.interview.form', [$career->id, $applier->id]) }}" class="btn btn-warning btn-block font-weight-bold text-white">
+                            <i class="fal fa-comments mr-1"></i> Form Wawancara 1
+                        </a>
+                    </div>
+                @elseif($applier->status == 'interview_2')
+                    <hr class="my-3">
+                    <div class="d-grid gap-2">
+                        <a href="{{ route('hrd.interview.form', [$career->id, $applier->id]) }}" class="btn bg-warning-800 btn-block font-weight-bold text-white">
+                            <i class="fal fa-user-shield mr-1"></i> Form Wawancara 2
+                        </a>
+                    </div>
+                @elseif(in_array($applier->status, ['accepted', 'rejected']) && $applier->interview)
+                    <hr class="my-3">
+                    <div class="d-grid gap-2">
+                        <a href="{{ route('hrd.interview.form', [$career->id, $applier->id]) }}" class="btn btn-outline-secondary btn-block font-weight-bold">
+                            <i class="fal fa-file-invoice mr-1"></i> Hasil Wawancara
+                        </a>
                     </div>
                 @endif
             </div>

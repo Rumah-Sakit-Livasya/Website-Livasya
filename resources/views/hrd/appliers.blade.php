@@ -122,6 +122,10 @@
                                 <td class="text-center">
                                     @if($applier->status == 'processed')
                                         <span class="badge badge-warning px-2 py-1" style="border-radius: 4px;">Diproses</span>
+                                    @elseif($applier->status == 'interview_1')
+                                        <span class="badge badge-info px-2 py-1" style="border-radius: 4px;">Wawancara 1</span>
+                                    @elseif($applier->status == 'interview_2')
+                                        <span class="badge badge-warning px-2 py-1 text-white bg-warning-800" style="border-radius: 4px;">Wawancara 2</span>
                                     @elseif($applier->status == 'accepted')
                                         <span class="badge badge-success px-2 py-1" style="border-radius: 4px;">Diterima</span>
                                     @elseif($applier->status == 'rejected')
@@ -138,22 +142,43 @@
                                             <i class="fal fa-eye"></i> Detail
                                         </a>
 
-                                        {{-- Terima / Tolak --}}
+                                        {{-- Terima / Tolak Administrasi --}}
                                         @if($applier->status == 'processed')
                                             <form action="{{ route('hrd.status', [$career->id, $applier->id]) }}" method="POST" class="d-inline">
                                                 @csrf @method('PUT')
                                                 <input type="hidden" name="status" value="accepted">
-                                                <button type="submit" class="btn btn-xs btn-success font-weight-bold js-confirm" data-msg="Terima pelamar ini?" title="Terima Lamaran Kerja">
+                                                <button type="submit" class="btn btn-xs btn-success font-weight-bold js-confirm" data-msg="Terima berkas administrasi pelamar & jadwalkan Wawancara Tahap 1?" title="Terima Berkas & Lanjut Wawancara">
                                                     <i class="fal fa-check"></i>
                                                 </button>
                                             </form>
                                             <form action="{{ route('hrd.status', [$career->id, $applier->id]) }}" method="POST" class="d-inline">
                                                 @csrf @method('PUT')
                                                 <input type="hidden" name="status" value="rejected">
-                                                <button type="submit" class="btn btn-xs btn-danger font-weight-bold js-confirm" data-msg="Tolak pelamar ini?" title="Tolak Lamaran Kerja">
+                                                <button type="submit" class="btn btn-xs btn-danger font-weight-bold js-confirm" data-msg="Tolak berkas administrasi pelamar ini?" title="Tolak Berkas Administrasi">
                                                     <i class="fal fa-times"></i>
                                                 </button>
                                             </form>
+                                        @endif
+
+                                        {{-- Wawancara 1 --}}
+                                        @if($applier->status == 'interview_1')
+                                            <a href="{{ route('hrd.interview.form', [$career->id, $applier->id]) }}" class="btn btn-xs btn-warning font-weight-bold" title="Isi Lembar Wawancara Tahap 1">
+                                                <i class="fal fa-comments"></i> Wawancara 1
+                                            </a>
+                                        @endif
+
+                                        {{-- Wawancara 2 --}}
+                                        @if($applier->status == 'interview_2')
+                                            <a href="{{ route('hrd.interview.form', [$career->id, $applier->id]) }}" class="btn btn-xs text-white bg-warning-800 font-weight-bold" title="Review & Isi Wawancara Tahap 2">
+                                                <i class="fal fa-user-shield"></i> Wawancara 2
+                                            </a>
+                                        @endif
+
+                                        {{-- Hasil Wawancara (Finalized) --}}
+                                        @if(in_array($applier->status, ['accepted', 'rejected']) && $applier->interview)
+                                            <a href="{{ route('hrd.interview.form', [$career->id, $applier->id]) }}" class="btn btn-xs btn-outline-secondary font-weight-bold" title="Lihat Hasil Wawancara">
+                                                <i class="fal fa-file-invoice"></i> Hasil Wawancara
+                                            </a>
                                         @endif
 
                                         {{-- WhatsApp --}}

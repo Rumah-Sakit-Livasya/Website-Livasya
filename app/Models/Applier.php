@@ -54,4 +54,9 @@ class Applier extends Model
     {
         return $this->hasMany(ApplierEducation::class);
     }
+
+    public function interview()
+    {
+        return $this->hasOne(ApplierInterview::class, 'applier_id');
+    }
 }

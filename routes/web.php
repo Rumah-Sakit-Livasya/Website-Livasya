@@ -116,6 +116,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/pelamar/{career}/{applier}', [\App\Http\Controllers\Hrd\HrdController::class, 'detail'])->name('hrd.detail');
         Route::put('/pelamar/{career}/{applier}/status', [\App\Http\Controllers\Hrd\HrdController::class, 'updateStatus'])->name('hrd.status');
         Route::get('/pelamar/{career}/{applier}/dokumen/{type}', [\App\Http\Controllers\Hrd\HrdController::class, 'downloadDoc'])->name('hrd.download');
+        Route::get('/pelamar/{career}/{applier}/wawancara', [\App\Http\Controllers\Hrd\HrdController::class, 'interviewForm'])->name('hrd.interview.form');
+        Route::post('/pelamar/{career}/{applier}/wawancara', [\App\Http\Controllers\Hrd\HrdController::class, 'storeInterview'])->name('hrd.interview.store');
     });
     // ── End HRD Area ──────────────────────────────────────────────────────────
 
