@@ -96,23 +96,23 @@
                     <div class="row">
                         @foreach($careers as $career)
                         <div class="col-md-6 col-lg-4 mb-4">
-                            <div class="card shadow-xs border-light-blue h-100 transition-hover">
-                                <div class="card-header bg-gradient-navy text-white py-3">
-                                    <h5 class="card-title mb-1 font-weight-bold" style="font-size: 0.95rem; line-height: 1.3;">
-                                        {{ $career->title }}
-                                    </h5>
-                                    <small class="text-white-50 font-weight-bold">{{ $career->tipe == 'medis' ? 'Medis' : 'Non-Medis' }}</small>
-                                </div>
-                                <div class="card-body d-flex flex-column justify-content-between p-3">
-                                    <div class="mb-3">
-                                        <span class="badge badge-light px-2 py-1 border text-primary" style="font-size: 0.8rem; border-radius: 4px;">
-                                            <i class="fal fa-users mr-1"></i>
-                                            <strong>{{ $career->applier_count }}</strong> Pelamar
+                            <div class="card shadow-xs border-light-blue h-100 transition-hover bg-white" style="border-radius: 8px; border-left: 4px solid #1a56db !important;">
+                                <div class="card-body d-flex flex-column justify-content-between p-3" style="min-height: 120px;">
+                                    <div class="d-flex align-items-start justify-content-between mb-2">
+                                        <h6 class="font-weight-bold text-dark mb-0 fs-md pr-2" style="line-height: 1.35; font-size: 0.925rem;">
+                                            {{ $career->title }}
+                                        </h6>
+                                        <span class="badge {{ $career->tipe == 'medis' ? 'badge-info' : 'badge-primary' }} px-2 py-1" style="font-size: 0.7rem; border-radius: 4px; flex-shrink: 0;">
+                                            {{ $career->tipe == 'medis' ? 'Medis' : 'Non-Medis' }}
                                         </span>
                                     </div>
-                                    <div>
-                                        <a href="{{ route('hrd.appliers', $career->id) }}" class="btn btn-primary btn-block font-weight-bold btn-sm">
-                                            <i class="fal fa-eye mr-1"></i> Lihat Pelamar
+                                    <div class="d-flex align-items-center justify-content-between mt-3 pt-3 border-top" style="border-color: #f3f4f6 !important;">
+                                        <span class="text-muted fs-xs font-weight-semibold">
+                                            <i class="fal fa-users text-primary mr-1"></i>
+                                            <strong class="text-dark">{{ $career->applier_count }}</strong> Pelamar
+                                        </span>
+                                        <a href="{{ route('hrd.appliers', $career->id) }}" class="btn btn-xs btn-outline-primary px-3 font-weight-bold" style="border-radius: 4px;">
+                                            Lihat Pelamar <i class="fal fa-chevron-right ml-1"></i>
                                         </a>
                                     </div>
                                 </div>
