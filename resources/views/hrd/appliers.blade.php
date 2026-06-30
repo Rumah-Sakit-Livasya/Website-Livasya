@@ -76,14 +76,33 @@
                                     <div class="d-flex align-items-center" style="gap: 10px;">
                                         @php
                                             $avatar = $applier->user?->avatar;
+                                            $avatarExists = false;
                                             $avatarUrl = asset('img/no-image.png');
                                             if ($avatar) {
-                                                $avatarUrl = \Illuminate\Support\Str::startsWith($avatar, ['http://','https://'])
-                                                    ? $avatar
-                                                    : asset('storage/' . $avatar);
+                                                if (\Illuminate\Support\Str::startsWith($avatar, ['http://','https://'])) {
+                                                    $avatarExists = true;
+                                                    $avatarUrl = $avatar;
+                                                } else {
+                                                    $avatarExists = \Illuminate\Support\Facades\Storage::disk('public')->exists($avatar);
+                                                    $avatarUrl = asset('storage/' . $avatar);
+                                                }
                                             }
                                         @endphp
-                                        <img src="{{ $avatarUrl }}" class="avatar-sm rounded-circle shadow-xs" alt="{{ $applier->first_name }}">
+                                        @if($avatarExists)
+                                            <img src="{{ $avatarUrl }}" class="avatar-sm rounded-circle shadow-xs" alt="{{ $applier->first_name }}">
+                                        @else
+                                            @php
+                                                $initial = strtoupper(substr($applier->first_name ?? 'P', 0, 1));
+                                                $bgColors = ['#1a56db', '#16a34a', '#d97706', '#e11d48', '#7c3aed', '#db2777', '#2563eb'];
+                                                $colorIndex = (ord($initial) % count($bgColors));
+                                                $bgColor = $bgColors[$colorIndex];
+                                            @endphp
+                                            <div class="avatar-sm rounded-circle shadow-xs d-inline-flex align-items-center justify-content-center text-white font-weight-bold" 
+                                                 style="width: 36px; height: 36px; background-color: {{ $bgColor }}; font-size: 0.95rem;" 
+                                                 title="Avatar tidak tersedia">
+                                                {{ $initial }}
+                                            </div>
+                                        @endif
                                         <div>
                                             <div class="font-weight-bold text-dark fs-md">
                                                 {{ $applier->first_name }} {{ $applier->last_name }}
@@ -113,10 +132,10 @@
                                 </td>
                                 <td class="text-center text-muted" style="font-size: 0.8rem;">{{ $applier->created_at->diffForHumans() }}</td>
                                 <td class="text-center">
-                                    <div class="d-flex flex-wrap align-items-center justify-content-center" style="gap: 5px;">
+                                    <div class="d-flex align-items-center justify-content-center" style="gap: 5px;">
                                         {{-- Detail --}}
-                                        <a href="{{ route('hrd.detail', [$career->id, $applier->id]) }}" class="btn btn-xs btn-outline-info font-weight-bold">
-                                            <i class="fal fa-eye mr-1"></i> Detail
+                                        <a href="{{ route('hrd.detail', [$career->id, $applier->id]) }}" class="btn btn-xs btn-outline-info font-weight-bold" title="Detail Berkas Pelamar">
+                                            <i class="fal fa-eye"></i> Detail
                                         </a>
 
                                         {{-- Terima / Tolak --}}
@@ -124,15 +143,15 @@
                                             <form action="{{ route('hrd.status', [$career->id, $applier->id]) }}" method="POST" class="d-inline">
                                                 @csrf @method('PUT')
                                                 <input type="hidden" name="status" value="accepted">
-                                                <button type="submit" class="btn btn-xs btn-success font-weight-bold js-confirm" data-msg="Terima pelamar ini?">
-                                                    <i class="fal fa-check mr-1"></i> Terima
+                                                <button type="submit" class="btn btn-xs btn-success font-weight-bold js-confirm" data-msg="Terima pelamar ini?" title="Terima Lamaran Kerja">
+                                                    <i class="fal fa-check"></i>
                                                 </button>
                                             </form>
                                             <form action="{{ route('hrd.status', [$career->id, $applier->id]) }}" method="POST" class="d-inline">
                                                 @csrf @method('PUT')
                                                 <input type="hidden" name="status" value="rejected">
-                                                <button type="submit" class="btn btn-xs btn-danger font-weight-bold js-confirm" data-msg="Tolak pelamar ini?">
-                                                    <i class="fal fa-times mr-1"></i> Tolak
+                                                <button type="submit" class="btn btn-xs btn-danger font-weight-bold js-confirm" data-msg="Tolak pelamar ini?" title="Tolak Lamaran Kerja">
+                                                    <i class="fal fa-times"></i>
                                                 </button>
                                             </form>
                                         @endif
@@ -144,8 +163,8 @@
                                                 if (substr($wa,0,1) == '0') $wa = '62'.substr($wa,1);
                                                 $waMsg = "Halo {$applier->first_name}, kami dari HRD RS Livasya terkait lamaran Anda untuk posisi {$career->title}.";
                                             @endphp
-                                            <a href="https://wa.me/{{ $wa }}?text={{ urlencode($waMsg) }}" target="_blank" class="btn btn-xs btn-outline-success font-weight-bold">
-                                                <i class="fab fa-whatsapp mr-1"></i> Chat
+                                            <a href="https://wa.me/{{ $wa }}?text={{ urlencode($waMsg) }}" target="_blank" class="btn btn-xs btn-outline-success font-weight-bold" title="Chat via WhatsApp">
+                                                <i class="fab fa-whatsapp"></i> Chat
                                             </a>
                                         @endif
                                     </div>
