@@ -949,7 +949,7 @@
                     <a href="/pelayanan/{{ $p->slug }}" class="service-card">
                         <span class="service-icon"><i class="{{ $p->icon }}" aria-hidden="true"></i></span>
                         <h3>{{ $p->title }}</h3>
-                        <p>Lihat informasi layanan {{ $p->title }} di Rumah Sakit Livasya Majalengka.</p>
+                        <p>{{ \Illuminate\Support\Str::limit(strip_tags($p->excerpt ?? $p->body), 90) }}</p>
                     </a>
                 @endforeach
             </div>
