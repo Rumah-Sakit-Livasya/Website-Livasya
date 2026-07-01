@@ -302,6 +302,10 @@
             border-color: #bfdbfe;
         }
 
+        .quick-card:hover .quick-icon {
+            transform: scale(1.1) rotate(3deg);
+        }
+
         .quick-icon {
             width: 44px;
             height: 44px;
@@ -313,6 +317,7 @@
             color: #ffffff;
             background: linear-gradient(135deg, var(--primary), #16a085);
             box-shadow: 0 10px 22px rgba(0, 108, 191, .18);
+            transition: all 0.3s ease;
         }
 
         .quick-icon i,
@@ -590,6 +595,10 @@
             box-shadow: 0 20px 42px rgba(16, 58, 90, .12);
         }
 
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(3deg);
+        }
+
         .service-icon {
             width: 58px;
             height: 58px;
@@ -598,6 +607,7 @@
             border-radius: 8px;
             color: #ffffff;
             background: linear-gradient(135deg, var(--primary), #16a085);
+            transition: all 0.3s ease;
             font-size: 2.5rem;
         }
 
@@ -678,18 +688,50 @@
         }
 
         .news-body h3 {
-            margin: 0 0 10px;
-            color: #17324d;
-            font-size: 1.9rem;
-            font-weight: 800;
-            line-height: 1.35;
+            margin: 0 0 12px;
+            color: #1f2937;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.45;
+        }
+
+        .news-body h3 a {
+            color: #1f2937 !important;
+            transition: color 0.2s;
+        }
+
+        .news-body h3 a:hover {
+            color: #2563eb !important;
+            text-decoration: none !important;
         }
 
         .news-body p {
             margin: 0;
-            color: #617487;
-            font-size: 1.4rem;
-            line-height: 1.7;
+            color: #4b5563;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .btn-read-more {
+            display: inline-flex;
+            align-items: center;
+            color: #2563eb;
+            font-weight: 700;
+            font-size: 13px;
+            text-decoration: none !important;
+            transition: all 0.2s;
+        }
+
+        .btn-read-more:hover {
+            color: #1d4ed8;
+        }
+
+        .btn-read-more i {
+            transition: transform 0.2s;
+        }
+
+        .btn-read-more:hover i {
+            transform: translateX(4px);
         }
 
         .media-section {
@@ -999,8 +1041,21 @@
                             <a href="/posts/{{ $p->slug }}" class="news-thumb" aria-label="{{ $p->title }}"
                                 style="background-image: url({{ $p->image ? asset('/storage/' . $p->image) : asset('img/rsialivasya.webp') }});"></a>
                             <div class="news-body">
-                                <h3><a href="/posts/{{ $p->slug }}" class="text-decoration-none text-reset">{{ $p->title }}</a></h3>
-                                <p>{{ \Illuminate\Support\Str::limit(strip_tags($p->body), 118) }}</p>
+                                <div>
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <span class="badge bg-light text-primary font-weight-bold" style="font-size: 10px; text-transform: uppercase;">{{ $p->category->name ?? 'Berita' }}</span>
+                                        <span class="text-muted" style="font-size: 11px;"><i class="far fa-calendar-alt mr-1"></i> {{ $p->created_at->format('d M Y') }}</span>
+                                    </div>
+                                    <h3><a href="/posts/{{ $p->slug }}">{{ $p->title }}</a></h3>
+                                    <p class="text-muted" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; height: 60px;">
+                                        {{ \Illuminate\Support\Str::limit(strip_tags($p->body), 118) }}
+                                    </p>
+                                </div>
+                                <div class="pt-3 border-top mt-3">
+                                    <a href="/posts/{{ $p->slug }}" class="btn-read-more">
+                                        Baca Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
+                                    </a>
+                                </div>
                             </div>
                         </article>
                     @endif
