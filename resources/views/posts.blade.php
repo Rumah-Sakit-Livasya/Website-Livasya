@@ -132,17 +132,18 @@
                 </div>
             </div>
 
+
             @if ($posts->count())
                 <div class="row g-4 justify-content-center">
                     @foreach ($posts as $post)
-                        <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="col-md-6 col-lg-4 mb-4 d-flex align-items-stretch">
                             @if ($post->is_embeded)
-                                <div class="news-card p-2 shadow-xs d-flex align-items-center justify-content-center bg-white" style="border-radius: 16px; overflow: hidden; min-height: 480px;">
+                                <div class="news-card p-2 shadow-xs d-flex align-items-start justify-content-center bg-white w-100" style="border-radius: 16px; overflow: hidden; min-height: 480px;">
                                     {!! str_replace('//www.instagram.com/embed.js', 'https://www.instagram.com/embed.js', $post->body) !!}
                                 </div>
                             @else
-                                <a href="/posts/{{ $post->slug }}" class="text-decoration-none">
-                                    <div class="news-card d-flex flex-column justify-content-between">
+                                <a href="/posts/{{ $post->slug }}" class="text-decoration-none d-flex flex-column w-100">
+                                    <div class="news-card d-flex flex-column justify-content-between h-100 w-100">
                                         <div>
                                             {{-- Post Image --}}
                                             <div class="position-relative overflow-hidden" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
