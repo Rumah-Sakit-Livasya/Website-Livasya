@@ -230,13 +230,19 @@
                         $('#edit-answer').val(data.answer);
 
                         var questionTrix = document.getElementById('edit-question-text');
-                        if (questionTrix && questionTrix.editor) {
-                            questionTrix.editor.loadHTML(data.question);
+                        if (questionTrix) {
+                            questionTrix.value = data.question;
+                            if (questionTrix.editor) {
+                                questionTrix.editor.loadHTML(data.question);
+                            }
                         }
 
                         var answerTrix = document.getElementById('edit-answer-text');
-                        if (answerTrix && answerTrix.editor) {
-                            answerTrix.editor.loadHTML(data.answer);
+                        if (answerTrix) {
+                            answerTrix.value = data.answer;
+                            if (answerTrix.editor) {
+                                answerTrix.editor.loadHTML(data.answer);
+                            }
                         }
 
                         // Show the modal
@@ -246,6 +252,28 @@
                         showErrorAlert('Terjadi kesalahan:', error);
                     }
                 });
+            });
+
+            // Fallback: Populate Trix editor when modal is fully visible and initialized
+            $('#edit-faq').on('shown.bs.modal', function () {
+                var qVal = $('#edit-question').val();
+                var aVal = $('#edit-answer').val();
+
+                var questionTrix = document.getElementById('edit-question-text');
+                if (questionTrix) {
+                    questionTrix.value = qVal;
+                    if (questionTrix.editor) {
+                        questionTrix.editor.loadHTML(qVal);
+                    }
+                }
+
+                var answerTrix = document.getElementById('edit-answer-text');
+                if (answerTrix) {
+                    answerTrix.value = aVal;
+                    if (answerTrix.editor) {
+                        answerTrix.editor.loadHTML(aVal);
+                    }
+                }
             });
 
             // Submit the form via AJAX
