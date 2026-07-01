@@ -11,12 +11,54 @@
         $youtubeUrl = $identity->youtube ?? '#';
         $featuredPosts = $post->take(3);
         $quickMenus = [
-            ['title' => 'Pelayanan', 'text' => 'Lihat layanan medis RS Livasya.', 'url' => '/pelayanan', 'icon' => 'fas fa-heartbeat'],
-            ['title' => 'Cari Dokter', 'text' => 'Temukan dokter dan jadwal praktik.', 'url' => '/dokter', 'icon' => 'fas fa-user-md'],
-            ['title' => 'Jadwal Dokter', 'text' => 'Cek jadwal sebelum berkunjung.', 'url' => '/jadwal-dokter', 'icon' => 'fas fa-calendar-check'],
-            ['title' => 'Fasilitas', 'text' => 'Kenali fasilitas rumah sakit.', 'url' => '/fasilitas-unggulan', 'icon' => 'fas fa-hospital'],
-            ['title' => 'Berita', 'text' => 'Baca edukasi dan kabar terbaru.', 'url' => '/posts', 'icon' => 'fas fa-newspaper'],
-            ['title' => 'Karir', 'text' => 'Lihat lowongan RS Livasya.', 'url' => '/career', 'icon' => 'fas fa-briefcase-medical'],
+            [
+                'title' => 'Pelayanan',
+                'text' => 'Lihat layanan medis RS Livasya.',
+                'url' => '/pelayanan',
+                'icon' => 'fas fa-heartbeat',
+                'gradient' => 'linear-gradient(135deg, #ef4444, #f97316)',
+                'shadow' => 'rgba(239, 68, 68, 0.25)'
+            ],
+            [
+                'title' => 'Cari Dokter',
+                'text' => 'Temukan dokter dan jadwal praktik.',
+                'url' => '/dokter',
+                'icon' => 'fas fa-user-md',
+                'gradient' => 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                'shadow' => 'rgba(59, 130, 246, 0.25)'
+            ],
+            [
+                'title' => 'Jadwal Dokter',
+                'text' => 'Cek jadwal sebelum berkunjung.',
+                'url' => '/jadwal-dokter',
+                'icon' => 'fas fa-calendar-check',
+                'gradient' => 'linear-gradient(135deg, #10b981, #059669)',
+                'shadow' => 'rgba(16, 185, 129, 0.25)'
+            ],
+            [
+                'title' => 'Fasilitas',
+                'text' => 'Kenali fasilitas rumah sakit.',
+                'url' => '/fasilitas-unggulan',
+                'icon' => 'fas fa-hospital',
+                'gradient' => 'linear-gradient(135deg, #f59e0b, #d97706)',
+                'shadow' => 'rgba(245, 158, 11, 0.25)'
+            ],
+            [
+                'title' => 'Berita',
+                'text' => 'Baca edukasi dan kabar terbaru.',
+                'url' => '/posts',
+                'icon' => 'fas fa-newspaper',
+                'gradient' => 'linear-gradient(135deg, #8b5cf6, #ec4899)',
+                'shadow' => 'rgba(139, 92, 246, 0.25)'
+            ],
+            [
+                'title' => 'Karir',
+                'text' => 'Lihat lowongan RS Livasya.',
+                'url' => '/career',
+                'icon' => 'fas fa-briefcase-medical',
+                'gradient' => 'linear-gradient(135deg, #06b6d4, #0891b2)',
+                'shadow' => 'rgba(6, 182, 212, 0.25)'
+            ],
         ];
         $homeFaqs = [
             [
@@ -922,7 +964,7 @@
             <div class="quick-grid">
                 @foreach ($quickMenus as $menu)
                     <a href="{{ $menu['url'] }}" class="quick-card">
-                        <span class="quick-icon"><i class="{{ $menu['icon'] }}" aria-hidden="true"></i></span>
+                        <span class="quick-icon" style="background: {{ $menu['gradient'] }}; box-shadow: 0 10px 22px {{ $menu['shadow'] }};"><i class="{{ $menu['icon'] }}" aria-hidden="true"></i></span>
                         <strong>{{ $menu['title'] }}</strong>
                         <span class="quick-text">{{ $menu['text'] }}</span>
                     </a>
