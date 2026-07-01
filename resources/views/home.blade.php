@@ -84,35 +84,41 @@
 
         .spotlight-card {
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, .7);
-            border-radius: 8px;
-            background: rgba(255, 255, 255, .88);
-            box-shadow: 0 28px 70px rgba(16, 58, 90, .18);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
             backdrop-filter: blur(14px);
+            transition: all 0.3s ease;
+        }
+
+        .spotlight-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 40px 75px rgba(0, 0, 0, 0.12);
         }
 
         .spotlight-image {
-            min-height: 210px;
+            min-height: 220px;
             background: url("{{ asset('img/rsialivasya.webp') }}") center / cover no-repeat;
         }
 
         .spotlight-body {
-            padding: 24px;
+            padding: 26px;
         }
 
         .spotlight-body h2 {
             margin: 0;
-            color: #17324d;
-            font-size: 2.25rem;
+            color: #1f2937;
+            font-size: 1.8rem;
             font-weight: 800;
-            line-height: 1.25;
+            line-height: 1.35;
         }
 
         .spotlight-body p {
             margin: 12px 0 0;
-            color: #52677b;
-            font-size: 1.45rem;
-            line-height: 1.7;
+            color: #4b5563;
+            font-size: 13.5px;
+            line-height: 1.6;
         }
 
         .spotlight-list {
@@ -225,10 +231,17 @@
 
         .trust-item {
             padding: 18px;
-            border: 1px solid #dceaf3;
-            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
             background: rgba(255, 255, 255, .9);
-            box-shadow: 0 16px 34px rgba(16, 58, 90, .08);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            transition: all 0.2s ease;
+        }
+
+        .trust-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-color: #cbd5e1;
         }
 
         .trust-item i {
@@ -272,19 +285,21 @@
         .quick-card {
             min-height: 150px;
             padding: 20px;
-            border: 1px solid #dceaf3;
-            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
             background: #ffffff;
             color: #17324d;
             text-decoration: none;
-            box-shadow: 0 18px 42px rgba(16, 58, 90, .10);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
         }
 
         .quick-card:hover {
             color: #17324d;
             text-decoration: none;
             transform: translateY(-5px);
-            box-shadow: 0 24px 54px rgba(16, 58, 90, .15);
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
+            border-color: #bfdbfe;
         }
 
         .quick-icon {
@@ -508,10 +523,17 @@
             display: grid;
             place-items: center;
             padding: 16px;
-            border-radius: 8px;
+            border-radius: 12px;
             background: #f8fcff;
             text-align: center;
             border: 1px solid #e9f1f6;
+            transition: all 0.2s ease;
+        }
+
+        .polyclinic-card:hover {
+            transform: translateY(-2px);
+            border-color: #bfdbfe;
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.06);
         }
 
         .polyclinic-card img {
@@ -536,16 +558,17 @@
         }
 
         .service-card {
-            min-height: 238px;
+            height: 100%;
             display: flex;
             flex-direction: column;
             padding: 26px;
-            border-radius: 8px;
+            border-radius: 16px;
             background: #ffffff;
             color: #17324d;
             text-decoration: none;
             border: 1px solid #e0edf4;
             box-shadow: 0 14px 34px rgba(16, 58, 90, .07);
+            transition: all 0.3s ease;
         }
 
         .service-card::after {
@@ -601,7 +624,7 @@
             gap: 34px;
             align-items: center;
             padding: 34px;
-            border-radius: 8px;
+            border-radius: 16px;
             background: #ffffff;
             border: 1px solid #e0edf4;
             box-shadow: 0 18px 44px rgba(16, 58, 90, .08);
@@ -610,7 +633,7 @@
         .schedule-image img,
         .schedule-image .schedule-placeholder {
             width: 100%;
-            border-radius: 8px;
+            border-radius: 12px;
         }
 
         .schedule-placeholder {
@@ -624,10 +647,14 @@
 
         .news-card {
             overflow: hidden;
-            border-radius: 8px;
+            border-radius: 16px;
             background: #ffffff;
             border: 1px solid #e0edf4;
             box-shadow: 0 14px 34px rgba(16, 58, 90, .07);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
         }
 
         .news-card:hover {
@@ -644,6 +671,10 @@
 
         .news-body {
             padding: 22px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .news-body h3 {
@@ -704,10 +735,18 @@
 
         .faq-card {
             padding: 24px;
-            border: 1px solid #e0edf4;
-            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
             background: #ffffff;
-            box-shadow: 0 14px 34px rgba(16, 58, 90, .07);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            height: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .faq-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-color: #cbd5e1;
         }
 
         .faq-card h3 {
