@@ -1,18 +1,77 @@
 @extends('layouts.main')
 
 @section('container')
-    <section class="gallery bg-white py-5">
-        <div class="container" style="margin-top: 8rem;">
-            <h1 class="heading my-5 text-center"><span>Kebijakan</span> Privasi</h1>
-            <div class="row justify-content-center align-items-start">
+    <style>
+        .hero-kebijakan {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.65) 100%),
+                        url("/img/rs.webp") center center / cover no-repeat;
+            height: 240px;
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .document-card {
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 16px;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            line-height: 1.8;
+            font-size: 14.5px;
+            color: #4b5563;
+        }
+
+        .document-card h3 {
+            color: #1f2937;
+            font-weight: 800;
+            font-size: 1.45rem;
+        }
+
+        .document-card h5 {
+            color: #1f2937;
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #eff6ff;
+            padding-bottom: 8px;
+        }
+
+        .document-card p {
+            margin-bottom: 1.25rem;
+        }
+
+        .document-card ol, .document-card ul {
+            padding-left: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .document-card li {
+            margin-bottom: 0.75rem;
+        }
+    </style>
+
+    {{-- Unified Compact Hero Banner --}}
+    <div class="container my-4">
+        <div class="hero-kebijakan position-relative d-flex align-items-end" style="overflow: hidden;">
+            <div class="p-4 w-100" data-aos="fade-up">
+                <span class="badge bg-light text-primary font-weight-bold px-3 py-1-5 mb-2 text-uppercase" style="border-radius: 20px; font-size: 10px; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">Legalitas Website</span>
+                <h1 class="text-white font-weight-bold mb-0 text-shadow" style="font-size: 2rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.65);">
+                    Kebijakan Privasi
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    {{-- Document Section --}}
+    <section class="gallery bg-light py-4 overflow-hidden">
+        <div class="container">
+            <div class="row justify-content-center">
                 <div class="col-lg-10">
-                    <h3 class="mt-5">KEBIJAKAN PRIVASI</h3>
-                    <p class="mt-3">
-                        Kebijakan Privasi ini akan melingkupi penjelasan mengenai bagaimana informasi pengguna WEBSITE
-                        ("PENGGUNA") dikumpulkan, digunakan, dan dijaga kerahasiaannya oleh PT LIVASYA SUDJONO
-                        BERSAUDARA dan/atau beserta anak perusahaan ("KAMI") dengan tetap menghormati Hak PENGGUNA dalam
-                        menggunakan situs www.livasya.com ("WEBSITE") KAMI.
-                    </p>
+                    <div class="card border-0 p-4 p-md-5 document-card">
+                        <h3 class="text-center mb-4 text-primary">KEBIJAKAN PRIVASI</h3>
+                        <p class="mb-4">
+                            Kebijakan Privasi ini akan melingkupi penjelasan mengenai bagaimana informasi pengguna WEBSITE ("PENGGUNA") dikumpulkan, digunakan, dan dijaga kerahasiaannya oleh PT LIVASYA SUDJONO BERSAUDARA dan/atau beserta anak perusahaan ("KAMI") dengan tetap menghormati Hak PENGGUNA dalam menggunakan situs www.livasya.com ("WEBSITE") KAMI.
+                        </p>
                     <h5 class="mt-5" id="lingkup-kebijakan-privasi">A. Lingkup Kebijakan Privasi</h5>
                     <ol class="mt-3">
                         <li>Kebijakan Privasi ini mengatur penggunaan dan perlindungan informasi yang diberikan oleh
@@ -171,6 +230,7 @@
                             yang bertentangan dengan ketentuan yang berlaku dalam Kebijakan Privasi ini atau
                             peraturan perundang-undangan yang berlaku.</li>
                     </ol>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,32 +1,79 @@
 @extends('layouts.main')
 
 @section('container')
-    <section class="gallery bg-white py-5">
-        <div class="container" style="margin-top: 8rem;">
-            <h1 class="heading my-5 text-center"><span>Syarat</span> & Ketentuan</h1>
-            <div class="row justify-content-center align-items-start">
-                <div class="col-lg-10">
+    <style>
+        .hero-syarat {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.65) 100%),
+                        url("/img/rs.webp") center center / cover no-repeat;
+            height: 240px;
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
 
-                    <div class="container my-5">
-                        <div class="row">
-                            <div class="col-12">
-                                <h3 class="text-center mb-4">SYARAT-SYARAT & KETENTUAN PENGGUNAAN WEBSITE LIVASYA</h3>
-                                <div class="mb-4">
-                                    <p>Dengan mendaftar dan/atau menggunakan situs Kami <a
-                                            href="http://livasya.com">livasya.com</a> (“Website”),
-                                        Anda sebagai pengguna (“Anda”) telah setuju dan telah membaca memahami, mengetahui,
-                                        dan menerima syarat-syarat dan ketentuan-ketentuan ini (“Syarat dan Ketentuan”) dan
-                                        kebijakan privasi yang terlampir (“Kebijakan Privasi”). Syarat dan Ketentuan ini dan
-                                        Kebijakan Privasi yang terlampir merupakan suatu perjanjian terkait tata cara dan
-                                        persyaratan penggunaan Website antara Anda dengan kami yaitu PT LIVASYA SUDJONO
-                                        BERSAUDARA berikut dengan anak perusahaannya (“Kami”).</p>
-                                    <p>Anda setuju dan mengakui, bahwa Kami memiliki hak dan kewenangan untuk melakukan
-                                        pembaharuan atas Syarat dan Ketentuan ini dari waktu ke waktu dan pembaruan tersebut
-                                        akan Kami beritahukan kepada Anda pada saat Anda mengakses Website. Dalam hal Anda
-                                        tidak dapat menyetujui Syarat dan Ketentuan dan Kebijakan Privasi ini maka Anda
-                                        dapat menghentikan penggunaan Website dan menghapus akun dalam hal Anda telah
-                                        melakukan pendaftaran sebagai pengguna Website.</p>
-                                </div>
+        .document-card {
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 16px;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            line-height: 1.8;
+            font-size: 14.5px;
+            color: #4b5563;
+        }
+
+        .document-card h3 {
+            color: #1f2937;
+            font-weight: 800;
+            font-size: 1.45rem;
+        }
+
+        .document-card h5 {
+            color: #1f2937;
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #eff6ff;
+            padding-bottom: 8px;
+        }
+
+        .document-card p {
+            margin-bottom: 1.25rem;
+        }
+
+        .document-card ol, .document-card ul {
+            padding-left: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .document-card li {
+            margin-bottom: 0.75rem;
+        }
+    </style>
+
+    {{-- Unified Compact Hero Banner --}}
+    <div class="container my-4">
+        <div class="hero-syarat position-relative d-flex align-items-end" style="overflow: hidden;">
+            <div class="p-4 w-100" data-aos="fade-up">
+                <span class="badge bg-light text-primary font-weight-bold px-3 py-1-5 mb-2 text-uppercase" style="border-radius: 20px; font-size: 10px; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">Legalitas Website</span>
+                <h1 class="text-white font-weight-bold mb-0 text-shadow" style="font-size: 2rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.65);">
+                    Syarat & Ketentuan
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    {{-- Document Section --}}
+    <section class="gallery bg-light py-4 overflow-hidden">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="card border-0 p-4 p-md-5 document-card">
+                        <h3 class="text-center mb-4 text-primary">SYARAT & KETENTUAN PENGGUNAAN WEBSITE</h3>
+                        <div class="mb-4">
+                            <p>Dengan mendaftar dan/atau menggunakan situs Kami <a href="http://livasya.com" class="font-weight-bold text-primary">livasya.com</a> (“Website”), Anda sebagai pengguna (“Anda”) telah setuju dan telah membaca memahami, mengetahui, dan menerima syarat-syarat dan ketentuan-ketentuan ini (“Syarat dan Ketentuan”) dan kebijakan privasi yang terlampir (“Kebijakan Privasi”). Syarat dan Ketentuan ini dan Kebijakan Privasi yang terlampir merupakan suatu perjanjian terkait tata cara dan persyaratan penggunaan Website antara Anda dengan kami yaitu PT LIVASYA SUDJONO BERSAUDARA berikut dengan anak perusahaannya (“Kami”).</p>
+                            <p>Anda setuju dan mengakui, bahwa Kami memiliki hak dan kewenangan untuk melakukan pembaharuan atas Syarat dan Ketentuan ini dari waktu ke waktu dan pembaruan tersebut akan Kami beritahukan kepada Anda pada saat Anda mengakses Website. Dalam hal Anda tidak dapat menyetujui Syarat dan Ketentuan dan Kebijakan Privasi ini maka Anda dapat menghentikan penggunaan Website dan menghapus akun dalam hal Anda telah melakukan pendaftaran sebagai pengguna Website.</p>
+                        </div>
+
                                 <h5 id="ketentuan-umum" class="mt-4">I. Ketentuan Umum</h5>
                                 <ol class="mb-4">
                                     <li>Koneksi internet diperlukan untuk dapat menggunakan Website. Segala biaya yang
@@ -159,11 +206,8 @@
                                         apapun tanpa persetujuan tertulis terlebih dahulu dari Kami.</li>
                                     <li>Anda tidak diperkenankan untuk menggunakan Materi Website untuk tujuan komersial
                                         apapun tanpa persetujuan tertulis terlebih dahulu dari Kami.</li>
-                                </ol>
-                            </div>
-                        </div>
+                        </ol>
                     </div>
-
                 </div>
             </div>
         </div>

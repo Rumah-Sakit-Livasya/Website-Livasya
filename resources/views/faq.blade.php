@@ -2,165 +2,68 @@
 
 @section('container')
     <style>
-        #faq {
-            max-width: 700px;
-            margin: auto;
-            padding: 0 15px;
-
+        .hero-faq {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.65) 100%),
+                        url("/img/rs.webp") center center / cover no-repeat;
+            height: 240px;
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
 
-        section.faq {
-            padding-top: 2em;
-            padding-bottom: 3em;
-        }
-
-        #faq ul {
-            text-align: left;
-        }
-
-        .transition,
-        p,
-        ul li i:before,
-        ul li i:after {
-            transition: all 0.3s;
-        }
-
-        #faq .no-select,
-        #faq h6 {
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            user-select: none;
-        }
-
-        #faq h1 {
-            color: #000;
-            margin-bottom: 30px;
-            margin-top: 0;
-        }
-
-        #faq h6 {
-            color: #e97f0d;
-            font-family: 'hm_light', sans-serif;
+        .accordion-button {
             font-size: 15px;
+            font-weight: 700;
+            color: #1f2937 !important;
+            background-color: #fff;
+            padding: 18px 20px;
+            border: 1px solid rgba(0,0,0,0.04);
+            border-radius: 12px !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.01);
             text-align: left;
-            padding: 15px 15px 0;
-            text-transform: none;
-            font-weight: 300;
-            letter-spacing: 1px;
-            display: block;
-            margin: 0;
-            cursor: pointer;
-            transition: .2s;
-        }
-
-        #faq p {
-            color: #333;
-            text-align: left;
-            font-family: 'hm_light', sans-serif;
-            font-size: 14px;
-            line-height: 1.45;
-            position: relative;
-            overflow: hidden;
-            max-height: 250px;
-            will-change: max-height;
-            contain: layout;
-            display: inline-block;
-            opacity: 1;
-            transform: translate(0, 0);
-            margin-top: 5px;
-            margin-bottom: 15px;
-            padding: 0 50px 0 15px;
-            transition: .3s opacity, .6s max-height;
-            hyphens: auto;
-            z-index: 2;
-        }
-
-        #faq ul {
-            list-style: none;
-            perspective: 900;
-            padding: 0;
-            margin: 0;
-        }
-
-        #faq ul li {
-            position: relative;
-            overflow: hidden;
-            padding: 0;
-            margin: 0;
-            /*padding-bottom: 4px;*/
-            /*padding-top: 18px;*/
-            background: #fff;
-            box-shadow: 0 3px 10px -2px rgba(0, 0, 0, 0.1);
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        #faq ul li+li {
-            margin-top: 15px;
-        }
-
-        #faq ul li:last-of-type {
-            padding-bottom: 0;
-        }
-
-        #faq ul li i {
-            position: absolute;
-            transform: translate(-6px, 0);
-            margin-top: 28px;
-            right: 15px;
-        }
-
-        #faq ul li i:before,
-        ul li i:after {
-            content: "";
-            position: absolute;
-            background-color: #e97f0d;
-            width: 3px;
-            height: 9px;
-        }
-
-        #faq ul li i:before {
-            transform: translate(-2px, 0) rotate(45deg);
-        }
-
-        #faq ul li i:after {
-            transform: translate(2px, 0) rotate(-45deg);
-        }
-
-        #faq ul li input[type=checkbox] {
-            position: absolute;
-            cursor: pointer;
             width: 100%;
-            height: 100%;
-            z-index: 1;
-            opacity: 0;
-            touch-action: manipulation;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
         }
 
-        #faq ul li input[type=checkbox]:checked~h6 {
-            color: #000;
+        .accordion-button:not(.collapsed) {
+            background-color: #eff6ff !important;
+            color: #2563eb !important;
+            border-color: #dbeafe;
         }
 
-        #faq ul li input[type=checkbox]:checked~p {
-            /*margin-top: 0;*/
-            max-height: 0;
-            transition: .3s;
-            opacity: 0;
-            /*transform: translate(0, 50%);*/
+        .accordion-item {
+            border: none;
+            margin-bottom: 12px;
+            border-radius: 12px !important;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
 
-        #faq ul li input[type=checkbox]:checked~i:before {
-            transform: translate(2px, 0) rotate(45deg);
-        }
-
-        #faq ul li input[type=checkbox]:checked~i:after {
-            transform: translate(-2px, 0) rotate(-45deg);
+        .accordion-body {
+            font-size: 14px;
+            color: #4b5563;
+            line-height: 1.6;
+            background-color: #fff;
+            padding: 20px;
+            border-top: 1px solid #f3f4f6;
         }
     </style>
-    <section class="title bg-primary">
-        <h1 class="fw-bold text-light" data-aos="fade-right" data-aos-anchor-placement="top-bottom" style="margin-top:20px;">FAQ
-        </h1>
-    </section>
-    <section id="about" class="overflow-hidden bg-white ">
+
+    {{-- Unified Compact Hero Banner --}}
+    <div class="container my-4">
+        <div class="hero-faq position-relative d-flex align-items-end" style="overflow: hidden;">
+            <div class="p-4 w-100" data-aos="fade-up">
+                <span class="badge bg-light text-primary font-weight-bold px-3 py-1-5 mb-2 text-uppercase" style="border-radius: 20px; font-size: 10px; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">Tanya Jawab</span>
+                <h1 class="text-white font-weight-bold mb-0 text-shadow" style="font-size: 2rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.65);">
+                    Pertanyaan Umum (FAQ)
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <section id="about" class="py-4 bg-light overflow-hidden">
         @include('isifaq')
     </section>
 @endsection
