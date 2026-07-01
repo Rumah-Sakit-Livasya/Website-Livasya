@@ -2,133 +2,157 @@
 
 @section('container')
     <style>
-        body {
-            background-color: #fff;
+        .hero-fasilitas {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.65) 100%),
+                        url("/img/fasilitas/header.jpg") center center / cover no-repeat;
+            height: 240px;
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
 
-        .icon {
-            color: var(--initialTextColor);
-        }
-
-        .hover {
-            color: var(--secondary);
-            background: linear-gradient(90deg, var(--initialBgColor) 0%, var(--initialBgColor) 50%, rgba(0, 123, 255, 1) 50%, rgba(0, 123, 255, 1) 100%);
-            background-size: 200%;
-            transition: background-position 1s ease, color 0.2s linear;
-            border: none;
+        .facility-card {
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
             height: 100%;
         }
 
-        div {
-            color: var(--black);
+        .facility-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.08);
+            border-color: #dbeafe;
         }
 
-        .hover i {
-            color: var(--primary);
-            transition: background-position 1s ease, color 0.2s linear;
+        .facility-img-container {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
         }
 
-        .hover p {
-            color: var(--initialTextColor);
-            transition: background-position 1s ease, color 0.2s linear;
+        .facility-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
         }
 
-        .hover h3 {
-            color: #000;
-            transition: background-position 1s ease, color 0.2s linear;
+        .facility-card:hover .facility-img {
+            transform: scale(1.03);
         }
 
-        .hover .read-more {
-            color: var(--primary);
-            transition: background-position 1s ease, color 0.2s linear;
+        .floating-icon {
+            position: absolute;
+            bottom: -22px;
+            left: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: #2563eb;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
+            z-index: 2;
+            border: 2px solid #fff;
         }
 
-        .hover:hover div {
-            color: var(--initialTextColor);
-            transition: background-position 1s ease, color 0.2s linear;
+        .facility-title {
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #1f2937;
+            margin-top: 10px;
         }
 
-        .hover:hover i {
-            color: var(--initialTextColor);
-            transition: background-position 1s ease, color 0.2s linear;
+        .facility-excerpt {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 58px;
         }
 
-        .hover:hover p {
-            color: var(--initialTextColor);
-            transition: background-position 1s ease, color 0.2s linear;
+        .btn-read-more {
+            display: inline-flex;
+            align-items: center;
+            color: #2563eb;
+            font-weight: 700;
+            font-size: 13.5px;
+            text-decoration: none !important;
+            transition: all 0.2s;
         }
 
-        .hover:hover h3 {
-            color: var(--initialTextColor);
-            transition: background-position 1s ease, color 0.2s linear;
+        .btn-read-more:hover {
+            color: #1d4ed8;
         }
 
-        .hover:hover i {
-            color: var(--slideTextColor);
-            cursor: pointer;
-            background-position: -100.1% 100%;
+        .btn-read-more i {
+            transition: transform 0.2s;
         }
 
-        .hover:hover {
-            color: var(--slideTextColor) !important;
-            cursor: pointer;
-            transition-delay: 0s, 0.15s;
-            background-position: -100.1% 100%;
-        }
-
-        .read-more:hover {
-            color: var(--initialTextColor) !important;
-            cursor: pointer;
-            transition-delay: 0s, 0.15s;
-            background-position: -100.1% 100%;
+        .btn-read-more:hover i {
+            transform: translateX(4px);
         }
     </style>
 
-    <section class="hero-fasilitas"></section>
+    {{-- Unified Compact Hero Banner --}}
+    <div class="container my-4">
+        <div class="hero-fasilitas position-relative d-flex align-items-end" style="overflow: hidden;">
+            <div class="p-4 w-100" data-aos="fade-up">
+                <span class="badge bg-light text-primary font-weight-bold px-3 py-1-5 mb-2 text-uppercase" style="border-radius: 20px; font-size: 10px; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">Fasilitas RS Livasya</span>
+                <h1 class="text-white font-weight-bold mb-0 text-shadow" style="font-size: 2rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.65);">
+                    {{ $title }}
+                </h1>
+            </div>
+        </div>
+    </div>
 
-    <section class="title" style="background: var(--primary);">
-        <h1 class="fw-bold text-light" data-aos="fade-right" data-aos-anchor-placement="top-bottom">{{ $title }}</h1>
-    </section>
-
-    <section class="fasilitas pt-5 bg-white">
+    {{-- Grid content section --}}
+    <section class="fasilitas py-4 bg-light overflow-hidden">
         @if ($facilities->count())
             <div class="container">
-                <div class="row justify-content-center g-5">
+                <div class="row g-4 justify-content-center">
                     @foreach ($facilities as $facility)
-                        <style>
-                            .bg {
-                                top: 0;
-                                left: 0;
-                                right: 0;
-                                bottom: 0;
-                                opacity: 0;
-                                transition: 1s ease;
-                            }
+                        <div class="col-sm-6 col-md-6 col-lg-4 mb-4 d-flex align-items-stretch">
+                            <div class="facility-card d-flex flex-column justify-content-between">
+                                <div>
+                                    {{-- Facility Image --}}
+                                    <div class="facility-img-container">
+                                        <img src="{{ $facility->image ? asset('/storage/' . $facility->image) : asset('img/rsialivasya.webp') }}"
+                                             alt="Foto {{ $facility->name }}"
+                                             class="facility-img"
+                                             onerror="this.onerror=null; this.src='{{ asset('img/rsialivasya.webp') }}';">
+                                        
+                                        {{-- Circular floating icon --}}
+                                        <div class="floating-icon">
+                                            <i class="{{ $facility->icon ?? 'fas fa-heartbeat' }}" style="font-size: 16px;"></i>
+                                        </div>
+                                    </div>
 
-                            .hover:hover .bg {
-                                opacity: .5;
-                            }
-                        </style>
+                                    {{-- Facility Body --}}
+                                    <div class="p-4 pt-3">
+                                        <h3 class="facility-title mb-2">{{ $facility->name }}</h3>
+                                        <div class="facility-excerpt mb-3">
+                                            {!! strip_tags($facility->excerpt ?? $facility->body) !!}
+                                        </div>
+                                    </div>
+                                </div>
 
-                        <div class="col-lg-6">
-                            <div class="card p-5 hover shadow position-relative" style="border: none; border-radius: 20px">
-                                <div class="bg position-absolute"
-                                    style="background: url('/storage/{{ $facility->image }}'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
-                                </div>
-                                <div class="icon rounded-circle shadow" style="z-index: 1; width: fit-content">
-                                    <i class="{{ $facility->icon }} p-4" style="font-size: 60px; z-index: 1"></i>
-                                </div>
-                                <h3 class="my-4 fw-bold" style="z-index: 1">{{ $facility->name }}</h3>
-                                <div style="z-index: 1">
-                                    {!! $facility->excerpt !!}
-                                </div>
-                                <div class="mt-5" style="z-index: 1">
-                                    <a href="/fasilitas/{{ $facility->slug }}">
-                                        <p class="font-weight-bold read-more">Baca Selengkapnya <i
-                                                class="d-inline-block fas fa-long-arrow-alt-right"
-                                                style="margin-top: 10px;"></i>
-                                        </p>
-                                    </a>
+                                {{-- Footer Read More --}}
+                                <div class="px-4 pb-4 bg-white" style="border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;">
+                                    <hr class="my-2 border-faded">
+                                    <div class="pt-2">
+                                        <a href="/fasilitas/{{ $facility->slug }}" class="btn-read-more">
+                                            Baca Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -136,11 +160,12 @@
                 </div>
             </div>
         @else
-            <p class="fs-4 text-center">Tidak ditemukan Fasilitas.</p>
+            <div class="text-center py-5">
+                <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center text-muted mb-3" style="width: 80px; height: 80px;">
+                    <i class="fas fa-procedures" style="font-size: 30px;"></i>
+                </div>
+                <p class="fs-5 font-weight-bold text-dark">Tidak ditemukan fasilitas.</p>
+            </div>
         @endif
-
-        {{-- <div class="d-flex justify-content-center mt-5">
-        <div class="pagination">{{ $facilities->links() }}</div>
-    </div> --}}
     </section>
 @endsection
