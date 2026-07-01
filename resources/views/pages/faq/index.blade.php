@@ -2,13 +2,65 @@
 @section('title', 'Faq')
 @section('content')
     <main id="js-page-content" role="main" class="page-content">
-        <div class="row mb-5">
-            <div class="col-xl-12">
-                <button type="button" class="btn btn-primary waves-effect waves-themed" data-backdrop="static"
-                    data-keyboard="false" data-toggle="modal" data-target="#tambah-faq" title="Tambah Faq">
+        <div class="subheader">
+            <h1 class="subheader-title">
+                <i class='subheader-icon bx bx-help-circle text-primary'></i> Tanya Jawab (FAQ)
+                <small>
+                    Kelola data pertanyaan dan jawaban umum untuk membantu pengunjung mendapatkan informasi penting.
+                </small>
+            </h1>
+            <div class="subheader-block">
+                <button type="button" class="btn btn-primary waves-effect waves-themed font-weight-bold" data-backdrop="static"
+                    data-keyboard="false" data-toggle="modal" data-target="#tambah-faq" title="Tambah FAQ">
                     <span class="fal fa-plus-circle mr-1"></span>
-                    Tambah Faq
+                    Tambah FAQ
                 </button>
+            </div>
+        </div>
+
+        {{-- Statistik Ringkasan --}}
+        <div class="row mb-g">
+            {{-- Total FAQ --}}
+            <div class="col-sm-6 col-xl-4">
+                <div class="card p-3 shadow-xs border-light-blue bg-white" style="border-radius: 8px; min-height: 100px;">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="text-muted font-weight-bold" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Total FAQ</span>
+                            <h2 class="font-weight-bold text-dark mb-0 mt-1" style="font-size: 24px;">{{ $faqs->count() }}</h2>
+                        </div>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center text-primary" style="width: 46px; height: 46px; background-color: #eff6ff; border: 1px solid #bfdbfe;">
+                            <i class="fal fa-question-circle" style="font-size: 20px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- FAQ Aktif --}}
+            <div class="col-sm-6 col-xl-4">
+                <div class="card p-3 shadow-xs border-light-blue bg-white" style="border-radius: 8px; min-height: 100px;">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="text-muted font-weight-bold" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Aktif</span>
+                            <h2 class="font-weight-bold text-success mb-0 mt-1" style="font-size: 24px;">{{ $faqs->where('is_active', 1)->count() }}</h2>
+                        </div>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center text-success" style="width: 46px; height: 46px; background-color: #ecfdf5; border: 1px solid #a7f3d0;">
+                            <i class="fal fa-check-circle" style="font-size: 20px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- FAQ Nonaktif --}}
+            <div class="col-sm-6 col-xl-4">
+                <div class="card p-3 shadow-xs border-light-blue bg-white" style="border-radius: 8px; min-height: 100px;">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="text-muted font-weight-bold" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Nonaktif</span>
+                            <h2 class="font-weight-bold text-danger mb-0 mt-1" style="font-size: 24px;">{{ $faqs->where('is_active', 0)->count() }}</h2>
+                        </div>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center text-danger" style="width: 46px; height: 46px; background-color: #fef2f2; border: 1px solid #fca5a5;">
+                            <i class="fal fa-minus-circle" style="font-size: 20px;"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -17,7 +69,7 @@
                 <div id="panel-1" class="panel">
                     <div class="panel-hdr">
                         <h2>
-                            Table <span class="fw-300"><i>Faq</i></span>
+                            Daftar <span class="fw-300"><i>FAQ</i></span>
                         </h2>
                     </div>
                     <div class="panel-container show">
@@ -26,57 +78,66 @@
                             <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                                 <thead>
                                     <tr>
-                                        <th style="white-space: nowrap">No</th>
-                                        <th style="white-space: nowrap">Aksi</th>
-                                        <th style="white-space: nowrap">Pertanyaan</th>
-                                        <th style="white-space: nowrap">Jawaban</th>
-                                        <th style="white-space: nowrap">Status</th>
+                                        <th style="white-space: nowrap; width: 5%;">No</th>
+                                        <th style="white-space: nowrap; width: 10%;">Aksi</th>
+                                        <th style="white-space: nowrap; width: 35%;">Pertanyaan</th>
+                                        <th style="white-space: nowrap; width: 40%;">Jawaban</th>
+                                        <th style="white-space: nowrap; width: 10%;">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($faqs as $faq)
                                         <tr>
-                                            <td style="white-space: nowrap">{{ $loop->iteration }}</td>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td style="white-space: nowrap">
-                                                <!-- Add a data-faq-id attribute to the edit button -->
                                                 <button type="button" data-backdrop="static" data-keyboard="false"
-                                                    class="badge mx-1 badge-primary p-2 border-0 text-white edit-button"
+                                                    class="btn btn-sm btn-icon btn-outline-primary mr-1 edit-button"
                                                     data-toggle="modal" data-target="#edit-faq" title="Ubah"
                                                     data-faq-id="{{ $faq->id }}">
-                                                    <span class="fal fa-pencil"></span>
+                                                    <i class="fal fa-edit"></i>
                                                 </button>
 
                                                 @if ($faq->is_active == 1)
-                                                    <!-- Button to deactivate faq -->
                                                     <button type="button"
-                                                        class="badge mx-1 badge-danger p-2 border-0 text-white deactivate-button"
-                                                        data-faq-id="{{ $faq->id }}" onclick="btnDeactivate(event)">
-                                                        <i class='bx bx-minus-circle m-0'></i>
+                                                        class="btn btn-sm btn-icon btn-outline-danger deactivate-button"
+                                                        data-faq-id="{{ $faq->id }}" onclick="btnDeactivate(event)" title="Nonaktifkan">
+                                                        <i class="fal fa-ban"></i>
                                                     </button>
                                                 @else
-                                                    <!-- Button to activate faq -->
                                                     <button type="button"
-                                                        class="badge mx-1 badge-success p-2 border-0 text-white activate-button"
-                                                        data-faq-id="{{ $faq->id }}" onclick="btnActivate(event)">
-                                                        <i class='bx bx-check-circle m-0'></i>
+                                                        class="btn btn-sm btn-icon btn-outline-success activate-button"
+                                                        data-faq-id="{{ $faq->id }}" onclick="btnActivate(event)" title="Aktifkan">
+                                                        <i class="fal fa-check"></i>
                                                     </button>
                                                 @endif
                                             </td>
-                                            <td style="white-space: nowrap">{!! str_replace(['<div>', '</div>'], '', $faq->question) !!}</td>
-                                            <td style="white-space: nowrap">{!! str_replace(['<div>', '</div>'], '', $faq->answer) !!}</td>
+                                            <td>
+                                                <div class="font-weight-bold text-dark" style="font-size: 13.5px; min-width: 220px; white-space: normal;">
+                                                    {!! strip_tags($faq->question) !!}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-muted" style="font-size: 13px; line-height: 1.55; min-width: 320px; white-space: normal;">
+                                                    {!! strip_tags($faq->answer) !!}
+                                                </div>
+                                            </td>
                                             <td style="white-space: nowrap">
-                                                {{ $faq->is_active == 1 ? 'Aktif' : 'Nonaktif' }}
+                                                @if ($faq->is_active == 1)
+                                                    <span class="badge badge-success px-2 py-1" style="font-size: 11px; border-radius: 4px;">Aktif</span>
+                                                @else
+                                                    <span class="badge badge-secondary px-2 py-1" style="font-size: 11px; border-radius: 4px;">Nonaktif</span>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th style="white-space: nowrap">No</th>
-                                        <th style="white-space: nowrap">Aksi</th>
-                                        <th style="white-space: nowrap">Pertanyaan</th>
-                                        <th style="white-space: nowrap">Jawaban</th>
-                                        <th style="white-space: nowrap">Status</th>
+                                        <th>No</th>
+                                        <th>Aksi</th>
+                                        <th>Pertanyaan</th>
+                                        <th>Jawaban</th>
+                                        <th>Status</th>
                                     </tr>
                                 </tfoot>
                             </table>
