@@ -1028,10 +1028,24 @@
                 </div>
             </div>
 
+            @php
+                $serviceColors = [
+                    ['gradient' => 'linear-gradient(135deg, #ef4444, #f97316)', 'shadow' => 'rgba(239, 68, 68, 0.25)'], // Red/Orange
+                    ['gradient' => 'linear-gradient(135deg, #3b82f6, #6366f1)', 'shadow' => 'rgba(59, 130, 246, 0.25)'], // Blue/Indigo
+                    ['gradient' => 'linear-gradient(135deg, #10b981, #059669)', 'shadow' => 'rgba(16, 185, 129, 0.25)'], // Green
+                    ['gradient' => 'linear-gradient(135deg, #06b6d4, #0891b2)', 'shadow' => 'rgba(6, 182, 212, 0.25)'], // Cyan/Teal
+                    ['gradient' => 'linear-gradient(135deg, #8b5cf6, #ec4899)', 'shadow' => 'rgba(139, 92, 246, 0.25)'], // Purple/Pink
+                    ['gradient' => 'linear-gradient(135deg, #f59e0b, #d97706)', 'shadow' => 'rgba(245, 158, 11, 0.25)']  // Amber/Orange
+                ];
+            @endphp
+
             <div class="service-grid">
-                @foreach ($pelayanan->take(6) as $p)
+                @foreach ($pelayanan->take(6) as $index => $p)
+                    @php
+                        $color = $serviceColors[$index % count($serviceColors)];
+                    @endphp
                     <a href="/pelayanan/{{ $p->slug }}" class="service-card">
-                        <span class="service-icon"><i class="{{ $p->icon }}" aria-hidden="true"></i></span>
+                        <span class="service-icon" style="background: {{ $color['gradient'] }}; box-shadow: 0 10px 22px {{ $color['shadow'] }};"><i class="{{ $p->icon }}" aria-hidden="true"></i></span>
                         <h3>{{ $p->title }}</h3>
                         <p>{{ \Illuminate\Support\Str::limit(strip_tags($p->excerpt ?? $p->body), 90) }}</p>
                     </a>
