@@ -56,7 +56,7 @@ class CareerController extends Controller
     public function appliers($career)
     {
         $mitras = Mitra::where('is_primary', 1)->get();
-        $applier = Applier::where('career_id', $career)->orderBy('created_at', 'desc')->get();
+        $applier = Applier::with(['educations', 'career'])->where('career_id', $career)->orderBy('created_at', 'desc')->get();
 
         // return $career;
 

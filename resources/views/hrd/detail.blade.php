@@ -286,7 +286,7 @@
                                     <tbody>
                                         @foreach($educations as $edu)
                                         <tr>
-                                            <td class="font-weight-bold text-dark">{{ $edu->school_name ?? '-' }}</td>
+                                            <td class="font-weight-bold text-dark">{{ $edu->institution ?? '-' }}</td>
                                             <td>{{ $edu->major ?? '-' }}</td>
                                             <td class="text-center"><span class="badge badge-light border">{{ $edu->level ?? '-' }}</span></td>
                                             <td class="text-center">{{ $edu->graduation_year ?? '-' }}</td>

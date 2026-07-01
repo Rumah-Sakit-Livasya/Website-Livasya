@@ -127,7 +127,31 @@
                                 </td>
                                 <td class="align-middle">
                                     <div style="font-size: 13px; color: #4b5563;" class="font-weight-bold">
-                                        <i class="fal fa-graduation-cap text-muted mr-1" style="width: 16px;"></i>{{ $applier->school_name ?? '-' }}
+                                        <i class="fal fa-graduation-cap text-muted mr-1" style="width: 16px;"></i>
+                                        @php
+                                            $educationText = '-';
+                                            if ($applier->educations && $applier->educations->isNotEmpty()) {
+                                                $latestEdu = $applier->educations->first();
+                                                $parts = [];
+                                                if ($latestEdu->level) {
+                                                    $parts[] = $latestEdu->level;
+                                                }
+                                                if ($latestEdu->institution) {
+                                                    $parts[] = $latestEdu->institution;
+                                                }
+                                                if (!empty($parts)) {
+                                                    $educationText = implode(' - ', $parts);
+                                                }
+                                            } elseif (!empty($applier->school_name) && $applier->school_name !== '-') {
+                                                $parts = [];
+                                                if ($applier->school_qual) {
+                                                    $parts[] = $applier->school_qual;
+                                                }
+                                                $parts[] = $applier->school_name;
+                                                $educationText = implode(' - ', $parts);
+                                            }
+                                        @endphp
+                                        {{ $educationText }}
                                     </div>
                                 </td>
                                 <td class="text-center align-middle">

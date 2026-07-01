@@ -50,7 +50,7 @@ class HrdController extends Controller
         $career = Career::findOrFail($careerId);
 
         $query = Applier::where('career_id', $careerId)
-            ->with('user')
+            ->with(['user', 'educations'])
             ->orderByDesc('created_at');
 
         // Filter status jika ada
@@ -136,12 +136,21 @@ class HrdController extends Controller
         $career = Career::findOrFail($careerId);
         $applier = Applier::with(['user', 'interview', 'educations'])->where('id', $applierId)->where('career_id', $careerId)->firstOrFail();
 
-        // Get candidate's main education details from appliers table
-        $latestEdu = (object) [
-            'level' => $applier->school_qual ?? '-',
-            'school_name' => $applier->school_name ?? '-',
-            'graduation_year' => $applier->school_year ?? '-',
-        ];
+        // Get candidate's main education details from relation or appliers table
+        $latestEduRecord = $applier->educations->first();
+        if ($latestEduRecord) {
+            $latestEdu = (object) [
+                'level' => $latestEduRecord->level ?? '-',
+                'school_name' => $latestEduRecord->institution ?? '-',
+                'graduation_year' => $latestEduRecord->gpa ? 'IPK: ' . $latestEduRecord->gpa : '-',
+            ];
+        } else {
+            $latestEdu = (object) [
+                'level' => $applier->school_qual ?? '-',
+                'school_name' => $applier->school_name ?? '-',
+                'graduation_year' => $applier->school_year ?? '-',
+            ];
+        }
 
         return view('hrd.wawancara', [
             'title'     => 'Lembar Penilaian Wawancara - ' . $applier->first_name . ' ' . $applier->last_name,

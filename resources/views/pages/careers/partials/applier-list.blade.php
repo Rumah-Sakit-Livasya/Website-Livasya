@@ -33,7 +33,32 @@
                                             {{ $applier->first_name }} {{ $applier->last_name ?? '' }}
                                         </td>
                                         <td style="white-space: nowrap">{{ $applier->sex }}</td>
-                                        <td style="white-space: nowrap">{{ $applier->school_name }}</td>
+                                        <td style="white-space: nowrap">
+                                            @php
+                                                $educationText = '-';
+                                                if ($applier->educations && $applier->educations->isNotEmpty()) {
+                                                    $latestEdu = $applier->educations->first();
+                                                    $parts = [];
+                                                    if ($latestEdu->level) {
+                                                        $parts[] = $latestEdu->level;
+                                                    }
+                                                    if ($latestEdu->institution) {
+                                                        $parts[] = $latestEdu->institution;
+                                                    }
+                                                    if (!empty($parts)) {
+                                                        $educationText = implode(' - ', $parts);
+                                                    }
+                                                } elseif (!empty($applier->school_name) && $applier->school_name !== '-') {
+                                                    $parts = [];
+                                                    if ($applier->school_qual) {
+                                                        $parts[] = $applier->school_qual;
+                                                    }
+                                                    $parts[] = $applier->school_name;
+                                                    $educationText = implode(' - ', $parts);
+                                                }
+                                            @endphp
+                                            {{ $educationText }}
+                                        </td>
                                         <td style="white-space: nowrap">{{ $applier->birth_day }}</td>
                                         <td style="white-space: nowrap">
                                             @if ($applier->status == 'processed')
