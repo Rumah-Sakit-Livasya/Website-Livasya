@@ -16,11 +16,11 @@
                     @foreach ($faqs as $index => $faq)
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading{{ $index }}">
-                                <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapse{{ $index }}" aria-expanded="false" aria-controls="collapse{{ $index }}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $index }}" aria-expanded="false" aria-controls="collapse{{ $index }}">
                                     {!! strip_tags($faq->question) !!}
                                 </button>
                             </h2>
-                            <div id="collapse{{ $index }}" class="collapse" aria-labelledby="heading{{ $index }}" data-parent="#accordionFaq">
+                            <div id="collapse{{ $index }}" class="collapse" aria-labelledby="heading{{ $index }}" data-bs-parent="#accordionFaq">
                                 <div class="accordion-body text-justify">
                                     {!! $faq->answer !!}
                                 </div>
