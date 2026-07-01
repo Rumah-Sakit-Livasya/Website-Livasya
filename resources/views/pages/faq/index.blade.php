@@ -227,10 +227,17 @@
                     url: '/api/faqs/' + faqId,
                     success: function(data) {
                         $('#edit-question').val(data.question);
-                        $('#edit-question-text').val(data.question);
                         $('#edit-answer').val(data.answer);
-                        $('#edit-answer-text').val(data.answer);
-                        console.log(data);
+
+                        var questionTrix = document.getElementById('edit-question-text');
+                        if (questionTrix && questionTrix.editor) {
+                            questionTrix.editor.loadHTML(data.question);
+                        }
+
+                        var answerTrix = document.getElementById('edit-answer-text');
+                        if (answerTrix && answerTrix.editor) {
+                            answerTrix.editor.loadHTML(data.answer);
+                        }
 
                         // Show the modal
                         $('#edit-faq').modal('show');
