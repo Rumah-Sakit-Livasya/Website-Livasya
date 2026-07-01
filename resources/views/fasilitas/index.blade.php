@@ -129,15 +129,14 @@
                                              alt="Foto {{ $facility->name }}"
                                              class="facility-img"
                                              onerror="this.onerror=null; this.src='{{ asset('img/rsialivasya.webp') }}';">
-                                        
-                                        {{-- Circular floating icon --}}
-                                        <div class="floating-icon">
-                                            <i class="{{ $facility->icon ?? 'fas fa-heartbeat' }}" style="font-size: 16px;"></i>
-                                        </div>
                                     </div>
 
                                     {{-- Facility Body --}}
-                                    <div class="p-4 pt-3">
+                                    <div class="p-4 pt-3 position-relative">
+                                        {{-- Circular floating icon --}}
+                                        <div class="floating-icon" style="position: absolute; top: -22px; left: 20px;">
+                                            <i class="{{ $facility->icon ?? 'fas fa-heartbeat' }}" style="font-size: 16px;"></i>
+                                        </div>
                                         <h3 class="facility-title mb-2">{{ $facility->name }}</h3>
                                         <div class="facility-excerpt mb-3">
                                             {!! strip_tags($facility->excerpt ?? $facility->body) !!}
