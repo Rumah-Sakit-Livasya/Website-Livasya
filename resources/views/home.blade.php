@@ -862,20 +862,7 @@
             border-color: #cbd5e1;
         }
 
-        .faq-card h3 {
-            margin: 0;
-            color: #17324d;
-            font-size: 1.85rem;
-            font-weight: 800;
-            line-height: 1.35;
-        }
 
-        .faq-card p {
-            margin: 12px 0 0;
-            color: #617487;
-            font-size: 1.45rem;
-            line-height: 1.75;
-        }
 
         @media (max-width: 991px) {
             .home-hero {
@@ -1186,10 +1173,30 @@
                 <a href="/faq" class="home-btn home-btn-secondary">FAQ Lengkap</a>
             </div>
             <div class="faq-grid">
-                @foreach ($homeFaqs as $faq)
-                    <article class="faq-card">
-                        <h3>{{ $faq['question'] }}</h3>
-                        <p>{{ $faq['answer'] }}</p>
+                @foreach ($homeFaqs as $index => $faq)
+                    @php
+                        $faqIcons = [
+                            'fas fa-hospital-user',      // Hospital/Services
+                            'fas fa-user-md',            // Doctor Schedule
+                            'fas fa-laptop-medical'      // Online registration
+                        ];
+                        $faqColors = [
+                            ['primary' => '#2563eb', 'bg' => '#eff6ff', 'border' => '#3b82f6'],
+                            ['primary' => '#10b981', 'bg' => '#ecfdf5', 'border' => '#10b981'],
+                            ['primary' => '#f59e0b', 'bg' => '#fffbeb', 'border' => '#f59e0b']
+                        ];
+                        $color = $faqColors[$index % count($faqColors)];
+                        $icon = $faqIcons[$index % count($faqIcons)];
+                    @endphp
+                    <article class="faq-card" style="border-left: 4px solid {{ $color['border'] }};">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="rounded-circle d-inline-flex align-items-center justify-content-center mr-3" 
+                                 style="width: 40px; height: 40px; background-color: {{ $color['bg'] }}; color: {{ $color['primary'] }}; font-size: 16px; flex-shrink: 0;">
+                                <i class="{{ $icon }}" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="mb-0" style="font-size: 14.5px; font-weight: 700; color: #1f2937; line-height: 1.4;">{{ $faq['question'] }}</h3>
+                        </div>
+                        <p class="text-muted mb-0" style="font-size: 13px; line-height: 1.65; text-align: justify; padding-left: 56px;">{{ $faq['answer'] }}</p>
                     </article>
                 @endforeach
             </div>
