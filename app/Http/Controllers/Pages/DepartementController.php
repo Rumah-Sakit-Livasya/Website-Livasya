@@ -10,10 +10,6 @@ class DepartementController extends Controller
 {
     public function index()
     {
-        $departements = Departement::all();
-
-        return view('pages.departements.index', compact('departements'), [
-            'title' => 'Departemen'
-        ]);
+        return redirect('/dashboard/doctors#pills-departement');
     }
 }

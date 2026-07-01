@@ -153,19 +153,10 @@
             </li>
             @endrole
             @role('super-admin|marketing')
-            <li class="{{ set_active('dashboard/doctors') }}">
-                <a href="{{ route('doctors.index') }}" title="Dokter" data-filter-tags="application dokter">
+            <li class="{{ set_active(['dashboard/doctors', 'dashboard/doctors/*', 'dashboard/departements', 'dashboard/departements/*']) }}">
+                <a href="{{ route('doctors.index') }}" title="Dokter" data-filter-tags="application dokter departement">
                     <i class='bx bx-user'></i>
                     <span class="nav-link-text" data-i18n="nav.application_doctors">Dokter</span>
-                </a>
-            </li>
-            @endrole
-            @role('super-admin|marketing')
-            <li class="{{ set_active('dashboard/departements') }}">
-                <a href="{{ route('departements.index') }}" title="Departement"
-                    data-filter-tags="application departement">
-                    <i class='bx bx-card'></i>
-                    <span class="nav-link-text" data-i18n="nav.application_departements">Departement</span>
                 </a>
             </li>
             @endrole

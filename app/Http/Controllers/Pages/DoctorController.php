@@ -13,7 +13,7 @@ class DoctorController extends Controller
     public function index()
     {
         $doctors = Doctor::all();
-        $departements = Departement::where('is_active', 1)->get();
+        $departements = Departement::all();
 
         return view('pages.doctors.index', compact('doctors', 'departements'), [
             'title' => 'Dokter'
