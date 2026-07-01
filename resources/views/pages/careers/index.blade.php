@@ -91,6 +91,7 @@
                                                         <i class="fal fa-edit"></i>
                                                     </button>
 
+                                                    @role('super-admin|hrd|user')
                                                     <!-- View Applicants Button -->
                                                     <button type="button"
                                                         class="btn btn-sm btn-info waves-effect waves-themed js-open-window font-weight-bold d-flex align-items-center"
@@ -98,6 +99,7 @@
                                                         <i class="fal fa-users mr-1"></i> Pelamar
                                                         <span class="badge badge-light ml-2" style="border-radius: 3px; font-size: 0.75rem;">{{ $career->applier_count }}</span>
                                                     </button>
+                                                    @endrole
                                                 </div>
                                             </td>
                                         </tr>

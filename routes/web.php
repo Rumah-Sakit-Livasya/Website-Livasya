@@ -147,7 +147,7 @@ Route::middleware('auth')->group(function () {
         });
 
         // 2. Career / Recruitment Routes
-        Route::middleware(['role:super-admin|user|hrd'])->group(function () {
+        Route::middleware(['role:super-admin|user|hrd|marketing'])->group(function () {
             // Career
             Route::get("/careers", [CareerController::class, 'admin'])->name("career.index");
         });
