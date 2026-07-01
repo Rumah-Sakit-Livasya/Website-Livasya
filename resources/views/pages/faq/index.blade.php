@@ -216,7 +216,7 @@
                 });
             });
 
-            $('.edit-button').on('click', function() {
+            $(document).on('click', '.edit-button', function() {
                 var faqId = $(this).data('faq-id');
                 console.log("asdasdasd");
                 // Set the category ID to the modal input field
