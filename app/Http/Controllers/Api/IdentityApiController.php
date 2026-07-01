@@ -52,6 +52,8 @@ class IdentityApiController extends Controller
 
         $identity->update($validatedData);
 
+        \Illuminate\Support\Facades\Cache::forget('frontend.common.navigation');
+
         return response()->json(['message' => 'Identity updated successfully']);
     }
 }
