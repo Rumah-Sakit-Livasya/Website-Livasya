@@ -2,9 +2,15 @@
 @section('title', 'Dokter')
 @section('content')
     <main id="js-page-content" role="main" class="page-content">
-        <div class="row mb-5">
-            <div class="col-xl-12">
-                <button type="button" class="btn btn-primary waves-effect waves-themed" data-backdrop="static"
+        <div class="subheader">
+            <h1 class="subheader-title">
+                <i class='subheader-icon bx bx-user text-primary'></i> Manajemen Dokter
+                <small>
+                    Kelola data dokter, departemen spesialisasi, dan jadwal praktik di RS Livasya.
+                </small>
+            </h1>
+            <div class="subheader-block">
+                <button type="button" class="btn btn-primary waves-effect waves-themed font-weight-bold shadow-sm" data-backdrop="static"
                     data-keyboard="false" data-toggle="modal" data-target="#tambah-dokter" title="Tambah Dokter">
                     <span class="fal fa-plus-circle mr-1"></span>
                     Tambah Dokter
@@ -12,77 +18,176 @@
             </div>
         </div>
 
+        {{-- Statistik Ringkasan --}}
+        <div class="row mb-g">
+            {{-- Total Dokter --}}
+            <div class="col-sm-6 col-xl-3">
+                <div class="card p-3 shadow-xs border-light-blue bg-white" style="border-radius: 8px; min-height: 100px;">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="text-muted font-weight-bold" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Total Dokter</span>
+                            <h2 class="font-weight-bold text-dark mb-0 mt-1" style="font-size: 24px;">{{ $doctors->count() }}</h2>
+                        </div>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center text-primary" style="width: 46px; height: 46px; background-color: #eff6ff; border: 1px solid #bfdbfe;">
+                            <i class="fal fa-user-md" style="font-size: 20px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- Spesialis --}}
+            <div class="col-sm-6 col-xl-3">
+                <div class="card p-3 shadow-xs border-light-blue bg-white" style="border-radius: 8px; min-height: 100px;">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="text-muted font-weight-bold" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Spesialis</span>
+                            <h2 class="font-weight-bold mb-0 mt-1 text-purple" style="font-size: 24px; color: #7c3aed !important;">{{ $doctors->filter(fn($d) => strpos(strtolower($d->jabatan), 'spesialis') !== false)->count() }}</h2>
+                        </div>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center text-purple" style="width: 46px; height: 46px; background-color: #f3e8ff; border: 1px solid #e9d5ff; color: #7c3aed !important;">
+                            <i class="fal fa-stethoscope" style="font-size: 20px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- Dokter Umum --}}
+            <div class="col-sm-6 col-xl-3">
+                <div class="card p-3 shadow-xs border-light-blue bg-white" style="border-radius: 8px; min-height: 100px;">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="text-muted font-weight-bold" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Dokter Umum</span>
+                            <h2 class="font-weight-bold text-warning mb-0 mt-1" style="font-size: 24px;">{{ $doctors->filter(fn($d) => strpos(strtolower($d->jabatan), 'umum') !== false)->count() }}</h2>
+                        </div>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center text-warning" style="width: 46px; height: 46px; background-color: #fffbeb; border: 1px solid #fde68a;">
+                            <i class="fal fa-heartbeat" style="font-size: 20px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- Dokter Aktif --}}
+            <div class="col-sm-6 col-xl-3">
+                <div class="card p-3 shadow-xs border-light-blue bg-white" style="border-radius: 8px; min-height: 100px;">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="text-muted font-weight-bold" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Status Aktif</span>
+                            <h2 class="font-weight-bold text-success mb-0 mt-1" style="font-size: 24px;">{{ $doctors->where('is_active', 1)->count() }}</h2>
+                        </div>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center text-success" style="width: 46px; height: 46px; background-color: #ecfdf5; border: 1px solid #a7f3d0;">
+                            <i class="fal fa-check-circle" style="font-size: 20px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-xl-12">
-                <div id="panel-1" class="panel">
-                    <div class="panel-hdr">
+                <div id="panel-1" class="panel" style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                    <div class="panel-hdr bg-faded">
                         <h2>
-                            Table <span class="fw-300"><i>Dokter</i></span>
+                            <i class="fal fa-user-md mr-2 text-primary"></i> Daftar Dokter Aktif
                         </h2>
                     </div>
                     <div class="panel-container show">
                         <div class="panel-content">
                             <!-- datatable start -->
-                            <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
-                                <thead>
+                            <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100 align-middle-table">
+                                <thead class="bg-primary text-white">
                                     <tr>
-                                        <th style="white-space: nowrap">No</th>
-                                        <th style="white-space: nowrap">Nama</th>
-                                        <th style="white-space: nowrap">Jabatan</th>
-                                        <th style="white-space: nowrap">Departement</th>
-                                        <th style="white-space: nowrap">Aksi</th>
+                                        <th style="width: 50px; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase;" class="text-center align-middle">No</th>
+                                        <th style="width: 70px; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase;" class="text-center align-middle">Foto</th>
+                                        <th style="font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase;" class="align-middle">Informasi Dokter</th>
+                                        <th style="width: 250px; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase;" class="align-middle">Departement</th>
+                                        <th style="width: 120px; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase;" class="text-center align-middle">Status</th>
+                                        <th style="width: 260px; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase;" class="text-center align-middle">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($doctors as $doctor)
                                         <tr>
-                                            <td style="white-space: nowrap">{{ $loop->iteration }}</td>
-                                            <td style="white-space: nowrap">{{ $doctor->name }}</td>
-                                            <td style="white-space: nowrap">{{ $doctor->jabatan }}</td>
-                                            <td style="white-space: nowrap">{{ $doctor->departement->name }}</td>
-
-                                            <td style="white-space: nowrap">
-                                                <!-- Add a data-doctor-id attribute to the edit button -->
-                                                <button type="button" data-backdrop="static" data-keyboard="false"
-                                                    class="badge mx-1 badge-primary p-2 border-0 text-white edit-button"
-                                                    data-toggle="modal" data-target="#edit-dokter" title="Ubah"
-                                                    data-doctor-id="{{ $doctor->id }}">
-                                                    <span class="fal fa-pencil"></span>
-                                                </button>
-
-                                                @if ($doctor->is_active == 1)
-                                                    <!-- Button to deactivate doctor -->
-                                                    <button type="button"
-                                                        class="badge mx-1 badge-danger p-2 border-0 text-white deactivate-button"
-                                                        data-doctor-id="{{ $doctor->id }}" onclick="btnDeactivate(event)">
-                                                        <i class='bx bx-minus-circle m-0'></i>
-                                                    </button>
+                                            <td class="text-center font-weight-bold text-muted align-middle">{{ $loop->iteration }}</td>
+                                            <td class="text-center align-middle">
+                                                <div style="width: 45px; height: 45px; border-radius: 50%; overflow: hidden; display: inline-block; border: 2px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                                    @if($doctor->foto)
+                                                        <img src="{{ asset('storage/' . $doctor->foto) }}" style="width: 100%; height: 100%; object-fit: cover;" alt="{{ $doctor->name }}" onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2245%22%20height%3D%2245%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23f1f5f9%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20font-size%3D%228%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22sans-serif%22%20text-anchor%3D%22middle%22%20dy%3D%22.3em%22%3EDoc%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                                                    @else
+                                                        <div class="rounded-circle d-flex align-items-center justify-content-center bg-light text-muted" style="width: 100%; height: 100%;">
+                                                            <i class="fal fa-user-md" style="font-size: 18px;"></i>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td class="align-middle" style="white-space: normal;">
+                                                <div class="font-weight-bold text-dark fs-md" style="font-size: 14px; margin-bottom: 2px;">
+                                                    {{ $doctor->name }}
+                                                </div>
+                                                <div class="text-muted" style="font-size: 11px;">
+                                                    <i class="fal fa-briefcase mr-1"></i>{{ $doctor->jabatan }}
+                                                </div>
+                                            </td>
+                                            <td class="align-middle">
+                                                <span class="badge-category cat-rs" style="font-size: 11px; padding: 4px 10px; border-radius: 20px;">
+                                                    {{ $doctor->departement->name ?? '-' }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                @if($doctor->is_active == 1)
+                                                    <span class="badge-status badge-status-active">
+                                                        <span class="status-dot bg-success mr-1"></span>Aktif
+                                                    </span>
                                                 @else
-                                                    <!-- Button to activate doctor -->
-                                                    <button type="button"
-                                                        class="badge mx-1 badge-success p-2 border-0 text-white activate-button"
-                                                        data-doctor-id="{{ $doctor->id }}" onclick="btnActivate(event)">
-                                                        <i class='bx bx-check-circle m-0'></i>
-                                                    </button>
+                                                    <span class="badge-status badge-status-inactive">
+                                                        <span class="status-dot bg-danger mr-1"></span>Nonaktif
+                                                    </span>
                                                 @endif
-                                                <button type="button"
-                                                    class="badge mx-1 badge-warning p-2 border-0 text-white edit-departement-button"
-                                                    data-backdrop="static" data-keyboard="false" data-toggle="modal"
-                                                    data-target="#edit-departement-dokter"
-                                                    data-doctor-id="{{ $doctor->id }}">
-                                                    <i class='bx bx-card m-0'></i>
-                                                </button>
+                                            </td>
+
+                                            <td class="text-center align-middle">
+                                                <div class="d-flex align-items-center justify-content-center" style="gap: 6px;">
+                                                    <!-- Edit Button -->
+                                                    <button type="button" data-backdrop="static" data-keyboard="false"
+                                                        class="btn-action-custom btn-action-detail edit-button"
+                                                        data-toggle="modal" data-target="#edit-dokter" title="Ubah Info"
+                                                        data-doctor-id="{{ $doctor->id }}">
+                                                        <span class="fal fa-pencil mr-1"></span>Ubah
+                                                    </button>
+                                                    
+                                                    <!-- Edit Department Button -->
+                                                    <button type="button" data-backdrop="static" data-keyboard="false"
+                                                        class="btn-action-custom btn-action-accept edit-departement-button"
+                                                        data-toggle="modal" data-target="#edit-departement-dokter" title="Ubah Departemen"
+                                                        data-doctor-id="{{ $doctor->id }}" style="background-color: #f0fdf4; color: #15803d !important; border-color: #bbf7d0;">
+                                                        <i class='bx bx-card mr-1'></i>Departemen
+                                                    </button>
+
+                                                    @if ($doctor->is_active == 1)
+                                                        <!-- Button to deactivate doctor -->
+                                                        <button type="button"
+                                                            class="btn-action-custom btn-action-reject deactivate-button"
+                                                            data-doctor-id="{{ $doctor->id }}" onclick="btnDeactivate(event)"
+                                                            title="Nonaktifkan Dokter">
+                                                            <i class='bx bx-minus-circle mr-1'></i>Nonaktif
+                                                        </button>
+                                                    @else
+                                                        <!-- Button to activate doctor -->
+                                                        <button type="button"
+                                                            class="btn-action-custom btn-action-accept activate-button"
+                                                            data-doctor-id="{{ $doctor->id }}" onclick="btnActivate(event)"
+                                                            title="Aktifkan Dokter">
+                                                            <i class='bx bx-check-circle mr-1'></i>Aktif
+                                                        </button>
+                                                    @endif
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th style="white-space: nowrap">No</th>
-                                        <th style="white-space: nowrap">Nama</th>
-                                        <th style="white-space: nowrap">Jabatan</th>
-                                        <th style="white-space: nowrap">Departement</th>
-                                        <th style="white-space: nowrap">Aksi</th>
+                                        <th class="text-center align-middle">No</th>
+                                        <th class="text-center align-middle">Foto</th>
+                                        <th class="align-middle">Informasi Dokter</th>
+                                        <th class="align-middle">Departement</th>
+                                        <th class="text-center align-middle">Status</th>
+                                        <th class="text-center align-middle">Aksi</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -100,7 +205,7 @@
 @section('plugin')
     <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
     <script src="/js/formplugins/select2/select2.bundle.js"></script>
-    <script>
+    <script nonce="{{ $nonce }}">
         function createPreviewImage() {
             const image = document.querySelector('#create-image');
             const imgPreview = document.querySelector('.create-img-preview')
@@ -498,4 +603,114 @@
             });
         }
     </script>
+
+    <style nonce="{{ $nonce }}">
+        .border-light-blue {
+            border-color: #e2e8f0 !important;
+        }
+        .align-middle-table td, .align-middle-table th {
+            vertical-align: middle !important;
+        }
+        
+        /* Category Pill Badges */
+        .badge-category {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 20px;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .cat-rs {
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #dbeafe;
+        }
+
+        /* Status Pill Badges with indicator dots */
+        .badge-status {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-radius: 30px;
+            min-width: 90px;
+        }
+        .badge-status-active {
+            background-color: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+        .badge-status-inactive {
+            background-color: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Modern Action Buttons */
+        .btn-action-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            transition: all 0.2s ease-in-out;
+            text-decoration: none !important;
+            cursor: pointer;
+        }
+        .btn-action-custom:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+        }
+        .btn-action-custom:active {
+            transform: translateY(0);
+        }
+        
+        .btn-action-detail {
+            background-color: #eff6ff;
+            color: #2563eb !important;
+            border-color: #bfdbfe;
+        }
+        .btn-action-detail:hover {
+            background-color: #2563eb;
+            color: #ffffff !important;
+            border-color: #2563eb;
+        }
+        
+        .btn-action-accept {
+            background-color: #ecfdf5;
+            color: #10b981 !important;
+            border-color: #a7f3d0;
+        }
+        .btn-action-accept:hover {
+            background-color: #10b981;
+            color: #ffffff !important;
+            border-color: #10b981;
+        }
+        
+        .btn-action-reject {
+            background-color: #fef2f2;
+            color: #ef4444 !important;
+            border-color: #fecaca;
+        }
+        .btn-action-reject:hover {
+            background-color: #ef4444;
+            color: #ffffff !important;
+            border-color: #ef4444;
+        }
+    </style>
 @endsection
