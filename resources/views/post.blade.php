@@ -1,60 +1,157 @@
 @extends('layouts.main')
 
-@section('container')
-    <div class="bg-white">
+@section('title', $post->title)
+@section('meta_description', trim($post->title . ' - Artikel Berita RS Livasya Majalengka.'))
 
-        <span></span>
-        <section class="title bg-primary mb-3" style="margin-top: 8rem;">
-            <h1 class="fw-bold text-light" data-aos="fade-right" data-aos-anchor-placement="top-bottom">{{ $post->title }}
-            </h1>
-        </section>
-        <div class="container bg-white" padding-bottom: 5rem;">
-            <div class="mb-3 row">
-                <div class="row">
-                    <div class="col-lg-9">
-                        <div class="card" style="border: none; border-radius: 20px">
-                            <div class="card-body">
-                                @if ($post->image)
-                                    <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid"
-                                        alt="{{ $post->title }}" fetchpriority="high" decoding="async"
-                                        style="border: none; border-radius: 20px">
-                                @else
-                                    <img src="{{ asset('img/rsialivasya.webp') }}" class="img-fluid"
-                                        alt="{{ $post->title }}" fetchpriority="high" decoding="async"
-                                        style="border: none; border-radius: 20px">
-                                @endif
-                            </div>
-                            <div class="card-footer">
-                                <div class="row justify-content-center">
-                                    <div class="col fs-5 text-center">
-                                        <i class="fas fa-calendar"></i> {{ $post->created_at->diffForHumans() }}
-                                    </div>
-                                    <div class="col fs-5 text-center">
-                                        <a class="nav-link" href="/categories/{{ $post->category->slug }}"><i
-                                                class="fas fa-list-alt"></i>
-                                            {{ $post->category->name }}</a>
-                                    </div>
-                                    <div class="col fs-5 text-center">
-                                        <i class="fas fa-user"></i> {{ $post->user->name }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+@section('container')
+    <style>
+        .hero-berita {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.75) 100%),
+                        url("{{ $post->image ? asset('/storage/' . $post->image) : asset('img/rsialivasya.webp') }}") center center / cover no-repeat;
+            height: 280px;
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .meta-badge {
+            background-color: #f3f4f6;
+            color: #4b5563;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 20px;
+            padding: 6px 14px;
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        .meta-badge i {
+            color: #2563eb;
+        }
+
+        .category-link-badge {
+            background-color: #eff6ff;
+            color: #2563eb;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 20px;
+            padding: 6px 14px;
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #dbeafe;
+            text-decoration: none !important;
+            transition: all 0.2s;
+        }
+
+        .category-link-badge:hover {
+            background-color: #2563eb;
+            color: #fff;
+            border-color: #2563eb;
+        }
+
+        .detail-card {
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 16px;
+            background: #fff;
+        }
+
+        .article-content p {
+            color: #4b5563;
+            line-height: 1.85;
+            margin-bottom: 1.5rem;
+            font-size: 15px;
+        }
+
+        .article-content h2, .article-content h3, .article-content h4 {
+            color: #1f2937;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #e5e7eb;
+            color: #4b5563;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: 25px;
+            padding: 10px 24px;
+            text-decoration: none !important;
+            transition: all 0.2s ease;
+            background-color: #fff;
+        }
+
+        .btn-back:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+            background-color: #f0fdf4;
+            transform: translateX(-3px);
+        }
+    </style>
+
+    {{-- Unified Compact Hero Banner --}}
+    <div class="container my-4">
+        <div class="hero-berita position-relative d-flex align-items-end" style="overflow: hidden;">
+            <div class="p-4 p-md-5 w-100" data-aos="fade-up">
+                <span class="badge bg-light text-primary font-weight-bold px-3 py-1-5 mb-2 text-uppercase" style="border-radius: 20px; font-size: 10px; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">Detail Artikel</span>
+                <h1 class="text-white font-weight-bold mb-0 text-shadow" style="font-size: 1.85rem; line-height: 1.4; text-shadow: 2px 2px 12px rgba(0,0,0,0.75);">
+                    {{ $post->title }}
+                </h1>
             </div>
-            <div class="row mb-5">
-                <h5 class="card-title fs-3 fw-bold">{{ $post->title }}</h5>
-            </div>
-            <div class="row">
-                <span class="card-text container fs-4 text-justify">
-                    {!! str_replace('//www.instagram.com/embed.js', 'https://www.instagram.com/embed.js', $post->body) !!}
-                </span>
-            </div>
-            <a href="/posts" class="kembali-parent text-decoration-none text-primary my-5 d-inline-block">
-                <span class="fas fa-chevron-left"></span>
-                <p class="kembali d-inline-block">Kembali ke halaman Berita</p>
-            </a>
         </div>
     </div>
+
+    {{-- Content Area --}}
+    <section class="main py-4 bg-light overflow-hidden">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    
+                    {{-- Metadata row --}}
+                    <div class="d-flex flex-wrap align-items-center mb-4" style="gap: 10px;">
+                        <span class="meta-badge">
+                            <i class="fas fa-calendar-alt mr-2"></i> {{ $post->created_at->diffForHumans() }}
+                        </span>
+                        <a href="/categories/{{ $post->category->slug }}" class="category-link-badge">
+                            <i class="fas fa-tags mr-2"></i> {{ $post->category->name }}
+                        </a>
+                        <span class="meta-badge">
+                            <i class="fas fa-user mr-2"></i> {{ $post->user->name ?? 'Administrator' }}
+                        </span>
+                    </div>
+
+                    {{-- Main article card --}}
+                    <div class="card border-0 shadow-xs p-4 p-md-5 mb-4 detail-card">
+                        
+                        {{-- Featured Image inside the card --}}
+                        <div class="mb-4 text-center">
+                            <img src="{{ $post->image ? asset('storage/' . $post->image) : asset('img/rsialivasya.webp') }}" 
+                                 class="img-fluid rounded-lg shadow-sm w-100" 
+                                 style="max-height: 480px; object-fit: cover; border-radius: 12px;" 
+                                 alt="{{ $post->title }}">
+                        </div>
+
+                        {{-- Body content --}}
+                        <div class="article-content text-dark">
+                            {!! str_replace('//www.instagram.com/embed.js', 'https://www.instagram.com/embed.js', $post->body) !!}
+                        </div>
+
+                        <hr class="my-4 border-faded">
+
+                        {{-- Back Action Button --}}
+                        <div class="mt-2 text-left">
+                            <a href="/posts" class="btn-back">
+                                <i class="fas fa-arrow-left mr-2"></i> Kembali ke Berita
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection
