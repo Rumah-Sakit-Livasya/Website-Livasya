@@ -96,6 +96,35 @@
             overflow: hidden;
             height: 42px;
         }
+
+        .instagram-embed-wrapper {
+            max-height: 480px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border-radius: 16px;
+            background: #ffffff;
+            border: 1px solid #e0edf4;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            width: 100%;
+            height: 100%;
+            padding: 8px;
+        }
+
+        /* Customize scrollbar inside instagram embed wrapper */
+        .instagram-embed-wrapper::-webkit-scrollbar {
+            width: 6px;
+        }
+        .instagram-embed-wrapper::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 16px;
+        }
+        .instagram-embed-wrapper::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 16px;
+        }
+        .instagram-embed-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
     </style>
 
     {{-- Unified Compact Hero Banner --}}
@@ -138,8 +167,10 @@
                     @foreach ($posts as $post)
                         <div class="col-md-6 col-lg-4 mb-4 d-flex align-items-stretch">
                             @if ($post->is_embeded)
-                                <div class="news-card p-2 shadow-xs d-flex align-items-start justify-content-center bg-white w-100" style="border-radius: 16px; overflow: hidden; min-height: 480px;">
-                                    {!! str_replace('//www.instagram.com/embed.js', 'https://www.instagram.com/embed.js', $post->body) !!}
+                                <div class="news-card p-0" style="border: none; background: transparent; box-shadow: none;">
+                                    <div class="instagram-embed-wrapper">
+                                        {!! str_replace('//www.instagram.com/embed.js', 'https://www.instagram.com/embed.js', $post->body) !!}
+                                    </div>
                                 </div>
                             @else
                                 <a href="/posts/{{ $post->slug }}" class="text-decoration-none d-flex flex-column w-100">

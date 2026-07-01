@@ -709,6 +709,35 @@
             transition: all 0.3s ease;
         }
 
+        .instagram-embed-wrapper {
+            max-height: 480px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border-radius: 16px;
+            background: #ffffff;
+            border: 1px solid #e0edf4;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            width: 100%;
+            height: 100%;
+            padding: 8px;
+        }
+
+        /* Customize scrollbar inside instagram embed wrapper */
+        .instagram-embed-wrapper::-webkit-scrollbar {
+            width: 6px;
+        }
+        .instagram-embed-wrapper::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 16px;
+        }
+        .instagram-embed-wrapper::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 16px;
+        }
+        .instagram-embed-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
         .news-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 42px rgba(16, 58, 90, .12);
@@ -1091,7 +1120,11 @@
             <div class="news-grid">
                 @forelse ($featuredPosts as $p)
                     @if ($p->is_embeded)
-                        <article class="news-card">{!! str_replace('//www.instagram.com/embed.js', 'https://www.instagram.com/embed.js', $p->body) !!}</article>
+                        <article class="news-card p-0" style="border: none; background: transparent; box-shadow: none;">
+                            <div class="instagram-embed-wrapper">
+                                {!! str_replace('//www.instagram.com/embed.js', 'https://www.instagram.com/embed.js', $p->body) !!}
+                            </div>
+                        </article>
                     @else
                         <article class="news-card">
                             <a href="/posts/{{ $p->slug }}" class="news-thumb" aria-label="{{ $p->title }}"
