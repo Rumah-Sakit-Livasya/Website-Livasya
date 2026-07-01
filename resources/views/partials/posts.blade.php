@@ -2,7 +2,7 @@
     @foreach ($posts as $post)
         <div class="col-lg-4">
             @if ($post->is_embeded)
-                {!! $post->body !!}
+                {!! str_replace('//www.instagram.com/embed.js', 'https://www.instagram.com/embed.js', $post->body) !!}
             @else
                 <a href="/posts/{{ $post->slug }}" class="text-decoration-none">
                     <div class="card img-parent overflow-hidden position-relative shadow"

@@ -71,6 +71,7 @@ class SecurityHeadersMiddleware
             'https://fonts.googleapis.com',
             'https://cdn.jsdelivr.net',
             'https://cdnjs.cloudflare.com',
+            'https://unpkg.com',
             'http://localhost:5173',
             'http://[::1]:5173',
         ]);
@@ -81,6 +82,7 @@ class SecurityHeadersMiddleware
             'https://fonts.gstatic.com',
             'https://cdnjs.cloudflare.com',
             'https://cdn.jsdelivr.net',
+            'https://unpkg.com',
         ]);
 
         $imgSources = implode(' ', [

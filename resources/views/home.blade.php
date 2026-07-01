@@ -954,7 +954,7 @@
             <div class="news-grid">
                 @forelse ($featuredPosts as $p)
                     @if ($p->is_embeded)
-                        <article class="news-card">{!! $p->body !!}</article>
+                        <article class="news-card">{!! str_replace('//www.instagram.com/embed.js', 'https://www.instagram.com/embed.js', $p->body) !!}</article>
                     @else
                         <article class="news-card">
                             <a href="/posts/{{ $p->slug }}" class="news-thumb" aria-label="{{ $p->title }}"

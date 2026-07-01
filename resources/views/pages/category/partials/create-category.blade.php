@@ -11,19 +11,19 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="create-name">Nama Kategori</label>
-                        <input type="text" autofocus value="" class="form-control" id="create-name"
+                        <label for="create-category-name">Nama Kategori</label>
+                        <input type="text" autofocus value="" class="form-control" id="create-category-name"
                             name="name" placeholder="Nama Kategori">
                     </div>
                     <div class="form-group">
-                        <label for="create-slug">Slug</label>
-                        <input type="text" value="" class="form-control" id="create-slug" name="slug"
+                        <label for="create-category-slug">Slug</label>
+                        <input type="text" value="" class="form-control" id="create-category-slug" name="slug"
                             placeholder="Slug">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="button" class="btn btn-primary" id="create-button">
+                    <button type="button" class="btn btn-primary" id="create-category-button">
                         <span class="fal fa-plus-circle mr-1"></span>
                         Tambah
                     </button>

@@ -48,7 +48,7 @@
             </div>
             <div class="row">
                 <span class="card-text container fs-4 text-justify">
-                    {!! $post->body !!}
+                    {!! str_replace('//www.instagram.com/embed.js', 'https://www.instagram.com/embed.js', $post->body) !!}
                 </span>
             </div>
             <a href="/posts" class="kembali-parent text-decoration-none text-primary my-5 d-inline-block">

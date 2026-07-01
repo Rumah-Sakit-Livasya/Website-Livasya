@@ -12,11 +12,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
-
-        return view('pages.category.index', compact('categories'), [
-            'title' => 'Kategori',
-        ]);
+        return redirect('/dashboard/posts#pills-kategori');
     }
 
     public function checkSlug(Request $request)

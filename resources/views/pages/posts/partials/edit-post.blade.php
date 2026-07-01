@@ -15,17 +15,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="edit-title">Judul</label>
-                        <input type="text" autofocus value="" class="form-control" id="edit-title"
-                            name="title" placeholder="Judul">
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-slug">Slug</label>
-                        <input type="text" value="" class="form-control" id="edit-slug" name="slug"
-                            placeholder="Slug">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="edit-category">
+                        <label class="form-label font-weight-bold" for="edit-category">
                             Kategori Berita
                         </label>
                         <select class="form-control w-100" id="edit-category" name="category_id">
@@ -35,24 +25,32 @@
                                 @endforeach
                             </optgroup>
                         </select>
+                        <small class="form-text text-muted mt-1">
+                            <i class="fal fa-info-circle mr-1"></i> Pilih kategori yang paling sesuai agar berita dikelompokkan dengan benar di website utama.
+                        </small>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label d-block" for="edit-image">Gambar Berita</label>
-                        <img class="edit-img-preview img-fluid mb-3 col-sm-5" alt="Image">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="edit-image" name="image"
-                                onchange="editPreviewImage()">
-                            <label class="custom-file-label" for="edit-image">Pilih gambar</label>
-                        </div>
+                    <!-- Instagram Link Input (hidden by default) -->
+                    <div class="form-group" id="edit-instagram-group" style="display: none;">
+                        <label for="edit-body-text" class="font-weight-bold">Link Postingan Instagram</label>
+                        <input type="text" class="form-control" id="edit-body-text" name="body" placeholder="https://www.instagram.com/p/...">
+                        <small class="form-text text-muted mt-1">
+                            <i class="fal fa-info-circle mr-1"></i> Tautan postingan Instagram, Reels, atau TV (misal: <code>https://www.instagram.com/p/C8o7kYNS4eX/</code>) untuk berita ini.
+                        </small>
                     </div>
-                    <div class="form-group">
-                        <label for="edit-body" class="form-label">Isi Berita</label>
-                        <input id="edit-body" type="hidden" name="body" value="{{ old('body') }}">
-                        <trix-editor input="edit-body" id="edit-body-text"></trix-editor>
-                        @error('body')
-                            <p class="text-danger">{{ $message }}</p>
-                        @enderror
+
+                    <!-- Standard Trix Editor Input for older posts (hidden by default) -->
+                    <div class="form-group" id="edit-standard-group" style="display: none;">
+                        <label for="edit-body" class="form-label font-weight-bold">Isi Berita</label>
+                        <input id="edit-body" type="hidden" name="body" value="">
+                        <trix-editor input="edit-body" id="edit-body-trix"></trix-editor>
+                        <small class="form-text text-muted mt-1">
+                            <i class="fal fa-info-circle mr-1"></i> Tulis konten utama berita Anda di sini. Gunakan editor di atas untuk memformat teks.
+                        </small>
                     </div>
+                    
+                    @error('body')
+                        <p class="text-danger mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

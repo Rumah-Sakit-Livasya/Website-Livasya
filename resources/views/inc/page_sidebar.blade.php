@@ -119,23 +119,15 @@
                 </ul>
             </li>
             @endrole
-            @role('super-admin|user|marketing')
-            <li class="{{ set_active('dashboard/categories') }}">
-                <a href="{{ route('category.index') }}" title="Kategori" data-filter-tags="application kategori">
-                    <i class='bx bxs-category-alt'></i>
-                    <span class="nav-link-text" data-i18n="nav.application_kategori">Kategori Berita</span>
-                </a>
-            </li>
-            @endrole
-            @role('super-admin|user|marketing')
-            <li class="{{ set_active('dashboard/posts') }}">
+            @role('super-admin|marketing')
+            <li class="{{ set_active(['dashboard/posts', 'dashboard/posts/*', 'dashboard/categories', 'dashboard/categories/*']) }}">
                 <a href="{{ route('posts.index') }}" title="Berita" data-filter-tags="application berita">
                     <i class='bx bxs-news'></i>
                     <span class="nav-link-text" data-i18n="nav.application_posts">Berita</span>
                 </a>
             </li>
             @endrole
-            @role('super-admin|user|marketing')
+            @role('super-admin|marketing')
             <li class="{{ set_active('dashboard/facilities') }}">
                 <a href="{{ route('facilities.index') }}" title="Fasilitas Unggulan"
                     data-filter-tags="application fasilitas unggulan">
@@ -144,13 +136,15 @@
                 </a>
             </li>
             @endrole
-            @role('super-admin|user|hrd')
+            @role('super-admin|hrd')
             <li class="{{ set_active(['hrd', 'hrd/*']) }}">
                 <a href="{{ route('hrd.index') }}" title="Seleksi Pelamar" data-filter-tags="application seleksi pelamar hrd">
                     <i class='bx bxs-group'></i>
                     <span class="nav-link-text" data-i18n="nav.application_hrd">Seleksi Pelamar</span>
                 </a>
             </li>
+            @endrole
+            @role('super-admin|hrd|marketing')
             <li class="{{ set_active('dashboard/careers') }}">
                 <a href="{{ route('career.index') }}" title="Karir" data-filter-tags="application karir">
                     <i class='bx bxs-briefcase'></i>
@@ -158,7 +152,7 @@
                 </a>
             </li>
             @endrole
-            @role('super-admin|user|marketing')
+            @role('super-admin|marketing')
             <li class="{{ set_active('dashboard/doctors') }}">
                 <a href="{{ route('doctors.index') }}" title="Dokter" data-filter-tags="application dokter">
                     <i class='bx bx-user'></i>
@@ -166,7 +160,7 @@
                 </a>
             </li>
             @endrole
-            @role('super-admin|user|marketing')
+            @role('super-admin|marketing')
             <li class="{{ set_active('dashboard/departements') }}">
                 <a href="{{ route('departements.index') }}" title="Departement"
                     data-filter-tags="application departement">
@@ -175,7 +169,7 @@
                 </a>
             </li>
             @endrole
-            @role('super-admin|user')
+            @role('super-admin')
             <li class="{{ set_active('dashboard/users') }}">
                 <a href="{{ route('user.index') }}" title="users" data-filter-tags="application user">
                     <i class='bx bxs-user-account'></i>

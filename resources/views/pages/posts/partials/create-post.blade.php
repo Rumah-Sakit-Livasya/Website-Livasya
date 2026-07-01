@@ -13,17 +13,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="create-title">Judul</label>
-                        <input type="text" autofocus value="" class="form-control" id="create-title"
-                            name="title" placeholder="Judul">
-                    </div>
-                    <div class="form-group">
-                        <label for="create-slug">Slug</label>
-                        <input type="text" value="" class="form-control" id="create-slug" name="slug"
-                            placeholder="Slug">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="create-category">
+                        <label class="form-label font-weight-bold" for="create-category">
                             Kategori Berita
                         </label>
                         <select class="form-control w-100" id="create-category" name="category_id">
@@ -33,30 +23,20 @@
                                 @endforeach
                             </optgroup>
                         </select>
+                        <small class="form-text text-muted mt-1">
+                            <i class="fal fa-info-circle mr-1"></i> Pilih kategori yang paling sesuai agar berita dikelompokkan dengan benar di website utama.
+                        </small>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label" for="create-image">Gambar Berita</label>
-                        <img class="create-img-preview img-fluid mb-3 col-sm-5">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="create-image" name="image"
-                                onchange="createPreviewImage()">
-                            <label class="custom-file-label" for="create-image">Pilih gambar</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="create-body" class="form-label">Isi Berita</label>
-                        <input id="create-body" type="hidden" name="body" value="{{ old('body') }}">
-                        <div id="editor-container">
-                            <trix-editor input="create-body"></trix-editor>
-                        </div>
+                    <input type="hidden" name="is_embeded" value="1">
+                    <div class="form-group mb-0">
+                        <label for="create-body" class="font-weight-bold">Link Postingan Instagram</label>
+                        <input type="text" class="form-control" id="create-body" name="body" placeholder="https://www.instagram.com/p/..." value="{{ old('body') }}">
+                        <small class="form-text text-muted mt-1">
+                            <i class="fal fa-info-circle mr-1"></i> Wajib memasukkan tautan postingan Instagram, Reels, atau TV (misal: <code>https://www.instagram.com/p/C8o7kYNS4eX/</code>) untuk dijadikan sebagai berita.
+                        </small>
                         @error('body')
-                            <p class="text-danger">{{ $message }}</p>
+                            <p class="text-danger mt-1">{{ $message }}</p>
                         @enderror
-                    </div>
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="is_embeded" name="is_embeded"
-                            value="1"">
-                        <label class="custom-control-label" for="is_embeded">Embedded</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -70,16 +50,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.getElementById('is_embeded').addEventListener('change', function() {
-        const editorContainer = document.getElementById('editor-container');
-        const bodyInput = document.getElementById('create-body');
-        if (this.checked) {
-            editorContainer.innerHTML =
-                '<textarea id="create-body" name="body" class="form-control" rows="5" oninput="updateBodyValue()">{{ old('body') }}</textarea>';
-        } else {
-            editorContainer.innerHTML = '<trix-editor input="create-body"></trix-editor>';
-        }
-    });
-</script>

@@ -13,13 +13,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="edit-name">Nama Kategori</label>
-                        <input type="text" autofocus value="" class="form-control" id="edit-name"
+                        <label for="edit-category-name">Nama Kategori</label>
+                        <input type="text" autofocus value="" class="form-control" id="edit-category-name"
                             name="name" placeholder="Nama Kategori">
                     </div>
                     <div class="form-group">
-                        <label for="edit-slug">Slug</label>
-                        <input type="text" value="" class="form-control" id="edit-slug" name="slug"
+                        <label for="edit-category-slug">Slug</label>
+                        <input type="text" value="" class="form-control" id="edit-category-slug" name="slug"
                             placeholder="Slug">
                     </div>
                 </div>

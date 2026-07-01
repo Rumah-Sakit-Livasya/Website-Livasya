@@ -22,28 +22,44 @@ class PostApiController extends Controller
 
     public function store(Request $request)
     {
+        // Parse Instagram code from link
+        $cleanBody = trim(strip_tags($request->body));
+        $code = Str::random(10);
+        if (preg_match('#https?://(?:www\.)?instagram\.com/(?:p|reel|tv)/([a-zA-Z0-9_-]+)#i', $cleanBody, $matches)) {
+            $code = $matches[1];
+        }
+
+        $request->merge([
+            'title' => 'Instagram Post ' . $code,
+            'slug' => 'instagram-post-' . strtolower($code),
+            'is_embeded' => 1,
+        ]);
+
         $rules = [
-            'body' => 'required', // Body is required if is_embeded is checked
+            'title' => 'required|max:255',
+            'slug' => 'required|unique:posts',
+            'category_id' => 'required',
+            'user_id' => 'required',
+            'body' => ['required', function ($attribute, $value, $fail) {
+                $clean = trim(strip_tags($value));
+                if (!preg_match('#https?://(?:www\.)?instagram\.com/(p|reel|tv)/([a-zA-Z0-9_-]+)#i', $clean) && strpos($value, 'instagram-media') === false) {
+                    $fail('Tautan yang dimasukkan harus berupa link postingan Instagram yang valid.');
+                }
+            }],
+            'image' => 'nullable|image|file|max:5120',
+            'is_embeded' => 'nullable|integer',
         ];
 
-        // If is_embeded is not checked, make title, slug, category_id, and user_id required
-        if (!$request->is_embeded) {
-            $rules['title'] = 'required|max:255';
-            $rules['slug'] = 'required|unique:posts';
-        }
-
-        $rules['image'] = 'image|file|max:5120'; // Image validation remains the same
-        $rules['is_embeded'] = 'nullable|integer'; // Added request validation for is_embeded
-        $rules['user_id'] = 'required';
-        $rules['category_id'] = 'required';
-
         $validatedData = $request->validate($rules);
+        $validatedData['is_embeded'] = 1;
+        $validatedData['published_at'] = now();
 
         if ($request->file('image')) {
-            $validatedData['image'] = $request->file('image')->store('img-berita');
+            $validatedData['image'] = $request->file('image')->store('img-berita', 'public');
         }
 
-        $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 100);
+        $validatedData['body'] = $this->processInstagramEmbed($validatedData['body']);
+        $validatedData['excerpt'] = Str::limit(strip_tags($validatedData['body']), 100);
 
         $post = Post::create($validatedData);
 
@@ -60,36 +76,60 @@ class PostApiController extends Controller
     public function update(Request $request, $postId)
     {
         $post = Post::findOrFail($postId);
-        $rules = [
-            'body' => 'required', // Body is required if is_embeded is checked
-        ];
+        $is_embeded = $post->is_embeded;
 
-        // If is_embeded is not checked, make title, slug, category_id, and user_id required
-        if (!$request->is_embeded) {
-            $rules['title'] = 'required|max:255';
-            $rules['slug'] = 'required|unique:posts';
-            $rules['category_id'] = 'required';
-            $rules['user_id'] = 'required';
+        if ($is_embeded) {
+            // Auto-generate title and slug based on new link
+            $cleanBody = trim(strip_tags($request->body));
+            $code = Str::random(10);
+            if (preg_match('#https?://(?:www\.)?instagram\.com/(?:p|reel|tv)/([a-zA-Z0-9_-]+)#i', $cleanBody, $matches)) {
+                $code = $matches[1];
+            }
+            $request->merge([
+                'title' => 'Instagram Post ' . $code,
+                'slug' => 'instagram-post-' . strtolower($code),
+            ]);
+        } else {
+            // Keep original title and slug for legacy posts
+            $request->merge([
+                'title' => $post->title,
+                'slug' => $post->slug,
+            ]);
         }
 
-        $rules['image'] = 'image|file|max:5120'; // Image validation remains the same
-        $rules['is_embeded'] = 'nullable|integer'; // Added request validation for is_embeded
+        $rules = [
+            'title' => 'required|max:255',
+            'slug' => 'required|unique:posts,slug,' . $post->id,
+            'category_id' => 'required',
+            'user_id' => 'required',
+            'image' => 'nullable|image|file|max:5120',
+            'is_embeded' => 'nullable|integer',
+        ];
 
-        if ($request->slug != $post->slug) {
-            $rules['slug'] = 'required|unique:posts';
+        if ($is_embeded) {
+            $rules['body'] = ['required', function ($attribute, $value, $fail) {
+                $clean = trim(strip_tags($value));
+                if (!preg_match('#https?://(?:www\.)?instagram\.com/(p|reel|tv)/([a-zA-Z0-9_-]+)#i', $clean) && strpos($value, 'instagram-media') === false) {
+                    $fail('Tautan yang dimasukkan harus berupa link postingan Instagram yang valid.');
+                }
+            }];
+        } else {
+            $rules['body'] = 'required';
         }
 
         $validatedData = $request->validate($rules);
+        $validatedData['is_embeded'] = $is_embeded;
 
         if ($request->file('image')) {
             if ($request->oldImage) {
-                Storage::delete($request->oldImage);
+                Storage::disk('public')->delete($request->oldImage);
             }
 
-            $validatedData['image'] = $request->file('image')->store('img-berita');
+            $validatedData['image'] = $request->file('image')->store('img-berita', 'public');
         }
 
-        $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 100);
+        $validatedData['body'] = $this->processInstagramEmbed($validatedData['body']);
+        $validatedData['excerpt'] = Str::limit(strip_tags($validatedData['body']), 100);
 
         $post->update($validatedData);
 
@@ -124,5 +164,20 @@ class PostApiController extends Controller
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'An error occurred'], 500);
         }
+    }
+
+    private function processInstagramEmbed($body)
+    {
+        $cleanBody = trim(strip_tags($body));
+        
+        if (preg_match('#https?://(?:www\.)?instagram\.com/(p|reel|tv)/([a-zA-Z0-9_-]+)#i', $cleanBody, $matches)) {
+            $type = $matches[1];
+            $code = $matches[2];
+            $permalink = "https://www.instagram.com/{$type}/{$code}/";
+            
+            return '<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="' . $permalink . '" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="' . $permalink . '" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"></a></div></blockquote> <script async src="https://www.instagram.com/embed.js"></script>';
+        }
+        
+        return $body;
     }
 }
