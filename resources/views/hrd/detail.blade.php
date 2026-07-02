@@ -68,11 +68,10 @@
                 @if($applier->status == 'processed')
                     <hr class="my-3">
                     <div class="d-grid gap-2">
-                        {{-- Tombol Terima: buka modal jadwal wawancara --}}
                         <button type="button"
                             class="btn btn-success btn-block font-weight-bold btn-terima-hrd"
                             data-name="{{ $applier->first_name }} {{ $applier->last_name }}"
-                            data-action="{{ route('hrd.status', [$career->id, $applier->id]) }}">
+                            data-action-url="{{ route('hrd.status', [$career->id, $applier->id]) }}">
                             <i class="fal fa-check-circle mr-1"></i> Terima Berkas
                         </button>
 
@@ -578,7 +577,7 @@ $(document).on('click', '.js-confirm', function(e) {
 // Tombol Terima Berkas HRD -> buka modal jadwal
 $(document).on('click', '.btn-terima-hrd', function() {
     var name   = $(this).data('name');
-    var action = $(this).data('action');
+    var action = $(this).data('action-url');
 
     $('#hrdModalApplierName').text(name);
     $('#formJadwalHrd').attr('action', action);

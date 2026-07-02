@@ -200,7 +200,7 @@
                                             <button type="button"
                                                 class="btn-action-custom btn-action-accept btn-icon-only btn-terima-appliers"
                                                 data-name="{{ $applier->first_name }} {{ $applier->last_name }}"
-                                                data-action="{{ route('hrd.status', [$career->id, $applier->id]) }}"
+                                                data-action-url="{{ route('hrd.status', [$career->id, $applier->id]) }}"
                                                 title="Terima Berkas & Lanjut Wawancara">
                                                 <i class="fal fa-check"></i>
                                             </button>
@@ -557,7 +557,7 @@ $(document).on('click', '.js-confirm', function(e) {
 // Tombol Terima Appliers -> buka modal jadwal
 $(document).on('click', '.btn-terima-appliers', function() {
     var name   = $(this).data('name');
-    var action = $(this).data('action');
+    var action = $(this).data('action-url');
 
     $('#appliersModalName').text(name);
     $('#formJadwalAppliers').attr('action', action);

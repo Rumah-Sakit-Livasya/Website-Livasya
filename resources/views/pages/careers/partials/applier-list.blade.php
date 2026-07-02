@@ -81,7 +81,7 @@
                                                     data-id="{{ $applier->id }}"
                                                     data-name="{{ $applier->first_name }} {{ $applier->last_name }}"
                                                     data-career-id="{{ $applier->career->id }}"
-                                                    data-action="{{ action([\App\Http\Controllers\Pages\CareerController::class, 'updateStatus'], ['career' => $applier->career->id, 'applier' => $applier->id]) }}">
+                                                    data-action-url="{{ action([\App\Http\Controllers\Pages\CareerController::class, 'updateStatus'], ['career' => $applier->career->id, 'applier' => $applier->id]) }}">
                                                     <span class="fal fa-check"></span> Terima
                                                 </button>
 
@@ -208,7 +208,7 @@
             // Tombol Terima -> buka modal jadwal wawancara
             $(document).on('click', '.btn-terima-pelamar', function() {
                 var name   = $(this).data('name');
-                var action = $(this).data('action');
+                var action = $(this).data('action-url');
 
                 $('#modalApplierName').text(name);
                 $('#formJadwalWawancara').attr('action', action);
