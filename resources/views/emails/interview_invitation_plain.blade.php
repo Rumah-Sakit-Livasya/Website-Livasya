@@ -13,9 +13,8 @@ Untuk tahap selanjutnya, kami mengundang Anda untuk menghadiri sesi wawancara ya
 - Lokasi: {{ $applier->interview_location }}
 @endif
 
-@if($applier->interview_type == 'online' && $vconLink)
-Wawancara akan dilaksanakan secara online. Silakan bergabung menggunakan tautan video conference berikut tepat pada waktu yang dijadwalkan:
-Tautan: {{ $vconLink }}
+@if($applier->interview_type == 'online')
+Wawancara akan dilaksanakan secara online. Untuk mengakses tautan video conference dan bergabung ke sesi wawancara, silakan masuk ke dashboard akun pelamar Anda di portal karir kami pada waktu yang dijadwalkan.
 @else
 Mohon hadir di lokasi wawancara 15 menit sebelum jadwal dimulai dengan mengenakan pakaian formal dan membawa dokumen pendukung (CV cetak, portofolio, dsb.).
 @endif
