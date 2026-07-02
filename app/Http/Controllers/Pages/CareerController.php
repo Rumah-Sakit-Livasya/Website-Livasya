@@ -164,8 +164,7 @@ class CareerController extends Controller
             $errorMsg = '';
             try {
                 $applier->refresh();
-                Mail::mailer('interview_smtp')
-                    ->to($applier->user?->email ?? $applier->email)
+                Mail::to($applier->user?->email ?? $applier->email)
                     ->send(new InterviewInvitation($applier, $vconLink));
             } catch (\Exception $e) {
                 $emailSent = false;

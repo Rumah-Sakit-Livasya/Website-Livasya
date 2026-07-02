@@ -46,18 +46,6 @@ return [
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
         ],
 
-        'interview_smtp' => [
-            'transport' => 'smtp',
-            'url' => env('MAIL_URL'),
-            'host' => env('MAIL_INTERVIEW_HOST', env('MAIL_HOST', 'smtp.mailgun.org')),
-            'port' => env('MAIL_INTERVIEW_PORT', env('MAIL_PORT', 587)),
-            'encryption' => env('MAIL_INTERVIEW_ENCRYPTION', env('MAIL_ENCRYPTION', 'tls')),
-            'username' => env('MAIL_INTERVIEW_USERNAME', env('MAIL_USERNAME')),
-            'password' => env('MAIL_INTERVIEW_PASSWORD', env('MAIL_PASSWORD')),
-            'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
-        ],
-
         'ses' => [
             'transport' => 'ses',
         ],
@@ -114,11 +102,6 @@ return [
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
-    ],
-
-    'interview_from' => [
-        'address' => env('MAIL_INTERVIEW_FROM_ADDRESS', 'rekrutmen@livasya.com'),
-        'name' => env('MAIL_FROM_NAME', 'HRD RS Livasya'),
     ],
 
     /*
