@@ -153,8 +153,11 @@
                     @endif
                 </div>
                 
-                @if($applier->interview_type == 'online')
-                    <p>Wawancara akan dilaksanakan secara online. Untuk mengakses tautan video conference dan bergabung ke sesi wawancara, silakan masuk ke dashboard akun pelamar Anda di portal karir kami pada waktu yang dijadwalkan.</p>
+                @if($applier->interview_type == 'online' && $vconLink)
+                    <p>Wawancara akan dilaksanakan secara online. Silakan bergabung menggunakan tombol video conference di bawah ini tepat pada waktu yang dijadwalkan:</p>
+                    <div class="btn-container">
+                        <a href="{{ $vconLink }}" target="_blank" class="btn">Gabung Video Conference</a>
+                    </div>
                 @else
                     <p>Mohon hadir di lokasi wawancara 15 menit sebelum jadwal dimulai dengan mengenakan pakaian formal dan membawa dokumen pendukung (CV cetak, portofolio, dsb.).</p>
                 @endif
