@@ -160,15 +160,24 @@ class CareerController extends Controller
                 $vconLink = $vconBase . '/?code=' . $roomSlug;
             }
 
+            $emailSent = true;
+            $errorMsg = '';
             try {
                 $applier->refresh();
-                Mail::to($applier->user?->email ?? $applier->email)
+                Mail::mailer('interview_smtp')
+                    ->to($applier->user?->email ?? $applier->email)
                     ->send(new InterviewInvitation($applier, $vconLink));
             } catch (\Exception $e) {
-                \Log::error('Gagal kirim email undangan wawancara: ' . $e->getMessage());
+                $emailSent = false;
+                $errorMsg = $e->getMessage();
+                \Log::error('Gagal kirim email undangan wawancara: ' . $errorMsg);
             }
 
-            return back()->with('success', 'Pelamar diterima. Jadwal wawancara telah disimpan dan email undangan telah dikirimkan.');
+            if ($emailSent) {
+                return back()->with('success', 'Pelamar diterima. Jadwal wawancara telah disimpan dan email undangan telah dikirimkan.');
+            } else {
+                return back()->with('warning', 'Jadwal wawancara disimpan, tetapi GAGAL mengirim email undangan. Silakan periksa pengaturan SMTP Anda. Detail error: ' . $errorMsg);
+            }
         }
 
         $applier->update(['status' => $newStatus]);
