@@ -511,7 +511,7 @@
 
                     <div class="form-group">
                         <label for="ap_interview_type">Jenis Wawancara <span class="text-danger">*</span></label>
-                        <select class="form-control" id="ap_interview_type" name="interview_type" required>
+                        <select class="form-control no-select2" id="ap_interview_type" name="interview_type" required>
                             <option value="">-- Pilih Jenis --</option>
                             <option value="online">Online (Video Conference)</option>
                             <option value="offline">Offline / Tatap Muka</option>
