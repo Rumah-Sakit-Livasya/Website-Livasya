@@ -31,12 +31,13 @@ class InterviewInvitation extends Mailable
      */
     public function envelope(): Envelope
     {
+        $name = $this->applier->first_name . ' ' . ($this->applier->last_name ?? '');
         return new Envelope(
             from: new Address(
                 config('mail.interview_from.address', 'rekrutmen@livasya.com'),
                 config('mail.interview_from.name', 'HRD RS Livasya')
             ),
-            subject: 'Undangan Wawancara Kerja - RS Livasya',
+            subject: 'Undangan Wawancara Kerja - ' . trim($name) . ' - RS Livasya',
         );
     }
 

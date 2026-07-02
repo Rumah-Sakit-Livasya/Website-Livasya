@@ -26,10 +26,11 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
         .header {
-            background-color: #10b981; /* Premium Emerald Green */
+            background-color: #1b4ba1; /* Livasya Deep Blue */
             padding: 35px 30px;
             text-align: center;
             color: #ffffff;
+            border-bottom: 4px solid #ea580c; /* Livasya Orange Accent Line */
         }
         .header h1 {
             margin: 0;
@@ -60,7 +61,7 @@
             color: #0f172a;
             margin-top: 0;
             margin-bottom: 15px;
-            border-bottom: 2px solid #e2e8f0;
+            border-bottom: 2px solid #1b4ba1; /* Blue accent border */
             padding-bottom: 8px;
         }
         .schedule-item {
@@ -87,18 +88,18 @@
         }
         .btn {
             display: inline-block;
-            background-color: #10b981;
+            background-color: #ea580c; /* Livasya Orange */
             color: #ffffff !important;
             text-decoration: none;
             padding: 12px 30px;
             font-size: 16px;
             font-weight: 700;
             border-radius: 50px;
-            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+            box-shadow: 0 4px 6px rgba(234, 88, 12, 0.25);
             transition: background-color 0.2s;
         }
         .btn:hover {
-            background-color: #059669;
+            background-color: #c2410c; /* Livasya Darker Orange on hover */
         }
         .footer {
             background-color: #f1f5f9;
@@ -158,7 +159,7 @@
                         <a href="{{ $vconLink }}" target="_blank" class="btn">Gabung Video Conference</a>
                     </div>
                     <p style="text-align: center; font-size: 13px; color: #64748b; margin-top: 5px;">
-                        (Tautan: <a href="{{ $vconLink }}" style="color: #10b981;">{{ $vconLink }}</a>)
+                        (Tautan: <a href="{{ $vconLink }}" style="color: #1b4ba1;">{{ $vconLink }}</a>)
                     </p>
                 @else
                     <p>Mohon hadir di lokasi wawancara 15 menit sebelum jadwal dimulai dengan mengenakan pakaian formal dan membawa dokumen pendukung (CV cetak, portofolio, dsb.).</p>
