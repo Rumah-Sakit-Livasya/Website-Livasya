@@ -44,6 +44,7 @@ class InterviewInvitation extends Mailable
     {
         return new Content(
             view: 'emails.interview_invitation',
+            text: 'emails.interview_invitation_plain',
         );
     }
 
