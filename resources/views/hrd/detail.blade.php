@@ -68,13 +68,14 @@
                 @if($applier->status == 'processed')
                     <hr class="my-3">
                     <div class="d-grid gap-2">
-                        <form action="{{ route('hrd.status', [$career->id, $applier->id]) }}" method="POST" class="mb-2">
-                            @csrf @method('PUT')
-                            <input type="hidden" name="status" value="accepted">
-                            <button type="submit" class="btn btn-success btn-block font-weight-bold js-confirm" data-msg="Terima berkas administrasi pelamar & jadwalkan Wawancara Tahap 1?">
-                                <i class="fal fa-check-circle mr-1"></i> Terima Berkas
-                            </button>
-                        </form>
+                        {{-- Tombol Terima: buka modal jadwal wawancara --}}
+                        <button type="button"
+                            class="btn btn-success btn-block font-weight-bold btn-terima-hrd"
+                            data-name="{{ $applier->first_name }} {{ $applier->last_name }}"
+                            data-action="{{ route('hrd.status', [$career->id, $applier->id]) }}">
+                            <i class="fal fa-check-circle mr-1"></i> Terima Berkas
+                        </button>
+
                         <form action="{{ route('hrd.status', [$career->id, $applier->id]) }}" method="POST">
                             @csrf @method('PUT')
                             <input type="hidden" name="status" value="rejected">
@@ -504,6 +505,59 @@
 </main>
 @endsection
 
+{{-- Modal Jadwal Wawancara --}}
+<div class="modal fade" id="modalJadwalWawarcaraHrd" tabindex="-1" role="dialog" aria-labelledby="modalJadwalHrdLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalJadwalHrdLabel">📅 Jadwal Wawancara</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formJadwalHrd" method="POST">
+                @csrf @method('PUT')
+                <input type="hidden" name="status" value="accepted">
+                <div class="modal-body">
+                    <p class="text-muted mb-3">Pelamar: <strong id="hrdModalApplierName"></strong></p>
+
+                    <div class="form-group">
+                        <label for="hrd_interview_date">Tanggal Wawancara <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" id="hrd_interview_date" name="interview_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hrd_interview_time">Waktu Wawancara <span class="text-danger">*</span></label>
+                        <input type="time" class="form-control" id="hrd_interview_time" name="interview_time" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hrd_interview_type">Jenis Wawancara <span class="text-danger">*</span></label>
+                        <select class="form-control" id="hrd_interview_type" name="interview_type" required>
+                            <option value="">-- Pilih Jenis --</option>
+                            <option value="online">Online (Video Conference)</option>
+                            <option value="offline">Offline / Tatap Muka</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="hrdLocationGroup">
+                        <label for="hrd_interview_location" id="hrdLocationLabel">Lokasi / Keterangan</label>
+                        <input type="text" class="form-control" id="hrd_interview_location" name="interview_location"
+                            placeholder="Contoh: Gedung A Lt. 3 atau link akan dikirim via email">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fal fa-check"></i> Kirim Undangan &amp; Terima
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 @section('scripts')
 <script nonce="{{ $nonce }}">
 $(document).on('click', '.js-confirm', function(e) {
@@ -520,5 +574,40 @@ $(document).on('click', '.js-confirm', function(e) {
         if (result.isConfirmed) $btn.closest('form').submit();
     });
 });
+
+// Tombol Terima Berkas HRD -> buka modal jadwal
+$(document).on('click', '.btn-terima-hrd', function() {
+    var name   = $(this).data('name');
+    var action = $(this).data('action');
+
+    $('#hrdModalApplierName').text(name);
+    $('#formJadwalHrd').attr('action', action);
+
+    // Reset form fields
+    $('#hrd_interview_date').val('');
+    $('#hrd_interview_time').val('');
+    $('#hrd_interview_type').val('');
+    $('#hrd_interview_location').val('');
+    updateHrdLocationLabel('');
+
+    $('#modalJadwalWawarcaraHrd').modal('show');
+});
+
+$(document).on('change', '#hrd_interview_type', function() {
+    updateHrdLocationLabel($(this).val());
+});
+
+function updateHrdLocationLabel(type) {
+    if (type === 'online') {
+        $('#hrdLocationLabel').text('Keterangan Tambahan (opsional)');
+        $('#hrd_interview_location').attr('placeholder', 'Mis. silakan test kamera sebelum sesi');
+    } else if (type === 'offline') {
+        $('#hrdLocationLabel').text('Lokasi / Alamat Wawancara');
+        $('#hrd_interview_location').attr('placeholder', 'Mis. Gedung A Lt. 3, Jl. Sudirman No.1');
+    } else {
+        $('#hrdLocationLabel').text('Lokasi / Keterangan');
+        $('#hrd_interview_location').attr('placeholder', 'Contoh: Gedung A Lt. 3 atau link akan dikirim via email');
+    }
+}
 </script>
 @endsection

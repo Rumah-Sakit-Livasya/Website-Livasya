@@ -196,13 +196,15 @@
 
                                         {{-- Terima / Tolak Administrasi --}}
                                         @if($applier->status == 'processed')
-                                            <form action="{{ route('hrd.status', [$career->id, $applier->id]) }}" method="POST" class="d-inline">
-                                                @csrf @method('PUT')
-                                                <input type="hidden" name="status" value="accepted">
-                                                <button type="submit" class="btn-action-custom btn-action-accept btn-icon-only js-confirm" data-msg="Terima berkas administrasi pelamar & jadwalkan Wawancara Tahap 1?" title="Terima Berkas & Lanjut Wawancara">
-                                                    <i class="fal fa-check"></i>
-                                                </button>
-                                            </form>
+                                            {{-- Tombol Terima: buka modal jadwal wawancara --}}
+                                            <button type="button"
+                                                class="btn-action-custom btn-action-accept btn-icon-only btn-terima-appliers"
+                                                data-name="{{ $applier->first_name }} {{ $applier->last_name }}"
+                                                data-action="{{ route('hrd.status', [$career->id, $applier->id]) }}"
+                                                title="Terima Berkas & Lanjut Wawancara">
+                                                <i class="fal fa-check"></i>
+                                            </button>
+
                                             <form action="{{ route('hrd.status', [$career->id, $applier->id]) }}" method="POST" class="d-inline">
                                                 @csrf @method('PUT')
                                                 <input type="hidden" name="status" value="rejected">
@@ -480,6 +482,59 @@
         transition: all 0.2s ease;
     }
 </style>
+
+{{-- Modal Jadwal Wawancara (HRD Appliers) --}}
+<div class="modal fade" id="modalJadwalAppliers" tabindex="-1" role="dialog" aria-labelledby="modalJadwalAppliersLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalJadwalAppliersLabel">📅 Jadwal Wawancara</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formJadwalAppliers" method="POST">
+                @csrf @method('PUT')
+                <input type="hidden" name="status" value="accepted">
+                <div class="modal-body">
+                    <p class="text-muted mb-3">Pelamar: <strong id="appliersModalName"></strong></p>
+
+                    <div class="form-group">
+                        <label for="ap_interview_date">Tanggal Wawancara <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" id="ap_interview_date" name="interview_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ap_interview_time">Waktu Wawancara <span class="text-danger">*</span></label>
+                        <input type="time" class="form-control" id="ap_interview_time" name="interview_time" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ap_interview_type">Jenis Wawancara <span class="text-danger">*</span></label>
+                        <select class="form-control" id="ap_interview_type" name="interview_type" required>
+                            <option value="">-- Pilih Jenis --</option>
+                            <option value="online">Online (Video Conference)</option>
+                            <option value="offline">Offline / Tatap Muka</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ap_interview_location" id="apLocationLabel">Lokasi / Keterangan</label>
+                        <input type="text" class="form-control" id="ap_interview_location" name="interview_location"
+                            placeholder="Contoh: Gedung A Lt. 3 atau link akan dikirim via email">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fal fa-check"></i> Kirim Undangan &amp; Terima
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('scripts')
@@ -498,5 +553,39 @@ $(document).on('click', '.js-confirm', function(e) {
         if (result.isConfirmed) $btn.closest('form').submit();
     });
 });
+
+// Tombol Terima Appliers -> buka modal jadwal
+$(document).on('click', '.btn-terima-appliers', function() {
+    var name   = $(this).data('name');
+    var action = $(this).data('action');
+
+    $('#appliersModalName').text(name);
+    $('#formJadwalAppliers').attr('action', action);
+
+    $('#ap_interview_date').val('');
+    $('#ap_interview_time').val('');
+    $('#ap_interview_type').val('');
+    $('#ap_interview_location').val('');
+    updateApLocationLabel('');
+
+    $('#modalJadwalAppliers').modal('show');
+});
+
+$(document).on('change', '#ap_interview_type', function() {
+    updateApLocationLabel($(this).val());
+});
+
+function updateApLocationLabel(type) {
+    if (type === 'online') {
+        $('#apLocationLabel').text('Keterangan Tambahan (opsional)');
+        $('#ap_interview_location').attr('placeholder', 'Mis. silakan test kamera sebelum sesi');
+    } else if (type === 'offline') {
+        $('#apLocationLabel').text('Lokasi / Alamat Wawancara');
+        $('#ap_interview_location').attr('placeholder', 'Mis. Gedung A Lt. 3, Jl. Sudirman No.1');
+    } else {
+        $('#apLocationLabel').text('Lokasi / Keterangan');
+        $('#ap_interview_location').attr('placeholder', 'Contoh: Gedung A Lt. 3 atau link akan dikirim via email');
+    }
+}
 </script>
 @endsection

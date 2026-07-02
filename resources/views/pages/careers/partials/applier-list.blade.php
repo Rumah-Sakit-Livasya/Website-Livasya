@@ -75,17 +75,17 @@
 
                                         <td style="white-space: nowrap">
                                             @if ($applier->status == 'processed')
-                                                <form
-                                                    action="{{ action([\App\Http\Controllers\Pages\CareerController::class, 'updateStatus'], ['career' => $applier->career->id, 'applier' => $applier->id]) }}"
-                                                    method="POST" class="d-inline">
-                                                    @csrf @method('PUT')
-                                                    <input type="hidden" name="status" value="accepted">
-                                                    <button
-                                                        class="badge mx-1 badge-success p-2 border-0 text-white js-confirm-action"
-                                                        data-message="Terima pelamar ini?">
-                                                        <span class="fal fa-check"></span> Terima
-                                                    </button>
-                                                </form>
+                                                {{-- Tombol Terima: buka modal jadwal wawancara --}}
+                                                <button type="button"
+                                                    class="badge mx-1 badge-success p-2 border-0 text-white btn-terima-pelamar"
+                                                    data-id="{{ $applier->id }}"
+                                                    data-name="{{ $applier->first_name }} {{ $applier->last_name }}"
+                                                    data-career-id="{{ $applier->career->id }}"
+                                                    data-action="{{ action([\App\Http\Controllers\Pages\CareerController::class, 'updateStatus'], ['career' => $applier->career->id, 'applier' => $applier->id]) }}">
+                                                    <span class="fal fa-check"></span> Terima
+                                                </button>
+
+                                                {{-- Tombol Tolak --}}
                                                 <form
                                                     action="{{ action([\App\Http\Controllers\Pages\CareerController::class, 'updateStatus'], ['career' => $applier->career->id, 'applier' => $applier->id]) }}"
                                                     method="POST" class="d-inline">
@@ -98,6 +98,7 @@
                                                     </button>
                                                 </form>
                                             @endif
+
 
                                             <!-- Add a new button for opening in a new window -->
                                             <a href="/careers/{{ $applier->career->id }}/{{ $applier->id }}"
@@ -140,16 +141,105 @@
     </div>
 @endsection
 
+{{-- Modal Jadwal Wawancara --}}
+<div class="modal fade" id="modalJadwalWawancara" tabindex="-1" role="dialog" aria-labelledby="modalJadwalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalJadwalLabel">📅 Jadwal Wawancara</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formJadwalWawancara" method="POST">
+                @csrf @method('PUT')
+                <input type="hidden" name="status" value="accepted">
+                <div class="modal-body">
+                    <p class="text-muted mb-3">Pelamar: <strong id="modalApplierName"></strong></p>
+
+                    <div class="form-group">
+                        <label for="interview_date">Tanggal Wawancara <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" id="interview_date" name="interview_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interview_time">Waktu Wawancara <span class="text-danger">*</span></label>
+                        <input type="time" class="form-control" id="interview_time" name="interview_time" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interview_type">Jenis Wawancara <span class="text-danger">*</span></label>
+                        <select class="form-control" id="interview_type" name="interview_type" required>
+                            <option value="">-- Pilih Jenis --</option>
+                            <option value="online">Online (Video Conference)</option>
+                            <option value="offline">Offline / Tatap Muka</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="locationGroup">
+                        <label for="interview_location">Lokasi / Keterangan</label>
+                        <input type="text" class="form-control" id="interview_location" name="interview_location"
+                            placeholder="Contoh: Gedung A Lt. 3 atau link akan dikirim via email">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">
+                        <span class="fal fa-check"></span> Kirim Undangan &amp; Terima
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 @section('plugin')
     <script nonce="{{ $nonce }}">
         $(document).ready(function() {
-            // Handle confirmation buttons
+            // Handle confirmation buttons (Tolak)
             $(document).on('click', '.js-confirm-action', function(e) {
                 var message = $(this).data('message');
                 if (!confirm(message)) {
                     e.preventDefault();
                 }
             });
+
+            // Tombol Terima -> buka modal jadwal wawancara
+            $(document).on('click', '.btn-terima-pelamar', function() {
+                var name   = $(this).data('name');
+                var action = $(this).data('action');
+
+                $('#modalApplierName').text(name);
+                $('#formJadwalWawancara').attr('action', action);
+
+                // Reset form fields
+                $('#interview_date').val('');
+                $('#interview_time').val('');
+                $('#interview_type').val('');
+                $('#interview_location').val('');
+                updateLocationLabel('');
+
+                $('#modalJadwalWawancara').modal('show');
+            });
+
+            // Toggle label lokasi berdasarkan jenis interview
+            $(document).on('change', '#interview_type', function() {
+                updateLocationLabel($(this).val());
+            });
+
+            function updateLocationLabel(type) {
+                if (type === 'online') {
+                    $('#locationGroup label').text('Keterangan Tambahan (opsional)');
+                    $('#interview_location').attr('placeholder', 'Mis. silakan test kamera sebelum sesi');
+                } else if (type === 'offline') {
+                    $('#locationGroup label').text('Lokasi / Alamat Wawancara');
+                    $('#interview_location').attr('placeholder', 'Mis. Gedung A Lt. 3, Jl. Sudirman No.1');
+                } else {
+                    $('#locationGroup label').text('Lokasi / Keterangan');
+                    $('#interview_location').attr('placeholder', 'Contoh: Gedung A Lt. 3 atau link akan dikirim via email');
+                }
+            }
         });
     </script>
 @endsection

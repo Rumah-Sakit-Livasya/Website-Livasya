@@ -319,6 +319,90 @@
             <!-- /.col -->
         </div>
 
+        {{-- Jadwal Wawancara Card --}}
+        @php
+            $applier = Auth::user()->applier;
+        @endphp
+        @if($applier && in_array($applier->status, ['interview_1', 'interview_2']))
+        @php
+            $vconLink = null;
+            if ($applier->interview_type === 'online') {
+                $roomSlug = \Illuminate\Support\Str::slug('Wawancara - ' . $applier->first_name . ' ' . $applier->last_name);
+                $vconBase = rtrim(config('services.vcon.url'), '/');
+                $vconLink = $vconBase . '/?code=' . $roomSlug;
+            }
+        @endphp
+        <div class="row mt-2">
+            <div class="col-12">
+                <div class="panel border-faded shadow-sm"
+                     style="border-left: 4px solid {{ $applier->interview_type === 'online' ? '#3b82f6' : '#10b981' }};">
+                    <div class="panel-hdr" style="background: linear-gradient(135deg,
+                        {{ $applier->interview_type === 'online' ? '#1e40af, #3b82f6' : '#065f46, #10b981' }});">
+                        <h2 class="text-white">
+                            <i class="fal fa-calendar-check mr-2"></i>
+                            Jadwal Wawancara <span class="fw-300"><i>Anda</i></span>
+                        </h2>
+                    </div>
+                    <div class="panel-container show">
+                        <div class="panel-content">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <div class="d-flex flex-wrap" style="gap: 1rem;">
+                                        <div class="d-flex align-items-start">
+                                            <i class="fal fa-calendar-alt text-primary mr-2 mt-1"></i>
+                                            <div>
+                                                <small class="text-muted d-block">Tanggal</small>
+                                                <strong>
+                                                    {{ $applier->interview_date
+                                                        ? \Carbon\Carbon::parse($applier->interview_date)->translatedFormat('l, d F Y')
+                                                        : '-' }}
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-start">
+                                            <i class="fal fa-clock text-warning mr-2 mt-1"></i>
+                                            <div>
+                                                <small class="text-muted d-block">Waktu</small>
+                                                <strong>{{ $applier->interview_time ?? '-' }} WIB</strong>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-start">
+                                            <i class="fal fa-{{ $applier->interview_type === 'online' ? 'video' : 'map-marker-alt' }} text-info mr-2 mt-1"></i>
+                                            <div>
+                                                <small class="text-muted d-block">Jenis</small>
+                                                <strong>{{ $applier->interview_type === 'online' ? 'Online (Video Conference)' : 'Offline / Tatap Muka' }}</strong>
+                                            </div>
+                                        </div>
+                                        @if($applier->interview_location)
+                                        <div class="d-flex align-items-start">
+                                            <i class="fal fa-info-circle text-secondary mr-2 mt-1"></i>
+                                            <div>
+                                                <small class="text-muted d-block">Lokasi / Keterangan</small>
+                                                <strong>{{ $applier->interview_location }}</strong>
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                @if($vconLink)
+                                <div class="col-md-4 mt-3 mt-md-0 text-md-right">
+                                    <a href="{{ $vconLink }}" target="_blank"
+                                       class="btn btn-primary btn-lg waves-effect waves-themed font-weight-bold">
+                                        <i class="fal fa-video mr-2"></i> Bergabung Video Conference
+                                    </a>
+                                    <p class="text-muted mt-2 mb-0" style="font-size: 0.78rem;">
+                                        Klik tombol di atas saat jadwal wawancara dimulai
+                                    </p>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
         <!-- Apply Modal -->
         <div class="modal fade" id="modal-apply">
             <div class="modal-dialog modal-lg">

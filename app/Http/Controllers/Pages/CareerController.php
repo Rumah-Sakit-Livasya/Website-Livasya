@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Mail\InterviewInvitation;
 use App\Models\Applier;
 use App\Models\ApplierCertification;
 use App\Models\ApplierLanguage;
@@ -16,7 +17,9 @@ use App\Models\Identity;
 use App\Models\Mitra;
 use App\Services\Frontend\CareerPageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CareerController extends Controller
 {
@@ -127,8 +130,48 @@ class CareerController extends Controller
 
     public function updateStatus(Request $request, $careerId, $applierId)
     {
-        $applier = Applier::findOrFail($applierId);
-        $applier->update(['status' => $request->input('status')]);
+        $applier = Applier::findOrFail($applierId)->load('career');
+
+        $newStatus = $request->input('status');
+
+        // Ketika admin menerima dari tahap processed -> ubah ke interview_1 + simpan jadwal + kirim email
+        if ($applier->status == 'processed' && $newStatus == 'accepted') {
+            $newStatus = 'interview_1';
+
+            $request->validate([
+                'interview_date'     => 'required|date',
+                'interview_time'     => 'required|string|max:10',
+                'interview_type'     => 'required|in:online,offline',
+                'interview_location' => 'nullable|string|max:255',
+            ]);
+
+            $applier->update([
+                'status'             => $newStatus,
+                'interview_date'     => $request->interview_date,
+                'interview_time'     => $request->interview_time,
+                'interview_type'     => $request->interview_type,
+                'interview_location' => $request->interview_location,
+            ]);
+
+            $vconLink = null;
+            if ($request->interview_type === 'online') {
+                $roomSlug = Str::slug('Wawancara - ' . $applier->first_name . ' ' . $applier->last_name);
+                $vconBase = rtrim(config('services.vcon.url'), '/');
+                $vconLink = $vconBase . '/?code=' . $roomSlug;
+            }
+
+            try {
+                $applier->refresh();
+                Mail::to($applier->user?->email ?? $applier->email)
+                    ->send(new InterviewInvitation($applier, $vconLink));
+            } catch (\Exception $e) {
+                \Log::error('Gagal kirim email undangan wawancara: ' . $e->getMessage());
+            }
+
+            return back()->with('success', 'Pelamar diterima. Jadwal wawancara telah disimpan dan email undangan telah dikirimkan.');
+        }
+
+        $applier->update(['status' => $newStatus]);
 
         return back()->with('success', 'Status pelamar berhasil diperbarui.');
     }

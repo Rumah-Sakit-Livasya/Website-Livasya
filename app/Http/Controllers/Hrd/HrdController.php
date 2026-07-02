@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Hrd;
 
 use App\Http\Controllers\Controller;
+use App\Mail\InterviewInvitation;
 use App\Models\Applier;
 use App\Models\Career;
 use App\Models\ApplierCertification;
@@ -13,7 +14,9 @@ use App\Models\ApplierScholarship;
 use App\Models\ApplierOther;
 use App\Models\ApplierLanguage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class HrdController extends Controller
 {
@@ -116,11 +119,50 @@ class HrdController extends Controller
             'status' => 'required|in:processed,interview_1,interview_2,accepted,rejected',
         ]);
 
-        $applier = Applier::where('id', $applierId)->where('career_id', $careerId)->firstOrFail();
-        
+        $applier = Applier::where('id', $applierId)->where('career_id', $careerId)
+                          ->with('career')
+                          ->firstOrFail();
+
         $newStatus = $request->status;
+
+        // Ketika admin menerima dari tahap processed -> ubah ke interview_1 + simpan jadwal + kirim email
         if ($applier->status == 'processed' && $newStatus == 'accepted') {
             $newStatus = 'interview_1';
+
+            $request->validate([
+                'interview_date'     => 'required|date',
+                'interview_time'     => 'required|string|max:10',
+                'interview_type'     => 'required|in:online,offline',
+                'interview_location' => 'nullable|string|max:255',
+            ]);
+
+            // Simpan data jadwal ke tabel appliers
+            $applier->update([
+                'status'             => $newStatus,
+                'interview_date'     => $request->interview_date,
+                'interview_time'     => $request->interview_time,
+                'interview_type'     => $request->interview_type,
+                'interview_location' => $request->interview_location,
+            ]);
+
+            // Hitung link video conference jika interview online
+            $vconLink = null;
+            if ($request->interview_type === 'online') {
+                $roomSlug  = Str::slug('Wawancara - ' . $applier->first_name . ' ' . $applier->last_name);
+                $vconBase  = rtrim(config('services.vcon.url'), '/');
+                $vconLink  = $vconBase . '/?code=' . $roomSlug;
+            }
+
+            // Kirim email undangan ke pelamar
+            try {
+                $applier->refresh(); // pastikan relasi terbaru
+                Mail::to($applier->user?->email ?? $applier->email)
+                    ->send(new InterviewInvitation($applier, $vconLink));
+            } catch (\Exception $e) {
+                \Log::error('Gagal kirim email undangan wawancara: ' . $e->getMessage());
+            }
+
+            return back()->with('success', 'Pelamar diterima. Jadwal wawancara telah disimpan dan email undangan telah dikirimkan.');
         }
 
         $applier->update(['status' => $newStatus]);

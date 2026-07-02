@@ -155,7 +155,7 @@
 @section('plugin')
     <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
     <script src="/js/formplugins/select2/select2.bundle.js"></script>
-    <script>
+    <script nonce="{{ $nonce }}">
         function createPreviewImage() {
             const header = document.querySelector('#create-image');
             const imgPreview = document.querySelector('.create-img-preview')

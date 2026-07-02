@@ -104,6 +104,11 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    'interview_from' => [
+        'address' => env('MAIL_INTERVIEW_FROM_ADDRESS', 'rekrutmen@livasya.com'),
+        'name' => env('MAIL_FROM_NAME', 'HRD RS Livasya'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Markdown Mail Settings
